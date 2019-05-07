@@ -1,0 +1,3 @@
+unitPower_Grow_Corpseroot
+"Leaving behind peasant superstition, Corpseroot is a well of untapped medicinal potential. If one ignores the agricultural requirements, that is."
+- Doctor Limee

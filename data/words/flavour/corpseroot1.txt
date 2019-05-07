@@ -1,0 +1,3 @@
+unitPower_Grow_Corpseroot
+"Though I am not fond of feeding these roots corpses, the sap this root provides works wonders for boils."
+- Doctor Villaaust

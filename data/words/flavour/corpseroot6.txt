@@ -1,0 +1,3 @@
+unitPower_Grow_Corpseroot
+"What many refer to as the 'Corpseroot' is a rather unremarkable plant, holding no nutritional or medicinal value whatsoever."
+- Physician Lethe

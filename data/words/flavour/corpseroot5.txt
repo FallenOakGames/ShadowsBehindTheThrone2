@@ -1,0 +1,3 @@
+unitPower_Grow_Corpseroot
+"The Corpseroot is like a rat, if you find one there is always another."
+-Xylina the Exile

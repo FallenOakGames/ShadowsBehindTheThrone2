@@ -1,0 +1,3 @@
+unitPower_Grow_Corpseroot
+"It appears as though when feasting upon a corpse, this root slows the physical degredation of the deceased... This presents to me a research opportunity."
+- Doctor Courarougan
