@@ -769,11 +769,11 @@ namespace Assets.Code
             float temp = tempMap[x][ y];
             float wet = humidityMap[x][ y];
 
-            //Don't delete forests without good reason, they're no-regenerable
-            if (grid[x][ y].terrain == Hex.terrainType.FOREST && grid[x][ y].settlement == null)
-            {
-                if (temp > 0.05 && temp < 0.8 && wet > 0.2 && wet < 0.8) { return; }
-            }
+            ////Don't delete forests without good reason, they're no-regenerable
+            //if (grid[x][ y].terrain == Hex.terrainType.FOREST && grid[x][ y].settlement == null)
+            //{
+            //    if (temp > 0.05 && temp < 0.8 && wet > 0.2 && wet < 0.8) { return; }
+            //}
 
             float minDist = -1;
             for (int i = 0; i < terrainPositions.Count; i++)
@@ -994,7 +994,7 @@ namespace Assets.Code
                             ly = hex.y;
                             if (landmass[lx][ly] && grid[lx][ly].settlement == null && grid[lx][ly].flora == null)
                             {
-                                hex.terrain = Hex.terrainType.FOREST;
+                                //hex.terrain = Hex.terrainType.FOREST;
                                 hex.flora = new Flora_Forest(hex);
                             }
                         }
@@ -1038,7 +1038,7 @@ namespace Assets.Code
                             ly = hex.y;
                             if (landmass[lx][ly] && grid[lx][ly].settlement == null && grid[lx][ly].flora == null)
                             {
-                                hex.terrain = Hex.terrainType.FOREST;
+                                //hex.terrain = Hex.terrainType.FOREST;
                                 hex.flora = new Flora_Forest(hex);
                             }
                         }

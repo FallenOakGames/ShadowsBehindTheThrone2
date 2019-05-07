@@ -11,8 +11,8 @@ namespace Assets.Code
     //[Serializable,HideInInspector]
     public class Params
     {
-        public int sizeX = 32;
-        public int sizeY = 32;
+        public int sizeX = 24;
+        public int sizeY = 24;
 
         public int stepsPerIsland = 12;
         public int maxBrushSize = 5;

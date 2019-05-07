@@ -14,7 +14,7 @@ namespace Assets.Code
         public int x;
         public int y;
         public Location location;
-        public enum terrainType { SEA, MOUNTAIN, GRASS, PATH, FOREST, SWAMP, MUD, DESERT, DRY, WETLAND, TUNDRA, SNOW };
+        public enum terrainType { SEA, MOUNTAIN, GRASS, PATH,  SWAMP, MUD, DESERT, DRY, WETLAND, TUNDRA, SNOW };
         public terrainType terrain;
         public bool road;
         public Location territoryOf;

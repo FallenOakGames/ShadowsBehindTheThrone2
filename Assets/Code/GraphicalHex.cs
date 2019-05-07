@@ -90,17 +90,17 @@ namespace Assets.Code
             {
                 terrainLayer.sprite = world.textureStore.hex_terrain_path;
             }
-            else if (hex.terrain == Hex.terrainType.FOREST)
-            {
-                if (map.tempMap[hex.x][ hex.y] < 0.3f)
-                {
-                    terrainLayer.sprite = world.textureStore.hex_terrain_snowforest;
-                }
-                else
-                {
-                    terrainLayer.sprite = world.textureStore.hex_terrain_forest;
-                }
-            }
+            //else if (hex.terrain == Hex.terrainType.FOREST)
+            //{
+            //    if (map.tempMap[hex.x][ hex.y] < 0.3f)
+            //    {
+            //        terrainLayer.sprite = world.textureStore.hex_terrain_snowforest;
+            //    }
+            //    else
+            //    {
+            //        terrainLayer.sprite = world.textureStore.hex_terrain_forest;
+            //    }
+            //}
             else if (hex.terrain == Hex.terrainType.SWAMP)
             {
                 terrainLayer.sprite = world.textureStore.hex_terrain_swamp;
@@ -258,7 +258,8 @@ namespace Assets.Code
             {
                 Destroy(societyNameTag.gameObject);
             }
-            
+            */
+
 
             if (hex.flora != null)
             {
@@ -270,7 +271,6 @@ namespace Assets.Code
             {
                 floraLayer.enabled = false;
             }
-            */
 
             for (int i = 0; i < 6; i++)
             {

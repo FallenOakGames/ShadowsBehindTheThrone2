@@ -289,7 +289,16 @@ namespace Assets.Code
             {
                 return map.world.textureStore.loc_minor_emptyOcean;
             }
-            return map.world.textureStore.loc_minor_emptyGrass;
+            else if (hex.terrain == Hex.terrainType.GRASS || hex.terrain == Hex.terrainType.DRY)
+            {
+                return map.world.textureStore.loc_minor_emptyGrass;
+            }
+            else if (hex.terrain == Hex.terrainType.SWAMP || hex.terrain == Hex.terrainType.WETLAND)
+            {
+                return map.world.textureStore.loc_minor_emptyGrass;
+            }
+            return map.world.textureStore.loc_minor_green;
+           // return map.world.textureStore.loc_minor_emptyGrass;
         }
     }
 }
