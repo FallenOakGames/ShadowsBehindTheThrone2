@@ -21,6 +21,48 @@ namespace Assets.Code
         {
             return Math.Sqrt(getSqrDist(a, b));
         }
+
+        public int getStepDist(Location a, Location b)
+        {
+            if (a == b) { return 0; }
+
+            //Expand in waves from the starting point, each time adding those on the border
+            //We know the distance, since each border is 1 distance more
+            HashSet<Location> seen = new HashSet<Location>();
+            HashSet<Location> open = new HashSet<Location>();
+            open.Add(a);
+            seen.Add(a);
+            int nSteps = 0;
+            while (true)
+            {
+                HashSet<Location> border = new HashSet<Location>();
+                nSteps += 1;
+                foreach (Location loc in open)
+                {
+                    foreach (Location l2 in getNeighbours(loc))
+                    {
+                        if (seen.Contains(l2)) { continue; }
+                        if (l2 == b) { return nSteps; }
+                        border.Add(l2);
+                        seen.Add(l2);
+                    }
+                }
+                //The border is now used as the opens
+                open.Clear();
+                foreach (Location loc in border)
+                {
+                    open.Add(loc);
+                }
+
+                if (nSteps > 1024)
+                {
+                    throw new Exception("Map discontinuity detected");
+                }
+            }
+
+            
+        }
+
         public double getSqrDist(Hex a, Hex b)
         {
             if (a.y % 2 == b.y % 2)
@@ -150,6 +192,16 @@ namespace Assets.Code
                 if (canGet(hex.x, hex.y - 1)) { reply.Add(grid[hex.x][ hex.y - 1]); }
             }
 
+            return reply;
+        }
+
+        public List<Location> getNeighbours(Location loc)
+        {
+            List<Location> reply = new List<Location>();
+            foreach (Link l in loc.links)
+            {
+                reply.Add(l.other(loc));
+            }
             return reply;
         }
     }

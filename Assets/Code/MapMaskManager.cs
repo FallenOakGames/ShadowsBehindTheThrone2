@@ -9,7 +9,7 @@ namespace Assets.Code
     //[Serializable,HideInInspector]
     public class MapMaskManager
     {
-        public enum maskType { NONE, NATION, WORTHYDEAD, TESTING };
+        public enum maskType { NONE, NATION, PROVINCE, TESTING };
         public maskType mask = maskType.NONE;
         public Map map;
         [NonSerialized]
@@ -43,6 +43,10 @@ namespace Assets.Code
                 {
                     return new Color(0.5f, 0.5f, 0.5f, 0.5f);
                 }
+            }
+            else if (mask == maskType.PROVINCE)
+            {
+                return new Color(hex.province.cr, hex.province.cg, hex.province.cb, 0.5f);
             }
             else if (mask == maskType.TESTING)
             {

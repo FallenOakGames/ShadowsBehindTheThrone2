@@ -276,6 +276,7 @@ namespace Assets.Code
         public Sprite getSprite()
         {
             if (settlement != null) { return settlement.getSprite(); }
+            if (isMajor) { return map.world.textureStore.loc_green; }
             
             if (hex.terrain == Hex.terrainType.SNOW || hex.terrain == Hex.terrainType.TUNDRA)
             {

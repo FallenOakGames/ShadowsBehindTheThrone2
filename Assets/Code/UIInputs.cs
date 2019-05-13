@@ -62,13 +62,13 @@ namespace Assets.Code
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha2))
                 {
-                    if (world.map.masker.mask == MapMaskManager.maskType.WORTHYDEAD)
+                    if (world.map.masker.mask == MapMaskManager.maskType.PROVINCE)
                     {
                         world.map.masker.mask = MapMaskManager.maskType.NONE;
                     }
                     else
                     {
-                        world.map.masker.mask = MapMaskManager.maskType.WORTHYDEAD;
+                        world.map.masker.mask = MapMaskManager.maskType.PROVINCE;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha9))
@@ -247,7 +247,7 @@ namespace Assets.Code
             }
 
             GraphicalMap.selectedHex = clickedHex;
-           // world.uiHex.checkData();
+            world.ui.uiHex.checkData();
         }
 
         public void rightClickOnHex()

@@ -35,6 +35,7 @@ namespace Assets.Code
         public float graphicalScale;
         public int graphicalIndexer;
 
+        public Province province;
         public static bool assertArmyPresence = true;
 
         public Hex() { }

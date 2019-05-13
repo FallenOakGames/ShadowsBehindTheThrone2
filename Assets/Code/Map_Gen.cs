@@ -14,8 +14,8 @@ namespace Assets.Code
         int minDistBetweenSocs = 12;
         int citySpread = 5;
         int townSpread = 12;
-        public int sx = 32;
-        public int sy = 24;
+        public int sx = 42;
+        public int sy = 32;
         public int sizeX;
         public int sizeY;
         public int nPrints;
@@ -37,6 +37,7 @@ namespace Assets.Code
         public int param_nSmallForests = 20;
         public float param_targetHexesPerTown = 20;
         public int param_isolatedTownMinIsolation = 3;//Dist between an isolated town and its nearest neighbour
+        public int param_locations_per_province = 5;
         int param_maxTerritoryRange = 7;
         int param_margin = 0;
         public int param_nSerpents = 3;
@@ -44,19 +45,21 @@ namespace Assets.Code
         public float param_seaMargin = 0;
         public double param_cityPlacementMult = 7;
         public float param_cityPlacementMapLimit = 0.35f;
+        public int param_provinceStepSize = 5;
 
         public int countLandmassID;
         public int nLandmasses;
-        
+
         public float[][] humidityMap;
         public float[][] tempMap;
         public float[][] cityPlacementMap;
         public bool[][] landmass;
-        
+
         public int[][] landmassID;
 
         public List<List<Hex>> allLandmasses = new List<List<Hex>>();
 
+        public List<Province> provinces = new List<Province>();
         public List<float[]> terrainPositions = new List<float[]>();
         public List<Hex.terrainType> terrainTypes = new List<Hex.terrainType>();
 
@@ -64,7 +67,7 @@ namespace Assets.Code
         public void loadGenerators()
         {
         }
-        
+
         public void gen()
         {
             World.log("Map generating starting...");
@@ -79,8 +82,8 @@ namespace Assets.Code
             landmass = new bool[sx][];
             for (int i = 0; i < sx; i++) { landmass[i] = new bool[sy]; }
             drawLandmass_islands();
-            
-            
+
+
             humidityMap = genHeightmap(sx, sy, 0.6f, 0.5f);
             tempMap = genHeightmap(sx, sy, 0.6f, 0.5f);
             //cityPlacementMap = genHeightmap(sx, sy, 0.6f, 0.5f);
@@ -88,7 +91,7 @@ namespace Assets.Code
             //balanceCityPlacementMap();
             loadTerrainPositions();
             biasTempMap();
-            
+
 
             for (int i = 0; i < sx; i++)
             {
@@ -98,7 +101,7 @@ namespace Assets.Code
                 }
             }
 
-            
+
             assignTerrainFromClimate();
             setLandmassIDs();
             placeLocations();
@@ -112,10 +115,100 @@ namespace Assets.Code
             addSmallForests();
             assignTerrainFromClimate();
             assignLocationNamesAndIndices();
+            placeProvinces();
             checkConnectivity();
-            
+
             //placeMinorSettlements();
-            
+
+        }
+
+
+        public void placeProvinces()
+        {
+            for (int i = 0; i < sx; i += param_provinceStepSize)
+            {
+                for (int j = 0; j < sy; j += param_provinceStepSize)
+                {
+                    int x = Eleven.random.Next(5) + i - 2;
+                    int y = Eleven.random.Next(5) + j - 2;
+
+                    if (canGet(x, y))
+                    {
+                        Province p = new Province(grid[x][y]);
+                        provinces.Add(p);
+                    }
+                }
+            }
+
+            //Assign all locations to provinces
+            foreach (Location loc in locations)
+            {
+                int i = loc.hex.x;
+                int j = loc.hex.y;
+                double minDist = -1;
+                foreach (Province p in provinces)
+                {
+                    //Provinces must map to either all land or all sea tiles
+                    if (landmass[p.coreHex.x][p.coreHex.y] != landmass[i][j]) { continue; }
+
+                    double dist = getDist(p.coreHex, grid[i][j]);
+                    if (minDist == -1 || dist < minDist)
+                    {
+                        minDist = dist;
+                        grid[i][j].province = p;
+                    }
+                }
+                if (grid[i][j].location != null)
+                {
+                    grid[i][j].province.locations.Add(grid[i][j].location);
+                }
+
+            }
+            //Hexes follow their parent loc
+            for (int i = 0; i < sx; i += 1)
+            {
+                for (int j = 0; j < sy; j += 1)
+                {
+                    grid[i][j].province = grid[i][j].territoryOf.hex.province;
+                }
+            }
+
+            foreach (Province p in provinces)
+            {
+                int c = 0;
+                foreach (Location l in p.locations)
+                {
+                    if (l.isMajor)
+                    {
+                        c += 1;
+                        if (Eleven.random.Next(c) == 0)
+                        {
+                            p.capital = l;
+                        }
+                    }
+                }
+                if (p.capital != null)
+                {
+                    if (landmass[p.coreHex.x][p.coreHex.y])
+                    {
+                        p.name = p.capital.name + " province";
+                    }else
+                    {
+                        p.name = p.capital.name + " sea";
+                    }
+                }else
+                {
+                    if (landmass[p.coreHex.x][p.coreHex.y])
+                    {
+                        p.name = TextStore.getCityName() + " province";
+                    }
+                    else
+                    {
+                        p.name = TextStore.getCityName() + " sea";
+                    }
+
+                }
+            }
         }
 
         public void generateCityPlacementMap()
@@ -125,7 +218,7 @@ namespace Assets.Code
             cityPlacementMap = new float[sx][];
             for (int j = 0; j < sx; j++) { cityPlacementMap[j] = new float[sy]; }
 
-                for (int i = 0; i < sx; i++)
+            for (int i = 0; i < sx; i++)
             {
                 for (int j = 0; j < sy; j++)
                 {
@@ -240,7 +333,7 @@ namespace Assets.Code
             {
                 if (loc.isOcean) { continue; }
                 if (loc.soc == null) { continue; }
-                
+
             }
         }
 
@@ -288,17 +381,17 @@ namespace Assets.Code
                 {
                     foreach (Hex h in getNeighbours(location.hex))
                     {
-                        if (landmass[h.x][ h.y]) { continue; }
+                        if (landmass[h.x][h.y]) { continue; }
                         foreach (Hex h2 in getNeighbours(h))
                         {
                             if (h2 == location.hex) { continue; }
-                            if (landmass[h2.x][ h2.y]) { continue; }
+                            if (landmass[h2.x][h2.y]) { continue; }
 
                             bool isValid = true;
                             foreach (Hex h3 in getNeighbours(h2))
                             {
                                 if (h3.location != null) { isValid = false; }
-                                if (landmass[h3.x][ h3.y]) { isValid = false; }
+                                if (landmass[h3.x][h3.y]) { isValid = false; }
                             }
 
                             if (isValid)
@@ -343,7 +436,7 @@ namespace Assets.Code
 
                     foreach (Location loc in locations)
                     {
-                        if (landmass[loc.hex.x][ loc.hex.y]) { continue; }
+                        if (landmass[loc.hex.x][loc.hex.y]) { continue; }
                         double dist = getSqrDist(grid[i][j], loc.hex);
                         if (dist < minDist)
                         {
@@ -365,7 +458,7 @@ namespace Assets.Code
         {
             foreach (Location loc in locations)
             {
-                if (landmass[loc.hex.x][ loc.hex.y]) { continue; }
+                if (landmass[loc.hex.x][loc.hex.y]) { continue; }
 
                 int nLinks = param_nLinksDefault;
                 if (loc.isMajor)
@@ -378,7 +471,7 @@ namespace Assets.Code
                     Location best = null;
                     foreach (Location l2 in locations)
                     {
-                        if (landmass[l2.hex.x][ l2.hex.y]) { continue; }
+                        if (landmass[l2.hex.x][l2.hex.y]) { continue; }
                         if (l2.index <= loc.index) { continue; }
 
 
@@ -513,11 +606,11 @@ namespace Assets.Code
                 int iY = (int)y;
 
 
-                if (landmass[iX][ iY] == false) { return false; }
-                if (grid[iX][ iY].location != null)
+                if (landmass[iX][iY] == false) { return false; }
+                if (grid[iX][iY].location != null)
                 {
-                    if (grid[iX][ iY].location == a) { }//Nothing
-                    else if (grid[iX][ iY].location == b) { return true; }
+                    if (grid[iX][iY].location == a) { }//Nothing
+                    else if (grid[iX][iY].location == b) { return true; }
                     else { return false; }
                 }
             }
@@ -547,11 +640,11 @@ namespace Assets.Code
                 int iY = (int)y;
 
 
-                if (landmass[iX][ iY] == true) { return false; }
-                if (grid[iX][ iY].location != null)
+                if (landmass[iX][iY] == true) { return false; }
+                if (grid[iX][iY].location != null)
                 {
-                    if (grid[iX][ iY].location == a) { }//Nothing
-                    else if (grid[iX][ iY].location == b) { return true; }
+                    if (grid[iX][iY].location == a) { }//Nothing
+                    else if (grid[iX][iY].location == b) { return true; }
                     else { return false; }
                 }
             }
@@ -588,7 +681,7 @@ namespace Assets.Code
 
             List<Hex> all = new List<Hex>();
             List<Hex> open = new List<Hex>();
-            open.Add(grid[x][ y]);
+            open.Add(grid[x][y]);
 
             while (open.Count > 0)
             {
@@ -599,7 +692,7 @@ namespace Assets.Code
                     landmassID[h.x][h.y] = id;
                     foreach (Hex h2 in getNeighbours(h))
                     {
-                        if (landmass[h2.x][ h2.y] && landmassID[h2.x][h2.y] == 0)
+                        if (landmass[h2.x][h2.y] && landmassID[h2.x][h2.y] == 0)
                         {
                             o2.Add(h2);
                             landmassID[h2.x][h2.y] = id;
@@ -760,14 +853,14 @@ namespace Assets.Code
 
         public void assignTerrain(int x, int y)
         {
-            if (!landmass[x][ y]) { grid[x][ y].terrain = Hex.terrainType.SEA; return; }
+            if (!landmass[x][y]) { grid[x][y].terrain = Hex.terrainType.SEA; return; }
 
             ////Temporary, for now
             //if (cityPlacementMap[x,y] > 0.9) { grid[x, y].terrain = Hex.terrainType.MOUNTAIN;return; }
 
             //Humidity and temp form a 2D grid with a centre at (0.5,0.5)
-            float temp = tempMap[x][ y];
-            float wet = humidityMap[x][ y];
+            float temp = tempMap[x][y];
+            float wet = humidityMap[x][y];
 
             ////Don't delete forests without good reason, they're no-regenerable
             //if (grid[x][ y].terrain == Hex.terrainType.FOREST && grid[x][ y].settlement == null)
@@ -783,7 +876,7 @@ namespace Assets.Code
                 if (minDist == -1 || dist < minDist)
                 {
                     minDist = dist;
-                    grid[x][ y].terrain = terrainTypes[i];
+                    grid[x][y].terrain = terrainTypes[i];
                 }
             }
         }
@@ -802,7 +895,7 @@ namespace Assets.Code
                     Hex target = null;
                     foreach (Hex hex in set.territory)
                     {
-                        if (landmass[hex.x][ hex.y] == false) { continue; }
+                        if (landmass[hex.x][hex.y] == false) { continue; }
                         if (hex.location != null) { continue; }
 
                         //Check for adjacent hexes
@@ -821,7 +914,7 @@ namespace Assets.Code
                     bool isCoastal = false;
                     foreach (Hex h2 in getNeighbours(target))
                     {
-                        if (landmass[h2.x][ h2.y] == false) { isCoastal = true; }
+                        if (landmass[h2.x][h2.y] == false) { isCoastal = true; }
                         if (h2.location != null) { World.log("Issue here, placing erroneously"); }
                     }
 
@@ -882,7 +975,7 @@ namespace Assets.Code
                         bool coastal = false;
                         foreach (Hex n in getNeighbours(h))
                         {
-                            if (!landmass[n.x][ n.y]) { coastal = true; break; }
+                            if (!landmass[n.x][n.y]) { coastal = true; break; }
                         }
                         if (coastal)
                         {
@@ -914,11 +1007,11 @@ namespace Assets.Code
             bool canPlace = true;
             double minPlacement = param_minLocSeparation * param_minLocSeparation;
 
-            if (inMargin(grid[x2][ y2])) { canPlace = false; }
-            if (landmass[x2][ y2] == false) { canPlace = false; }
+            if (inMargin(grid[x2][y2])) { canPlace = false; }
+            if (landmass[x2][y2] == false) { canPlace = false; }
             foreach (Location set in locations)
             {
-                double dist = getSqrDist(grid[x2][ y2], set.hex);
+                double dist = getSqrDist(grid[x2][y2], set.hex);
                 if (dist < minPlacement)
                 {
                     return false;
@@ -934,13 +1027,17 @@ namespace Assets.Code
             {
                 for (int j = 0; j < sizeY; j++)
                 {
-                    double minDist = param_maxTerritoryRange * param_maxTerritoryRange;
+                    //double minDist = param_maxTerritoryRange * param_maxTerritoryRange;
+                    double minDist = -1;
                     Location bestLoc = null;
                     foreach (Location loc in locations)
                     {
-                        if (landmassID[i][j] != landmassID[loc.hex.x][loc.hex.y]) { continue; }
 
                         double dist = getSqrDist(loc.hex, grid[i][j]);
+
+                        //Add a penalty for being on the wrong landmass, but don't disable it
+                        if (landmassID[i][j] != landmassID[loc.hex.x][loc.hex.y]) { dist *= 10; }
+
                         if (minDist == -1 || dist < minDist)
                         {
                             minDist = dist;
@@ -982,7 +1079,7 @@ namespace Assets.Code
                     {
                         if (canGet(lx, ly))
                         {
-                            Hex hex = grid[lx][ ly];
+                            Hex hex = grid[lx][ly];
                             for (int step = 0; step < stepSpread; step++)
                             {
                                 List<Hex> list = getNeighbours(hex);
@@ -1026,7 +1123,7 @@ namespace Assets.Code
                     {
                         if (canGet(lx, ly))
                         {
-                            Hex hex = grid[lx][ ly];
+                            Hex hex = grid[lx][ly];
                             for (int step = 0; step < stepSpread; step++)
                             {
                                 List<Hex> list = getNeighbours(hex);
@@ -1108,22 +1205,22 @@ namespace Assets.Code
             {
                 for (int j = 0; j < map[0].Length; j++)
                 {
-                    map[i][ j] = (float)Math.Pow(map[i][ j], exponent);
+                    map[i][j] = (float)Math.Pow(map[i][j], exponent);
                 }
             }
         }
 
         public void normaliseMap(float[][] map)
         {
-            float max = map[0][ 0];
-            float min = map[0][ 0];
+            float max = map[0][0];
+            float min = map[0][0];
             for (int i = 0; i < map.Length; i++)
             {
                 for (int j = 0; j < map[0].Length; j++)
                 {
-                    if (map[i][ j] > max)
+                    if (map[i][j] > max)
                     {
-                        max = map[i][ j];
+                        max = map[i][j];
                     }
                     if (map[i][j] < min)
                     {
@@ -1144,7 +1241,7 @@ namespace Assets.Code
             }
         }
 
-        public float[][] genArray(int i,int j)
+        public float[][] genArray(int i, int j)
         {
             float[][] reply = new float[i][];
             for (int k = 0; k < i; k++)
@@ -1190,13 +1287,13 @@ namespace Assets.Code
                     float avrg = 0;
                     int ox = i / 2;
                     int oy = j / 2;
-                    if (i % 2 == 0 && j % 2 == 0) { map[i][j] = old[ox][ oy]; continue; }
+                    if (i % 2 == 0 && j % 2 == 0) { map[i][j] = old[ox][oy]; continue; }
 
                     int c = 1;
                     avrg += old[ox][oy];
-                    if (ox < old.Length - 1) { avrg += old[ox + 1][ oy]; c += 1; }
-                    if (oy < old[0].Length - 1) { avrg += old[ox][ oy + 1]; c += 1; }
-                    if (ox < old.Length - 1 && oy < old[0].Length - 1) { avrg += old[ox + 1][ oy + 1]; c += 1; }
+                    if (ox < old.Length - 1) { avrg += old[ox + 1][oy]; c += 1; }
+                    if (oy < old[0].Length - 1) { avrg += old[ox][oy + 1]; c += 1; }
+                    if (ox < old.Length - 1 && oy < old[0].Length - 1) { avrg += old[ox + 1][oy + 1]; c += 1; }
 
                     avrg /= c;
                     float basis = (float)(Eleven.random.NextDouble() * 2) - 1;
@@ -1230,7 +1327,7 @@ namespace Assets.Code
                     int v = y + j;
                     if (canGet(u, v))
                     {
-                        reply.Add(grid[u][ v]);
+                        reply.Add(grid[u][v]);
                     }
                 }
             }
@@ -1274,7 +1371,7 @@ namespace Assets.Code
                     int tx = Eleven.random.Next(sx);
                     int ty = Eleven.random.Next(sy);
                     if (inMargin(tx, ty)) { continue; }
-                    if (landmass[tx][ ty]) { continue; }
+                    if (landmass[tx][ty]) { continue; }
                     open.Clear();
                     nLand += paintCircle(tx, ty, 3, open);
                     stepsLeftInIsland = Eleven.random.Next(param.stepsPerIsland) + 1;
@@ -1286,7 +1383,7 @@ namespace Assets.Code
                 bool bordersSea = false;
                 foreach (int[] n in getNeighbours(chosen[0], chosen[1]))
                 {
-                    if (landmass[n[0]][ n[1]] == false)
+                    if (landmass[n[0]][n[1]] == false)
                     {
                         bordersSea = true;
                         break;
@@ -1332,7 +1429,7 @@ namespace Assets.Code
                     int tx = Eleven.random.Next(sx);
                     int ty = Eleven.random.Next(sy);
                     if (inMargin(tx, ty)) { continue; }
-                    if (landmass[tx][ ty]) { continue; }
+                    if (landmass[tx][ty]) { continue; }
                     //open.Add(new int[] { tx, ty });
                     //landmass[tx, ty] = true;
                     nLand += paintCircle(tx, ty, 3, open);
@@ -1366,7 +1463,7 @@ namespace Assets.Code
                 bool bordersSea = false;
                 foreach (int[] n in getNeighbours(chosen[0], chosen[1]))
                 {
-                    if (landmass[n[0]][ n[1]] == false)
+                    if (landmass[n[0]][n[1]] == false)
                     {
                         bordersSea = true;
                         break;
@@ -1436,7 +1533,7 @@ namespace Assets.Code
                         double sDist = (i * i) + (j * j);
                         if (sDist <= size)
                         {
-                            if (landmass[x + i][ j + y] == false)
+                            if (landmass[x + i][j + y] == false)
                             {
                                 nAdded += 1;
 
@@ -1445,7 +1542,7 @@ namespace Assets.Code
                                 if (Math.Abs(sizeY - (y + j) - 1) < distToEdge) { distToEdge = Math.Abs(sizeY - (y + j) - 1); }
                                 if (distToEdge >= param_seaMargin)
                                 {
-                                    landmass[x + i][ j + y] = true;
+                                    landmass[x + i][j + y] = true;
                                     open.Add(new int[] { x + i, j + y });
                                 }
                             }

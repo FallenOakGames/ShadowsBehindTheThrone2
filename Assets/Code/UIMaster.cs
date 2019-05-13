@@ -10,7 +10,7 @@ namespace Assets.Code
     public class UIMaster : MonoBehaviour
     {
         public World world;
-        //public UIHex uiHex;
+        public UIHex uiHex;
        // public UICity uiCity;
         //public UIWorldRight uiWorldRight;
         //public UISociety uiSociety;
@@ -50,11 +50,11 @@ namespace Assets.Code
                     if (GraphicalMap.selectedHex == null)
                     {
                         //uiCity.gameObject.SetActive(false);
-                        //uiHex.gameObject.SetActive(true);
+                        uiHex.gameObject.SetActive(true);
                     }
                     else
                     {
-                       // uiHex.gameObject.SetActive(true);
+                       uiHex.gameObject.SetActive(true);
                     }
                 }
                 else if (state == uiState.SOCIETY || state == uiState.SELECT_SOC)
@@ -152,7 +152,7 @@ namespace Assets.Code
 
             state = uiState.BACKGROUND;
             //uiWorldRight.gameObject.SetActive(false);
-            //uiHex.gameObject.SetActive(false);
+            uiHex.gameObject.SetActive(false);
             //uiMainMenu.gameObject.SetActive(false);
             //uiSociety.gameObject.SetActive(false);
             uiMaster.gameObject.SetActive(false);
@@ -166,7 +166,7 @@ namespace Assets.Code
 
             state = uiState.WORLD;
             //uiWorldRight.gameObject.SetActive(true);
-            //uiHex.gameObject.SetActive(true);
+            uiHex.gameObject.SetActive(true);
             //uiMainMenu.gameObject.SetActive(false);
             //uiSociety.gameObject.SetActive(false);
             uiMaster.gameObject.SetActive(true);
@@ -179,7 +179,7 @@ namespace Assets.Code
 
             state = uiState.MAIN_MENU;
             //uiWorldRight.gameObject.SetActive(false);
-            //uiHex.gameObject.SetActive(false);
+            uiHex.gameObject.SetActive(false);
             //uiMainMenu.gameObject.SetActive(true);
             //uiSociety.gameObject.SetActive(false);
             uiMaster.gameObject.SetActive(false);
