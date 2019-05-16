@@ -11,6 +11,8 @@ namespace Assets.Code
         public string name;
         public List<Location> locations = new List<Location>();
         public Location capital;
+        public List<EconTrait> econTraits = new List<EconTrait>();
+        public bool isSea = false;
 
         public float cr = (float)Eleven.random.NextDouble();
         public float cg = (float)Eleven.random.NextDouble();

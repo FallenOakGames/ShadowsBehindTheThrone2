@@ -15,7 +15,8 @@ namespace Assets.Code
 
         public void checkData()
         {
-            if (GraphicalMap.selectedHex == null)
+            Hex hex = GraphicalMap.selectedHex;
+            if (hex == null)
             {
                 title.text = "";
                 body.text = "";
@@ -26,7 +27,11 @@ namespace Assets.Code
                string bodyText = "Body text for hex " + GraphicalMap.selectedHex.getName();
 
                 bodyText += "\nAttachedTo " + GraphicalMap.selectedHex.territoryOf.hex.getName();
-                bodyText += "\nProvince: " + GraphicalMap.selectedHex.province.name;
+                bodyText += "\nProvince: " + hex.province.name;
+                foreach (EconTrait t in hex.province.econTraits)
+                {
+                    bodyText += "\n  Industry: " + t.name;
+                }
                 body.text = bodyText;
             }
         }

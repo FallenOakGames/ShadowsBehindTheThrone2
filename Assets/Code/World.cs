@@ -44,7 +44,7 @@ namespace Assets.Code
 
         public string pathPrefix = "";
         public bool isWindows = false;
-        public void commonStartup()
+        public void specificStartup()
         {
             if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Windows)
             {
@@ -86,15 +86,21 @@ namespace Assets.Code
         public void startup()
         {
             Log("Called startup");
-            commonStartup();
+            specificStartup();
             Params param = new Params();
             param.loadFromFile();
             map = new Map(param);
             GraphicalMap.map = map;
             GraphicalMap.world = this;
 
+            EconTrait.loadTraits(map);
             map.world = this;
             map.gen();
+
+            for (int i = 0; i < param.burnInSteps; i++)
+            {
+                map.turnTick();
+            }
 
             ui.setToWorld();
             Log("Got to end of initial startup");

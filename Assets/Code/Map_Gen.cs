@@ -118,8 +118,35 @@ namespace Assets.Code
             placeProvinces();
             checkConnectivity();
 
+            placeInitialSettlements();
+
             //placeMinorSettlements();
 
+        }
+
+        public void placeInitialSettlements()
+        {
+            foreach (Location loc in locations)
+            {
+                if (isSea(loc)) { continue; }
+                float cityPlaceVal = cityPlacementMap[loc.hex.x][loc.hex.y];
+                if (cityPlaceVal < 0.15) { continue; }
+                if (loc.hex.getHabilitability() < param.minHabitabilityForHumans) { continue; }
+
+                if (loc.isMajor)
+                {
+                    loc.settlement = new Set_City(loc);
+                }else
+                {
+                    loc.settlement = new Set_Abbey(loc);
+                }
+
+                Society soc = new Society(this);
+                soc.name = loc.shortName;
+                loc.soc = soc;
+
+                socialGroups.Add(soc);
+            }
         }
 
 
@@ -191,22 +218,47 @@ namespace Assets.Code
                 {
                     if (landmass[p.coreHex.x][p.coreHex.y])
                     {
-                        p.name = p.capital.name + " province";
-                    }else
+                        p.name = p.capital.shortName + " province";
+                        p.isSea = false;
+                    }
+                    else
                     {
-                        p.name = p.capital.name + " sea";
+                        p.name = p.capital.shortName + " sea";
+                        p.isSea = true;
                     }
                 }else
                 {
                     if (landmass[p.coreHex.x][p.coreHex.y])
                     {
                         p.name = TextStore.getCityName() + " province";
+                        p.isSea = false;
                     }
                     else
                     {
                         p.name = TextStore.getCityName() + " sea";
+                        p.isSea = true;
                     }
+                }
 
+                if (!p.isSea)
+                {
+                    EconTrait chosenTrait = null;
+                    c = 0;
+                    foreach (EconTrait t in globalist.allEconTraits)
+                    {
+                        if (t.provinceIndustry)
+                        {
+                            c += 1;
+                            if (Eleven.random.Next(c) == 0)
+                            {
+                                chosenTrait = t;
+                            }
+                        }
+                    }
+                    if (chosenTrait != null)
+                    {
+                        p.econTraits.Add(chosenTrait);
+                    }
                 }
             }
         }
@@ -349,7 +401,8 @@ namespace Assets.Code
                 loc.index = index;
                 index += 1;
 
-                string name = TextStore.getLocName() + " ";
+                loc.shortName = TextStore.getLocName();
+                string name =  loc.shortName + " ";
                 string[] opts = null;
                 if (loc.isOcean)
                 {

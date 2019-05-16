@@ -21,6 +21,7 @@ namespace Assets.Code
         public bool isOcean;
         public Map map;
         public string name;
+        public string shortName;
         public bool isMajor;//Remember if it's a city, so we have roughly the same amount at all times, regardless of razing
         private List<Property> properties = new List<Property>();
         public int turnLastTaken = -1000;
@@ -35,6 +36,7 @@ namespace Assets.Code
             this.map = map;
             this.hex = hex;
             name = "Empty Location";
+            shortName = "Empty Location";
 
             territoryColor = new Color(
                 (float)Eleven.random.NextDouble(),

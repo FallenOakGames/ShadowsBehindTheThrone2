@@ -9,6 +9,14 @@ namespace Assets.Code
     public partial class Map
     {
 
+        public bool isSea(Location loc)
+        {
+            return isSea(loc.hex);
+        }
+        public bool isSea(Hex hex)
+        {
+            return !landmass[hex.x][hex.y];
+        }
         public bool canGet(int x, int y)
         {
             return x >= 0 && y >= 0 && x < sizeX && y < sizeY;

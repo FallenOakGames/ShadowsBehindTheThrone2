@@ -37,7 +37,16 @@ namespace Assets.Code
             relations.Add(this, rel);
         }
 
-        public virtual bool isGone() { return false; }
+        /*
+         * By default, a social group is gone if it holds no territory. Can be overriden by specials
+         */
+        public virtual bool isGone() {
+            foreach (Location loc in map.locations)
+            {
+                if (loc.soc == this) { return false; }
+            }
+            return true;
+        }
 
         public virtual void turnTick()
         {
