@@ -41,7 +41,7 @@ namespace Assets.Code
             if (title.heldBy != null)
             {
                 double damageToOther = title.settlement.getPrestige();
-                localU = damageToOther * voter.getRelation(title.heldBy).value;
+                localU = -damageToOther * voter.getRelation(title.heldBy).value;
                 msgs.Add(new VoteMsg("Harm to " + title.heldBy.getFullName(), localU));
                 u += localU;
             }
