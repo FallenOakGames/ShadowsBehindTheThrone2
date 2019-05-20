@@ -51,5 +51,10 @@ namespace Assets.Code
                 return "Lady";
             }
         }
+
+        public void die(string v)
+        {
+            World.log(v);
+        }
     }
 }

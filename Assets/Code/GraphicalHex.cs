@@ -74,7 +74,7 @@ namespace Assets.Code
             map = hex.map;
             gameObject.transform.localScale = new Vector3(GraphicalMap.scale, GraphicalMap.scale, 1);
 
-            float dark = 0.2f + (0.7f * hex.purity);
+            float dark = 0.2f + (0.6f * hex.purity);
             float floraDark = 0.3f + (+0.7f * hex.purity);
             Color colour = new Color(dark, dark, dark);
 
@@ -204,8 +204,7 @@ namespace Assets.Code
                     nameTag.words.color = new Color(0.7f, 0.7f, 0.5f);
                 }
 
-                /*
-                if (hex.location.settlement != null && hex.location.settlement.maxDef != 0)
+                if (hex.location.soc != null)
                 {
 
                     if (defenceTag == null)
@@ -220,7 +219,7 @@ namespace Assets.Code
                         defenceTag.gameObject.SetActive(true);
                         defenceTag.gameObject.transform.localScale = new Vector3(0.015f, 0.015f, 1);//This is apparently their default scale
                     }
-                    defenceTag.words.text = "" + hex.location.settlement.def + "/" + hex.location.settlement.maxDef;
+                    defenceTag.words.text = "" + ((int)(hex.location.soc.currentMilitary+0.5) + "/" + (int)(hex.location.soc.maxMilitary+0.5));
                 }
                 else
                 {
@@ -230,6 +229,7 @@ namespace Assets.Code
                     }
                 }
 
+                /*
 
                 if (hex.location.cloud == null)
                 {

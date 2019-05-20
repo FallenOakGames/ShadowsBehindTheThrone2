@@ -138,11 +138,19 @@ namespace Assets.Code
                     loc.settlement = new Set_City(loc);
                 }else
                 {
-                    loc.settlement = new Set_Abbey(loc);
+                    int q = Eleven.random.Next(2);
+                    if (q == 0)
+                    {
+                        loc.settlement = new Set_Abbey(loc);
+                    }
+                    else
+                    {
+                        loc.settlement = new Set_Fort(loc);
+                    }
                 }
 
                 Society soc = new Society(this);
-                soc.name = loc.shortName;
+                soc.setName(loc.shortName);
                 loc.soc = soc;
 
                 socialGroups.Add(soc);

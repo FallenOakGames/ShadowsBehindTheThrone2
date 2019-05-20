@@ -24,6 +24,11 @@ namespace Assets.Code
         public int burnInSteps = 3;
         
         public double relObj_defaultLiking = 10;
+        public double combat_thresholdAttackStrength = 0.25;
+        public double combat_lethality = 0.25;//How much of an army is destroyed in a battle at maximum roll against an equivalent force
+        public double combat_takeLandThreshold = 1.25;//How much over their strength do you have to be to take some land
+
+        public int war_defaultLength = 10;
 
         public void loadFromFile()
         {

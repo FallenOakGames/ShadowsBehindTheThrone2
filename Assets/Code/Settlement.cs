@@ -13,6 +13,10 @@ namespace Assets.Code
         public float purity = 1;
         public Title_Land title;
         public double basePrestige = 10;
+        public double militaryCapAdd = 0;
+        public double militaryRegenAdd = 0;
+        public double defensiveStrength = 0;
+
 
         public Settlement(Location loc)
         {

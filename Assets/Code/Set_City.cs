@@ -13,6 +13,8 @@ namespace Assets.Code
             title = new Title_Land("Baron", "Baroness");
             name = "City of " + loc.shortName;
             basePrestige = 25;
+            militaryCapAdd += 10;
+            militaryRegenAdd = 1;
         }
 
         public override Sprite getSprite()

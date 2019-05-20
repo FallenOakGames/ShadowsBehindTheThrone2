@@ -23,6 +23,10 @@ namespace Assets.Code
             {
                 name = "Church of " + loc.shortName;
             }
+
+
+            militaryCapAdd += 5;
+            militaryRegenAdd = 2;
         }
 
         public override Sprite getSprite()

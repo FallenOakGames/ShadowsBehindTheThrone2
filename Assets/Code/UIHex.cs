@@ -28,6 +28,24 @@ namespace Assets.Code
 
                 bodyText += "\nAttachedTo " + GraphicalMap.selectedHex.territoryOf.hex.getName();
                 bodyText += "\nProvince: " + hex.province.name;
+                if (hex.location != null)
+                {
+                    if (hex.location.settlement != null)
+                    {
+                        if (hex.location.settlement.title != null)
+                        {
+                            if (hex.location.settlement.title.heldBy != null)
+                            {
+                                bodyText += "\nTitle held by: " + hex.location.settlement.title.heldBy.getFullName();
+                            }
+                            else
+                            {
+                                bodyText += "\nTitle currently unheld";
+
+                            }
+                        }
+                    }
+                }
                 foreach (EconTrait t in hex.province.econTraits)
                 {
                     bodyText += "\n  Industry: " + t.name;

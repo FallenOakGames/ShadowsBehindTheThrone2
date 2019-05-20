@@ -59,6 +59,20 @@ namespace Assets.Code
             }
         }
 
+        public string getName()
+        {
+            return name;
+        }
+
+        /**
+         * Between 0 and 1, with 0 being an empty field, 1 being literally impregnable
+         */
+        public double getMilitaryDefence()
+        {
+            if (settlement != null) { return settlement.defensiveStrength; }
+            return 0;
+        }
+
         public List<Location> getNeighbours()
         {
             List<Location> reply = new List<Location>();

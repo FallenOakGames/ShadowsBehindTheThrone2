@@ -106,6 +106,18 @@ namespace Assets.Code
             Log("Got to end of initial startup");
         }
 
+        public void bEndTurn()
+        {
+            if (turnLock) { return; }
+
+            turnLock = true;
+            if (map != null) {
+                map.turnTick();
+            }
+
+            turnLock = false;
+        }
+
         public static void Log(string str)
         {
             Debug.Log(str);

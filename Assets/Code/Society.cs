@@ -16,7 +16,7 @@ namespace Assets.Code
 
         public Society(Map map) : base(map)
         {
-            name = "DEFAULT_SOC_NAME";
+            setName("DEFAULT_SOC_NAME");
         }
 
         public override void turnTick()
@@ -87,7 +87,7 @@ namespace Assets.Code
                     }
                     if (p.title_land.settlement.location.soc != this)
                     {
-                        log(p.getFullName() + " has lost title " + p.title_land.getName() + " has it is no longer owned by their society, " + this.name);
+                        log(p.getFullName() + " has lost title " + p.title_land.getName() + " has it is no longer owned by their society, " + this.getName());
                         p.title_land = null;
                     }
                 }
@@ -110,7 +110,7 @@ namespace Assets.Code
             while (people.Count < map.param.soc_untitledPeople + unclaimedTitles.Count)
             {
                 Person p = new Person(this);
-                log(p.getFullName() + " has risen to note in the society of " + this.name);
+                log(p.getFullName() + " has risen to note in the society of " + this.getName());
                 people.Add(p);
             }
 
@@ -133,7 +133,7 @@ namespace Assets.Code
                 }
                 if (lastUntitled != null)
                 {
-                    log(lastUntitled.getFullName() + " has no title, and has lost lordship in " + this.name);
+                    log(lastUntitled.getFullName() + " has no title, and has lost lordship in " + this.getName());
                     people.Remove(lastUntitled);
                 }
             }

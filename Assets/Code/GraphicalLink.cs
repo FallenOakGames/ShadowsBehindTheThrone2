@@ -39,19 +39,18 @@ namespace Assets.Code
                 {
                     this.gameObject.transform.localScale = link.a.hex.outer.transform.localScale;
                 }
-
-                /*
+                
                 if (link.a.soc.getRel(link.b.soc).state == DipRel.dipState.war)
                 {
+                    combatIcon.enabled = true;
                     combatIcon.sprite = link.a.hex.map.world.textureStore.icon_combat;
                     lineRenderer.startColor = Color.red;
                     lineRenderer.endColor = Color.red;
                 }
                 else
                 {
-
+                    combatIcon.enabled = false;
                 }
-                */
             }
         }
     }
