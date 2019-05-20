@@ -13,12 +13,25 @@ namespace Assets.Code
         public Society society;
         public Dictionary<Person, RelObj> relations = new Dictionary<Person, RelObj>();
         public double prestige = 1;
+        public int lastVoteProposalTurn;
+
+        public enum personState { normal,enthralled,broken};
+        public personState state = personState.normal;
 
         public Person(Society soc)
         {
             this.society = soc;
             firstName = TextStore.getName(male);
             getRelation(this).value = 100;//Set self-relation to 100
+        }
+
+        public void turnTick()
+        {
+            prestige = map.param.person_defaultPrestige;
+            if (title_land != null)
+            {
+                prestige += title_land.settlement.basePrestige;
+            }
         }
 
         public Map map { get { return society.map; } }
@@ -55,6 +68,58 @@ namespace Assets.Code
         public void die(string v)
         {
             World.log(v);
+        }
+
+        public VoteIssue proposeVotingIssue()
+        {
+            //Note we start at zero utility. This means no guaranteed negative utility options will be proposed
+            double bestU = 0;
+            VoteIssue bestIssue = null;
+
+            bool existFreeTitles = false;
+
+
+            foreach (Location loc in map.locations)
+            {
+                if (loc.soc == society && loc.settlement != null && loc.settlement.title != null && loc.settlement.title.heldBy == null)
+                {
+                    existFreeTitles = true;
+                }
+            }
+
+            foreach (Location loc in map.locations)
+            {
+                //If there are unhanded out titles, only consider those. Else, check all.
+                //Maybe they could be rearranged (handed out or simply swapped) in a way which could benefit you
+                if (loc.soc == society && loc.settlement != null && loc.settlement.title != null && ((!existFreeTitles) || (loc.settlement.title.heldBy == null)))
+                {
+                    VoteIssue issue = new VoteIssue_AssignTitle(society,loc.settlement.title);
+                    //Everyone is eligible
+                    foreach (Person p in society.people)
+                    {
+                        VotingOption opt = new VotingOption();
+                        opt.person = p;
+                        issue.options.Add(opt);
+                    }
+
+                    foreach (VotingOption opt in issue.options)
+                    {
+                        //Random factor to prevent them all rushing a singular voting choice
+                        double localU = issue.computeUtility(this, opt, new List<VoteMsg>())*Eleven.random.NextDouble();
+                        if (localU > bestU)
+                        {
+                            bestU = localU;
+                            bestIssue = issue;
+                        }
+                    }
+                }
+            }
+
+            if (bestIssue != null)
+            {
+                World.log(this.getFullName() + " returning voting issue " + bestIssue.ToString() + " with expected utility " + bestU);
+            }
+            return bestIssue;
         }
     }
 }

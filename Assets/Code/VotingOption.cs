@@ -18,5 +18,15 @@ namespace Assets.Code
         public List<Person> votesFor = new List<Person>();
 
         public double votingWeight;
+
+        public string info()
+        {
+            string reply = "OPT: ";
+            if (person != null) { reply += person.getFullName() + " "; }
+            if (location != null) { reply += location.getName() + " "; }
+            if (group != null) { reply += group.getName() + " "; }
+
+            return reply;
+        }
     }
 }

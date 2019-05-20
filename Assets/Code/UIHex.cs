@@ -45,6 +45,18 @@ namespace Assets.Code
                             }
                         }
                     }
+
+                    if (hex.location.soc != null)
+                    {
+                        bodyText += "\nSocial group: " + hex.location.soc.getName();
+                        if (hex.location.soc is Society)
+                        {
+                            Society locSoc = (Society)hex.location.soc;
+                            foreach (Person p in locSoc.people){
+                                bodyText += "\n   -" + p.getFullName();
+                            }
+                        }
+                    }
                 }
                 foreach (EconTrait t in hex.province.econTraits)
                 {

@@ -12,10 +12,11 @@ namespace Assets.Code
         public string titleM;
         public string titleF;
 
-        public Title_Land(string titleM, string titleF)
+        public Title_Land(string titleM, string titleF,Settlement set)
         {
             this.titleM = titleM;
             this.titleF = titleF;
+            this.settlement = set;
         }
 
         public string getName()

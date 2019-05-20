@@ -10,7 +10,7 @@ namespace Assets.Code
     {
         public Set_City(Location loc) : base(loc)
         {
-            title = new Title_Land("Baron", "Baroness");
+            title = new Title_Land("Count", "Countess",this);
             name = "City of " + loc.shortName;
             basePrestige = 25;
             militaryCapAdd += 10;

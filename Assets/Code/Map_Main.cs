@@ -154,18 +154,10 @@ namespace Assets.Code
                 if (taken.settlement.title != null && taken.settlement.title.heldBy != null)
                 {
                     Person lord = taken.settlement.title.heldBy;
-                    if (def is Society)
-                    {
-                        Society socDef = (Society)def;
-                        if (socDef.people.Contains(lord) == false) { throw new Exception("Lord wasn't in the society holding their land"); }
-                        socDef.people.Remove(lord);
-                    }
                     if (att is Society)
                     {
                         Society socAtt = (Society)att;
-                        if (socAtt.people.Contains(lord)) { throw new Exception("Lord already in invading social group's people"); }
-                        socAtt.people.Add(lord);
-                        World.log(lord.getFullName() + " now under the rule of " + att.getName());
+                        movePerson(lord, socAtt);
                     }
                     else
                     {
@@ -175,6 +167,17 @@ namespace Assets.Code
             }
 
             taken.soc = att;
+        }
+
+        public void movePerson(Person lord,Society receiving)
+        {
+            if (lord.society.people.Contains(lord) == false) { throw new Exception("Person attempting to leave society they were not a part of"); }
+            if (receiving.people.Contains(lord)) { throw new Exception("Lord already in group they are attempting to join"); }
+
+            lord.society.people.Remove(lord);
+            receiving.people.Add(lord);
+            lord.society = receiving;
+            World.log(lord.getFullName() + " now under the rule of " + receiving.getName());
         }
 
         private void declarePeace(DipRel rel)

@@ -51,6 +51,16 @@ namespace Assets.Code
             return true;
         }
 
+        public int getSize()
+        {
+            int reply = 0;
+            foreach (Location loc in map.locations)
+            {
+                if (loc.soc == this) { reply += 1; }
+            }
+            return reply;
+        }
+
         public DipRel getRel(SocialGroup soc)
         {
             if (relations.ContainsKey(soc)) { return relations[soc]; }
@@ -107,30 +117,33 @@ namespace Assets.Code
         {
             processMilitaryCap();
 
-            int nWars = 0;
-            foreach (SocialGroup other in getNeighbours())
+            if (this.getSize() < 5)
             {
-                if (getRel(other).state == DipRel.dipState.war)
-                {
-                    nWars += 1;
-                }
-
-            }
-            if (nWars == 0)
-            {
-                int c = 0;
-                SocialGroup choice = null;
+                int nWars = 0;
                 foreach (SocialGroup other in getNeighbours())
                 {
-                    c += 1;
-                    if (Eleven.random.Next(c) == 0)
+                    if (getRel(other).state == DipRel.dipState.war)
                     {
-                        choice = other;
+                        nWars += 1;
                     }
+
                 }
-                if (choice != null)
+                if (nWars == 0)
                 {
-                    map.declareWar(this, choice);
+                    int c = 0;
+                    SocialGroup choice = null;
+                    foreach (SocialGroup other in getNeighbours())
+                    {
+                        c += 1;
+                        if (Eleven.random.Next(c) == 0)
+                        {
+                            choice = other;
+                        }
+                    }
+                    if (choice != null)
+                    {
+                        map.declareWar(this, choice);
+                    }
                 }
             }
         }
@@ -146,6 +159,7 @@ namespace Assets.Code
                     maxMilitary += loc.settlement.militaryCapAdd;
                 }
             }
+            maxMilitary = Math.Pow(maxMilitary, map.param.combat_maxMilitaryCapExponent);
             currentMilitary += militaryRegen;
             if (currentMilitary > maxMilitary) { currentMilitary = maxMilitary; }
         }

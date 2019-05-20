@@ -15,5 +15,6 @@ namespace Assets.Code
         public List<VotingOption> options = new List<VotingOption>();
         public abstract double computeUtility(Person p,VotingOption option, List<VoteMsg> msgs);
         public abstract void implement(VotingOption option);
+        public abstract bool stillValid(Map map);
     }
 }

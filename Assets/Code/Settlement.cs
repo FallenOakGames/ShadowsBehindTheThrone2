@@ -35,9 +35,21 @@ namespace Assets.Code
 
         public virtual void turnTick()
         {
-            if (title != null && title.heldBy != null && title.heldBy.society != this.location.soc)
-            {
-                World.log("Settlement " + this.name + " recognises loss of title of " + title.heldBy.getFullName());
+            checkTitles();
+        }
+
+        public void checkTitles() { 
+            if (title != null && title.heldBy != null){
+                if (title.heldBy.society != this.location.soc)
+                {
+                    World.log("Settlement " + this.name + " recognises loss of title of " + title.heldBy.getFullName());
+                    title.heldBy = null;
+                }
+                else if (title.heldBy.society.people.Contains(title.heldBy) == false)
+                {
+                    World.log("Settlement " + this.name + " recognises loss of title of " + title.heldBy.getFullName());
+                    title.heldBy = null;
+                }
             }
         }
 

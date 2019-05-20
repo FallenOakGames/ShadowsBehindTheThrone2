@@ -33,9 +33,44 @@ namespace Assets.Code
             {
                 if (voteCooldown > 0) { voteCooldown -= 1; return; }
 
+                Person proposer = null;
+                foreach (Person p in people)
+                {
+                    if (p.state == Person.personState.enthralled) { continue; }
+                    if (proposer == null)
+                    {
+                        proposer = p;
+                    }
+                    else
+                    {
+                        int myDelta = map.turn - p.lastVoteProposalTurn;
+                        int theirDelta = map.turn - proposer.lastVoteProposalTurn;
+                        if (myDelta > theirDelta)
+                        {
+                            proposer = p;
+                        }
+                    }
+                }
+                if (proposer != null)
+                {
+                    proposer.lastVoteProposalTurn = map.turn;
+                    VoteIssue issue = proposer.proposeVotingIssue();
+                    if (issue == null) { World.log(proposer.getFullName() + " elects not to submit a voting proposal on their turn");return; }
+
+                    //Otherwise, on with voting for this new thing
+                    voteSession = new VoteSession();
+                    voteSession.issue = issue;
+                    voteSession.timeRemaining = map.param.society_votingDuration;
+                }
             }
             else
             {
+                if (voteSession.issue.stillValid(map) == false)
+                {
+                    voteSession = null;
+                    World.log("Vote session no longer valid");
+                    return;
+                }
                 if (voteSession.timeRemaining > 0) { voteSession.timeRemaining -= 1; return; }
 
                 foreach (Person p in people)
@@ -69,6 +104,7 @@ namespace Assets.Code
                 }
 
                 voteSession.issue.implement(winner);
+                voteSession = null;
             }
         }
 
