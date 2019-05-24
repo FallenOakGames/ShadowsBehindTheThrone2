@@ -117,6 +117,7 @@ namespace Assets.Code
         {
             processMilitaryCap();
 
+            /*
             if (this.getSize() < 5)
             {
                 int nWars = 0;
@@ -146,6 +147,7 @@ namespace Assets.Code
                     }
                 }
             }
+            */
         }
 
         public void processMilitaryCap() { 

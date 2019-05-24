@@ -52,6 +52,8 @@ namespace Assets.Code
 
             //Wars
             processWars();
+            //Map events
+            processMapEvents();
 
             //Finally societies
             //Use a duplication list so they can modify the primary society list (primarly adding a child soc)
@@ -73,6 +75,41 @@ namespace Assets.Code
             }
             
             //stats.turnTick();
+        }
+
+        public void processMapEvents()
+        {
+            int nEvils = 0;
+            foreach (SocialGroup sg in socialGroups)
+            {
+                if (sg is SG_GenericDark)
+                {
+                    nEvils += 1;
+                }
+            }
+            if (nEvils < 5)
+            {
+                if (turn % 5 == 0)
+                {
+                    Location chosen = null;
+                    int c = 0;
+                    foreach (Location loc in locations)
+                    {
+                        if (loc.isOcean) { continue; }
+                        if (loc.soc != null) { continue; }
+                        c += 1;
+                        if (Eleven.random.Next(c) == 0)
+                        {
+                            chosen = loc;
+                        }
+                    }
+                    if (chosen != null)
+                    {
+                        SG_GenericDark add = new SG_GenericDark(this, chosen);
+                        socialGroups.Add(add);
+                    }
+                }
+            }
         }
 
         public void processWars()
