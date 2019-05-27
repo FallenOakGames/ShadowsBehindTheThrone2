@@ -73,7 +73,7 @@ namespace Assets.Code
             {
                 socialGroups.Remove(g);
             }
-            
+
             //stats.turnTick();
         }
 
@@ -145,6 +145,9 @@ namespace Assets.Code
                 if (attackFrom != null)
                 {
                     SocialGroup defender = attackTo.soc;
+
+                    sg.lastBattle = turn;
+                    defender.lastBattle = turn;
 
                     World.log(sg.getName() + " attacking into " + attackTo.getName());
                     double myStr = sg.currentMilitary * Eleven.random.NextDouble();
@@ -223,7 +226,7 @@ namespace Assets.Code
 
             rel.war = null;
             rel.state = DipRel.dipState.none;
-        } 
+        }
 
         public void declareWar(SocialGroup att,SocialGroup def)
         {
@@ -231,6 +234,6 @@ namespace Assets.Code
 
             att.getRel(def).state = DipRel.dipState.war;
             att.getRel(def).war = new War(this,att, def);
-        } 
+        }
     }
 }

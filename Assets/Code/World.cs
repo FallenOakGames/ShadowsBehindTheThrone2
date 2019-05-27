@@ -10,10 +10,10 @@ namespace Assets.Code
 {
     /*
      * World is your monobehaviour master. It calls the start function, triggering all loading and suchlikes and suchforths
-     * 
+     *
      * It has the ONLY reference to map. Map must be kept apart from any Unity gameObjects, so it can be serialised out
      * Obviously this is impossible, but every class which knows about its unity GameObject must be able to purge this reference
-     * 
+     *
      * It holds the references to the 'stores'. These are repositories which should not be serialised into the saved games
      */
     public class World : MonoBehaviour
@@ -62,7 +62,7 @@ namespace Assets.Code
                 wordStore = new TextStore();
                 wordStore.load();
             }
-            else if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Linux)
+            else //if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Linux)
             {
                 Log("The operating system is Linux based");
                 pathPrefix = "";
@@ -76,9 +76,9 @@ namespace Assets.Code
                 wordStore = new TextStore();
                 wordStore.loadLinux(this);
             }
-            
-            wordStore = new TextStore();
-            wordStore.load();
+
+            //wordStore = new TextStore();
+            //wordStore.load();
             Application.targetFrameRate = 60;
             GraphicalMap.world = this;
             //Activity.load();
@@ -211,5 +211,5 @@ namespace Assets.Code
         }
         */
     }
-    
+
 }
