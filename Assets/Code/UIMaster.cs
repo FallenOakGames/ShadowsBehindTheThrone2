@@ -227,7 +227,6 @@ namespace Assets.Code
         //{
         //    if (world.displayMessages == false) { return; }
         //    if (world.map.permaDismissed.Contains(lockout)) { return; }
-
         //    Alert a = new Alert();
         //    a.targetVote = v;
         //    a.targetHex = hex;
@@ -239,7 +238,6 @@ namespace Assets.Code
         //    //alertQueue.Add(a);
         //    Alert alert = a;
         //    world.prefabStore.popupAlert(alert.title, alert.words, alert.targetVote, alert.targetSociety, alert.targetPerson, alert.targetHex, alert.lockout);
-
         //}
 
         public void addBlocker(GameObject block)

@@ -9,7 +9,7 @@ namespace Assets.Code
     public class PrefabStore : MonoBehaviour
     {
         public World world;
-        //public UIMaster ui;
+        public UIMaster ui { get { return world.ui; } }
 
         public GameObject graphicalHex;
         public GameObject graphicalUnit;
@@ -89,6 +89,71 @@ namespace Assets.Code
         {
             return Instantiate(prefabHexEdge2Sprite) as GameObject;
         }
+
+        private PopupXScroll getInnerXScrollSet()
+        {
+            GameObject obj = Instantiate(xScrollSet) as GameObject;
+            PopupXScroll specific = obj.GetComponent<PopupXScroll>();
+            if (specific == null) { World.log("Unable to find scrip subobject"); }
+            specific.ui = world.ui;
+            specific.next.onClick.AddListener(delegate { specific.bNext(); });
+            specific.prev.onClick.AddListener(delegate { specific.bPrev(); });
+            specific.cancel.onClick.AddListener(delegate { specific.bCancel(); });
+            return specific;
+        }
+
+        public PopupXScroll getScrollSetThreats(List<ThreatItem> threats)
+        {
+            PopupXScroll specific = getInnerXScrollSet();
+
+            List<ThreatItem> dupe = new List<ThreatItem>();
+            foreach (ThreatItem item in threats)
+            {
+                dupe.Add(item);
+            }
+            List<ThreatItem> ordered = new List<ThreatItem>();
+            int viewedCount = 0;
+            while (dupe.Count > 0)
+            {
+                ThreatItem best = dupe[0];
+                foreach (ThreatItem item in dupe)
+                {
+                    if (item.threat > best.threat)
+                    {
+                        best = item;
+                    }
+                }
+                if (best.threat < 75 && best.group != null && best.group is Society && viewedCount >= 3)
+                {
+                    //Skip it, we don't need to list all minor factions we aren't scared of
+                }
+                else
+                {
+                    viewedCount += 1;
+                    ordered.Add(best);
+                }
+                dupe.Remove(best);
+            }
+
+            foreach (ThreatItem item in ordered)
+            {
+                PopupXBoxThreat box = getThreatBox(item);
+                box.gameObject.transform.SetParent(specific.gameObject.transform);
+                specific.scrollables.Add(box);
+            }
+
+            return specific;
+        }
+
+        public PopupXBoxThreat getThreatBox(ThreatItem item)
+        {
+            GameObject obj = Instantiate(xBoxThreat) as GameObject;
+            PopupXBoxThreat specific = obj.GetComponent<PopupXBoxThreat>();
+            specific.setTo(item);
+
+            return specific;
+        }
+
         /*
         public void particleCombat(Hex a, Hex b)
         {
@@ -129,17 +194,6 @@ namespace Assets.Code
         }
 
 
-
-        private PopupXScroll getInnerXScrollSet()
-        {
-            GameObject obj = Instantiate(xScrollSet) as GameObject;
-            PopupXScroll specific = obj.GetComponent<PopupXScroll>();
-            specific.ui = ui;
-            specific.next.onClick.AddListener(delegate { specific.bNext(); });
-            specific.prev.onClick.AddListener(delegate { specific.bPrev(); });
-            specific.cancel.onClick.AddListener(delegate { specific.bCancel(); });
-            return specific;
-        }
         public PopupXScroll getScrollSetDates(List<string> actTexts, List<string> dateTexts, List<string> plotTexts)
         {
             PopupXScroll specific = getInnerXScrollSet();
@@ -147,48 +201,6 @@ namespace Assets.Code
             for (int i = 0; i < actTexts.Count; i++)
             {
                 PopupXBoxDate box = getDateBox(actTexts[i], dateTexts[i], plotTexts[i]);
-                box.gameObject.transform.SetParent(specific.gameObject.transform);
-                specific.scrollables.Add(box);
-            }
-
-            return specific;
-        }
-        public PopupXScroll getScrollSetThreats(List<ThreatItem> threats)
-        {
-            PopupXScroll specific = getInnerXScrollSet();
-
-            List<ThreatItem> dupe = new List<ThreatItem>();
-            foreach (ThreatItem item in threats)
-            {
-                dupe.Add(item);
-            }
-            List<ThreatItem> ordered = new List<ThreatItem>();
-            int viewedCount = 0;
-            while (dupe.Count > 0)
-            {
-                ThreatItem best = dupe[0];
-                foreach (ThreatItem item in dupe)
-                {
-                    if (item.threat > best.threat)
-                    {
-                        best = item;
-                    }
-                }
-                if (best.threat < 75 && best.group != null && best.group is Society && viewedCount >= 3)
-                {
-                    //Skip it, we don't need to list all minor factions we aren't scared of
-                }
-                else
-                {
-                    viewedCount += 1;
-                    ordered.Add(best);
-                }
-                dupe.Remove(best);
-            }
-
-            foreach (ThreatItem item in ordered)
-            {
-                PopupXBoxThreat box = getThreatBox(item);
                 box.gameObject.transform.SetParent(specific.gameObject.transform);
                 specific.scrollables.Add(box);
             }
@@ -269,14 +281,6 @@ namespace Assets.Code
             return h;
         }
 
-        public PopupXBoxThreat getThreatBox(ThreatItem item)
-        {
-            GameObject obj = Instantiate(xBoxThreat) as GameObject;
-            PopupXBoxThreat specific = obj.GetComponent<PopupXBoxThreat>();
-            specific.setTo(item);
-
-            return specific;
-        }
         public PopupXBoxDate getDateBox(string act, string date, string plot)
         {
             GameObject obj = Instantiate(xBoxDate) as GameObject;

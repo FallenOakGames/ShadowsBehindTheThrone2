@@ -68,6 +68,11 @@ namespace Assets.Code
             this.setThreat(null);
         }
 
+        public void setThreat(List<string> reasons)
+        {
+
+        }
+
         public string getTitle()
         {
             if (group == null)
@@ -99,6 +104,7 @@ namespace Assets.Code
             }
         }
 
+        /*
         public void setThreat(List<string> verbose)
         {
             if (group == null)
@@ -353,5 +359,6 @@ namespace Assets.Code
                 threat = (float)newThreat;
             }
         }
+        */
     }
 }

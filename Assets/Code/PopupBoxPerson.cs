@@ -12,7 +12,7 @@ namespace Assets.Code
         public Text title;
         public Text body;
         public Text body2;
-        public Selector_Person selector;
+        //public Selector_Person selector;
         public Person person;
         public Image layerBack;
         public Image layerMid;
@@ -34,6 +34,7 @@ namespace Assets.Code
             mover.transform.Translate(delta);
         }
 
+        /*
         public void setTo(Person viewer,Person p,Selector_Person selector)
         {
             this.agent = viewer;
@@ -63,6 +64,7 @@ namespace Assets.Code
                 body2.text = "Liking towards " + viewer.getRankAndName() + ": " + (int)(p.getLiking(viewer));
             }
         }
+        */
 
         public float ySize()
         {
@@ -75,17 +77,18 @@ namespace Assets.Code
         }
         public void clicked(Map map)
         {
-            selector.selected(person,agent);
+            //selector.selected(person,agent);
         }
 
         public string getTitle()
         {
-            return person.getRankAndName();
+            return person.getFullName();
         }
 
         public string getBody()
         {
-            return selector.getDescriptionOfSelection() ;
+            ///return selector.getDescriptionOfSelection() ;
+            return "Body of selection command";
         }
 
         public bool overwriteSidebar()

@@ -134,6 +134,32 @@ namespace Assets.Code
             }
         }
 
+
+        public void testXScroll()
+        {
+
+            List<ThreatItem> threats = new List<ThreatItem>();
+            for (int i = 0; i < 5; i++)
+            {
+                Person p = new Person((Society)map.socialGroups[0]);
+                ThreatItem t = new ThreatItem(map, p);
+                threats.Add(t);
+            }
+            ui.addBlocker(prefabStore.getScrollSetThreats(threats).gameObject);
+        }
+
+        public void testYScroll()
+        {
+
+            List<ThreatItem> threats = new List<ThreatItem>();
+            for (int i = 0; i < 5; i++)
+            {
+                Person p = new Person((Society)map.socialGroups[0]);
+                ThreatItem t = new ThreatItem(map, p);
+                threats.Add(t);
+            }
+            ui.addBlocker(prefabStore.getScrollSetThreats(threats).gameObject);
+        }
         /*
         public void save(string filename)
         {
