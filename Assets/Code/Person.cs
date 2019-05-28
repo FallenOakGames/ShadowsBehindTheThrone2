@@ -15,6 +15,8 @@ namespace Assets.Code
         public double prestige = 1;
         public int lastVoteProposalTurn;
 
+        public double politics_militarism = Eleven.random.NextDouble() * 2 - 1;
+
         public enum personState { normal,enthralled,broken};
         public personState state = personState.normal;
 
@@ -27,11 +29,17 @@ namespace Assets.Code
 
         public void turnTick()
         {
-            prestige = map.param.person_defaultPrestige;
+            double targetPrestige = map.param.person_defaultPrestige;
             if (title_land != null)
             {
-                prestige += title_land.settlement.basePrestige;
+                targetPrestige += title_land.settlement.basePrestige;
             }
+            if (Math.Abs(prestige-targetPrestige) < map.param.person_prestigeDeltaPerTurn)
+            {
+                prestige = targetPrestige;
+            }
+            else if (prestige < targetPrestige) { prestige += map.param.person_prestigeDeltaPerTurn; }
+            else if (prestige > targetPrestige) { prestige -= map.param.person_prestigeDeltaPerTurn; }
         }
 
         public Map map { get { return society.map; } }
@@ -87,13 +95,14 @@ namespace Assets.Code
                 }
             }
 
+            VoteIssue issue;
             foreach (Location loc in map.locations)
             {
                 //If there are unhanded out titles, only consider those. Else, check all.
                 //Maybe they could be rearranged (handed out or simply swapped) in a way which could benefit you
                 if (loc.soc == society && loc.settlement != null && loc.settlement.title != null && ((!existFreeTitles) || (loc.settlement.title.heldBy == null)))
                 {
-                    VoteIssue issue = new VoteIssue_AssignTitle(society,loc.settlement.title);
+                    issue = new VoteIssue_AssignTitle(society,loc.settlement.title);
                     //Everyone is eligible
                     foreach (Person p in society.people)
                     {
@@ -113,6 +122,12 @@ namespace Assets.Code
                         }
                     }
                 }
+            }
+
+            //Change current offensive target
+            issue = new VoteIssue_SetOffensiveTarget(society);
+            foreach (SocialGroup group in society.getNeighbours())
+            {
             }
 
             if (bestIssue != null)

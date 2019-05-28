@@ -32,7 +32,10 @@ namespace Assets.Code
         internal double person_defaultPrestige = 5;
         internal int society_votingDuration = 2;
         internal double combat_maxMilitaryCapExponent = 0.75;//Used to reduce the power of larger nations
+        internal float minInformationAvailability = 0.2f;
 
+        public double utility_militaryTargetRelStrength = 100;
+        public double person_prestigeDeltaPerTurn = 2;
         public void loadFromFile()
         {
             //Placeholder

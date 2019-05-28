@@ -52,9 +52,20 @@ namespace Assets.Code
                         if (hex.location.soc is Society)
                         {
                             Society locSoc = (Society)hex.location.soc;
+                            /*
                             foreach (Person p in locSoc.people){
                                 bodyText += "\n   -" + p.getFullName();
                             }
+                            */
+                            if (locSoc.offensiveTarget != null)
+                            {
+                                bodyText += "\nOffensive: " + locSoc.offensiveTarget.getName();
+                            }
+                            else
+                            {
+                                bodyText += "\nOffensive: None";
+                            }
+
                         }
                     }
                 }

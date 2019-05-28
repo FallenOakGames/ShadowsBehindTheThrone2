@@ -14,6 +14,20 @@ namespace Assets.Code
             this.title = title;
         }
 
+        public override string ToString()
+        {
+            string add = ""; 
+            if (title.heldBy != null)
+            {
+                add = " (" + title.heldBy.getFullName() + ")";
+            }
+            else
+            {
+                add = " (unassigned)";
+            }
+            return "VoteIssue\"Assign " + title.getName() + "\" " + add;
+        }
+
         public override double computeUtility(Person voter, VotingOption option,List<VoteMsg> msgs)
         {
             double u = 0;
@@ -37,8 +51,8 @@ namespace Assets.Code
             u += localU;
 
             //We need to know if someone's going to lose out here
-
-            if (title.heldBy != null)
+            //(Note this is irrelevant if they're the person who's being voted on)
+            if (title.heldBy != null && title.heldBy != p)
             {
                 double damageToOther = title.settlement.getPrestige();
                 localU = -damageToOther * voter.getRelation(title.heldBy).value;
@@ -54,7 +68,10 @@ namespace Assets.Code
         public override void implement(VotingOption option)
         {
             if (society.people.Contains(option.person) == false) { World.log("Invalid option. Person cannot hold title."); return; }
-
+            if (title.heldBy == option.person)
+            {
+                World.log("Title: " + title.getName() + " remains held by " + option.person.getFullName());
+            }
             //Person already has a title
             if (option.person.title_land != null)
             {

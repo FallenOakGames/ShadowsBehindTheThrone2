@@ -82,21 +82,7 @@ namespace Assets.Code
 
         public List<SocialGroup> getNeighbours()
         {
-            List<SocialGroup> neighbours = new List<SocialGroup>();
-            foreach (Location loc in map.locations)
-            {
-                if (loc.soc == this)
-                {
-                    foreach (Link l in loc.links)
-                    {
-                        if (l.other(loc).soc != this && l.other(loc).soc != null)
-                        {
-                            neighbours.Add(l.other(loc).soc);
-                        }
-                    }
-                }
-            }
-            return neighbours;
+            return map.getNeighbours(this);
         }
 
         public List<DipRel> getAllRelations()
@@ -149,6 +135,7 @@ namespace Assets.Code
             }
             */
         }
+        
 
         public void processMilitaryCap() { 
             maxMilitary = 0;
