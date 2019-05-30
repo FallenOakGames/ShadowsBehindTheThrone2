@@ -8,7 +8,7 @@ namespace Assets.Code
     public class VoteIssue_SetOffensiveTarget : VoteIssue
     {
 
-        public VoteIssue_SetOffensiveTarget(Society soc) : base(soc)
+        public VoteIssue_SetOffensiveTarget(Society soc,Person proposer) : base(soc,proposer)
         {
         }
 

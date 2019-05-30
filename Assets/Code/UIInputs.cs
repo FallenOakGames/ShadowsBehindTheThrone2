@@ -71,6 +71,17 @@ namespace Assets.Code
                         world.map.masker.mask = MapMaskManager.maskType.PROVINCE;
                     }
                 }
+                else if (Input.GetKeyDown(KeyCode.Alpha3))
+                {
+                    if (world.map.masker.mask == MapMaskManager.maskType.INFORMATION)
+                    {
+                        world.map.masker.mask = MapMaskManager.maskType.NONE;
+                    }
+                    else
+                    {
+                        world.map.masker.mask = MapMaskManager.maskType.INFORMATION;
+                    }
+                }
                 else if (Input.GetKeyDown(KeyCode.Alpha9))
                 {
                     if (world.map.masker.mask == MapMaskManager.maskType.TESTING)
