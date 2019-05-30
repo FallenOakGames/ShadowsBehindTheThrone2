@@ -39,7 +39,10 @@ namespace Assets.Code
         internal double society_votingRelChangePerUtilityPositive = 0.0075;//If benefitted by a vote
         internal double society_votingRelChangePerUtilityNegative = 0.01;//If harmed by a vote
         internal double utility_econEffect = 0.05;
+        internal float minInformationAvailability = 0.2f;
 
+        public double utility_militaryTargetRelStrength = 100;
+        public double person_prestigeDeltaPerTurn = 2;
         public void loadFromFile()
         {
             //Placeholder

@@ -25,7 +25,7 @@ namespace Assets.Code
         public bool isMajor;//Remember if it's a city, so we have roughly the same amount at all times, regardless of razing
         private List<Property> properties = new List<Property>();
         public int turnLastTaken = -1000;
-        
+        public double inherentInformationAvailability = 0.85;
 
         public Location(Map map, Hex hex,bool isMajor)
         {
@@ -43,6 +43,11 @@ namespace Assets.Code
                 (float)Eleven.random.NextDouble(),
                 (float)Eleven.random.NextDouble(),
                 0.5f);
+        }
+
+        public double getInformationAvailability()
+        {
+            return inherentInformationAvailability;
         }
 
         public List<Property> getProperties()

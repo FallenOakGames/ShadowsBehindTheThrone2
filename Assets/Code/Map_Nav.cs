@@ -30,6 +30,9 @@ namespace Assets.Code
             return Math.Sqrt(getSqrDist(a, b));
         }
 
+        /*
+         * This should be replaced with A* as ASAP as possible
+         */
         public int getStepDist(Location a, Location b)
         {
             if (a == b) { return 0; }
@@ -67,8 +70,101 @@ namespace Assets.Code
                     throw new Exception("Map discontinuity detected");
                 }
             }
+        }
 
-            
+        /*
+         * This should be replaced with A* as ASAP as possible
+         */
+        public int getStepDist(SocialGroup a, SocialGroup b)
+        {
+            if (a == b) { return 0; }
+
+            //Expand in waves from the starting point, each time adding those on the border
+            //We know the distance, since each border is 1 distance more
+            HashSet<Location> seen = new HashSet<Location>();
+            HashSet<Location> open = new HashSet<Location>();
+            foreach (Location loc in locations)
+            {
+                if (loc.soc == a)
+                {
+                    open.Add(loc);
+                    seen.Add(loc);
+                }
+            }
+            int nSteps = 0;
+            while (true)
+            {
+                HashSet<Location> border = new HashSet<Location>();
+                nSteps += 1;
+                foreach (Location loc in open)
+                {
+                    foreach (Location l2 in getNeighbours(loc))
+                    {
+                        if (seen.Contains(l2)) { continue; }
+                        if (l2.soc == b) { return nSteps; }
+                        border.Add(l2);
+                        seen.Add(l2);
+                    }
+                }
+                //The border is now used as the opens
+                open.Clear();
+                foreach (Location loc in border)
+                {
+                    open.Add(loc);
+                }
+
+                if (nSteps > 1024)
+                {
+                    throw new Exception("Map discontinuity detected");
+                }
+            }
+        }
+        /**
+         * This function tells you "how much do you know about this particular social group?"
+         * It is a function of how blotted out information is by intervening terrain
+         * 
+         * This implementation should 100% be replaced with A*
+         */
+        public double getInformationAvailability(Location a,SocialGroup b)
+        {
+            int CUTOFF = 128;
+            HashSet<Location> closed = new HashSet<Location>();
+            closed.Add(a);
+            List<Location> working = new List<Location>();
+            working.Add(a);
+            List<double> distances = new List<double>();
+            distances.Add(1);
+
+            int steps = 0;
+            while(working.Count > 0)
+            {
+                steps += 1;
+                if (steps >= CUTOFF) { break; }
+                List<Location> next = new List<Location>();
+                List<double> nextDistances = new List<double>();
+                for (int i=0;i<working.Count;i++)
+                {
+                    Location l = working[i];
+                    double dist = distances[i];
+
+                    if (l.soc == b) { return Math.Max(param.minInformationAvailability,dist); }
+
+                    dist *= l.getInformationAvailability();
+
+                    foreach (Location n in l.getNeighbours())
+                    {
+                        if (closed.Contains(n)){continue;}
+
+                        closed.Add(n);
+                        nextDistances.Add(dist);
+                        next.Add(n);
+                    }
+                }
+
+                working = next;
+                distances = nextDistances;
+            }
+            return param.minInformationAvailability;
         }
 
         public double getSqrDist(Hex a, Hex b)
@@ -210,6 +306,26 @@ namespace Assets.Code
             {
                 reply.Add(l.other(loc));
             }
+            return reply;
+        }
+        public List<SocialGroup> getNeighbours(SocialGroup group)
+        {
+            List<SocialGroup> reply = new List<SocialGroup>();
+
+            foreach (Location loc in locations)
+            {
+                if (loc.soc == group)
+                {
+                    foreach (Location l2 in loc.getNeighbours())
+                    {
+                        if (l2.soc != group && l2.soc != null && (reply.Contains(l2.soc) == false))
+                        {
+                            reply.Add(l2.soc);
+                        }
+                    }
+                }
+            }
+
             return reply;
         }
     }

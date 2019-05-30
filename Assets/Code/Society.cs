@@ -11,6 +11,10 @@ namespace Assets.Code
 
         public List<Title_Land> unclaimedTitles = new List<Title_Land>();
 
+        public enum militaryPosture { introverted,defensive,offensive};
+        public militaryPosture posture = militaryPosture.introverted;
+        public SocialGroup defensiveTarget;
+        public SocialGroup offensiveTarget;
         public VoteSession voteSession;
         public int voteCooldown = 0;
         internal List<EconEffect> econEffects = new List<EconEffect>();
@@ -141,7 +145,7 @@ namespace Assets.Code
                     return;
                 }
                 if (voteSession.timeRemaining > 0) { voteSession.timeRemaining -= 1; return; }
-
+                
                 foreach (Person p in people)
                 {
                     double highestWeight = 0;
@@ -155,8 +159,7 @@ namespace Assets.Code
                         {
                             bestChoice = option;
                             highestWeight = u;
-                        }
-                    }
+                        }}
                     bestChoice.votesFor.Add(p);
                     bestChoice.votingWeight += p.prestige;
                 }
@@ -211,6 +214,11 @@ namespace Assets.Code
         
         public void checkPopulation()
         {
+            foreach (Person p in people)
+            {
+                p.turnTick();
+            }
+
             //Insta-add enough to make up the numbers
             while (people.Count < map.param.soc_untitledPeople + unclaimedTitles.Count)
             {

@@ -50,7 +50,29 @@ namespace Assets.Code
             }
             else if (mask == maskType.TESTING)
             {
-                return new Color(0, 0, 0, 0.8f);
+                if (hex.location != null && GraphicalMap.selectedHex != null && GraphicalMap.selectedHex.location != null && GraphicalMap.selectedHex.location.soc != null)
+                {
+                    SocialGroup group = GraphicalMap.selectedHex.location.soc;
+
+                    float mult = (float)map.getInformationAvailability(hex.location, group);
+                    mult = Mathf.Max(0, mult);
+                    mult = Mathf.Min(1, mult);
+                    float r = mult;
+                    float g = mult;
+                    float b = mult;
+
+                    //Color color = new Color(r, g, b, 0.8f);
+                    Color color = new Color(0,0,0,(1-mult));
+                    return color;
+                }
+                else if (hex.location != null)
+                {
+                    return new Color(0f, 0f, 0f, 1f);
+                }
+                else
+                {
+                    return new Color(0f, 0f, 0f, 0.75f);
+                }
             }
             else
             {
