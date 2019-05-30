@@ -13,6 +13,7 @@ namespace Assets.Code
 
         public VoteSession voteSession;
         public int voteCooldown = 0;
+        internal List<EconEffect> econEffects = new List<EconEffect>();
 
         public Society(Map map) : base(map)
         {
@@ -22,9 +23,77 @@ namespace Assets.Code
         public override void turnTick()
         {
             base.turnTick();
+            debug();
+            processExpirables();
             checkTitles();
             processVoting();
             checkPopulation();//Add people last, so new people don't suddenly arrive and act before the player can see them
+        }
+
+        public void processExpirables()
+        {
+            List<EconEffect> rems = new List<EconEffect>();
+            foreach (EconEffect effect in econEffects)
+            {
+                bool hasFrom = false;
+                bool hasTo = false;
+                foreach (Location loc in map.locations)
+                {
+                    if (loc.soc == this && loc.settlement != null && loc.settlement.econTraits().Contains(effect.from)){ hasFrom = true; break; }
+                }
+                if (hasFrom == false) { effect.durationLeft = 0; }//No longer valid
+                else
+                {
+                    foreach (Location loc in map.locations)
+                    {
+                        if (loc.soc == this && loc.settlement != null && loc.settlement.econTraits().Contains(effect.to)) { hasTo = true; break; }
+                    }
+                    if (hasTo == false) { effect.durationLeft = 0; }//No longer valid
+                }
+                if (effect.durationLeft > 0)
+                {
+                    effect.durationLeft -= 1;
+                    }
+                if (effect.durationLeft == 0) { rems.Add(effect); }
+            }
+            foreach (EconEffect effect in rems)
+            {
+                econEffects.Remove(effect);
+            }
+        }
+
+        public void debug()
+        {
+
+            if (this.getSize() < 5)
+            {
+                int nWars = 0;
+                foreach (SocialGroup other in getNeighbours())
+                {
+                    if (getRel(other).state == DipRel.dipState.war)
+                    {
+                        nWars += 1;
+                    }
+
+                }
+                if (nWars == 0)
+                {
+                    int c = 0;
+                    SocialGroup choice = null;
+                    foreach (SocialGroup other in getNeighbours())
+                    {
+                        c += 1;
+                        if (Eleven.random.Next(c) == 0)
+                        {
+                            choice = other;
+                        }
+                    }
+                    if (choice != null)
+                    {
+                        map.declareWar(this, choice);
+                    }
+                }
+            }
         }
 
         public void processVoting()
@@ -102,7 +171,7 @@ namespace Assets.Code
                         topVote = option.votingWeight;
                     }
                 }
-
+                
                 voteSession.issue.implement(winner);
                 voteSession = null;
             }
@@ -139,7 +208,7 @@ namespace Assets.Code
                 }
             }
         }
-
+        
         public void checkPopulation()
         {
             //Insta-add enough to make up the numbers

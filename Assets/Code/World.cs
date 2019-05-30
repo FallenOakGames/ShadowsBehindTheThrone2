@@ -117,6 +117,21 @@ namespace Assets.Code
 
             turnLock = false;
         }
+        public void b10Turns()
+        {
+            if (turnLock) { return; }
+
+            turnLock = true;
+            if (map != null)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    map.turnTick();
+                }
+            }
+
+            turnLock = false;
+        }
 
         public static void Log(string str)
         {

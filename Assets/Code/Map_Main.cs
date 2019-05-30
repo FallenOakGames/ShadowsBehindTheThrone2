@@ -198,6 +198,7 @@ namespace Assets.Code
                     {
                         Society socAtt = (Society)att;
                         movePerson(lord, socAtt);
+                        lord.prestige *= param.combat_prestigeLossFromConquest;
                     }
                     else
                     {

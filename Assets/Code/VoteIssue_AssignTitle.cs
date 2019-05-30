@@ -9,7 +9,7 @@ namespace Assets.Code
     {
         public Title_Land title;
 
-        public VoteIssue_AssignTitle(Society soc,Title_Land title) : base(soc)
+        public VoteIssue_AssignTitle(Society soc,Person proposer,Title_Land title) : base(soc,proposer)
         {
             this.title = title;
         }
@@ -32,7 +32,7 @@ namespace Assets.Code
             //We know how much they would be advantaged. We now need to know how much we like them to determine
             //if this is a good thing or not
 
-            double localU = benefitToPerson * voter.getRelation(p).value;
+            double localU = benefitToPerson * voter.getRelation(p).getLiking();
             msgs.Add(new VoteMsg("Benefit to " + p.getFullName(), localU));
             u += localU;
 
@@ -41,7 +41,7 @@ namespace Assets.Code
             if (title.heldBy != null)
             {
                 double damageToOther = title.settlement.getPrestige();
-                localU = -damageToOther * voter.getRelation(title.heldBy).value;
+                localU = -damageToOther * voter.getRelation(title.heldBy).getLiking();
                 msgs.Add(new VoteMsg("Harm to " + title.heldBy.getFullName(), localU));
                 u += localU;
             }
@@ -54,6 +54,7 @@ namespace Assets.Code
         public override void implement(VotingOption option)
         {
             if (society.people.Contains(option.person) == false) { World.log("Invalid option. Person cannot hold title."); return; }
+            base.implement(option);
 
             //Person already has a title
             if (option.person.title_land != null)

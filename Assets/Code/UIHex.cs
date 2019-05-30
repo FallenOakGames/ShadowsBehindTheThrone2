@@ -52,6 +52,11 @@ namespace Assets.Code
                         if (hex.location.soc is Society)
                         {
                             Society locSoc = (Society)hex.location.soc;
+
+                            foreach (EconEffect effect in locSoc.econEffects)
+                            {
+                                bodyText += "\nEcon from " + effect.from.name + " to " + effect.to.name;
+                            }
                             foreach (Person p in locSoc.people){
                                 bodyText += "\n   -" + p.getFullName();
                             }

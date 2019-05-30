@@ -117,37 +117,7 @@ namespace Assets.Code
         {
             processMilitaryCap();
 
-            /*
-            if (this.getSize() < 5)
-            {
-                int nWars = 0;
-                foreach (SocialGroup other in getNeighbours())
-                {
-                    if (getRel(other).state == DipRel.dipState.war)
-                    {
-                        nWars += 1;
-                    }
-
-                }
-                if (nWars == 0)
-                {
-                    int c = 0;
-                    SocialGroup choice = null;
-                    foreach (SocialGroup other in getNeighbours())
-                    {
-                        c += 1;
-                        if (Eleven.random.Next(c) == 0)
-                        {
-                            choice = other;
-                        }
-                    }
-                    if (choice != null)
-                    {
-                        map.declareWar(this, choice);
-                    }
-                }
-            }
-            */
+            
         }
 
         public void processMilitaryCap() { 

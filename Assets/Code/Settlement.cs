@@ -23,9 +23,29 @@ namespace Assets.Code
             this.location = loc;
         }
 
+        public double getEconEffectMult()
+        {
+            double mult = 1;
+            if (location.soc != null && location.soc is Society)
+            {
+                foreach (EconEffect effect in ((Society)location.soc).econEffects)
+                {
+                    if (econTraits().Contains(effect.to))
+                    {
+                        mult *= location.map.param.econ_multFromBuff;
+                    }
+                    if (econTraits().Contains(effect.from))
+                    {
+                        mult /= location.map.param.econ_multFromBuff;
+                    }
+                }
+            }
+            return mult;
+        }
         public virtual double getPrestige()
         {
-            return basePrestige;
+            double mult = getEconEffectMult();
+            return basePrestige*mult;
         }
 
         public List<EconTrait> econTraits()
