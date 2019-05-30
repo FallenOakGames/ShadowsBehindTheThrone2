@@ -43,6 +43,8 @@ namespace Assets.Code
 
         public double utility_militaryTargetRelStrength = 100;
         public double person_prestigeDeltaPerTurn = 2;
+        internal double society_sovreignPrestige = 10;
+
         public void loadFromFile()
         {
             //Placeholder

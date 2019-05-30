@@ -11,7 +11,7 @@ namespace Assets.Code
         public Location location;
         public string name = "defaultSettlementName";
         public float purity = 1;
-        public Title_Land title;
+        public TitleLanded title;
         public double basePrestige = 10;
         public double militaryCapAdd = 0;
         public double militaryRegenAdd = 0;

@@ -5,14 +5,14 @@ using System.Text;
 
 namespace Assets.Code
 {
-    public class Title_Land
+    public class TitleLanded
     {
         public Settlement settlement;
         public Person heldBy;
         public string titleM;
         public string titleF;
 
-        public Title_Land(string titleM, string titleF,Settlement set)
+        public TitleLanded(string titleM, string titleF,Settlement set)
         {
             this.titleM = titleM;
             this.titleF = titleF;

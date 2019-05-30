@@ -79,6 +79,7 @@ namespace Assets.Code
 
         public void processMapEvents()
         {
+            /**
             int nEvils = 0;
             foreach (SocialGroup sg in socialGroups)
             {
@@ -110,6 +111,7 @@ namespace Assets.Code
                     }
                 }
             }
+            */
         }
 
         public void processWars()
@@ -197,8 +199,12 @@ namespace Assets.Code
                     if (att is Society)
                     {
                         Society socAtt = (Society)att;
-                        movePerson(lord, socAtt);
                         lord.prestige *= param.combat_prestigeLossFromConquest;
+                        foreach (Title t in lord.titles) { t.heldBy = null; }
+                        lord.titles.Clear();
+
+
+                        movePerson(lord, socAtt);
                     }
                     else
                     {

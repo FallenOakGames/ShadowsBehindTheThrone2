@@ -10,7 +10,7 @@ namespace Assets.Code
     {
         public Set_Abbey(Location loc) : base(loc)
         {
-            title = new Title_Land("Abott", "Abess",this);
+            title = new TitleLanded("Abott", "Abess",this);
             int q = Eleven.random.Next(3);
             if (q == 0)
             {

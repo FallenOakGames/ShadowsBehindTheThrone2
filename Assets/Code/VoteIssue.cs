@@ -14,9 +14,9 @@ namespace Assets.Code
             this.society = society;
             this.proposer = proposer;
         }
-        public List<VotingOption> options = new List<VotingOption>();
-        public abstract double computeUtility(Person p,VotingOption option, List<VoteMsg> msgs);
-        public virtual void implement(VotingOption option)
+        public List<VoteOption> options = new List<VoteOption>();
+        public abstract double computeUtility(Person p,VoteOption option, List<VoteMsg> msgs);
+        public virtual void implement(VoteOption option)
         {
             //Everyone affected/concerned about the vote now changes their opinion of all the voters for the winning option
             //depending on how much they care and how much they were affected

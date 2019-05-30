@@ -19,7 +19,7 @@ namespace Assets.Code
         public double maxMilitary;
         public double currentMilitary;
         public int lastBattle;
-
+        private bool cachedGone;
 
         public SocialGroup(Map map)
         {
@@ -44,10 +44,12 @@ namespace Assets.Code
          * By default, a social group is gone if it holds no territory. Can be overriden by specials
          */
         public virtual bool isGone() {
+            if (cachedGone) { return true; }
             foreach (Location loc in map.locations)
             {
-                if (loc.soc == this) { return false; }
+                if (loc.soc == this) {return false; }
             }
+            cachedGone = true;
             return true;
         }
 

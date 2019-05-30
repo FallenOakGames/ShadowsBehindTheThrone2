@@ -8,8 +8,10 @@ namespace Assets.Code
     public class Society : SocialGroup
     {
         public List<Person> people = new List<Person>();
+        public Title sovreign;
+        public List<Title> titles = new List<Title>();
 
-        public List<Title_Land> unclaimedTitles = new List<Title_Land>();
+        public List<TitleLanded> unclaimedTitles = new List<TitleLanded>();
 
         public enum militaryPosture { introverted,defensive,offensive};
         public militaryPosture posture = militaryPosture.introverted;
@@ -22,6 +24,8 @@ namespace Assets.Code
         public Society(Map map) : base(map)
         {
             setName("DEFAULT_SOC_NAME");
+            sovreign = new Title_Sovreign(this);
+            titles.Add(sovreign);
         }
 
         public override void turnTick()
@@ -36,6 +40,8 @@ namespace Assets.Code
 
         public void processExpirables()
         {
+            if (offensiveTarget != null && offensiveTarget.isGone()) { offensiveTarget = null; }
+
             List<EconEffect> rems = new List<EconEffect>();
             foreach (EconEffect effect in econEffects)
             {
@@ -68,7 +74,7 @@ namespace Assets.Code
 
         public void debug()
         {
-
+            /*
             if (this.getSize() < 5)
             {
                 int nWars = 0;
@@ -98,6 +104,7 @@ namespace Assets.Code
                     }
                 }
             }
+            */
         }
 
         public void processVoting()
@@ -149,8 +156,8 @@ namespace Assets.Code
                 foreach (Person p in people)
                 {
                     double highestWeight = 0;
-                    VotingOption bestChoice = null;
-                    foreach (VotingOption option in voteSession.issue.options)
+                    VoteOption bestChoice = null;
+                    foreach (VoteOption option in voteSession.issue.options)
                     {
                         List<VoteMsg> msgs = new List<VoteMsg>();
                         double u = voteSession.issue.computeUtility(p, option, msgs);
@@ -165,8 +172,8 @@ namespace Assets.Code
                 }
 
                 double topVote = 0;
-                VotingOption winner = null;
-                foreach (VotingOption option in voteSession.issue.options)
+                VoteOption winner = null;
+                foreach (VoteOption option in voteSession.issue.options)
                 {
                     if (option.votingWeight > topVote || winner == null)
                     {
@@ -210,6 +217,10 @@ namespace Assets.Code
                     }
                 }
             }
+            foreach (Title t in titles)
+            {
+                t.turnTick();
+            }
         }
         
         public void checkPopulation()
@@ -252,6 +263,10 @@ namespace Assets.Code
             }
         }
 
+        public Person getSovreign()
+        {
+            return sovreign.heldBy;
+        }
         public void log(String msg)
         {
             World.log(msg);

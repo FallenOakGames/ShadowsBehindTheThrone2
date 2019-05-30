@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Assets.Code
 {
-    public class VoteIssue_AssignTitle : VoteIssue
+    public class VoteIssue_AssignLandedTitle : VoteIssue
     {
-        public Title title;
+        public TitleLanded title;
 
-        public VoteIssue_AssignTitle(Society soc,Person proposer,Title title) : base(soc,proposer)
+        public VoteIssue_AssignLandedTitle(Society soc,Person proposer,TitleLanded title) : base(soc,proposer)
         {
             this.title = title;
         }
@@ -39,7 +39,7 @@ namespace Assets.Code
                 existingValue = p.title_land.settlement.getPrestige();
             }
 
-            double newValue = title.getPrestige();
+            double newValue = title.settlement.getPrestige();
 
             double benefitToPerson = newValue - existingValue;
 
@@ -54,7 +54,7 @@ namespace Assets.Code
             //(Note this is irrelevant if they're the person who's being voted on)
             if (title.heldBy != null && title.heldBy != p)
             {
-                double damageToOther = title.getPrestige();
+                double damageToOther = title.settlement.getPrestige();
                 localU = -damageToOther * voter.getRelation(title.heldBy).getLiking();
                 msgs.Add(new VoteMsg("Harm to " + title.heldBy.getFullName(), localU));
                 u += localU;
@@ -73,22 +73,30 @@ namespace Assets.Code
             {
                 World.log("Title: " + title.getName() + " remains held by " + option.person.getFullName());
             }
-            
+
+            //Person already has a title
+            if (option.person.title_land != null)
+            {
+                TitleLanded prev = option.person.title_land;
+                prev.heldBy = null;
+                option.person.title_land = null;
+                World.log(prev.getName() + " has lost its lord as they have been reassigned");
+            }
             //Title already has a person
             if (title.heldBy != null)
             {
                 World.log(title.heldBy.getFullName() + " is losing title " + title.getName());
-                title.heldBy.titles.Remove(title);
+                title.heldBy.title_land = null;
                 title.heldBy = null;
             }
 
             World.log(option.person.getFullName() + " has been granded the title of " + title.getName());
             title.heldBy = option.person;
-            option.person.titles.Add(title);
+            option.person.title_land = title;
         }
         public override bool stillValid(Map map)
         {
-            return true;
+            return title.settlement != null && title.settlement.location.soc == society;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Assets.Code
         {
         }
 
-        public override double computeUtility(Person p, VotingOption option, List<VoteMsg> msgs)
+        public override double computeUtility(Person p, VoteOption option, List<VoteMsg> msgs)
         {
             double u = 0;
 
@@ -35,7 +35,7 @@ namespace Assets.Code
             return u;
         }
 
-        public override void implement(VotingOption option)
+        public override void implement(VoteOption option)
         {
             base.implement(option);
             EconEffect effect = new EconEffect(society.map, option.econ_from, option.econ_to);

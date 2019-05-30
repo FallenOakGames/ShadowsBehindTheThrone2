@@ -10,7 +10,7 @@ namespace Assets.Code
     {
         public Set_Fort(Location loc) : base(loc)
         {
-            title = new Title_Land("Baron", "Baroness",this);
+            title = new TitleLanded("Baron", "Baroness",this);
             int q = Eleven.random.Next(2);
             if (q == 0)
             {
