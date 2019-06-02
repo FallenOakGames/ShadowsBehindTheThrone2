@@ -16,6 +16,7 @@ namespace Assets.Code
         // FIXME
         public Sprite personFrame;
         public Sprite personHead;
+        public Sprite votesIcon;
 
         public void SetInfo(Person p)
         {
@@ -35,7 +36,6 @@ namespace Assets.Code
         public void SetInfo(Settlement s)
         {
             foreground.sprite = s.getSprite();
-            background.sprite = null;
             background.enabled = false;
 
             name.text = s.name;
@@ -49,11 +49,10 @@ namespace Assets.Code
 
         public void SetInfo(VoteOption v)
         {
-            foreground.sprite = personHead;
-            background.sprite = personFrame;
-            background.enabled = true;
+            foreground.sprite = votesIcon;
+            background.enabled = false;
 
-            name.text = "For " + v.person.getFullName();
+            name.text = "For " + v.info();
             info.text = v.votingWeight + " Influence";
         }
     }

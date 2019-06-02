@@ -69,6 +69,9 @@ namespace Assets.Code
                     {
                         List<VoteOption> vs = soc.voteSession.issue.options;
                         // FIXME: make sure this doesnt interfere with actual voting
+                        // Something is not right here, number changes when
+                        // you click around. randomn noise? Should be computed once
+                        // at beginning rather than right before applying votes?
                         foreach (Person p in soc.people)
                         {
                             double highestWeight = 0;

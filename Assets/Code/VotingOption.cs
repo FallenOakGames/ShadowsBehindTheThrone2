@@ -28,7 +28,7 @@ namespace Assets.Code
         }
         public string info()
         {
-            string reply = "OPT: ";
+            string reply = "";
             if (person != null) { reply += person.getFullName() + " "; }
             if (location != null) { reply += location.getName() + " "; }
             if (group != null) { reply += group.getName() + " "; }
