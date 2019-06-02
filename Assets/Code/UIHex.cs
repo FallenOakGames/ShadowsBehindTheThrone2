@@ -11,15 +11,130 @@ namespace Assets.Code
     {
         public UIMaster master;
         public Text title;
-        public Text body;
+        //public Text body;
+
+        public GameObject portraitPrefab;
+        public RectTransform listContent;
+
+        public Toggle bPeople;
+        public Toggle bPlaces;
+        public Toggle bVotes;
+
+        public enum Tab { People, Places, Votes };
+        private Tab currentTab;
+
+        public void Start()
+        {
+            currentTab = Tab.People;
+        }
 
         public void checkData()
+        {
+            title.text = "";
+            // FIXME: check if this needs to be done?
+            foreach (Transform t in listContent)
+            {
+                GameObject.Destroy(t.gameObject);
+            }
+
+            Society soc = getSociety(GraphicalMap.selectedHex);
+            if (soc == null) return;
+
+            title.text = soc.getName();
+            switch (currentTab)
+            {
+                case Tab.People:
+                {
+                    foreach (Person p in soc.people)
+                    {
+                        GameObject pp = Instantiate(portraitPrefab, listContent);
+                        pp.GetComponent<Portrait>().SetInfo(p);
+                    }
+
+                    break;
+                }
+                case Tab.Places:
+                {
+                    foreach (Settlement s in getSettlements(soc))
+                    {
+                        GameObject sp = Instantiate(portraitPrefab, listContent);
+                        sp.GetComponent<Portrait>().SetInfo(s);
+                    }
+
+                    break;
+                }
+                case Tab.Votes:
+                {
+                    if (soc.voteSession != null)
+                    {
+                        List<VoteOption> vs = soc.voteSession.issue.options;
+                        // FIXME: make sure this doesnt interfere with actual voting
+                        foreach (Person p in soc.people)
+                        {
+                            double highestWeight = 0;
+                            VoteOption bestChoice = null;
+                            foreach (VoteOption option in vs)
+                            {
+                                List<VoteMsg> msgs = new List<VoteMsg>();
+                                double u = soc.voteSession.issue.computeUtility(p, option, msgs);
+                                if (u > highestWeight || bestChoice == null)
+                                {
+                                    bestChoice = option;
+                                    highestWeight = u;
+                                }
+                            }
+                            bestChoice.votingWeight += p.prestige;
+                        }
+
+                        foreach (VoteOption v in vs)
+                        {
+                            GameObject vp = Instantiate(portraitPrefab, listContent);
+                            vp.GetComponent<Portrait>().SetInfo(v);
+
+                            v.votingWeight = 0.0;
+                        }
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        public void onToggle(bool b)
+        {
+            if      (bPeople.isOn) currentTab = Tab.People;
+            else if (bPlaces.isOn) currentTab = Tab.Places;
+            else if (bVotes.isOn)  currentTab = Tab.Votes;
+
+            checkData();
+        }
+
+        private Society getSociety(Hex h)
+        {
+            if (h == null) return null;
+            if (h.location == null) return null;
+            if (h.location.soc == null) return null;
+            if (!(h.location.soc is Society)) return null;
+
+            return (Society)h.location.soc;
+        }
+
+        private List<Settlement> getSettlements(Society s)
+        {
+            // FIXME: LINQ :(
+            return s.map.locations
+                .Where(l => l.soc == s && l.settlement != null)
+                .Select(l => l.settlement)
+                .ToList();
+        }
+
+        public void checkData_old()
         {
             Hex hex = GraphicalMap.selectedHex;
             if (hex == null)
             {
                 title.text = "";
-                body.text = "";
+                //body.text = "";
             }
             else
             {
@@ -57,9 +172,12 @@ namespace Assets.Code
                             {
                                 bodyText += "\nEcon from " + effect.from.name + " to " + effect.to.name;
                             }
-                            foreach (Person p in locSoc.people){
+
+                            foreach (Person p in locSoc.people)
+                            {
                                 bodyText += "\n   -" + p.getFullName();
                             }
+
                             if (locSoc.offensiveTarget != null)
                             {
                                 bodyText += "\nOffensive: " + locSoc.offensiveTarget.getName();
@@ -76,7 +194,7 @@ namespace Assets.Code
                 {
                     bodyText += "\n  Industry: " + t.name;
                 }
-                body.text = bodyText;
+                //body.text = bodyText;
             }
         }
     }
