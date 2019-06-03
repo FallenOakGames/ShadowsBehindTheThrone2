@@ -22,7 +22,9 @@ namespace Assets.Code
             //depending on how much they care and how much they were affected
             foreach (Person p in society.people)
             {
-                double deltaRel = computeUtility(p, option, new List<VoteMsg>());
+                double utility = computeUtility(p, option, new List<VoteMsg>());
+
+                double deltaRel = utility;
                 if (deltaRel > 0)
                 {
                     deltaRel *= p.map.param.society_votingRelChangePerUtilityPositive;

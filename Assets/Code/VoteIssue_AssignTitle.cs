@@ -30,7 +30,7 @@ namespace Assets.Code
 
         public override double computeUtility(Person voter, VoteOption option,List<VoteMsg> msgs)
         {
-            double u = 0;
+            double u = option.getBaseUtility(voter);
 
             Person p = option.person;
             double existingValue = 0;
@@ -59,8 +59,7 @@ namespace Assets.Code
                 msgs.Add(new VoteMsg("Harm to " + title.heldBy.getFullName(), localU));
                 u += localU;
             }
-
-            u += Eleven.random.NextDouble() * 0.001;//Noise to introduce randomness
+            
 
             return u;
         }

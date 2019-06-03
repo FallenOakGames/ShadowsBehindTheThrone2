@@ -14,7 +14,7 @@ namespace Assets.Code
 
         public override double computeUtility(Person voter, VoteOption option,List<VoteMsg> msgs)
         {
-            double u = 0;
+            double u = option.getBaseUtility(voter);
 
             double ourStrength = society.currentMilitary;
             double theirStrength = option.group.currentMilitary;
@@ -50,8 +50,7 @@ namespace Assets.Code
                 u += localU;
             }
 
-
-            u += Eleven.random.NextDouble() * 0.001;//Noise to introduce randomness
+            
 
             return u;
         }

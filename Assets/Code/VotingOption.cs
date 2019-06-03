@@ -17,11 +17,23 @@ namespace Assets.Code
         public EconTrait econ_to;
         public int index = -1;//For stuff which doesn't have a discrete target, such as "Declare war yes/no"
 
+        public Dictionary<Person, double> randomUtility = new Dictionary<Person, double>();
         public Dictionary<Person, List<VoteMsg>> msgs = new Dictionary<Person, List<VoteMsg>>();
         public List<Person> votesFor = new List<Person>();
 
         public double votingWeight;
 
+
+        public double getBaseUtility(Person voter)
+        {
+            if (randomUtility.ContainsKey(voter))
+            {
+                return randomUtility[voter];
+            }
+            double u = Eleven.random.NextDouble()*0.0001;
+            randomUtility.Add(voter, u);
+            return u;
+        }
         public override string ToString()
         {
             return info();

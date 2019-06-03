@@ -16,7 +16,7 @@ namespace Assets.Code
 
         public override double computeUtility(Person voter, VoteOption option,List<VoteMsg> msgs)
         {
-            double u = 0;
+            double u = option.getBaseUtility(voter);
 
             //Option 0 is "Don't declare war"
             double parityMult = 1;
@@ -44,9 +44,7 @@ namespace Assets.Code
             localU = voter.politics_militarism * parityMult;
             msgs.Add(new VoteMsg("Militarism of " + voter.getFullName(), localU));
             u += localU;
-
-
-            u += Eleven.random.NextDouble() * 0.001;//Noise to introduce randomness
+            
 
             return u;
         }

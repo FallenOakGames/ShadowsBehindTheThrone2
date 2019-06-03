@@ -130,6 +130,9 @@ namespace Assets.Code
                 }
                 */
             }
+
+            world.ui.uiLeftPrimary.checkData();
+            world.ui.uiHex.checkData();
         }
 
         public static void checkLoaded()

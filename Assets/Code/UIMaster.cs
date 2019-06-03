@@ -11,10 +11,11 @@ namespace Assets.Code
     {
         public World world;
         public UIHex uiHex;
-       // public UICity uiCity;
+        public UILeftPrimary uiLeftPrimary;
+        // public UICity uiCity;
         //public UIWorldRight uiWorldRight;
         //public UISociety uiSociety;
-       // public UIMainMenu uiMainMenu;
+        // public UIMainMenu uiMainMenu;
         //public UICityFullscreen uiCityFullscreen;
         public GameObject uiMaster;
 
@@ -92,6 +93,8 @@ namespace Assets.Code
             {
                 GraphicalMap.checkData();
             }
+
+            uiLeftPrimary.checkData();
         }
 
         /*

@@ -12,16 +12,18 @@ namespace Assets.Code
 
         public override double computeUtility(Person p, VoteOption option, List<VoteMsg> msgs)
         {
-            double u = 0;
+            double u = option.getBaseUtility(p);
 
             foreach (Person affected in society.people)
             {
+                if (affected != p) { continue; }
                 if (affected.title_land != null)
                 {
                     double delta = 1;
                     if (affected.title_land.settlement.econTraits().Contains(option.econ_to)) { delta *= society.map.param.econ_multFromBuff; }
                     if (affected.title_land.settlement.econTraits().Contains(option.econ_from)) { delta /= society.map.param.econ_multFromBuff; }
 
+                    delta = 1 - delta;
                     //Run off the base prestige, so all change is regarded the same, regardless of existing changes
                     double localU = delta * p.getRelation(affected).getLiking() * affected.title_land.settlement.basePrestige * society.map.param.utility_econEffect;
 
@@ -29,8 +31,7 @@ namespace Assets.Code
                     u += localU;
                 }
             }
-
-            u += Eleven.random.NextDouble() * 0.00001;
+            
 
             return u;
         }

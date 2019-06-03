@@ -21,6 +21,10 @@ namespace Assets.Code
         public int voteCooldown = 0;
         internal List<EconEffect> econEffects = new List<EconEffect>();
 
+        public int instabilityTurns;
+        public double data_loyalLordsCap;
+        public double data_rebelLordsCap;
+
         public Society(Map map) : base(map)
         {
             setName("DEFAULT_SOC_NAME");
@@ -33,9 +37,51 @@ namespace Assets.Code
             base.turnTick();
             debug();
             processExpirables();
+            processStability();
             checkTitles();
             processVoting();
             checkPopulation();//Add people last, so new people don't suddenly arrive and act before the player can see them
+        }
+
+
+        public void processStability()
+        {
+            data_loyalLordsCap = 0;
+            data_rebelLordsCap = 0;
+            if (getSovreign() == null)
+            {
+                instabilityTurns = 0;
+                return;
+            }
+
+            List<Person> rebels = new List<Person>();
+            foreach (Person p in people)
+            {
+                if (p.title_land == null) { continue; }
+                if (p.getRelation(getSovreign()).getLiking() <= map.param.society_rebelLikingThreshold)
+                {
+                    data_rebelLordsCap += p.title_land.settlement.militaryCapAdd;
+                    rebels.Add(p);
+                }
+                else
+                {
+                    data_loyalLordsCap += p.title_land.settlement.militaryCapAdd;
+                }
+            }
+
+            if (data_rebelLordsCap > data_loyalLordsCap)
+            {
+                instabilityTurns += 1;
+                if (instabilityTurns >= map.param.society_instablityTillRebellion)
+                {
+                    triggerCivilWar(rebels);
+                }
+            }
+        }
+
+        public void triggerCivilWar(List<Person> rebels)
+        {
+            World.log(this.getName() + " falls into civil war as " + rebels.Count + " out of " + people.Count + " nobles declare rebellion against " + getSovreign().getFullName());
         }
 
         public void processExpirables()
