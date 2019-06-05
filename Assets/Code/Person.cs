@@ -113,6 +113,15 @@ namespace Assets.Code
         public void die(string v)
         {
             World.log(v);
+            society.people.Remove(this);
+            if (this.title_land != null)
+            {
+                this.title_land.heldBy = null;
+            }
+            foreach (Title t in titles)
+            {
+                t.heldBy = null;
+            }
         }
 
         public VoteIssue proposeVotingIssue()

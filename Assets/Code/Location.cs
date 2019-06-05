@@ -26,6 +26,7 @@ namespace Assets.Code
         private List<Property> properties = new List<Property>();
         public int turnLastTaken = -1000;
         public double inherentInformationAvailability = 0.85;
+        public int lastTaken;
 
         public Location(Map map, Hex hex,bool isMajor)
         {
@@ -69,13 +70,34 @@ namespace Assets.Code
             return name;
         }
 
+
         /**
-         * Between 0 and 1, with 0 being an empty field, 1 being literally impregnable
+         * The amount of damage which could theoretically be absorbed by defences
+         */
+        public double getMaxMilitaryDefence()
+        {
+            if (settlement != null) { return settlement.defensiveStrengthMax; }
+            return 0;
+        }
+        /**
+         * The amount of damage which is absorbed by a defensive structure
          */
         public double getMilitaryDefence()
         {
-            if (settlement != null) { return settlement.defensiveStrength; }
+            if (settlement != null) { return settlement.defensiveStrengthCurrent; }
             return 0;
+        }
+        /**
+         * Removes defence from settments first, then allows any overflow damage through
+         */
+        public double takeMilitaryDamage(double amount)
+        {
+            if (settlement != null) {
+                double soaked = Math.Min(settlement.defensiveStrengthCurrent, amount);
+                settlement.defensiveStrengthCurrent -= soaked;
+                amount -= soaked;
+            }
+            return amount;
         }
 
         public List<Location> getNeighbours()

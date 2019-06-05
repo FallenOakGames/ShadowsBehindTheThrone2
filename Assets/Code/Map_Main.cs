@@ -134,6 +134,7 @@ namespace Assets.Code
                         {
                             if (link.other(l).soc != null && link.other(l).soc != sg && link.other(l).soc.getRel(sg).state == DipRel.dipState.war)
                             {
+                                if (link.other(l).lastTaken == turn) { continue; }//Can't retake on this turn
                                 c += 1;
                                 if (Eleven.random.Next(c) == 0)
                                 {
@@ -149,7 +150,7 @@ namespace Assets.Code
                     SocialGroup defender = attackTo.soc;
 
                     sg.lastBattle = turn;
-                    defender.lastBattle = turn;
+                    //defender.lastBattle = turn;
 
                     World.log(sg.getName() + " attacking into " + attackTo.getName());
                     double myStr = sg.currentMilitary * Eleven.random.NextDouble();
@@ -158,16 +159,15 @@ namespace Assets.Code
                     //Note the defensive fortifications only reduce losses, not increase chance of taking territory
                     double myLosses = Math.Min(sg.currentMilitary, theirStr * param.combat_lethality);
                     sg.currentMilitary -= myLosses;
-                    double theirLosses = (1 - attackTo.getMilitaryDefence())*Math.Min(defender.currentMilitary, myStr * param.combat_lethality);
+                    double theirLosses = Math.Min(defender.currentMilitary, myStr * param.combat_lethality);
+                    theirLosses = attackTo.takeMilitaryDamage(theirLosses);
                     defender.currentMilitary -= theirLosses;
 
-                    if (myStr > theirStr * param.combat_takeLandThreshold)
+                    //Can only take land if there are no defenses in place
+                    if (myStr > theirStr * param.combat_takeLandThreshold && (attackTo.getMilitaryDefence() <= 0.01))
                     {
                         takeLocationFromOther(sg, defender,attackTo);
-                    }
-                    else if (theirStr > myStr * param.combat_takeLandThreshold)
-                    {
-                        takeLocationFromOther(defender,sg,attackFrom);
+                        attackTo.lastTaken = turn;
                     }
                 }
             }

@@ -26,7 +26,7 @@ namespace Assets.Code
 
 
             militaryCapAdd += 5;
-            militaryRegenAdd = 2;
+            militaryRegenAdd = 1;
         }
 
         public override Sprite getSprite()

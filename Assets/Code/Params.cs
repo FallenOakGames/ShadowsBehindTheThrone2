@@ -28,7 +28,7 @@ namespace Assets.Code
         public double relObj_decayRate = 0.96;
         public double combat_prestigeLossFromConquest = 0.333;//multiplier on captured lords' prestige
         public double combat_thresholdAttackStrength = 0.25;
-        public double combat_lethality = 0.25;//How much of an army is destroyed in a battle at maximum roll against an equivalent force
+        public double combat_lethality = 1.25;//How much of an army is destroyed in a battle at maximum roll against an equivalent force
         public double combat_takeLandThreshold = 1.25;//How much over their strength do you have to be to take some land
 
         public int war_defaultLength = 10;

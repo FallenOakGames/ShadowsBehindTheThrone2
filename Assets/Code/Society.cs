@@ -20,6 +20,8 @@ namespace Assets.Code
         public VoteSession voteSession;
         public int voteCooldown = 0;
         internal List<EconEffect> econEffects = new List<EconEffect>();
+        public bool isRebellion = false;
+        public List<KillOrder> killOrders = new List<KillOrder>();
 
         public int instabilityTurns;
         public double data_loyalLordsCap;
@@ -37,13 +39,23 @@ namespace Assets.Code
             base.turnTick();
             debug();
             processExpirables();
+            processKillOrders();
             processStability();
             checkTitles();
             processVoting();
             checkPopulation();//Add people last, so new people don't suddenly arrive and act before the player can see them
         }
 
-
+        public void processKillOrders()
+        {
+            foreach (KillOrder order in killOrders)
+            {
+                if (people.Contains(order.person))
+                {
+                    order.person.die("Executed by " + this.getName() + ". Reason: " + order.reason);
+                }
+            }
+        }
         public void processStability()
         {
             data_loyalLordsCap = 0;
@@ -82,6 +94,45 @@ namespace Assets.Code
         public void triggerCivilWar(List<Person> rebels)
         {
             World.log(this.getName() + " falls into civil war as " + rebels.Count + " out of " + people.Count + " nobles declare rebellion against " + getSovreign().getFullName());
+
+            Society rebellion = new Society(map);
+            map.socialGroups.Add(rebellion);
+            rebellion.setName("Rebellion from " + this.getName());
+            rebellion.isRebellion = true;
+            foreach (Person p in rebels)
+            {
+                if (p.title_land != null)
+                {
+                    p.title_land.settlement.location.soc = rebellion;
+                }
+                this.people.Remove(p);
+                rebellion.people.Add(p);
+                p.society = rebellion;
+            }
+
+            double proportionalStrength = 0;
+            rebellion.computeMilitaryCap();
+            this.computeMilitaryCap();
+
+            if (this.maxMilitary > 0 || rebellion.maxMilitary > 0)
+            {
+                proportionalStrength = this.maxMilitary / (this.maxMilitary + rebellion.maxMilitary);
+                rebellion.currentMilitary = this.currentMilitary * (1 - proportionalStrength);
+                this.currentMilitary = this.currentMilitary * proportionalStrength;
+            }
+
+            if (getSovreign() != null) {
+                KillOrder killSovreign = new KillOrder(getSovreign(), "Rebellion against tyranny");
+                rebellion.killOrders.Add(killSovreign);
+            }
+
+            foreach (Person p in rebels)
+            {
+                KillOrder killRebel = new KillOrder(p, "Rebelled against sovreign");
+                this.killOrders.Add(killRebel);
+
+            }
+            this.map.declareWar(rebellion, this);
         }
 
         public void processExpirables()
@@ -115,6 +166,25 @@ namespace Assets.Code
             foreach (EconEffect effect in rems)
             {
                 econEffects.Remove(effect);
+            }
+
+            if (isRebellion)
+            {
+                bool atWar = false;
+                foreach (SocialGroup sg in map.socialGroups)
+                {
+                    if (this.getRel(sg).state == DipRel.dipState.war)
+                    {
+                        atWar = true;
+                        break;
+                    }
+                }
+                if (!atWar)
+                {
+                    isRebellion = false;
+                    World.log(this.getName() + " has successfully defended itself and broken away properly. Renaming now");
+                    this.setName(TextStore.getLocName());
+                }
             }
         }
 

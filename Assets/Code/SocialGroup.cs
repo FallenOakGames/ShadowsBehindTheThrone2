@@ -18,6 +18,7 @@ namespace Assets.Code
 
         public double maxMilitary;
         public double currentMilitary;
+        public double militaryRegen;
         public int lastBattle;
         private bool cachedGone;
 
@@ -103,15 +104,15 @@ namespace Assets.Code
         }
         public virtual void turnTick()
         {
-            processMilitaryCap();
+            computeMilitaryCap();
+            processMilitaryRegen();
 
             
         }
         
-
-        public void processMilitaryCap() { 
+        public void computeMilitaryCap() {
             maxMilitary = 0;
-            double militaryRegen = 0;
+            militaryRegen = 0;
             foreach (Location loc in map.locations)
             {
                 if (loc.soc == this && loc.settlement != null)
@@ -121,6 +122,9 @@ namespace Assets.Code
                 }
             }
             maxMilitary = Math.Pow(maxMilitary, map.param.combat_maxMilitaryCapExponent);
+        }
+
+        public void processMilitaryRegen() { 
             currentMilitary += militaryRegen;
             if (currentMilitary > maxMilitary) { currentMilitary = maxMilitary; }
         }

@@ -15,7 +15,10 @@ namespace Assets.Code
         public double basePrestige = 10;
         public double militaryCapAdd = 0;
         public double militaryRegenAdd = 0;
-        public double defensiveStrength = 0;
+        //public double defensiveStrength = 0;
+        public double defensiveStrengthRegen = 0.25;
+        public double defensiveStrengthCurrent = 0;
+        public double defensiveStrengthMax;
 
 
         public Settlement(Location loc)
@@ -56,6 +59,9 @@ namespace Assets.Code
         public virtual void turnTick()
         {
             checkTitles();
+
+            defensiveStrengthCurrent += defensiveStrengthRegen;
+            if (defensiveStrengthCurrent > defensiveStrengthMax) { defensiveStrengthCurrent = defensiveStrengthMax; }
         }
 
         public void checkTitles() { 
