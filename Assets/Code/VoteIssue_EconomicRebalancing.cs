@@ -16,7 +16,6 @@ namespace Assets.Code
 
             foreach (Person affected in society.people)
             {
-                if (affected != p) { continue; }
                 if (affected.title_land != null)
                 {
                     double delta = 1;

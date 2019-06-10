@@ -16,6 +16,7 @@ namespace Assets.Code
         public double prestige = 1;
         public int lastVoteProposalTurn;
         public VoteIssue lastProposedIssue;
+        public GraphicalSlot outer;
         
         public double politics_militarism = Eleven.random.NextDouble() * 2 - 1;
 

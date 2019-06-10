@@ -47,6 +47,7 @@ namespace Assets.Code
 
         public int society_instablityTillRebellion = 10;
         public int society_rebelLikingThreshold = -10;
+        internal int society_zeitDuration = 3;
 
         public void loadFromFile()
         {

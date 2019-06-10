@@ -22,6 +22,7 @@ namespace Assets.Code
         internal List<EconEffect> econEffects = new List<EconEffect>();
         public bool isRebellion = false;
         public List<KillOrder> killOrders = new List<KillOrder>();
+        public List<Zeit> zeits = new List<Zeit>();
 
         public int instabilityTurns;
         public double data_loyalLordsCap;
