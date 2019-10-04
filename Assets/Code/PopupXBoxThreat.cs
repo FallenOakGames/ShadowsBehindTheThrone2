@@ -33,8 +33,7 @@ namespace Assets.Code
             titleText.text = item.getTitle();
             if (item.p != null)
             {
-                List<string> list = new List<string>();
-                item.setThreat(list);
+                List<string> list = item.getReasons();
                 string t = "Threat: " + (int)(item.threat);
                 foreach (string s in list)
                 {

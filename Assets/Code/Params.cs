@@ -49,6 +49,7 @@ namespace Assets.Code
         public int society_rebelLikingThreshold = -10;
         internal int society_zeitDuration = 3;
 
+        public int society_threatMultFromOffensivePosture = 50;
         public void loadFromFile()
         {
             //Placeholder

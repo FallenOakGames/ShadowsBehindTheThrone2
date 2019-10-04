@@ -86,9 +86,25 @@ namespace Assets.Code
                             {
                                 bodyText += "\nOffensive: None";
                             }
+                            if (locSoc.defensiveTarget != null)
+                            {
+                                bodyText += "\nDefensive: " + locSoc.defensiveTarget.getName();
+                            }
+                            else
+                            {
+                                bodyText += "\nDefensive: None";
+                            }
                             bodyText += "\nRebel cap " + locSoc.data_rebelLordsCap;
                             bodyText += "\nLoyal cap " + locSoc.data_loyalLordsCap;
 
+                        }
+
+                        List<ReasonMsg> msgs = new List<ReasonMsg>();
+                        double threat = hex.location.soc.getThreat(msgs);
+                        bodyText += "\nThreat: " + threat;
+                        foreach (ReasonMsg msg in msgs)
+                        {
+                            bodyText += "\n   " + msg.msg + " " + msg.value;
                         }
                     }
                 }

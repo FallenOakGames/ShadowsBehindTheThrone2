@@ -23,6 +23,7 @@ namespace Assets.Code
         public bool isRebellion = false;
         public List<KillOrder> killOrders = new List<KillOrder>();
         public List<Zeit> zeits = new List<Zeit>();
+        private Location capital;
 
         public int instabilityTurns;
         public double data_loyalLordsCap;
@@ -138,7 +139,7 @@ namespace Assets.Code
 
         public void processExpirables()
         {
-            if (offensiveTarget != null && offensiveTarget.isGone()) { offensiveTarget = null; }
+            if (offensiveTarget != null && offensiveTarget.checkIsGone()) { offensiveTarget = null; }
 
             List<EconEffect> rems = new List<EconEffect>();
             foreach (EconEffect effect in econEffects)
@@ -187,6 +188,36 @@ namespace Assets.Code
                     this.setName(TextStore.getLocName());
                 }
             }
+        }
+
+        public Location getCapital()
+        {
+            if (capital == null || capital.soc != this)
+            {
+                computeCapital();
+            }
+            return capital;
+        }
+
+        public void computeCapital()
+        {
+            double bestPrestige = 0;
+            foreach (Location loc in map.locations)
+            {
+                if (loc.soc != this) { continue; }
+            }
+        }
+
+        public override double getThreat(List<ReasonMsg> msgs)
+        {
+            double threat = base.getThreat(msgs);
+            if (this.posture == militaryPosture.offensive)
+            {
+                int percent = (int)(100 * map.param.society_threatMultFromOffensivePosture);
+                msgs.Add(new ReasonMsg("Offensive Posture (+" + percent + "%)", threat));
+                threat *= 1 + (map.param.society_threatMultFromOffensivePosture);
+            }
+            return threat;
         }
 
         public void debug()
@@ -276,7 +307,7 @@ namespace Assets.Code
                     VoteOption bestChoice = null;
                     foreach (VoteOption option in voteSession.issue.options)
                     {
-                        List<VoteMsg> msgs = new List<VoteMsg>();
+                        List<ReasonMsg> msgs = new List<ReasonMsg>();
                         double u = voteSession.issue.computeUtility(p, option, msgs);
                         option.msgs.Add(p, msgs);
                         if (u > highestWeight || bestChoice == null)

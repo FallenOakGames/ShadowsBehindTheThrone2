@@ -10,7 +10,7 @@ namespace Assets.Code
         {
         }
 
-        public override double computeUtility(Person p, VoteOption option, List<VoteMsg> msgs)
+        public override double computeUtility(Person p, VoteOption option, List<ReasonMsg> msgs)
         {
             double u = option.getBaseUtility(p);
 
@@ -26,7 +26,7 @@ namespace Assets.Code
                     //Run off the base prestige, so all change is regarded the same, regardless of existing changes
                     double localU = delta * p.getRelation(affected).getLiking() * affected.title_land.settlement.basePrestige * society.map.param.utility_econEffect;
 
-                    msgs.Add(new VoteMsg("Prestige change for " + affected.getFullName(), localU));
+                    msgs.Add(new ReasonMsg("Prestige change for " + affected.getFullName(), localU));
                     u += localU;
                 }
             }

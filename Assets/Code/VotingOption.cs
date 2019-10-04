@@ -18,7 +18,7 @@ namespace Assets.Code
         public int index = -1;//For stuff which doesn't have a discrete target, such as "Declare war yes/no"
 
         public Dictionary<Person, double> randomUtility = new Dictionary<Person, double>();
-        public Dictionary<Person, List<VoteMsg>> msgs = new Dictionary<Person, List<VoteMsg>>();
+        public Dictionary<Person, List<ReasonMsg>> msgs = new Dictionary<Person, List<ReasonMsg>>();
         public List<Person> votesFor = new List<Person>();
 
         public double votingWeight;

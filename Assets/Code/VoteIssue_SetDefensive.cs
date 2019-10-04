@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Assets.Code
 {
-    public class VoteIssue_SetOffensiveTarget : VoteIssue
+    public class VoteIssue_SetDefensiveTarget : VoteIssue
     {
 
-        public VoteIssue_SetOffensiveTarget(Society soc,Person proposer) : base(soc,proposer)
+        public VoteIssue_SetDefensiveTarget(Society soc,Person proposer) : base(soc,proposer)
         {
         }
         
@@ -16,18 +16,8 @@ namespace Assets.Code
         {
             double u = option.getBaseUtility(voter);
             
-
-            double ourStrength = society.currentMilitary;
-            double theirStrength = option.group.currentMilitary;
+            
             double localU = 0;
-            
-            
-            //1 if we're 100% of the balance, -1 if they are
-            double relativeStrength = (ourStrength - theirStrength) / (ourStrength + theirStrength);
-
-            localU = society.map.param.utility_militaryTargetRelStrength*relativeStrength;
-            msgs.Add(new ReasonMsg("Relative Strength of Current Militaries", localU));
-            u += localU;
 
             foreach (ThreatItem threat in voter.threatEvaluations)
             {
@@ -42,26 +32,21 @@ namespace Assets.Code
 
 
             //If we already have a military target
-            if (society.offensiveTarget != null)
+            if (society.defensiveTarget != null)
             {
-                theirStrength = society.offensiveTarget.currentMilitary;
                 localU = 0;
-
-                //1 if we're 100% of the balance, -1 if they are
-                relativeStrength = (ourStrength - theirStrength) / (ourStrength + theirStrength);
-
+                
                 //Add current target threat
                 foreach (ThreatItem threat in voter.threatEvaluations)
                 {
-                    if (threat.group == society.offensiveTarget)
+                    if (threat.group == society.defensiveTarget)
                     {
                         localU += threat.threat;
                         break;
                     }
                 }
-
-                localU += -society.map.param.utility_militaryTargetRelStrength * relativeStrength;
-                msgs.Add(new ReasonMsg("Desirability of current target (" + society.offensiveTarget.getName() + ")", localU));
+                
+                msgs.Add(new ReasonMsg("Threat of current target (" + society.defensiveTarget.getName() + ")", localU));
                 u += localU;
             }
             
@@ -71,7 +56,7 @@ namespace Assets.Code
 
         public override void implement(VoteOption option)
         {
-            society.offensiveTarget = option.group;
+            society.defensiveTarget = option.group;
         }
         public override bool stillValid(Map map)
         {

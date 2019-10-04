@@ -17,6 +17,7 @@ namespace Assets.Code
         public int lastVoteProposalTurn;
         public VoteIssue lastProposedIssue;
         public GraphicalSlot outer;
+        public List<ThreatItem> threatEvaluations = new List<ThreatItem>();
         
         public double politics_militarism = Eleven.random.NextDouble() * 2 - 1;
 
@@ -59,6 +60,79 @@ namespace Assets.Code
                 }
             }
             foreach (Title t in rems) { titles.Remove(t); }
+
+            processThreats();
+        }
+
+        public void processThreats()
+        {
+            //First up, see if anything needs to be added/removed
+            List<ThreatItem> rems = new List<ThreatItem>();
+            HashSet<SocialGroup> groups = new HashSet<SocialGroup>();
+            foreach (ThreatItem item in threatEvaluations)
+            {
+                if (item.group != null){
+                    if (item.group.isGone())
+                    {
+                        rems.Add(item);
+                    }
+                    else
+                    {
+                        groups.Add(item.group);
+                    }
+                }
+                item.turnTick();
+            }
+            foreach (ThreatItem item in rems) { threatEvaluations.Remove(item); }
+
+            foreach (SocialGroup sg in map.socialGroups)
+            {
+                if (groups.Contains(sg) == false)
+                {
+                    ThreatItem item = new ThreatItem(map, this);
+                    item.group = sg;
+                    threatEvaluations.Add(item);
+                }
+            }
+
+            //Actually do the evaluations here
+            foreach (ThreatItem item in threatEvaluations)
+            {
+                item.reasons.Clear();
+                if (item.group == null)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    double value = item.group.getThreat(null);
+                    item.reasons.Add(new ReasonMsg("Group Threat", value));
+                    Location sourceLoc = null;
+                    //Fear things which are nearby
+                    if (this.title_land != null)
+                    {
+                        sourceLoc = title_land.settlement.location;
+                    }
+                    //If you don't have a landed title you live in the capital
+                    if (sourceLoc == null)
+                    {
+                        sourceLoc = society.getCapital();
+                    }
+                    //Fallback to just use the first location, to avoid null exceptions in extreme edge cases
+                    if (sourceLoc == null)
+                    {
+                        sourceLoc = map.locations[0];
+                    }
+
+
+                    double infoAvailability = map.getInformationAvailability(sourceLoc, item.group);
+                    int intInfoAvailability = (int)(infoAvailability);
+                    item.reasons.Add(new ReasonMsg("Information (% kept)", intInfoAvailability));
+                    value *= infoAvailability;
+
+                    item.threat = value;
+                }
+            }
         }
 
         public double getRelBaseline(Person other)
@@ -161,7 +235,7 @@ namespace Assets.Code
                 foreach (VoteOption opt in issue.options)
                 {
                     //Random factor to prevent them all rushing a singular voting choice
-                    double localU = issue.computeUtility(this, opt, new List<VoteMsg>()) * Eleven.random.NextDouble();
+                    double localU = issue.computeUtility(this, opt, new List<ReasonMsg>()) * Eleven.random.NextDouble();
                     if (localU > bestU)
                     {
                         bestU = localU;
@@ -191,7 +265,7 @@ namespace Assets.Code
                         foreach (VoteOption opt in issue.options)
                         {
                             //Random factor to prevent them all rushing a singular voting choice
-                            double localU = issue.computeUtility(this, opt, new List<VoteMsg>()) * Eleven.random.NextDouble();
+                            double localU = issue.computeUtility(this, opt, new List<ReasonMsg>()) * Eleven.random.NextDouble();
                             if (localU > bestU)
                             {
                                 bestU = localU;
@@ -252,7 +326,7 @@ namespace Assets.Code
                             foreach (VoteOption opt in issue.options)
                             {
                                 //Random factor to prevent them all rushing a singular voting choice
-                                double localU = issue.computeUtility(this, opt, new List<VoteMsg>()) * Eleven.random.NextDouble();
+                                double localU = issue.computeUtility(this, opt, new List<ReasonMsg>()) * Eleven.random.NextDouble();
                                 if (localU > bestU)
                                 {
                                     bestU = localU;
@@ -264,7 +338,7 @@ namespace Assets.Code
                     }
                 }
 
-                //Check to see if you want to alter military targetting
+                //Check to see if you want to alter offensive military targetting
                 issue = new VoteIssue_SetOffensiveTarget(society, this);
                 foreach (SocialGroup neighbour in society.getNeighbours())
                 {
@@ -277,7 +351,29 @@ namespace Assets.Code
                     if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
 
                     //Random factor to prevent them all rushing a singular voting choice
-                    double localU = issue.computeUtility(this, opt, new List<VoteMsg>()) * Eleven.random.NextDouble();
+                    double localU = issue.computeUtility(this, opt, new List<ReasonMsg>()) * Eleven.random.NextDouble();
+                    if (localU > bestU)
+                    {
+                        bestU = localU;
+                        bestIssue = issue;
+                    }
+                }
+
+                //Check to see if you want to alter defensive military targetting
+                issue = new VoteIssue_SetDefensiveTarget(society, this);
+                foreach (ThreatItem item in threatEvaluations)
+                {
+                    if (item.group == null) { continue; }
+                    VoteOption option = new VoteOption();
+                    option.group = item.group;
+                    issue.options.Add(option);
+                }
+                foreach (VoteOption opt in issue.options)
+                {
+                    if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
+
+                    //Random factor to prevent them all rushing a singular voting choice
+                    double localU = issue.computeUtility(this, opt, new List<ReasonMsg>()) * Eleven.random.NextDouble();
                     if (localU > bestU)
                     {
                         bestU = localU;
@@ -301,7 +397,7 @@ namespace Assets.Code
                     {
                         if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
                                                                                                                    //Random factor to prevent them all rushing a singular voting choice
-                        double localU = issue.computeUtility(this, opt, new List<VoteMsg>()) * Eleven.random.NextDouble();
+                        double localU = issue.computeUtility(this, opt, new List<ReasonMsg>()) * Eleven.random.NextDouble();
                         if (localU > bestU)
                         {
                             bestU = localU;

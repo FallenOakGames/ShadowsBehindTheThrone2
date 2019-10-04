@@ -44,7 +44,7 @@ namespace Assets.Code
         /*
          * By default, a social group is gone if it holds no territory. Can be overriden by specials
          */
-        public virtual bool isGone() {
+        public virtual bool checkIsGone() {
             if (cachedGone) { return true; }
             foreach (Location loc in map.locations)
             {
@@ -52,6 +52,13 @@ namespace Assets.Code
             }
             cachedGone = true;
             return true;
+        }
+        /*
+         * By default, a social group is gone if it holds no territory. Can be overriden by specials
+         */
+        public virtual bool isGone()
+        {
+            return cachedGone;
         }
 
         public int getSize()
@@ -108,6 +115,20 @@ namespace Assets.Code
             processMilitaryRegen();
 
             
+        }
+
+        public virtual double getThreat(List<ReasonMsg> reasons)
+        {
+            double threat = currentMilitary + maxMilitary;
+            if (reasons != null)
+            {
+                ReasonMsg msg = new ReasonMsg("Current Military", currentMilitary);
+                reasons.Add(msg);
+                msg = new ReasonMsg("Max Military", maxMilitary);
+                reasons.Add(msg);
+            }
+
+            return threat;
         }
         
         public void computeMilitaryCap() {

@@ -78,7 +78,7 @@ namespace Assets.Code
                             VoteOption bestChoice = null;
                             foreach (VoteOption option in vs)
                             {
-                                List<VoteMsg> msgs = new List<VoteMsg>();
+                                List<ReasonMsg> msgs = new List<ReasonMsg>();
                                 double u = soc.voteSession.issue.computeUtility(p, option, msgs);
                                 if (u > highestWeight || bestChoice == null)
                                 {

@@ -28,7 +28,7 @@ namespace Assets.Code
             return "VoteIssue\"Assign " + title.getName() + "\" " + add;
         }
 
-        public override double computeUtility(Person voter, VoteOption option,List<VoteMsg> msgs)
+        public override double computeUtility(Person voter, VoteOption option,List<ReasonMsg> msgs)
         {
             double u = option.getBaseUtility(voter);
 
@@ -47,7 +47,7 @@ namespace Assets.Code
             //if this is a good thing or not
 
             double localU = benefitToPerson * voter.getRelation(p).getLiking();
-            msgs.Add(new VoteMsg("Benefit to " + p.getFullName(), localU));
+            msgs.Add(new ReasonMsg("Benefit to " + p.getFullName(), localU));
             u += localU;
 
             //We need to know if someone's going to lose out here
@@ -56,7 +56,7 @@ namespace Assets.Code
             {
                 double damageToOther = title.getPrestige();
                 localU = -damageToOther * voter.getRelation(title.heldBy).getLiking();
-                msgs.Add(new VoteMsg("Harm to " + title.heldBy.getFullName(), localU));
+                msgs.Add(new ReasonMsg("Harm to " + title.heldBy.getFullName(), localU));
                 u += localU;
             }
             

@@ -67,7 +67,7 @@ namespace Assets.Code
             List<SocialGroup> rems = new List<SocialGroup>();
             foreach (SocialGroup group in socialGroups)
             {
-                if (group.isGone()) { rems.Add(group); }
+                if (group.checkIsGone()) { rems.Add(group); }
             }
             foreach (SocialGroup g in rems)
             {
