@@ -126,11 +126,38 @@ namespace Assets.Code
 
         public void placeInitialSettlements()
         {
+            int nNonSea = 0;
+
+            List<float> placementValues = new List<float>();
             foreach (Location loc in locations)
             {
                 if (isSea(loc)) { continue; }
+                nNonSea += 1;
+                if (loc.hex.getHabilitability() < param.minHabitabilityForHumans) { continue; }
+
                 float cityPlaceVal = cityPlacementMap[loc.hex.x][loc.hex.y];
-                if (cityPlaceVal < 0.15) { continue; }
+                placementValues.Add(cityPlaceVal);
+            }
+
+            //We want a set percentage of the land squares to be available for human habitation
+            //Placement values is now all the available locations for human hab. We can remove n by setting the placement threshold
+            int targetCount = (int)(nNonSea * param.mapGen_proportionOfMapForHumans);
+            int nToRemove = placementValues.Count - targetCount;
+            float habThreshold = 0;
+            placementValues.Sort();//Lowest at [0]
+            World.log("targetCount: " + targetCount + " nNow " + placementValues.Count);
+            if (nToRemove > 0)
+            {
+                habThreshold = placementValues[nToRemove];
+                World.log("Removing " + nToRemove + " locations from the human available board");
+            }
+
+
+            foreach (Location loc in locations)
+            {
+                if (isSea(loc)) { loc.isForSocieties = false; continue; }
+                float cityPlaceVal = cityPlacementMap[loc.hex.x][loc.hex.y];
+                if (cityPlaceVal < habThreshold) { loc.isForSocieties = false; continue; }
                 if (loc.hex.getHabilitability() < param.minHabitabilityForHumans) { continue; }
 
                 if (loc.isMajor)

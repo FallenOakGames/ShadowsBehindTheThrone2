@@ -256,12 +256,12 @@ namespace Assets.Code
                 {
                     if (loc.soc == this)
                     {
-                        if (loc.settlement != null && (loc.settlement.isHuman == false))
+                        if (loc.isForSocieties == false || loc.hex.getHabilitability() < map.param.minHabitabilityForHumans)
                         {
-                            //loc.soc = null;
-                        }
-                        else if (loc.settlement == null)
-                        {
+                            if (loc.settlement != null)
+                            {
+                                throw new NotImplementedException();
+                            }
                             loc.soc = null;
                         }
                     }

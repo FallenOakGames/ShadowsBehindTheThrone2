@@ -19,6 +19,7 @@ namespace Assets.Code
         public List<Link> links = new List<Link>();
         public bool isCoastal;
         public bool isOcean;
+        public bool isForSocieties = true;
         public Map map;
         public string name;
         public string shortName;

@@ -13,11 +13,12 @@ namespace Assets.Code
     {
         public int sizeX = 24;
         public int sizeY = 24;
+        public double mapGen_proportionOfMapForHumans = 0.65;
 
         public int stepsPerIsland = 12;
         public int maxBrushSize = 5;
 
-        public float minHabitabilityForHumans = 0.2f;
+        public float minHabitabilityForHumans = 0.15f;
         public int soc_untitledPeople = 3;
         public int soc_maxUntitledPeople = 7;
 
