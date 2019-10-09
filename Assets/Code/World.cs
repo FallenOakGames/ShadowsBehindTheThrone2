@@ -18,7 +18,7 @@ namespace Assets.Code
      */
     public class World : MonoBehaviour
     {
-        public static bool logging = false;
+        public static bool logging = true;
 
         public UIMaster ui;
         public TextureStore textureStore;
@@ -97,6 +97,13 @@ namespace Assets.Code
                         File.Delete(f);
                     }
                 }
+                foreach (string f in Directory.GetFiles("logging" + separator + "societies"))
+                {
+                    if (f.Contains(".log"))
+                    {
+                        File.Delete(f);
+                    }
+                }
             }
         }
         public void startup()
@@ -151,6 +158,22 @@ namespace Assets.Code
             ui.uiHex.checkData();
         }
 
+        public void b100Turns()
+        {
+            if (turnLock) { return; }
+
+            turnLock = true;
+            if (map != null)
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    map.turnTick();
+                }
+            }
+
+            turnLock = false;
+            ui.uiHex.checkData();
+        }
         public static void Log(string str)
         {
             Debug.Log(str);

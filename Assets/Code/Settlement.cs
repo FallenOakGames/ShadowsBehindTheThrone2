@@ -16,9 +16,10 @@ namespace Assets.Code
         public double militaryCapAdd = 0;
         public double militaryRegenAdd = 0;
         //public double defensiveStrength = 0;
-        public double defensiveStrengthRegen = 0.25;
+        public double defensiveStrengthRegen = 0.33;
         public double defensiveStrengthCurrent = 0;
         public double defensiveStrengthMax;
+        public bool isHuman = false;//Mainly used to determine whether it can be maintained by a human society
 
 
         public Settlement(Location loc)

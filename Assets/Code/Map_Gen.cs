@@ -234,7 +234,8 @@ namespace Assets.Code
                         p.name = p.capital.shortName + " sea";
                         p.isSea = true;
                     }
-                }else
+                }
+                else
                 {
                     if (landmass[p.coreHex.x][p.coreHex.y])
                     {
@@ -247,26 +248,37 @@ namespace Assets.Code
                         p.isSea = true;
                     }
                 }
+            }
 
+
+            //We want the proportions to be almost exactly identical between all resources, but still randomised
+            List<EconTrait> shuffleBag = new List<EconTrait>();
+            while(shuffleBag.Count < provinces.Count)
+            {
+                List<EconTrait> sublist = new List<EconTrait>();
+                foreach (EconTrait effect in globalist.allEconTraits)
+                {
+                    sublist.Add(effect);
+                }
+
+                int n = sublist.Count;
+                while (n > 1)
+                {
+                    n--;
+                    int k = Eleven.random.Next(n + 1);
+                    EconTrait value = sublist[k];
+                    sublist[k] = sublist[n];
+                    sublist[n] = value;
+                }
+
+                shuffleBag.AddRange(sublist);
+            }
+            for (int c=0;c<provinces.Count;c++)
+            {
+                Province p = provinces[c];
                 if (!p.isSea)
                 {
-                    EconTrait chosenTrait = null;
-                    c = 0;
-                    foreach (EconTrait t in globalist.allEconTraits)
-                    {
-                        if (t.provinceIndustry)
-                        {
-                            c += 1;
-                            if (Eleven.random.Next(c) == 0)
-                            {
-                                chosenTrait = t;
-                            }
-                        }
-                    }
-                    if (chosenTrait != null)
-                    {
-                        p.econTraits.Add(chosenTrait);
-                    }
+                    p.econTraits.Add(shuffleBag[c]);
                 }
             }
         }

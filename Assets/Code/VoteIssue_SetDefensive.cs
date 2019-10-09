@@ -11,7 +11,17 @@ namespace Assets.Code
         public VoteIssue_SetDefensiveTarget(Society soc,Person proposer) : base(soc,proposer)
         {
         }
-        
+
+        public override string ToString()
+        {
+            string reply = "SetDefensiveTarget";
+            if (society.defensiveTarget == null){
+                reply += "(cur:None)";
+            }else{
+                reply += "(cur:" + society.defensiveTarget.getName() + ")";
+            }
+            return reply;
+        }
         public override double computeUtility(Person voter, VoteOption option,List<ReasonMsg> msgs)
         {
             double u = option.getBaseUtility(voter);
@@ -41,13 +51,13 @@ namespace Assets.Code
                 {
                     if (threat.group == society.defensiveTarget)
                     {
-                        localU += threat.threat;
+                        localU -= threat.threat;
+                        msgs.Add(new ReasonMsg("Threat of current target (" + society.defensiveTarget.getName() + ")", localU));
+                        u += localU;
                         break;
                     }
                 }
                 
-                msgs.Add(new ReasonMsg("Threat of current target (" + society.defensiveTarget.getName() + ")", localU));
-                u += localU;
             }
             
 

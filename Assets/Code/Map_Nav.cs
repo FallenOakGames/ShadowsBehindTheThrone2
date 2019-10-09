@@ -218,7 +218,96 @@ namespace Assets.Code
                 return 0;
             }
         }
-        
+
+
+        public Location[] getPathTo(Location a, Location b)
+        {
+            HashSet<Location> seen = new HashSet<Location>();
+            List<Location> open = new List<Location>();
+            List<Location[]> paths = new List<Location[]>();
+            open.Add(a);
+            seen.Add(a);
+            paths.Add(new Location[] { a });
+
+            int nSteps = 0;
+            Location loc;
+            while (true)
+            {
+                List<Location> border = new List<Location>();
+                List<Location[]> newPaths = new List<Location[]>();
+                nSteps += 1;
+                for (int i = 0; i < open.Count; i++)
+                {
+                    loc = open[i];
+                    foreach (Location l2 in getNeighbours(loc))
+                    {
+                        World.log("Adding " + l2.hex.getName());
+                        if (seen.Contains(l2)) { continue; }
+                        Location[] path = new Location[paths[i].Length + 1];
+                        for (int j = 0; j < paths[i].Length; j++) { path[j] = paths[i][j]; }
+                        path[path.Length - 1] = l2;
+                        if (l2 == b) { return path; }
+                        border.Add(l2);
+                        newPaths.Add(path);
+                        seen.Add(l2);
+                    }
+                }
+                open = border;
+                paths = newPaths;
+
+                if (nSteps > 1024)
+                {
+                    throw new Exception("Map discontinuity detected");
+                }
+            }
+            return null;
+        }
+        public Location[] getEmptyPathTo(SocialGroup source, SocialGroup b)
+        {
+            HashSet<Location> seen = new HashSet<Location>();
+            List<Location> open = new List<Location>();
+            List<Location[]> paths = new List<Location[]>();
+            foreach (Location a in locations)
+            {
+                if (a.soc == source) { 
+                    open.Add(a);
+                    seen.Add(a);
+                    paths.Add(new Location[] { a });
+                }
+            }
+            int nSteps = 0;
+            Location loc;
+            while (true)
+            {
+                List<Location> border = new List<Location>();
+                List<Location[]> newPaths = new List<Location[]>();
+                nSteps += 1;
+                for (int i=0;i<open.Count;i++)
+                {
+                    loc = open[i];
+                    foreach (Location l2 in getNeighbours(loc))
+                    {
+                        if (seen.Contains(l2)) { continue; }
+                        if (l2.soc != null && l2.soc != b) { continue; }
+                        Location[] path = new Location[paths[i].Length + 1];
+                        for (int j = 0; j < paths[i].Length; j++) { path[j] = paths[i][j]; }
+                        path[path.Length - 1] = l2;
+                        if (l2.soc == b) { return path; }
+                        border.Add(l2);
+                        newPaths.Add(path);
+                        seen.Add(l2);
+                    }
+                }
+                if (border.Count == 0) { return null; }//Can't reach without crossing through other nation's terrain
+                open = border;
+                paths = newPaths;
+
+                if (nSteps > 1024)
+                {
+                    throw new Exception("Map discontinuity detected");
+                }
+            }
+        }
 
         public void recomputeInformationAvailability(SocialGroup sg)
         {
@@ -414,6 +503,56 @@ namespace Assets.Code
                 if (canGet(hex.x, hex.y - 1)) { reply.Add(grid[hex.x][ hex.y - 1]); }
             }
 
+            return reply;
+        }
+
+        public List<SocialGroup> getExtendedNeighbours(SocialGroup sg)
+        {
+            int CUTOFF = 128;
+            List<SocialGroup> reply = new List<SocialGroup>();
+            HashSet<Location> closed = new HashSet<Location>();
+            List<Location> working = new List<Location>();
+            foreach (Location a in locations)
+            {
+                if (a.soc == sg)
+                {
+                    closed.Add(a);
+                    working.Add(a);
+                }
+
+            }
+
+            int steps = 0;
+            while (working.Count > 0)
+            {
+                steps += 1;
+                if (steps >= CUTOFF) { break; }
+                List<Location> next = new List<Location>();
+                List<double> nextDistances = new List<double>();
+                for (int i = 0; i < working.Count; i++)
+                {
+                    Location l = working[i];
+
+                    if (l.soc != null && l.soc != sg)
+                    {
+                        if (reply.Contains(l.soc) == false)
+                        {
+                            reply.Add(l.soc);
+                        }
+                    }
+                    else
+                    {
+                        foreach (Location n in l.getNeighbours())
+                        {
+                            if (closed.Contains(n)) { continue; }
+
+                            closed.Add(n);
+                            next.Add(n);
+                        }
+                    }
+                }
+                working = next;
+            }
             return reply;
         }
 

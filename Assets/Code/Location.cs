@@ -28,6 +28,8 @@ namespace Assets.Code
         public double inherentInformationAvailability = 0.85;
         public int lastTaken;
         public Dictionary<SocialGroup, double> information = new Dictionary<SocialGroup, double>();
+        internal int debugVal;
+        internal int turnLastAssigned;
 
         public Location(Map map, Hex hex,bool isMajor)
         {
@@ -95,6 +97,7 @@ namespace Assets.Code
         {
             if (settlement != null) {
                 double soaked = Math.Min(settlement.defensiveStrengthCurrent, amount);
+                World.log(this.settlement.name + " has " + settlement.defensiveStrengthCurrent + " dmg " + amount + " soaked " + soaked);
                 settlement.defensiveStrengthCurrent -= soaked;
                 amount -= soaked;
             }

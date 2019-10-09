@@ -11,7 +11,22 @@ namespace Assets.Code
         public VoteIssue_SetOffensiveTarget(Society soc,Person proposer) : base(soc,proposer)
         {
         }
-        
+
+
+        public override string ToString()
+        {
+            string reply = "SetOffensiveTarget";
+            if (society.offensiveTarget == null)
+            {
+                reply += "(cur:None)";
+            }
+            else
+            {
+                reply += "(cur:" + society.offensiveTarget.getName() + ")";
+            }
+            return reply;
+        }
+
         public override double computeUtility(Person voter, VoteOption option,List<ReasonMsg> msgs)
         {
             double u = option.getBaseUtility(voter);
@@ -55,12 +70,12 @@ namespace Assets.Code
                 {
                     if (threat.group == society.offensiveTarget)
                     {
-                        localU += threat.threat;
+                        localU -= threat.threat;
                         break;
                     }
                 }
 
-                localU += -society.map.param.utility_militaryTargetRelStrength * relativeStrength;
+                localU -= society.map.param.utility_militaryTargetRelStrength * relativeStrength;
                 msgs.Add(new ReasonMsg("Desirability of current target (" + society.offensiveTarget.getName() + ")", localU));
                 u += localU;
             }

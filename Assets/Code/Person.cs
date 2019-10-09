@@ -285,6 +285,7 @@ namespace Assets.Code
                     //Maybe they could be rearranged (handed out or simply swapped) in a way which could benefit you
                     if (loc.soc == society && loc.settlement != null && loc.settlement.title != null && ((!existFreeTitles) || (loc.settlement.title.heldBy == null)))
                     {
+                        if (map.turn - loc.turnLastAssigned  < Params.society_minTimeBetweenLocReassignments) { continue; }
                         issue = new VoteIssue_AssignLandedTitle(society, this, loc.settlement.title);
                         if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
                                                                                                                    //Everyone is eligible
@@ -375,7 +376,7 @@ namespace Assets.Code
 
                 //Check to see if you want to alter offensive military targetting
                 issue = new VoteIssue_SetOffensiveTarget(society, this);
-                foreach (SocialGroup neighbour in society.getNeighbours())
+                foreach (SocialGroup neighbour in map.getExtendedNeighbours(society))
                 {
                     VoteOption option = new VoteOption();
                     option.group = neighbour;
@@ -447,7 +448,6 @@ namespace Assets.Code
 
             if (bestIssue != null)
             {
-                World.log(this.getFullName() + " returning voting issue " + bestIssue.ToString() + " with expected utility " + bestU);
                 if (World.logging)
                 {
                     log.takeLine("CHOSE: " + bestIssue.ToString());

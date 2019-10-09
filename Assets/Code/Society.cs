@@ -30,6 +30,8 @@ namespace Assets.Code
         public double data_rebelLordsCap;
         public int turnSovreignAssigned = -1;
 
+        public LogBox logbox;
+
         public Society(Map map) : base(map)
         {
             setName("DEFAULT_SOC_NAME");
@@ -45,8 +47,23 @@ namespace Assets.Code
             processKillOrders();
             processStability();
             checkTitles();
+            processWarExpansion();
+            processTerritoryLoss();
             processVoting();
             checkPopulation();//Add people last, so new people don't suddenly arrive and act before the player can see them
+            log();
+        }
+
+        public void log()
+        {
+            if (World.logging)
+            {
+                if (logbox == null)
+                {
+                    logbox = new LogBox(this);
+                }
+                logbox.takeLine("--------Turn " + map.turn + "------");
+            }
         }
 
         public void processKillOrders()
@@ -221,6 +238,57 @@ namespace Assets.Code
             return threat;
         }
 
+
+        public void processTerritoryLoss()
+        {
+            bool hasWar = false;
+            foreach (DipRel rel in getAllRelations())
+            {
+                if (rel.state == DipRel.dipState.war)
+                {
+                    hasWar = true;
+                    break;
+                }
+            }
+            if (!hasWar)
+            {
+                foreach (Location loc in map.locations)
+                {
+                    if (loc.soc == this)
+                    {
+                        if (loc.settlement != null && (loc.settlement.isHuman == false))
+                        {
+                            //loc.soc = null;
+                        }
+                        else if (loc.settlement == null)
+                        {
+                            loc.soc = null;
+                        }
+                    }
+                }
+            }
+        }
+        //Check to see if you need to build outposts to reach an enemy you're at war with
+        public void processWarExpansion()
+        {
+            List<SocialGroup> neighbours = this.getNeighbours();
+            foreach (DipRel rel in getAllRelations())
+            {
+                if (rel.state == DipRel.dipState.war && rel.war.att == this)
+                {
+                    if (neighbours.Contains(rel.other(this)) == false)
+                    {
+                        //We need to build an outpost towards them
+                        Location[] pathTo = map.getEmptyPathTo(this, rel.other(this));
+                        if (pathTo != null && pathTo.Length > 1 && pathTo[1].soc == null)
+                        {
+                            pathTo[1].soc = this;
+                        }
+                    }
+                }
+            }
+        }
+
         public void debug()
         {
             /*
@@ -290,6 +358,7 @@ namespace Assets.Code
                     voteSession = new VoteSession();
                     voteSession.issue = issue;
                     voteSession.timeRemaining = map.param.society_votingDuration;
+                    if (World.logging && logbox != null) { logbox.takeLine("Starting voting on " + voteSession.issue.ToString()); }
                 }
             }
             else
@@ -330,7 +399,9 @@ namespace Assets.Code
                         topVote = option.votingWeight;
                     }
                 }
-                
+
+                if (World.logging && logbox != null) { logbox.takeLine("End voting on " + voteSession.issue.ToString()); }
+                if (World.logging && logbox != null) { logbox.takeLine("    Winning option: " + winner.info()); }
                 voteSession.issue.implement(winner);
                 voteSession = null;
             }

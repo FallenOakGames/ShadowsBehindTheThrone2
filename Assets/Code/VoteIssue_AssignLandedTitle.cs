@@ -92,6 +92,10 @@ namespace Assets.Code
             World.log(option.person.getFullName() + " has been granded the title of " + title.getName());
             title.heldBy = option.person;
             option.person.title_land = title;
+            if (title.settlement != null)
+            {
+                title.settlement.location.turnLastAssigned = title.settlement.location.map.turn;
+            }
         }
         public override bool stillValid(Map map)
         {

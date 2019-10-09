@@ -215,6 +215,7 @@ namespace Assets.Code
             Hex clickedHex = GraphicalMap.getHexUnderMouse(Input.mousePosition).hex;
             bool deselectedProperty = false;
 
+            
             if (Input.GetKey(KeyCode.LeftControl))
             {
                 GraphicalMap.selectedProperty = null;

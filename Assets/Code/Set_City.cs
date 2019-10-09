@@ -15,6 +15,7 @@ namespace Assets.Code
             basePrestige = 25;
             militaryCapAdd += 10;
             militaryRegenAdd = 0.5;
+            isHuman = true;
         }
 
         public override Sprite getSprite()

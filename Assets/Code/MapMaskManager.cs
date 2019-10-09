@@ -127,7 +127,20 @@ namespace Assets.Code
             }
             else if (mask == maskType.TESTING)
             {
-                    return new Color(0f, 0f, 0f, 0.75f);
+                if (hex.location != null)
+                {
+                    if (hex.location.debugVal == map.turn)
+                    {
+                        return new Color(1, 1, 1, 0.5f);
+                    }
+                    else
+                    {
+                        return new Color(0, 0, 0, 0.5f);
+
+                    }
+                }
+
+                return new Color(0f, 0f, 0f, 0.75f);
             }
             else if (mask == maskType.TESTING)
             {

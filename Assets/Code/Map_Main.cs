@@ -161,11 +161,13 @@ namespace Assets.Code
                     double theirStr =  defender.currentMilitary * Eleven.random.NextDouble();
 
                     //Note the defensive fortifications only reduce losses, not increase chance of taking territory
-                    double myLosses = Math.Min(sg.currentMilitary, theirStr * param.combat_lethality);
+                    double myLosses = theirStr * param.combat_lethality;
                     sg.currentMilitary -= myLosses;
-                    double theirLosses = Math.Min(defender.currentMilitary, myStr * param.combat_lethality);
+                    if (sg.currentMilitary < 0) { sg.currentMilitary = 0; }
+                    double theirLosses = myStr * param.combat_lethality;
                     theirLosses = attackTo.takeMilitaryDamage(theirLosses);
                     defender.currentMilitary -= theirLosses;
+                    if (defender.currentMilitary < 0) { defender.currentMilitary = 0; }
 
                     //Can only take land if there are no defenses in place
                     if (myStr > theirStr * param.combat_takeLandThreshold && (attackTo.getMilitaryDefence() <= 0.01))
@@ -197,7 +199,11 @@ namespace Assets.Code
 
             if (taken.settlement != null)
             {
-                if (taken.settlement.title != null && taken.settlement.title.heldBy != null)
+                if (taken.settlement.isHuman == false)
+                {
+                    taken.settlement = null;//Burn it down
+                }
+                else if (taken.settlement.title != null && taken.settlement.title.heldBy != null)
                 {
                     Person lord = taken.settlement.title.heldBy;
                     if (att is Society)
