@@ -27,6 +27,7 @@ namespace Assets.Code
         public int turnLastTaken = -1000;
         public double inherentInformationAvailability = 0.85;
         public int lastTaken;
+        public Dictionary<SocialGroup, double> information = new Dictionary<SocialGroup, double>();
 
         public Location(Map map, Hex hex,bool isMajor)
         {

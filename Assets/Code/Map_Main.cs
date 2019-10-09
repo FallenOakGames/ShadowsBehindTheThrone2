@@ -68,6 +68,10 @@ namespace Assets.Code
             foreach (SocialGroup group in socialGroups)
             {
                 if (group.checkIsGone()) { rems.Add(group); }
+                else
+                {
+                    recomputeInformationAvailability(group);
+                }
             }
             foreach (SocialGroup g in rems)
             {

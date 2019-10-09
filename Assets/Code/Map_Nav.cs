@@ -169,6 +169,7 @@ namespace Assets.Code
          */
         public double getInformationAvailability(Location a,SocialGroup b)
         {
+            /*
             int CUTOFF = 128;
             HashSet<Location> closed = new HashSet<Location>();
             closed.Add(a);
@@ -207,6 +208,81 @@ namespace Assets.Code
                 distances = nextDistances;
             }
             return param.minInformationAvailability;
+            */
+            if (a.information.ContainsKey(b))
+            {
+                return a.information[b];
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        
+
+        public void recomputeInformationAvailability(SocialGroup sg)
+        {
+            int CUTOFF = 128;
+            HashSet<Location> closed = new HashSet<Location>();
+            List<Location> working = new List<Location>();
+            List<double> distances = new List<double>();
+            foreach (Location a in locations)
+            {
+                if (a.soc == sg)
+                {
+                    closed.Add(a);
+                    working.Add(a);
+                    double dist = 1;
+                    distances.Add(dist);
+                    if (a.information.ContainsKey(sg))
+                    {
+                        a.information[sg] = dist;
+                    }
+                    else
+                    {
+                        a.information.Add(sg, dist);
+                    }
+                }
+
+            }
+
+            int steps = 0;
+            while (working.Count > 0)
+            {
+                steps += 1;
+                if (steps >= CUTOFF) { break; }
+                List<Location> next = new List<Location>();
+                List<double> nextDistances = new List<double>();
+                for (int i = 0; i < working.Count; i++)
+                {
+                    Location l = working[i];
+                    double dist = distances[i];
+                    dist *= l.getInformationAvailability();
+
+                    dist =  Math.Max(param.minInformationAvailability, dist);
+
+                    if (l.information.ContainsKey(sg))
+                    {
+                        l.information[sg] = dist;
+                    }
+                    else
+                    {
+                        l.information.Add(sg, dist);
+                    }
+
+                    foreach (Location n in l.getNeighbours())
+                    {
+                        if (closed.Contains(n)) { continue; }
+
+                        closed.Add(n);
+                        nextDistances.Add(dist);
+                        next.Add(n);
+                    }
+                }
+
+                working = next;
+                distances = nextDistances;
+            }
         }
 
         public double getSqrDist(Hex a, Hex b)
