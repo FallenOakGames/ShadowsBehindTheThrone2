@@ -32,5 +32,35 @@ namespace Assets.Code
 
             return reply;
         }
+
+        public static string toFixedLen(double d, int len)
+        {
+            if (Math.Abs(d) < 0.0001) { d = 0; }
+
+            string s = "" + d;
+            if (s.Length > len)
+            {
+                s = s.Substring(0, len);
+            }
+
+            while (s.Length < len)
+            {
+                s = " " + s;
+            }
+            return s;
+        }
+        public static string toFixedLen(string s,int len)
+        {
+            if (s.Length > len)
+            {
+                s = s.Substring(0, len);
+            }
+
+            while ( s.Length < len)
+            {
+                s = " " + s;
+            }
+            return s;
+        }
     }
 }

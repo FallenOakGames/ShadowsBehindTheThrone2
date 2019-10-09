@@ -18,7 +18,8 @@ namespace Assets.Code
         public VoteIssue lastProposedIssue;
         public GraphicalSlot outer;
         public List<ThreatItem> threatEvaluations = new List<ThreatItem>();
-        
+        public LogBox log;
+
         public double politics_militarism = Eleven.random.NextDouble() * 2 - 1;
 
         public enum personState { normal,enthralled,broken};
@@ -29,10 +30,17 @@ namespace Assets.Code
             this.society = soc;
             firstName = TextStore.getName(male);
             getRelation(this).setLiking(100);//Set self-relation to 100
+
+            if (World.logging)
+            {
+                log = new LogBox(this);
+            }
         }
 
         public void turnTick()
         {
+            if (World.logging) { log.takeLine("---------Turn " + map.turn + "------------"); }
+
             double targetPrestige = map.param.person_defaultPrestige;
             if (title_land != null)
             {
@@ -76,6 +84,10 @@ namespace Assets.Code
                     {
                         rems.Add(item);
                     }
+                    else if (item.group == society)
+                    {
+                        rems.Add(item);
+                    }
                     else
                     {
                         groups.Add(item.group);
@@ -87,7 +99,7 @@ namespace Assets.Code
 
             foreach (SocialGroup sg in map.socialGroups)
             {
-                if (groups.Contains(sg) == false)
+                if (groups.Contains(sg) == false && (sg != society))
                 {
                     ThreatItem item = new ThreatItem(map, this);
                     item.group = sg;
@@ -128,6 +140,10 @@ namespace Assets.Code
                     int intInfoAvailability = (int)(infoAvailability);
                     item.reasons.Add(new ReasonMsg("Information (% kept)", intInfoAvailability));
                     value *= infoAvailability;
+
+                    value /= (society.currentMilitary + society.maxMilitary) + 1;
+
+                    value *= map.param.person_threatMult;
 
                     item.threat = value;
                 }
@@ -198,6 +214,21 @@ namespace Assets.Code
             }
         }
 
+        public void logVote(VoteIssue issue)
+        {
+            if (World.logging)
+            {
+                string line = "  " + issue.ToString() + " for soc " + issue.society.getName();
+                log.takeLine(line);
+                foreach (VoteOption opt in issue.options)
+                {
+                    line = "     " + opt.fixedLenInfo();
+                    line += " U " + Eleven.toFixedLen(issue.computeUtility(this, opt, new List<ReasonMsg>()),12);
+                    log.takeLine(line);
+                }
+            }
+        }
+
         public VoteIssue proposeVotingIssue()
         {
             //Note we start at 1 utility. This means no guaranteed negative/near-zero utility options will be proposed
@@ -205,6 +236,8 @@ namespace Assets.Code
             VoteIssue bestIssue = null;
 
             bool existFreeTitles = false;
+
+            if (World.logging) { log.takeLine("Proposing vote on turn " + map.turn); }
 
 
             foreach (Location loc in map.locations)
@@ -241,6 +274,7 @@ namespace Assets.Code
                         bestIssue = issue;
                     }
                 }
+                logVote(issue);
             }
 
             if (society.getSovreign() != null)
@@ -271,6 +305,7 @@ namespace Assets.Code
                                 bestIssue = issue;
                             }
                         }
+                        logVote(issue);
                     }
                 }
 
@@ -333,6 +368,7 @@ namespace Assets.Code
                                 }
                             }
 
+                            logVote(issue);
                         }
                     }
                 }
@@ -357,6 +393,7 @@ namespace Assets.Code
                         bestIssue = issue;
                     }
                 }
+                logVote(issue);
 
                 //Check to see if you want to alter defensive military targetting
                 issue = new VoteIssue_SetDefensiveTarget(society, this);
@@ -379,6 +416,7 @@ namespace Assets.Code
                         bestIssue = issue;
                     }
                 }
+                logVote(issue);
 
                 //Check to see if you want to declare war
                 if (society.offensiveTarget != null && society.getRel(society.offensiveTarget).state != DipRel.dipState.war)
@@ -403,12 +441,17 @@ namespace Assets.Code
                             bestIssue = issue;
                         }
                     }
+                    logVote(issue);
                 }
             }
 
             if (bestIssue != null)
             {
                 World.log(this.getFullName() + " returning voting issue " + bestIssue.ToString() + " with expected utility " + bestU);
+                if (World.logging)
+                {
+                    log.takeLine("CHOSE: " + bestIssue.ToString());
+                }
             }
             lastProposedIssue = bestIssue;
             return bestIssue;

@@ -50,5 +50,18 @@ namespace Assets.Code
 
             return reply;
         }
+
+        public string fixedLenInfo()
+        {
+            string line = "";
+            VoteOption opt = this;
+            if (opt.econ_from != null) { line += " eFrom  " + Eleven.toFixedLen("" + opt.econ_from.name, 12); }
+            if (opt.econ_to != null) { line += " eTo    " + Eleven.toFixedLen("" + opt.econ_from.name, 12); }
+            if (opt.group != null) { line += " group  " + Eleven.toFixedLen("" + opt.group.getName(), 12); }
+            if (opt.location != null) { line += " loc    " + Eleven.toFixedLen("" + opt.location.getName(), 12); }
+            if (opt.person != null) { line += " person " + Eleven.toFixedLen("" + opt.person.getFullName(), 12); }
+            line += " ind " + opt.index;
+            return line;
+        }
     }
 }

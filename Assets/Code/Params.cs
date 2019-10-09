@@ -43,6 +43,7 @@ namespace Assets.Code
 
         public double utility_militaryTargetRelStrength = 100;
         public double person_prestigeDeltaPerTurn = 2;
+        public double person_threatMult = 1;
         internal double society_sovreignPrestige = 10;
 
         public int society_instablityTillRebellion = 10;

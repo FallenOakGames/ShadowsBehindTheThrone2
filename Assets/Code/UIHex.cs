@@ -14,13 +14,15 @@ namespace Assets.Code
         //public Text body;
 
         public GameObject portraitPrefab;
+        public GameObject testButtonObj;
         public RectTransform listContent;
 
         public Toggle bPeople;
         public Toggle bPlaces;
         public Toggle bVotes;
+        public Toggle bActions;
 
-        public enum Tab { People, Places, Votes };
+        public enum Tab { People, Places, Votes, Actions };
         private Tab currentTab;
 
         public void Start()
@@ -37,6 +39,11 @@ namespace Assets.Code
                 GameObject.Destroy(t.gameObject);
             }
 
+            if (currentTab == Tab.Actions)
+            {
+                fillActionsInTab();
+                return;
+            }
             Society soc = getSociety(GraphicalMap.selectedHex);
             if (soc == null) return;
 
@@ -44,70 +51,85 @@ namespace Assets.Code
             switch (currentTab)
             {
                 case Tab.People:
-                {
-                    foreach (Person p in soc.people)
                     {
-                        GameObject pp = Instantiate(portraitPrefab, listContent);
-                        pp.GetComponent<Portrait>().SetInfo(p);
-                    }
-
-                    break;
-                }
-                case Tab.Places:
-                {
-                    foreach (Settlement s in getSettlements(soc))
-                    {
-                        GameObject sp = Instantiate(portraitPrefab, listContent);
-                        sp.GetComponent<Portrait>().SetInfo(s);
-                    }
-
-                    break;
-                }
-                case Tab.Votes:
-                {
-                    if (soc.voteSession != null)
-                    {
-                        List<VoteOption> vs = soc.voteSession.issue.options;
-                        // FIXME: make sure this doesnt interfere with actual voting
-                        // Something is not right here, number changes when
-                        // you click around. randomn noise? Should be computed once
-                        // at beginning rather than right before applying votes?
                         foreach (Person p in soc.people)
                         {
-                            double highestWeight = 0;
-                            VoteOption bestChoice = null;
-                            foreach (VoteOption option in vs)
-                            {
-                                List<ReasonMsg> msgs = new List<ReasonMsg>();
-                                double u = soc.voteSession.issue.computeUtility(p, option, msgs);
-                                if (u > highestWeight || bestChoice == null)
-                                {
-                                    bestChoice = option;
-                                    highestWeight = u;
-                                }
-                            }
-                            bestChoice.votingWeight += p.prestige;
+                            GameObject pp = Instantiate(portraitPrefab, listContent);
+                            pp.GetComponent<Portrait>().SetInfo(p);
                         }
 
-                        foreach (VoteOption v in vs)
+                        break;
+                    }
+                case Tab.Places:
+                    {
+                        foreach (Settlement s in getSettlements(soc))
                         {
-                            GameObject vp = Instantiate(portraitPrefab, listContent);
-                            vp.GetComponent<Portrait>().SetInfo(v);
-
-                            v.votingWeight = 0.0;
+                            GameObject sp = Instantiate(portraitPrefab, listContent);
+                            sp.GetComponent<Portrait>().SetInfo(s);
                         }
+
+                        break;
+                    }
+                case Tab.Votes:
+                    {
+                        if (soc.voteSession != null)
+                        {
+                            List<VoteOption> vs = soc.voteSession.issue.options;
+                            foreach (Person p in soc.people)
+                            {
+                                double highestWeight = 0;
+                                VoteOption bestChoice = null;
+                                foreach (VoteOption option in vs)
+                                {
+                                    List<ReasonMsg> msgs = new List<ReasonMsg>();
+                                    double u = soc.voteSession.issue.computeUtility(p, option, msgs);
+                                    if (u > highestWeight || bestChoice == null)
+                                    {
+                                        bestChoice = option;
+                                        highestWeight = u;
+                                    }
+                                }
+                                bestChoice.votingWeight += p.prestige;
+                            }
+
+                            foreach (VoteOption v in vs)
+                            {
+                                GameObject vp = Instantiate(portraitPrefab, listContent);
+                                vp.GetComponent<Portrait>().SetInfo(v);
+
+                                v.votingWeight = 0.0;
+                            }
+                        }
+                        break;
                     }
 
-                    break;
-                }
+                case Tab.Actions:
+                    {
+                        break;
+                    }
             }
+        }
+
+        public void fillActionsInTab()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                GameObject sp = Instantiate(testButtonObj, listContent);
+                ButtonPortrait script = sp.GetComponent<ButtonPortrait>();
+                script.button.onClick.AddListener(delegate { bTestClick(i); });
+            }
+        }
+        public void bTestClick(int i)
+        {
+            World.log("Received data " + i);
         }
 
         public void onToggle(bool b)
         {
-            if      (bPeople.isOn) currentTab = Tab.People;
+            if (bPeople.isOn) currentTab = Tab.People;
             else if (bPlaces.isOn) currentTab = Tab.Places;
-            else if (bVotes.isOn)  currentTab = Tab.Votes;
+            else if (bVotes.isOn) currentTab = Tab.Votes;
+            else if (bActions.isOn) currentTab = Tab.Actions;
 
             checkData();
         }
@@ -142,7 +164,7 @@ namespace Assets.Code
             else
             {
                 title.text = GraphicalMap.selectedHex.getName();
-               string bodyText = "Body text for hex " + GraphicalMap.selectedHex.getName();
+                string bodyText = "Body text for hex " + GraphicalMap.selectedHex.getName();
 
                 bodyText += "\nAttachedTo " + GraphicalMap.selectedHex.territoryOf.hex.getName();
                 bodyText += "\nProvince: " + hex.province.name;

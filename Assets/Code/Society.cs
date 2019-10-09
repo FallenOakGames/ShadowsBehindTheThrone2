@@ -28,6 +28,7 @@ namespace Assets.Code
         public int instabilityTurns;
         public double data_loyalLordsCap;
         public double data_rebelLordsCap;
+        public int turnSovreignAssigned = -1;
 
         public Society(Map map) : base(map)
         {

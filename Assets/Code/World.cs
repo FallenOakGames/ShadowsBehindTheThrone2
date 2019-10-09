@@ -18,6 +18,8 @@ namespace Assets.Code
      */
     public class World : MonoBehaviour
     {
+        public static bool logging = false;
+
         public UIMaster ui;
         public TextureStore textureStore;
         public PrefabStore prefabStore;
@@ -29,6 +31,9 @@ namespace Assets.Code
         public static Map staticMap;
         public bool displayMessages = false;
         public bool turnLock = false;
+        public string pathPrefix = "";
+        public static string separator = "";
+        public bool isWindows = false;
 
         public void Start()
         {
@@ -42,8 +47,6 @@ namespace Assets.Code
             staticMap = map;
         }
 
-        public string pathPrefix = "";
-        public bool isWindows = false;
         public void specificStartup()
         {
             if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Windows)
@@ -51,6 +54,7 @@ namespace Assets.Code
                 Log("Windows! A windows OS");
                 isWindows = true;
                 pathPrefix = "";
+                separator = "/";
                 string[] decomp = Application.dataPath.Split('/');
                 for (int i = 0; i < decomp.Length - 1; i++)
                 {
@@ -66,6 +70,7 @@ namespace Assets.Code
             {
                 Log("The operating system is Linux based");
                 pathPrefix = "";
+                separator = "/";
                 string[] decomp = Application.dataPath.Split('/');
                 for (int i = 0; i < decomp.Length - 1; i++)
                 {
@@ -82,6 +87,17 @@ namespace Assets.Code
             Application.targetFrameRate = 60;
             GraphicalMap.world = this;
             //Activity.load();
+
+            if (logging)
+            {
+                foreach (string f in Directory.GetFiles("logging" + separator + "people"))
+                {
+                    if (f.Contains(".log"))
+                    {
+                        File.Delete(f);
+                    }
+                }
+            }
         }
         public void startup()
         {
