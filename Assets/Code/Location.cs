@@ -23,7 +23,7 @@ namespace Assets.Code
         public string name;
         public string shortName;
         public bool isMajor;//Remember if it's a city, so we have roughly the same amount at all times, regardless of razing
-        private List<Property> properties = new List<Property>();
+        public List<Property> properties = new List<Property>();
         public int turnLastTaken = -1000;
         public double inherentInformationAvailability = 0.85;
         public int lastTaken;
@@ -53,20 +53,7 @@ namespace Assets.Code
         {
             return inherentInformationAvailability;
         }
-
-        public List<Property> getProperties()
-        {
-            if (settlement == null) { return properties; }
-            else
-            {
-                List<Property> reply = new List<Property>();
-                foreach (Property p in this.properties)
-                {
-                    reply.Add(p);
-                }
-                return reply;
-            }
-        }
+        
 
         public string getName()
         {
@@ -141,7 +128,7 @@ namespace Assets.Code
             foreach (Property p in rems)
             {
                 properties.Remove(p);
-                p.end(this);
+                p.endProperty(this);
             }
         }
         public void addPropertyInternally(Property p)

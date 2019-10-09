@@ -229,12 +229,12 @@ namespace Assets.Code
                 //If we've clicked on his hex we want to cycle to the next unit in the cycle
                 if (GraphicalMap.selectedProperty.getLoc().hex == clickedHex)
                 {
-                    int index = GraphicalMap.selectedProperty.getLoc().getProperties().IndexOf(GraphicalMap.selectedProperty);
+                    int index = GraphicalMap.selectedProperty.getLoc().properties.IndexOf(GraphicalMap.selectedProperty);
                     bool foundAny = false;
-                    for (int i = index + 1; i < clickedHex.location.getProperties().Count; i++)
+                    for (int i = index + 1; i < clickedHex.location.properties.Count; i++)
                     {
                         foundAny = true;
-                        GraphicalMap.selectedProperty = clickedHex.location.getProperties()[i];
+                        GraphicalMap.selectedProperty = clickedHex.location.properties[i];
                         //world.ui.uiUnit.setTo(GraphicalMap.selectedProperty);
                         GraphicalMap.selectedHex = null;
                         return;
@@ -258,7 +258,7 @@ namespace Assets.Code
                 //See if there's someone to select
                 if (clickedHex.location != null)
                 {
-                    foreach (Property u in clickedHex.location.getProperties())
+                    foreach (Property u in clickedHex.location.properties)
                     {
                         GraphicalMap.selectedProperty = u;
                         //world.ui.uiUnit.setTo(GraphicalMap.selectedProperty);

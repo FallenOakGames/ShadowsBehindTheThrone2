@@ -10,13 +10,14 @@ namespace Assets.Code
         public abstract Location getLoc();
         public Property_Prototype proto;
         public int charge;
+        public GraphicalProperty outer;
 
         public Property(Property_Prototype proto)
         {
             this.proto = proto;
         }
 
-        public virtual void end(Location l)
+        public virtual void endProperty(Location l)
         {
         }
 
@@ -32,7 +33,7 @@ namespace Assets.Code
             //Some, but not many, properties can be added multiply. Stackable defaults to false
             if (proto.stackable == false)
             {
-                foreach (Property p in location.getProperties())
+                foreach (Property p in location.properties)
                 {
                     if (p.proto.name != name) { continue; }
                     //Found matching name. Set timer to whatever's largest
