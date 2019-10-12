@@ -157,6 +157,10 @@ namespace Assets.Code
                 map.socialGroups.Add(rebellion);
                 rebellion.setName(seenProvinces[k].name + " rebellion");
                 rebellion.isRebellion = true;
+                if (Eleven.random.Next(2) == 0)
+                {
+                    rebellion.posture = militaryPosture.defensive;
+                }
                 foreach (Person p in rebels)
                 {
                     if (p.title_land != null)

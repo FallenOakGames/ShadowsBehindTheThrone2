@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
 namespace Assets.Code
 {
@@ -42,6 +43,21 @@ namespace Assets.Code
                             advantageToEnemeies += delta * p.getRelation(affected).getLiking() * affected.title_land.settlement.basePrestige * society.map.param.utility_econEffectOther;
                         }
                     }
+                }
+            }
+
+            //If we're actually affected by this, don't care more about the wellbeing of others than of yourself
+            if (Math.Abs(advtangeToMe) > 1)
+            {
+                if (Math.Abs(advantageToAllies) > Math.Abs(advtangeToMe))
+                {
+                    if (advantageToAllies > 0) { advantageToAllies = Math.Abs(advtangeToMe); }
+                    if (advantageToAllies < 0) { advantageToAllies = -Math.Abs(advtangeToMe); }
+                }
+                if (Math.Abs(advantageToEnemeies) > Math.Abs(advtangeToMe))
+                {
+                    if (advantageToEnemeies > 0) { advantageToEnemeies = Math.Abs(advtangeToMe); }
+                    if (advantageToEnemeies < 0) { advantageToEnemeies = -Math.Abs(advtangeToMe); }
                 }
             }
 
