@@ -124,6 +124,8 @@ namespace Assets.Code
             foreach (SocialGroup sg in socialGroups)
             {
                 if (sg.lastBattle == turn) { continue; }//Only one battle permitted per social group (that they initiate, at least)
+                
+                if (checkDefensiveAttackHold(sg)) { continue; }//Should you stop attacking, to conserve strength?
 
                 if (sg.currentMilitary < sg.maxMilitary * param.combat_thresholdAttackStrength) { continue; }//Below min strength
 
@@ -192,6 +194,15 @@ namespace Assets.Code
                     }
                 }
             }
+        }
+
+        private bool checkDefensiveAttackHold(SocialGroup sg)
+        {
+            if (sg is Society == false) { return false; }
+            Society soc = (Society)sg;
+            if (soc.posture != Society.militaryPosture.defensive) { return false; }
+            if (soc.defensiveTarget == null) { return false; }
+            return soc.currentMilitary < soc.defensiveTarget.currentMilitary * 1.5;//If you completely overwhelm them attack, but otherwise hide
         }
 
         private double computeDefensiveBonuses(double dmg,SocialGroup att,SocialGroup def)

@@ -120,7 +120,7 @@ namespace Assets.Code
             map.world = this;
             map.gen();
 
-            for (int i = 0; i < param.burnInSteps; i++)
+            for (int i = 0; i < param.mapGen_burnInSteps; i++)
             {
                 map.turnTick();
             }

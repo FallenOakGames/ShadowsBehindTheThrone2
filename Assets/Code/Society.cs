@@ -305,7 +305,7 @@ namespace Assets.Code
                 {
                     if (loc.soc == this)
                     {
-                        if (loc.isForSocieties == false || loc.hex.getHabilitability() < map.param.minHabitabilityForHumans)
+                        if (loc.isForSocieties == false || loc.hex.getHabilitability() < map.param.mapGen_minHabitabilityForHumans)
                         {
                             if (loc.settlement != null)
                             {
@@ -446,11 +446,6 @@ namespace Assets.Code
                     }
                     bestChoice.votesFor.Add(p);
                     bestChoice.votingWeight += p.prestige;
-
-                    if (voteSession.issue is VoteIssue_AssignTitle)
-                    {
-                        World.log("SOVREIGN VOTE: " + p.getFullName() + " votes for " + bestChoice.person.getFullName());
-                    }
                 }
 
                 double topVote = 0;

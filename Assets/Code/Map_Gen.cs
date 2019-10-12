@@ -71,8 +71,8 @@ namespace Assets.Code
         public void gen()
         {
             World.log("Map generating starting...");
-            sx = param.sizeX;
-            sy = param.sizeY;
+            sx = param.mapGen_sizeX;
+            sy = param.mapGen_sizeY;
             grid = new Hex[sx][];
             for (int i = 0; i < sx; i++) { grid[i] = new Hex[sy]; }
             sizeX = sx;
@@ -133,7 +133,7 @@ namespace Assets.Code
             {
                 if (isSea(loc)) { continue; }
                 nNonSea += 1;
-                if (loc.hex.getHabilitability() < param.minHabitabilityForHumans) { continue; }
+                if (loc.hex.getHabilitability() < param.mapGen_minHabitabilityForHumans) { continue; }
 
                 float cityPlaceVal = cityPlacementMap[loc.hex.x][loc.hex.y];
                 placementValues.Add(cityPlaceVal);
@@ -158,7 +158,7 @@ namespace Assets.Code
                 if (isSea(loc)) { loc.isForSocieties = false; continue; }
                 float cityPlaceVal = cityPlacementMap[loc.hex.x][loc.hex.y];
                 if (cityPlaceVal < habThreshold) { loc.isForSocieties = false; continue; }
-                if (loc.hex.getHabilitability() < param.minHabitabilityForHumans) { continue; }
+                if (loc.hex.getHabilitability() < param.mapGen_minHabitabilityForHumans) { continue; }
 
                 if (loc.isMajor)
                 {
@@ -1475,7 +1475,7 @@ namespace Assets.Code
                     if (landmass[tx][ty]) { continue; }
                     open.Clear();
                     nLand += paintCircle(tx, ty, 3, open);
-                    stepsLeftInIsland = Eleven.random.Next(param.stepsPerIsland) + 1;
+                    stepsLeftInIsland = Eleven.random.Next(param.mapGen_stepsPerIsland) + 1;
                 }
 
                 int[] chosen = chooseFromOpen(open);
@@ -1581,7 +1581,7 @@ namespace Assets.Code
                     if (Math.Abs(chosen[1] - sizeY - 1) < distToEdge) { distToEdge = Math.Abs(chosen[1] - sizeY - 1); }
                     if (distToEdge < param_margin) { open.Remove(chosen); continue; }
 
-                    int size = Eleven.random.Next(param.maxBrushSize) + 1;
+                    int size = Eleven.random.Next(param.mapGen_maxBrushSize) + 1;
                     if (size >= distToEdge) { size = distToEdge; }
                     nLand += paintCircle(chosen[0], chosen[1], size, open);
                 }

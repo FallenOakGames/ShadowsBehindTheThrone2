@@ -27,7 +27,6 @@ namespace Assets.Code
 
                     delta = 1 - delta;
                     //Run off the base prestige, so all change is regarded the same, regardless of existing changes
-                    double localU = 0;
                     if (affected == p)
                     {
                         advtangeToMe = delta * p.getRelation(affected).getLiking() * affected.title_land.settlement.basePrestige * society.map.param.utility_econEffect;
