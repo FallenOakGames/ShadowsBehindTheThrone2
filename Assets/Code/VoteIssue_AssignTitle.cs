@@ -34,15 +34,10 @@ namespace Assets.Code
             double u = option.getBaseUtility(voter);
 
             Person p = option.person;
-            double existingValue = 0;
-            if (p.title_land != null)
-            {
-                existingValue = p.title_land.settlement.getPrestige();
-            }
 
             double newValue = title.getPrestige();
 
-            double benefitToPerson = newValue - existingValue;
+            double benefitToPerson = newValue;
 
             //We know how much they would be advantaged. We now need to know how much we like them to determine
             //if this is a good thing or not
@@ -79,6 +74,10 @@ namespace Assets.Code
             {
                 double damageToOther = title.getPrestige();
                 double localU = -damageToOther * voter.getRelation(title.heldBy).getLiking() * voter.map.param.society_unlandedTitleUtilityMult;
+                if (wouldBeOutvoted)
+                {
+                    localU *= voter.map.param.society_wouldBeOutvotedUtilityMult;
+                }
                 msgs.Add(new ReasonMsg("Harm to " + title.heldBy.getFullName(), localU));
                 u += localU;
             }

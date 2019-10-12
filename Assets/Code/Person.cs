@@ -8,7 +8,7 @@ namespace Assets.Code
     public class Person
     {
         public string firstName;
-        public bool male = Eleven.random.Next(2) == 0;
+        public bool isMale = Eleven.random.Next(2) == 0;
         public List<Title> titles = new List<Title>();
         public TitleLanded title_land;
         public Society society;
@@ -28,7 +28,7 @@ namespace Assets.Code
         public Person(Society soc)
         {
             this.society = soc;
-            firstName = TextStore.getName(male);
+            firstName = TextStore.getName(isMale);
             getRelation(this).setLiking(100);//Set self-relation to 100
 
             if (World.logging)
@@ -187,7 +187,7 @@ namespace Assets.Code
                     bestTitle = t;
                 }
             }
-            if (male)
+            if (isMale)
             {
                 if (bestTitle != null) { return bestTitle.nameM; }
                 if (title_land != null) { return title_land.titleM; }

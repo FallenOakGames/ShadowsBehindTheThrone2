@@ -48,7 +48,7 @@ namespace Assets.Code
         public double combat_defensivePostureDmgMult = 0.666;
 
         internal int society_votingDuration = 2;
-        internal double society_votingRelChangePerUtilityPositive = 0.05;//If benefitted by a vote
+        internal double society_votingRelChangePerUtilityPositive = 0.04;//If benefitted by a vote
         internal double society_votingRelChangePerUtilityNegative = 0.08;//If harmed by a vote
         public int society_instablityTillRebellion = 10;
         public int society_rebelLikingThreshold = -5;

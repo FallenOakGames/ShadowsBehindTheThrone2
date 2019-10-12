@@ -442,10 +442,10 @@ namespace Assets.Code
                                 p.log.takeLine("     " + Eleven.toFixedLen(msg.value, 5) +  msg.msg);
                             }
                         }
-
                     }
                     bestChoice.votesFor.Add(p);
                     bestChoice.votingWeight += p.prestige;
+
                 }
 
                 double topVote = 0;
