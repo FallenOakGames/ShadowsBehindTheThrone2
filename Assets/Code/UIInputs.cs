@@ -93,6 +93,28 @@ namespace Assets.Code
                         world.map.masker.mask = MapMaskManager.maskType.THREAT;
                     }
                 }
+                else if (Input.GetKeyDown(KeyCode.Alpha5))
+                {
+                    if (world.map.masker.mask == MapMaskManager.maskType.LIKING_FROM)
+                    {
+                        world.map.masker.mask = MapMaskManager.maskType.NONE;
+                    }
+                    else
+                    {
+                        world.map.masker.mask = MapMaskManager.maskType.LIKING_FROM;
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha6))
+                {
+                    if (world.map.masker.mask == MapMaskManager.maskType.LIKING_TO)
+                    {
+                        world.map.masker.mask = MapMaskManager.maskType.NONE;
+                    }
+                    else
+                    {
+                        world.map.masker.mask = MapMaskManager.maskType.LIKING_TO;
+                    }
+                }
                 else if (Input.GetKeyDown(KeyCode.Alpha9))
                 {
                     if (world.map.masker.mask == MapMaskManager.maskType.TESTING)

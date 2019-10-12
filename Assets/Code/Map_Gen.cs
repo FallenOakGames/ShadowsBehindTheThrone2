@@ -240,6 +240,7 @@ namespace Assets.Code
                 int c = 0;
                 foreach (Location l in p.locations)
                 {
+                    l.province = p;
                     if (l.isMajor)
                     {
                         c += 1;

@@ -165,6 +165,7 @@ namespace Assets.Code
                     sg.currentMilitary -= myLosses;
                     if (sg.currentMilitary < 0) { sg.currentMilitary = 0; }
                     double theirLosses = myStr * param.combat_lethality;
+                    theirLosses = computeDefensiveBonuses(theirLosses,sg,defender);
                     theirLosses = attackTo.takeMilitaryDamage(theirLosses);
                     defender.currentMilitary -= theirLosses;
                     if (defender.currentMilitary < 0) { defender.currentMilitary = 0; }
@@ -191,6 +192,19 @@ namespace Assets.Code
                     }
                 }
             }
+        }
+
+        private double computeDefensiveBonuses(double dmg,SocialGroup att,SocialGroup def)
+        {
+            if (def is Society)
+            {
+                Society defender = (Society)def;
+                if (defender.posture == Society.militaryPosture.defensive && defender.defensiveTarget == att)
+                {
+                    dmg *= param.combat_defensivePostureDmgMult;
+                }
+            }
+            return dmg;
         }
 
         public void takeLocationFromOther(SocialGroup att,SocialGroup def,Location taken)

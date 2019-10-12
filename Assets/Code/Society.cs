@@ -51,7 +51,13 @@ namespace Assets.Code
             processTerritoryLoss();
             processVoting();
             checkPopulation();//Add people last, so new people don't suddenly arrive and act before the player can see them
+            checkAssertions();
             log();
+        }
+
+        public void checkAssertions()
+        {
+            if (titles.Count == 0) { throw new Exception("Sovreign title not present"); }
         }
 
         public void log()
@@ -101,7 +107,7 @@ namespace Assets.Code
                 }
             }
 
-            if (data_rebelLordsCap > data_loyalLordsCap)
+            if (data_rebelLordsCap >= data_loyalLordsCap)
             {
                 instabilityTurns += 1;
                 if (instabilityTurns >= map.param.society_instablityTillRebellion)
@@ -111,48 +117,82 @@ namespace Assets.Code
             }
         }
 
-        public void triggerCivilWar(List<Person> rebels)
+        public void triggerCivilWar(List<Person> rebelsTotal)
         {
-            World.log(this.getName() + " falls into civil war as " + rebels.Count + " out of " + people.Count + " nobles declare rebellion against " + getSovreign().getFullName());
+            World.log(this.getName() + " falls into civil war as " + rebelsTotal.Count + " out of " + people.Count + " nobles declare rebellion against " + getSovreign().getFullName());
 
-            Society rebellion = new Society(map);
-            map.socialGroups.Add(rebellion);
-            rebellion.setName("Rebellion from " + this.getName());
-            rebellion.isRebellion = true;
-            foreach (Person p in rebels)
+            List<Province> seenProvinces = new List<Province>();
+            List<List<Person>> rebelsByProvince = new List<List<Person>>();
+            List<Person> unmappedRebels = new List<Person>();
+            foreach (Person p in rebelsTotal)
             {
-                if (p.title_land != null)
+                if (p.title_land == null) { unmappedRebels.Add(p); continue; }
+                if (seenProvinces.Contains(p.title_land.settlement.location.province))
                 {
-                    p.title_land.settlement.location.soc = rebellion;
+                    int ind = seenProvinces.IndexOf(p.title_land.settlement.location.province);
+                    rebelsByProvince[ind].Add(p);
                 }
-                this.people.Remove(p);
-                rebellion.people.Add(p);
-                p.society = rebellion;
+                else
+                {
+                    seenProvinces.Add(p.title_land.settlement.location.province);
+                    rebelsByProvince.Add(new List<Person>());
+                    rebelsByProvince[rebelsByProvince.Count - 1].Add(p);
+                }
             }
 
-            double proportionalStrength = 0;
-            rebellion.computeMilitaryCap();
-            this.computeMilitaryCap();
-
-            if (this.maxMilitary > 0 || rebellion.maxMilitary > 0)
+            if (rebelsByProvince.Count == 0)
             {
-                proportionalStrength = this.maxMilitary / (this.maxMilitary + rebellion.maxMilitary);
-                rebellion.currentMilitary = this.currentMilitary * (1 - proportionalStrength);
-                this.currentMilitary = this.currentMilitary * proportionalStrength;
+                World.log("No rebels had any territory. Rebellion called off");
+                return;
             }
 
-            if (getSovreign() != null) {
-                KillOrder killSovreign = new KillOrder(getSovreign(), "Rebellion against tyranny");
-                rebellion.killOrders.Add(killSovreign);
-            }
+            rebelsByProvince[0].AddRange(unmappedRebels);
 
-            foreach (Person p in rebels)
+            World.log("Rebellion has " + seenProvinces.Count + " provinces");
+
+            for (int k = 0; k < seenProvinces.Count; k++)
             {
-                KillOrder killRebel = new KillOrder(p, "Rebelled against sovreign");
-                this.killOrders.Add(killRebel);
+                List<Person> rebels = rebelsByProvince[k];
+                Society rebellion = new Society(map);
+                map.socialGroups.Add(rebellion);
+                rebellion.setName(seenProvinces[k].name + " rebellion");
+                rebellion.isRebellion = true;
+                foreach (Person p in rebels)
+                {
+                    if (p.title_land != null)
+                    {
+                        p.title_land.settlement.location.soc = rebellion;
+                    }
+                    this.people.Remove(p);
+                    rebellion.people.Add(p);
+                    p.society = rebellion;
+                }
 
+                double proportionalStrength = 0;
+                rebellion.computeMilitaryCap();
+                this.computeMilitaryCap();
+
+                if (this.maxMilitary > 0 || rebellion.maxMilitary > 0)
+                {
+                    proportionalStrength = this.maxMilitary / (this.maxMilitary + rebellion.maxMilitary);
+                    rebellion.currentMilitary = this.currentMilitary * (1 - proportionalStrength);
+                    this.currentMilitary = this.currentMilitary * proportionalStrength;
+                }
+
+                if (getSovreign() != null)
+                {
+                    KillOrder killSovreign = new KillOrder(getSovreign(), "Rebellion against tyranny");
+                    rebellion.killOrders.Add(killSovreign);
+                }
+
+                foreach (Person p in rebels)
+                {
+                    KillOrder killRebel = new KillOrder(p, "Rebelled against sovreign");
+                    this.killOrders.Add(killRebel);
+
+                }
+                this.map.declareWar(rebellion, this);
             }
-            this.map.declareWar(rebellion, this);
         }
 
         public void processExpirables()
@@ -219,10 +259,16 @@ namespace Assets.Code
 
         public void computeCapital()
         {
-            double bestPrestige = 0;
+            double bestPrestige = -100000;
             foreach (Location loc in map.locations)
             {
                 if (loc.soc != this) { continue; }
+                if (loc.settlement == null) { continue; }
+                if (loc.settlement.basePrestige > bestPrestige)
+                {
+                    bestPrestige = loc.settlement.basePrestige;
+                    capital = loc;
+                }
             }
         }
 
@@ -232,7 +278,10 @@ namespace Assets.Code
             if (this.posture == militaryPosture.offensive)
             {
                 int percent = (int)(100 * map.param.society_threatMultFromOffensivePosture);
-                msgs.Add(new ReasonMsg("Offensive Posture (+" + percent + "%)", threat));
+                if (msgs != null)
+                {
+                    msgs.Add(new ReasonMsg("Offensive Posture (+" + percent + "%)", threat));
+                }
                 threat *= 1 + (map.param.society_threatMultFromOffensivePosture);
             }
             return threat;
@@ -373,6 +422,7 @@ namespace Assets.Code
                 
                 foreach (Person p in people)
                 {
+                    if (World.logging) { p.log.takeLine("Voting on " + voteSession.issue); }
                     double highestWeight = 0;
                     VoteOption bestChoice = null;
                     foreach (VoteOption option in voteSession.issue.options)
@@ -384,9 +434,23 @@ namespace Assets.Code
                         {
                             bestChoice = option;
                             highestWeight = u;
-                        }}
+                        }
+                        if (World.logging) {
+                            p.log.takeLine(" " + option.fixedLenInfo() + "  " + u);
+                            foreach (ReasonMsg msg in msgs)
+                            {
+                                p.log.takeLine("     " + Eleven.toFixedLen(msg.value, 5) +  msg.msg);
+                            }
+                        }
+
+                    }
                     bestChoice.votesFor.Add(p);
                     bestChoice.votingWeight += p.prestige;
+
+                    if (voteSession.issue is VoteIssue_AssignTitle)
+                    {
+                        World.log("SOVREIGN VOTE: " + p.getFullName() + " votes for " + bestChoice.person.getFullName());
+                    }
                 }
 
                 double topVote = 0;
@@ -398,6 +462,8 @@ namespace Assets.Code
                         winner = option;
                         topVote = option.votingWeight;
                     }
+
+                    voteSession.issue.changeLikingForVotes(option);
                 }
 
                 if (World.logging && logbox != null) { logbox.takeLine("End voting on " + voteSession.issue.ToString()); }

@@ -6,6 +6,7 @@ namespace Assets.Code{
     {
         public Society society;
         public Person heldBy;
+        public int turnLastAssigned = 0;
 
         public string nameM = "DEFAULTTITLE_M";
         public string nameF = "DEFAULTTITLE_F";

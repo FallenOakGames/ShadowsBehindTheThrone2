@@ -8,6 +8,7 @@ namespace Assets.Code
     public class VoteIssue_AssignTitle : VoteIssue
     {
         public Title title;
+        public int lastAssigned = 0;
 
         public VoteIssue_AssignTitle(Society soc,Person proposer,Title title) : base(soc,proposer)
         {
@@ -46,16 +47,38 @@ namespace Assets.Code
             //We know how much they would be advantaged. We now need to know how much we like them to determine
             //if this is a good thing or not
 
-            double localU = benefitToPerson * voter.getRelation(p).getLiking();
-            msgs.Add(new ReasonMsg("Benefit to " + p.getFullName(), localU));
-            u += localU;
+            double benefitU = benefitToPerson * voter.getRelation(p).getLiking() * voter.map.param.society_unlandedTitleUtilityMult;
+
+            //Check if you should avoid voting for yourself
+            bool wouldBeOutvoted = false;
+            if (p == voter)
+            {
+                foreach (Person p2 in voter.society.people)
+                {
+                    if (p2.prestige > p.prestige && p.getRelation(p2).getLiking() < 0)
+                    {
+                        wouldBeOutvoted = true;
+                    }
+                }
+            }
+            if (wouldBeOutvoted)
+            {
+                benefitU *= voter.map.param.society_wouldBeOutvotedUtilityMult;
+                msgs.Add(new ReasonMsg("Benefit to (reduced by fears of being outvoted) " + p.getFullName(), benefitU));
+                u += benefitU;
+            }
+            else
+            {
+                msgs.Add(new ReasonMsg("Benefit to " + p.getFullName(), benefitU));
+                u += benefitU;
+            }
 
             //We need to know if someone's going to lose out here
             //(Note this is irrelevant if they're the person who's being voted on)
             if (title.heldBy != null && title.heldBy != p)
             {
                 double damageToOther = title.getPrestige();
-                localU = -damageToOther * voter.getRelation(title.heldBy).getLiking();
+                double localU = -damageToOther * voter.getRelation(title.heldBy).getLiking() * voter.map.param.society_unlandedTitleUtilityMult;
                 msgs.Add(new ReasonMsg("Harm to " + title.heldBy.getFullName(), localU));
                 u += localU;
             }
@@ -86,6 +109,7 @@ namespace Assets.Code
             option.person.titles.Add(title);
 
             society.turnSovreignAssigned = society.map.turn;
+            title.turnLastAssigned = society.map.turn;
         }
         public override bool stillValid(Map map)
         {

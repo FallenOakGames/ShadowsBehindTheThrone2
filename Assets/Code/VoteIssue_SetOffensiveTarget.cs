@@ -40,7 +40,7 @@ namespace Assets.Code
             //1 if we're 100% of the balance, -1 if they are
             double relativeStrength = (ourStrength - theirStrength) / (ourStrength + theirStrength);
 
-            localU = society.map.param.utility_militaryTargetRelStrength*relativeStrength;
+            localU = society.map.param.utility_militaryTargetRelStrengthOffensive*relativeStrength;
             msgs.Add(new ReasonMsg("Relative Strength of Current Militaries", localU));
             u += localU;
 
@@ -75,7 +75,7 @@ namespace Assets.Code
                     }
                 }
 
-                localU -= society.map.param.utility_militaryTargetRelStrength * relativeStrength;
+                localU -= society.map.param.utility_militaryTargetRelStrengthOffensive * relativeStrength;
                 msgs.Add(new ReasonMsg("Desirability of current target (" + society.offensiveTarget.getName() + ")", localU));
                 u += localU;
             }

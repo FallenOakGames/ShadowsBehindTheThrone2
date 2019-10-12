@@ -9,6 +9,7 @@ namespace Assets.Code
     {
         public Person proposer;
         public Society society;
+
         public VoteIssue(Society society,Person proposer)
         {
             this.society = society;
@@ -17,6 +18,11 @@ namespace Assets.Code
         public List<VoteOption> options = new List<VoteOption>();
         public abstract double computeUtility(Person p,VoteOption option, List<ReasonMsg> msgs);
         public virtual void implement(VoteOption option)
+        {
+        }
+        public abstract bool stillValid(Map map);
+
+        public void changeLikingForVotes(VoteOption option)
         {
             //Everyone affected/concerned about the vote now changes their opinion of all the voters for the winning option
             //depending on how much they care and how much they were affected
@@ -39,6 +45,5 @@ namespace Assets.Code
                 }
             }
         }
-        public abstract bool stillValid(Map map);
     }
 }

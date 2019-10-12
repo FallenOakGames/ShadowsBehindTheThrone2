@@ -9,7 +9,7 @@ namespace Assets.Code
     //[Serializable,HideInInspector]
     public class MapMaskManager
     {
-        public enum maskType { NONE, NATION, PROVINCE, INFORMATION,THREAT,TESTING };
+        public enum maskType { NONE, NATION, PROVINCE, INFORMATION,THREAT,LIKING_FROM,LIKING_TO,TESTING };
         public maskType mask = maskType.NONE;
         public Map map;
         [NonSerialized]
@@ -124,6 +124,74 @@ namespace Assets.Code
                 {
                     return new Color(0f, 0f, 0f, 0.75f);
                 }
+            }
+
+            else if (mask == maskType.LIKING_FROM)
+            {
+                Color c = new Color(0, 0, 0, 0.5f);
+                try
+                {
+                    Person me = GraphicalMap.selectedHex.location.settlement.title.heldBy;
+                    Person them = hex.location.settlement.title.heldBy;
+                    float liking = (float)me.getRelation(them).getLiking();
+                    if (liking > 0)
+                    {
+                        if (liking > 100) { liking = 100; }
+                        liking /= 100;
+                        c = new Color(0, liking, 0, 0.5f);
+                    }
+                    else
+                    {
+                        liking *= liking;
+                        if (liking > 100) { liking = 100; }
+                        liking /= 100;
+                        c = new Color(liking, 0, 0, 0.5f);
+
+                    }
+                }
+                catch (NullReferenceException e)
+                {
+
+                }
+                catch (ArgumentNullException e)
+                {
+
+                }
+                return c;
+            }
+
+            else if (mask == maskType.LIKING_TO)
+            {
+                Color c = new Color(0, 0, 0, 0.5f);
+                try
+                {
+                    Person me = GraphicalMap.selectedHex.location.settlement.title.heldBy;
+                    Person them = hex.location.settlement.title.heldBy;
+                    float liking = (float)them.getRelation(me).getLiking();
+                    if (liking > 0)
+                    {
+                        if (liking > 100) { liking = 100; }
+                        liking /= 100;
+                        c = new Color(0, liking, 0, 0.5f);
+                    }
+                    else
+                    {
+                        liking *= liking;
+                        if (liking > 100) { liking = 100; }
+                        liking /= 100;
+                        c = new Color(liking, 0, 0, 0.5f);
+
+                    }
+                }
+                catch (NullReferenceException e)
+                {
+
+                }
+                catch (ArgumentNullException e)
+                {
+
+                }
+                return c;
             }
             else if (mask == maskType.TESTING)
             {

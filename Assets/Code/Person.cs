@@ -165,6 +165,7 @@ namespace Assets.Code
 
         public RelObj getRelation(Person other)
         {
+            if (other == null) { throw new NullReferenceException(); }
             if (relations.ContainsKey(other))
             {
                 return relations[other];
@@ -254,7 +255,7 @@ namespace Assets.Code
             //Assignment of sovreign takes priority over any other voting, in the minds of the lords and ladies
             foreach (Title t in society.titles)
             {
-                if (t.heldBy != null) { continue; }
+                if (t.heldBy != null && (map.turn - t.turnLastAssigned < map.param.society_minTimeBetweenTitleReassignments)) { continue; }
                 issue = new VoteIssue_AssignTitle(society, this, t);
 
                 //Everyone is eligible
@@ -268,7 +269,7 @@ namespace Assets.Code
                 {
                     //Random factor to prevent them all rushing a singular voting choice
                     double localU = issue.computeUtility(this, opt, new List<ReasonMsg>()) * Eleven.random.NextDouble();
-                    if (localU > bestU)
+                    if (localU > bestU || (t == society.sovreign && t.heldBy == null))//Note we force them to vote on a sovereign if there is none
                     {
                         bestU = localU;
                         bestIssue = issue;
@@ -283,14 +284,18 @@ namespace Assets.Code
                 {
                     //If there are unhanded out titles, only consider those. Else, check all.
                     //Maybe they could be rearranged (handed out or simply swapped) in a way which could benefit you
-                    if (loc.soc == society && loc.settlement != null && loc.settlement.title != null && ((!existFreeTitles) || (loc.settlement.title.heldBy == null)))
+                    //if (loc.soc == society && loc.settlement != null && loc.settlement.title != null && ((!existFreeTitles) || (loc.settlement.title.heldBy == null)))
+
+                    //We're now stopping them suggesting this on places with existing nobles, as that lead to undue amounts of swapping
+                    if (loc.soc == society && loc.settlement != null && loc.settlement.title != null && (loc.settlement.title.heldBy == null))
                     {
-                        if (map.turn - loc.turnLastAssigned  < Params.society_minTimeBetweenLocReassignments) { continue; }
+                        //if (map.turn - loc.turnLastAssigned  < Params.society_minTimeBetweenLocReassignments) { continue; }
                         issue = new VoteIssue_AssignLandedTitle(society, this, loc.settlement.title);
                         if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
                                                                                                                    //Everyone is eligible
                         foreach (Person p in society.people)
                         {
+                            if (p.title_land != null) { continue; }//Again, to prevent constant shuffling
                             VoteOption opt = new VoteOption();
                             opt.person = p;
                             issue.options.Add(opt);
@@ -338,7 +343,8 @@ namespace Assets.Code
                         foreach (EconTrait econ_to in mine)
                         {
                             issue = new VoteIssue_EconomicRebalancing(society, this);
-                            if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
+                            //Allow them to spam econ votes
+                            //if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
 
                             bool present = false;
                             foreach (EconEffect effect in society.econEffects)
@@ -384,7 +390,7 @@ namespace Assets.Code
                 }
                 foreach (VoteOption opt in issue.options)
                 {
-                    if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
+                    //if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
 
                     //Random factor to prevent them all rushing a singular voting choice
                     double localU = issue.computeUtility(this, opt, new List<ReasonMsg>()) * Eleven.random.NextDouble();
@@ -407,7 +413,29 @@ namespace Assets.Code
                 }
                 foreach (VoteOption opt in issue.options)
                 {
-                    if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
+                    //if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
+
+                    //Random factor to prevent them all rushing a singular voting choice
+                    double localU = issue.computeUtility(this, opt, new List<ReasonMsg>()) * Eleven.random.NextDouble();
+                    if (localU > bestU)
+                    {
+                        bestU = localU;
+                        bestIssue = issue;
+                    }
+                }
+                logVote(issue);
+
+                //Change military posture, to either improve defence, fix internal problems, or attack an enemy
+                issue = new VoteIssue_MilitaryStance(society, this);
+                for (int i = 0; i < 3; i++)
+                {
+                    VoteOption opt = new VoteOption();
+                    opt.index = i;
+                    issue.options.Add(opt);
+                }
+                foreach (VoteOption opt in issue.options)
+                {
+                    //if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
 
                     //Random factor to prevent them all rushing a singular voting choice
                     double localU = issue.computeUtility(this, opt, new List<ReasonMsg>()) * Eleven.random.NextDouble();
@@ -420,7 +448,8 @@ namespace Assets.Code
                 logVote(issue);
 
                 //Check to see if you want to declare war
-                if (society.offensiveTarget != null && society.getRel(society.offensiveTarget).state != DipRel.dipState.war)
+                //You need to be in offensive posture to be allowed to do so
+                if (society.offensiveTarget != null && society.posture == Society.militaryPosture.offensive && society.getRel(society.offensiveTarget).state != DipRel.dipState.war)
                 {
                     issue = new VoteIssue_DeclareWar(society, society.offensiveTarget, this);
                     VoteOption option = new VoteOption();
@@ -433,7 +462,7 @@ namespace Assets.Code
 
                     foreach (VoteOption opt in issue.options)
                     {
-                        if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
+                        //if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
                                                                                                                    //Random factor to prevent them all rushing a singular voting choice
                         double localU = issue.computeUtility(this, opt, new List<ReasonMsg>()) * Eleven.random.NextDouble();
                         if (localU > bestU)

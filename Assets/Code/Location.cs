@@ -31,6 +31,7 @@ namespace Assets.Code
         public Dictionary<SocialGroup, double> information = new Dictionary<SocialGroup, double>();
         internal int debugVal;
         internal int turnLastAssigned;
+        public Province province;
 
         public Location(Map map, Hex hex,bool isMajor)
         {
@@ -61,6 +62,12 @@ namespace Assets.Code
             return name;
         }
 
+        public Person person()
+        {
+            if (settlement == null) { return null; }
+            if (settlement.title == null) { return null; }
+            return settlement.title.heldBy;
+        }
 
         /**
          * The amount of damage which could theoretically be absorbed by defences

@@ -14,6 +14,9 @@ namespace Assets.Code
         {
             double u = option.getBaseUtility(p);
 
+            double advtangeToMe = 0;
+            double advantageToAllies = 0;
+            double advantageToEnemeies = 0;
             foreach (Person affected in society.people)
             {
                 if (affected.title_land != null)
@@ -24,13 +27,33 @@ namespace Assets.Code
 
                     delta = 1 - delta;
                     //Run off the base prestige, so all change is regarded the same, regardless of existing changes
-                    double localU = delta * p.getRelation(affected).getLiking() * affected.title_land.settlement.basePrestige * society.map.param.utility_econEffect;
-
-                    msgs.Add(new ReasonMsg("Prestige change for " + affected.getFullName(), localU));
-                    u += localU;
+                    double localU = 0;
+                    if (affected == p)
+                    {
+                        advtangeToMe = delta * p.getRelation(affected).getLiking() * affected.title_land.settlement.basePrestige * society.map.param.utility_econEffect;
+                    }
+                    else
+                    {
+                        if (p.getRelation(affected).getLiking() > 0)
+                        {
+                            advantageToAllies += delta * p.getRelation(affected).getLiking() * affected.title_land.settlement.basePrestige * society.map.param.utility_econEffectOther;
+                        }
+                        else
+                        {
+                            advantageToEnemeies += delta * p.getRelation(affected).getLiking() * affected.title_land.settlement.basePrestige * society.map.param.utility_econEffectOther;
+                        }
+                    }
                 }
             }
-            
+
+            msgs.Add(new ReasonMsg("Advantage to me", advtangeToMe));
+            u += advtangeToMe;
+            msgs.Add(new ReasonMsg("Advantage to allies", advantageToAllies));
+            u += advantageToAllies;
+            msgs.Add(new ReasonMsg("Advantage to enemies", advantageToEnemeies));
+            u += advantageToEnemeies;
+
+            //World.log("Econ advantages " + advtangeToMe + " " + advantageToAllies + " " + advantageToEnemeies);
 
             return u;
         }

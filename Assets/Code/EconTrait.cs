@@ -24,10 +24,6 @@ namespace Assets.Code
             t.provinceIndustry = true;
 
             t = new EconTrait(); map.globalist.allEconTraits.Add(t);
-            t.name = "Gems";
-            t.provinceIndustry = true;
-
-            t = new EconTrait(); map.globalist.allEconTraits.Add(t);
             t.name = "Gold";
             t.provinceIndustry = true;
 

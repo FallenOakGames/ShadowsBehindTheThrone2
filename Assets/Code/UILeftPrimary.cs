@@ -78,6 +78,7 @@ namespace Assets.Code
                                 //bodyText += "\n   -" + p.getFullName();
                             }
 
+                            bodyText += "\nMILITARY POSTURE: " + locSoc.posture;
                             if (locSoc.offensiveTarget != null)
                             {
                                 bodyText += "\nOffensive: " + locSoc.offensiveTarget.getName();

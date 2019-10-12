@@ -39,14 +39,16 @@ namespace Assets.Code
             //1 if we're 100% of the balance, -1 if they are
             double relativeStrength = (ourStrength - theirStrength) / (ourStrength + theirStrength);
 
-            localU = society.map.param.utility_militaryTargetRelStrength*relativeStrength * parityMult;
+            localU = society.map.param.utility_militaryTargetRelStrengthOffensive*relativeStrength * parityMult;
             msgs.Add(new ReasonMsg("Relative strength of current militaries", localU));
             u += localU;
 
             localU = voter.politics_militarism * parityMult;
             msgs.Add(new ReasonMsg("Militarism of " + voter.getFullName(), localU));
             u += localU;
+            
 
+            /*
             if (this.society.defensiveTarget != null && this.society.defensiveTarget != this.society.offensiveTarget)
             {
 
@@ -55,9 +57,10 @@ namespace Assets.Code
                 relativeStrength = (((ourStrength - theirStrength) / (ourStrength + theirStrength))-1)/2;
 
                 localU = society.map.param.utility_militaryTargetRelStrength * relativeStrength * parityMult;
-                msgs.Add(new ReasonMsg("Defensive Target's Capabilities", localU));
+                msgs.Add(new ReasonMsg("Defensive Target's Capabilities (risk of sneak attack)", localU));
                 u += localU;
             }
+            */
             
 
             return u;
@@ -65,10 +68,14 @@ namespace Assets.Code
 
         public override void implement(VoteOption option)
         {
-            society.map.declareWar(society, target);
+            if (option.index == 1 && society.posture == Society.militaryPosture.offensive)
+            {
+                society.map.declareWar(society, target);
+            }
         }
         public override bool stillValid(Map map)
         {
+            if (society.posture != Society.militaryPosture.offensive) { return false; }
             if (society.offensiveTarget == null) { return false; }
             if (society.offensiveTarget != target) { return false; }
             if (society.map.socialGroups.Contains(target) == false) { return false; }

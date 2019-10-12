@@ -46,7 +46,7 @@ namespace Assets.Code
             //We know how much they would be advantaged. We now need to know how much we like them to determine
             //if this is a good thing or not
 
-            double localU = benefitToPerson * voter.getRelation(p).getLiking();
+            double localU = benefitToPerson * voter.getRelation(p).getLiking() * voter.map.param.society_landedTitleUtilityMult;
             msgs.Add(new ReasonMsg("Benefit to " + p.getFullName(), localU));
             u += localU;
 
@@ -55,7 +55,7 @@ namespace Assets.Code
             if (title.heldBy != null && title.heldBy != p)
             {
                 double damageToOther = title.settlement.getPrestige();
-                localU = -damageToOther * voter.getRelation(title.heldBy).getLiking();
+                localU = -damageToOther * voter.getRelation(title.heldBy).getLiking() * voter.map.param.society_landedTitleUtilityMult;
                 msgs.Add(new ReasonMsg("Harm to " + title.heldBy.getFullName(), localU));
                 u += localU;
             }
