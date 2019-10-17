@@ -49,7 +49,7 @@ namespace Assets.Code
             processStability();
             checkTitles();
             processWarExpansion();
-            processTerritoryLoss();
+            processTerritoryExchanges();
             processVoting();
             checkPopulation();//Add people last, so new people don't suddenly arrive and act before the player can see them
             checkAssertions();
@@ -99,12 +99,12 @@ namespace Assets.Code
                 if (p.title_land == null) { continue; }
                 if (p.getRelation(getSovreign()).getLiking() <= map.param.society_rebelLikingThreshold)
                 {
-                    data_rebelLordsCap += p.title_land.settlement.militaryCapAdd;
+                    data_rebelLordsCap += p.title_land.settlement.getMilitaryCap();
                     rebels.Add(p);
                 }
                 else
                 {
-                    data_loyalLordsCap += p.title_land.settlement.militaryCapAdd;
+                    data_loyalLordsCap += p.title_land.settlement.getMilitaryCap();
                 }
             }
 
@@ -305,7 +305,7 @@ namespace Assets.Code
         }
 
 
-        public void processTerritoryLoss()
+        public void processTerritoryExchanges()
         {
             bool hasWar = false;
             foreach (DipRel rel in getAllRelations())
@@ -326,9 +326,21 @@ namespace Assets.Code
                         {
                             if (loc.settlement != null)
                             {
-                                throw new NotImplementedException();
+                                loc.settlement = null;
                             }
                             loc.soc = null;
+                        }
+
+                        if (loc.isForSocieties && loc.settlement == null)
+                        {
+                            if (loc.isMajor)
+                            {
+                                loc.settlement = new Set_City(loc);
+                            }
+                            else
+                            {
+                                loc.settlement = new Set_Fort(loc);
+                            }
                         }
                     }
                 }

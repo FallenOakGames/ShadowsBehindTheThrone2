@@ -22,6 +22,7 @@ namespace Assets.Code
         public double militaryRegen;
         public int lastBattle;
         private bool cachedGone;
+        public double temporaryThreat;
 
         public SocialGroup(Map map)
         {
@@ -112,6 +113,7 @@ namespace Assets.Code
         }
         public virtual void turnTick()
         {
+            temporaryThreat *= map.param.temporaryThreatDecay;
             computeMilitaryCap();
             processMilitaryRegen();
 
@@ -120,10 +122,11 @@ namespace Assets.Code
 
         public virtual double getThreat(List<ReasonMsg> reasons)
         {
+            ReasonMsg msg;
             double threat = currentMilitary + (maxMilitary/2);
             if (reasons != null)
             {
-                ReasonMsg msg = new ReasonMsg("Current Military", currentMilitary);
+                msg = new ReasonMsg("Current Military", currentMilitary);
                 reasons.Add(msg);
                 msg = new ReasonMsg("Max Military", (maxMilitary/2));
                 reasons.Add(msg);
@@ -136,10 +139,17 @@ namespace Assets.Code
                 threat += addT;
                 if (reasons != null)
                 {
-                    ReasonMsg msg = new ReasonMsg("+" + percent + "% from type", addT);
+                    msg = new ReasonMsg("+" + percent + "% from type", addT);
                     reasons.Add(msg);
                 }
 
+            }
+
+            threat += temporaryThreat;
+            if (reasons != null)
+            {
+                msg = new ReasonMsg("Temporary Threat", temporaryThreat);
+                reasons.Add(msg);
             }
             return threat;
         }
@@ -152,7 +162,7 @@ namespace Assets.Code
                 if (loc.soc == this && loc.settlement != null)
                 {
                     militaryRegen += loc.settlement.militaryRegenAdd;
-                    maxMilitary += loc.settlement.militaryCapAdd;
+                    maxMilitary += loc.settlement.getMilitaryCap() ;
                 }
             }
             maxMilitary = Math.Pow(maxMilitary, map.param.combat_maxMilitaryCapExponent);
@@ -162,6 +172,11 @@ namespace Assets.Code
         public void processMilitaryRegen() { 
             currentMilitary += militaryRegen;
             if (currentMilitary > maxMilitary) { currentMilitary = maxMilitary; }
+        }
+
+        public virtual void takeLocationFromOther(SocialGroup def, Location taken)
+        {
+            this.temporaryThreat += map.param.threat_takeLocation;
         }
     }
 }

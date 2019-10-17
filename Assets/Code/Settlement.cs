@@ -13,7 +13,7 @@ namespace Assets.Code
         public float purity = 1;
         public TitleLanded title;
         public double basePrestige = 10;
-        public double militaryCapAdd = 0;
+        protected double militaryCapAdd = 0;
         public double militaryRegenAdd = 0;
         //public double defensiveStrength = 0;
         public double defensiveStrengthRegen = 0.33;
@@ -27,6 +27,18 @@ namespace Assets.Code
             this.location = loc;
         }
 
+        public double getMilitaryCap()
+        {
+            if (location.properties.Count > 0)
+            {
+                double v = militaryCapAdd;
+                foreach (Property p in location.properties)
+                {
+                    v *= p.militaryCapMult;
+                }
+            }
+            return militaryCapAdd;
+        }
         public double getEconEffectMult()
         {
             double mult = 1;

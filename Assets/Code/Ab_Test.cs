@@ -29,5 +29,10 @@ namespace Assets.Code
         {
             return "Demonstration ability one. Long name.";
         }
+
+        public override Sprite getSprite(Map map)
+        {
+            return map.world.textureStore.icon_convert;
+        }
     }
 }

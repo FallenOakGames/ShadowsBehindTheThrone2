@@ -8,7 +8,7 @@ namespace Assets.Code
     public class Overmind
     {
         public float power;
-        public float powerRegen;
+        public bool hasTakenAction;
 
         public List<Ability> abilities = new List<Ability>();
         public Map map;
@@ -16,12 +16,17 @@ namespace Assets.Code
         public Overmind(Map map)
         {
             this.map = map;
-            abilities.Add(new Ab_Test());
-            abilities.Add(new Ab_Test());
-            abilities.Add(new Ab_Test());
-            abilities.Add(new Ab_Test());
-            abilities.Add(new Ab_Test());
-            abilities.Add(new Ab_Test());
+            abilities.Add(new Ab_UnholyFlesh_Attack());
+            abilities.Add(new Ab_UnholyFlesh_Defend());
+            abilities.Add(new Ab_UnholyFlesh_Grow());
+            abilities.Add(new Ab_UnholyFlesh_Seed());
+        }
+
+        public void turnTick()
+        {
+            hasTakenAction = false;
+            power += map.param.overmind_powerRegen;
+            power = Math.Min(power, map.param.overmind_maxPower);
         }
 
         public int countAvailableAbilities(Hex hex)

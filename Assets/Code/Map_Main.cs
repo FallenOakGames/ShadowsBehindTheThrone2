@@ -79,6 +79,7 @@ namespace Assets.Code
                 socialGroups.Remove(g);
             }
 
+            overmind.turnTick();
             //stats.turnTick();
         }
 
@@ -87,7 +88,7 @@ namespace Assets.Code
             int nEvils = 0;
             foreach (SocialGroup sg in socialGroups)
             {
-                if (sg is SG_GenericDark)
+                if (sg is Society == false)
                 {
                     nEvils += 1;
                 }
@@ -110,7 +111,7 @@ namespace Assets.Code
                     }
                     if (chosen != null)
                     {
-                        SG_GenericDark add = new SG_GenericDark(this, chosen);
+                        SG_WormHive add = new SG_WormHive(this, chosen);
                         socialGroups.Add(add);
                     }
                 }
@@ -248,6 +249,7 @@ namespace Assets.Code
             }
 
             taken.soc = att;
+            att.takeLocationFromOther(def, taken);
         }
 
         public void movePerson(Person lord,Society receiving)

@@ -14,6 +14,7 @@ namespace Assets.Code
         public Text body;
         public Text maskTitle;
         public Text maskBody;
+        public Button abilityButton;
         public Text abilityButtonText;
 
 
@@ -35,6 +36,7 @@ namespace Assets.Code
         {
             Hex hex = GraphicalMap.selectedHex;
 
+            abilityButton.gameObject.SetActive(master.world.map.overmind.power > 0);
             abilityButtonText.text = "Use Ability (" + master.world.map.overmind.countAvailableAbilities(hex) + ")";
             
             maskTitle.text = GraphicalMap.map.masker.getTitleText();

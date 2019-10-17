@@ -12,6 +12,7 @@ namespace Assets.Code
         public Text title;
         public Text body;
         public Text cost;
+        public Image icon;
         public GameObject mover;
         public float targetY;
         public Ability ability;
@@ -36,6 +37,7 @@ namespace Assets.Code
             title.text = a.getName();
             body.text = a.getDesc();
             cost.text = ""+a.getCost();
+            icon.sprite = a.getSprite(hex.map);
         }
 
         public float ySize()

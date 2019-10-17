@@ -11,6 +11,7 @@ namespace Assets.Code
     {
         public World world;
         public UIHex uiHex;
+        public UIMidTop uiMidTop;
         public UILeftPrimary uiLeftPrimary;
         // public UICity uiCity;
         //public UIWorldRight uiWorldRight;
@@ -95,6 +96,7 @@ namespace Assets.Code
             }
 
             uiLeftPrimary.checkData();
+            uiMidTop.checkData();
         }
 
         public void bActions()

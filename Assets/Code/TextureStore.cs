@@ -58,6 +58,7 @@ namespace Assets.Code
         public Sprite icon_enshadow;
         public Sprite icon_convert;
         public Sprite icon_mask;
+        public Sprite icon_ghoul;
 
         public Sprite icon_combat;
 

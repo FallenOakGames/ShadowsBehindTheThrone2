@@ -11,6 +11,7 @@ namespace Assets.Code
         public Property_Prototype proto;
         public int charge;
         public GraphicalProperty outer;
+        public double militaryCapMult = 1;
 
         public Property(Property_Prototype proto)
         {

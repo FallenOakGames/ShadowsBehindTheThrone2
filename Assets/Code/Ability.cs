@@ -8,7 +8,8 @@ namespace Assets.Code
         public abstract string getName();
         public abstract string getDesc();
         public abstract int getCost();
-        public abstract void cast(Map map, Hex hex);
+        public virtual void cast(Map map, Hex hex) { }
         public abstract bool castable(Map map, Hex hex);
+        public abstract Sprite getSprite(Map map);
     }
 }

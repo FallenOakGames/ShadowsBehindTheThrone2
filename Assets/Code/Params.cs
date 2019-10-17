@@ -19,6 +19,8 @@ namespace Assets.Code
         public int mapGen_maxBrushSize = 5;
         public int mapGen_burnInSteps = 0;
 
+        public int overmind_maxPower = 24;
+        public float overmind_powerRegen = 2;
 
         public double econ_multFromBuff = 0.75;//How much to mult/div by if a society rules in favour or against a given economic trait being priviledged/penalised
         
@@ -67,6 +69,10 @@ namespace Assets.Code
         public int society_minTimeBetweenTitleReassignments = 30;
         internal double society_landedTitleUtilityMult = 0.33;
         internal double society_wouldBeOutvotedUtilityMult = 0.25;
+
+        public double ability_growFleshThreatAdd = 5;
+        internal double temporaryThreatDecay = 0.95;
+        internal double threat_takeLocation = 3;
 
         public void loadFromFile()
         {

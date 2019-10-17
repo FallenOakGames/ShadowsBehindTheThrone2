@@ -283,33 +283,55 @@ namespace Assets.Code
 
 
             //We want the proportions to be almost exactly identical between all resources, but still randomised
-            List<EconTrait> shuffleBag = new List<EconTrait>();
-            while(shuffleBag.Count < provinces.Count)
+            List<Province> duplicateProvinces = new List<Province>();
+            duplicateProvinces.AddRange(provinces);
+            //Shuffle these real quick
+            int n = duplicateProvinces.Count;
+            while (n > 1)
             {
-                List<EconTrait> sublist = new List<EconTrait>();
-                foreach (EconTrait effect in globalist.allEconTraits)
-                {
-                    sublist.Add(effect);
-                }
-
-                int n = sublist.Count;
-                while (n > 1)
-                {
-                    n--;
-                    int k = Eleven.random.Next(n + 1);
-                    EconTrait value = sublist[k];
-                    sublist[k] = sublist[n];
-                    sublist[n] = value;
-                }
-
-                shuffleBag.AddRange(sublist);
+                n--;
+                int k = Eleven.random.Next(n + 1);
+                Province value = duplicateProvinces[k];
+                duplicateProvinces[k] = duplicateProvinces[n];
+                duplicateProvinces[n] = value;
             }
-            for (int c=0;c<provinces.Count;c++)
+
+            //Assign the econ type which is currently used by the fewest humans
+            while (duplicateProvinces.Count > 0)
             {
-                Province p = provinces[c];
-                if (!p.isSea)
+                Province next = duplicateProvinces[duplicateProvinces.Count - 1];
+                duplicateProvinces.RemoveAt(duplicateProvinces.Count - 1);
+                if (next.isSea == false)
                 {
-                    p.econTraits.Add(shuffleBag[c]);
+                    int[] useCounts = new int[globalist.allEconTraits.Count];
+                    foreach (Location loc in locations)
+                    {
+                        if (loc.isForSocieties == false) { continue; }
+                        if (loc.isOcean) { continue; }
+                        if (loc.province.econTraits.Count != 0)
+                        {
+                            int ind = globalist.allEconTraits.IndexOf(loc.province.econTraits[0]);
+                            useCounts[ind] += 1;
+                        }
+                    }
+
+                    int minV = useCounts[0];
+                    int minInd = 0;
+                    for (int i = 0; i < useCounts.Length; i++)
+                    {
+                        if (useCounts[i] < minV)
+                        {
+                            minV = useCounts[i];
+                            minInd = i;
+                        }
+                    }
+                    next.econTraits.Add(globalist.allEconTraits[minInd]);
+
+                    for (int i = 0; i < useCounts.Length; i++)
+                    {
+                        World.log("i " + useCounts[i] + " " + globalist.allEconTraits[i].name);
+                    }
+                    World.log("Chose " + minInd);
                 }
             }
         }
