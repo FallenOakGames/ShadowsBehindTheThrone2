@@ -11,7 +11,7 @@ namespace Assets.Code
     //[Serializable,HideInInspector]
     public class Params
     {
-        public int mapGen_sizeX = 24;
+        public int mapGen_sizeX = 32;
         public int mapGen_sizeY = 24;
         public double mapGen_proportionOfMapForHumans = 0.65;
         public float mapGen_minHabitabilityForHumans = 0.15f;
@@ -23,7 +23,7 @@ namespace Assets.Code
         public double econ_multFromBuff = 0.75;//How much to mult/div by if a society rules in favour or against a given economic trait being priviledged/penalised
         
         public double relObj_defaultLiking = 5;
-        public double relObj_decayRate = 0.97;
+        public double relObj_decayRate = 0.98;
 
         public double combat_prestigeLossFromConquest = 0.333;//multiplier on captured lords' prestige
         public double combat_thresholdAttackStrength = 0.25;
@@ -35,27 +35,33 @@ namespace Assets.Code
         public int war_defaultLength = 10;
         internal float minInformationAvailability = 0.2f;
 
-        internal double utility_econEffect = 0.35;
-        internal double utility_econEffectOther = 0.15;
+        internal double utility_econEffect = 0.5;
+        internal double utility_econEffectOther = 0.25;
         public double utility_militaryTargetRelStrengthOffensive = 200;
         public double utility_militaryTargetRelStrengthDefensive = 300;
+        internal double utility_vassaliseReluctance = -100;
+        internal double utility_vassaliseMilMult = 100;
+        internal double utility_vassaliseThreatMult = 0.5;
+        internal double utility_introversionFromInstability = 200;
+        internal double utility_militarism = 50;
+        public double utility_unlandedTitleMult = 0.5;
 
         public double person_prestigeDeltaPerTurn = 2;
         public double person_threatMult = 100;
         internal double person_defaultPrestige = 5;
 
-        internal int econ_buffDuration = 35;
+        internal int econ_buffDuration = 50;
 
         public int soc_untitledPeople = 3;
         public int soc_maxUntitledPeople = 7;
         internal int society_votingDuration = 2;
-        internal double society_votingRelChangePerUtilityPositive = 0.03;//If benefitted by a vote
-        internal double society_votingRelChangePerUtilityNegative = 0.08;//If harmed by a vote
+        internal double society_votingRelChangePerUtilityPositive = 0.04;//If benefitted by a vote
+        internal double society_votingRelChangePerUtilityNegative = 0.1;//If harmed by a vote
         public int society_instablityTillRebellion = 10;
         public int society_rebelLikingThreshold = -5;
         internal int society_zeitDuration = 3;
         internal double society_sovreignPrestige = 10;
-        public double society_unlandedTitleUtilityMult = 1;
+        internal double society_chancellorPrestige = 10;
         public double society_threatMultFromOffensivePosture = 0.5;
         public int society_minTimeBetweenLocReassignments = 40;
         public int society_minTimeBetweenTitleReassignments = 30;

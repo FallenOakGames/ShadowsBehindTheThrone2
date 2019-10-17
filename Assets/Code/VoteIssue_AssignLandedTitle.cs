@@ -89,7 +89,7 @@ namespace Assets.Code
                 title.heldBy = null;
             }
 
-            World.log(option.person.getFullName() + " has been granded the title of " + title.getName());
+            World.log(option.person.getFullName() + " has been granted the title of " + title.getName());
             title.heldBy = option.person;
             option.person.title_land = title;
             if (title.settlement != null)

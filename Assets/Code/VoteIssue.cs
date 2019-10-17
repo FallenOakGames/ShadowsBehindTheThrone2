@@ -41,7 +41,7 @@ namespace Assets.Code
                 }
                 foreach (Person voter in option.votesFor)
                 {
-                    p.getRelation(voter).addLiking(deltaRel);
+                    p.getRelation(voter).addLiking(deltaRel,"Vote on issue " + this.ToString(),society.map.turn);
                 }
             }
         }

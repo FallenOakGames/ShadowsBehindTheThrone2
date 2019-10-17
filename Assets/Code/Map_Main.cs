@@ -83,7 +83,6 @@ namespace Assets.Code
 
         public void processMapEvents()
         {
-            /**
             int nEvils = 0;
             foreach (SocialGroup sg in socialGroups)
             {
@@ -92,7 +91,7 @@ namespace Assets.Code
                     nEvils += 1;
                 }
             }
-            if (nEvils < 5)
+            if (nEvils < 3)
             {
                 if (turn % 5 == 0)
                 {
@@ -115,7 +114,6 @@ namespace Assets.Code
                     }
                 }
             }
-            */
         }
 
         public void processWars()

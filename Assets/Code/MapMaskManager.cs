@@ -9,7 +9,7 @@ namespace Assets.Code
     //[Serializable,HideInInspector]
     public class MapMaskManager
     {
-        public enum maskType { NONE, NATION, PROVINCE, INFORMATION,THREAT,LIKING_FROM,LIKING_TO,TESTING };
+        public enum maskType { NONE, NATION, PROVINCE, INFORMATION,THREAT,LIKING_ME,LIKING_THEM,TESTING };
         public maskType mask = maskType.NONE;
         public Map map;
         [NonSerialized]
@@ -25,6 +25,96 @@ namespace Assets.Code
         public bool applyMask(Hex hex)
         {
             return mask != maskType.NONE;
+        }
+
+        public string getTitleText()
+        {
+            if (mask == maskType.NATION)
+            {
+                return "Mask: Nation";
+            }
+            else if (mask == maskType.PROVINCE)
+            {
+                return "Mask: Province";
+            }
+            else if (mask == maskType.INFORMATION)
+            {
+                return "Mask: Information Availability";
+            }
+            else if (mask == maskType.THREAT)
+            {
+                return "Mask: Threat Perception";
+            }
+            else if (mask == maskType.LIKING_ME)
+            {
+                return "Mask: Selected Person's Liking";
+            }
+            else if (mask == maskType.LIKING_THEM)
+            {
+                return "Mask: Liking for Selected Person";
+            }
+            return "";
+        }
+        public string getBodyText()
+        {
+            if (mask == maskType.LIKING_ME)
+            {
+                try
+                {
+                    Hex hex = GraphicalMap.getHexUnderMouse(Input.mousePosition).hex;
+                    Person me = GraphicalMap.selectedHex.location.settlement.title.heldBy;
+                    Person them = hex.location.settlement.title.heldBy;
+
+                    string words = me.getFullName() + " liking for " + them.getFullName();
+                    RelObj rel = me.getRelation(them);
+                    words += "\nAmount: " + ((int)rel.getLiking());
+
+                    List<RelEvent> sortedEvents = new List<RelEvent>();
+                    sortedEvents.AddRange(rel.events);
+                    sortedEvents.Sort();
+                    int nPrinted = 0;
+                    foreach (RelEvent ev in sortedEvents)
+                    {
+                        words += "\n  -" + ev.reason + " : " + ((int)ev.amount);
+                        nPrinted += 1;
+                        if (nPrinted > 6) { break; }
+                    }
+                    return words;
+                }catch(Exception e)
+                {
+                    return "";
+                }
+            }
+            else if (mask == maskType.LIKING_THEM)
+            {
+                try
+                {
+                    Hex hex = GraphicalMap.getHexUnderMouse(Input.mousePosition).hex;
+                    Person them = GraphicalMap.selectedHex.location.settlement.title.heldBy;
+                    Person me = hex.location.settlement.title.heldBy;
+
+                    string words = me.getFullName() + " liking for " + them.getFullName();
+                    RelObj rel = me.getRelation(them);
+                    words += "\nAmount: " + ((int)rel.getLiking());
+
+                    List<RelEvent> sortedEvents = new List<RelEvent>();
+                    sortedEvents.AddRange(rel.events);
+                    sortedEvents.Sort();
+                    int nPrinted = 0;
+                    foreach (RelEvent ev in sortedEvents)
+                    {
+                        words += "\n  -" + ev.reason + " : " + ((int)ev.amount);
+                        nPrinted += 1;
+                        if (nPrinted > 6) { break; }
+                    }
+                    return words;
+                }
+                catch (Exception e)
+                {
+                    return "";
+                }
+            }
+            return "";
         }
 
         public Color getColor(Hex hex)
@@ -126,14 +216,14 @@ namespace Assets.Code
                 }
             }
 
-            else if (mask == maskType.LIKING_FROM)
+            else if (mask == maskType.LIKING_THEM)
             {
                 Color c = new Color(0, 0, 0, 0.5f);
                 try
                 {
                     Person me = GraphicalMap.selectedHex.location.settlement.title.heldBy;
                     Person them = hex.location.settlement.title.heldBy;
-                    float liking = (float)me.getRelation(them).getLiking();
+                    float liking = (float)them.getRelation(me).getLiking();
                     if (liking > 0)
                     {
                         if (liking > 100) { liking = 100; }
@@ -160,14 +250,14 @@ namespace Assets.Code
                 return c;
             }
 
-            else if (mask == maskType.LIKING_TO)
+            else if (mask == maskType.LIKING_ME)
             {
                 Color c = new Color(0, 0, 0, 0.5f);
                 try
                 {
                     Person me = GraphicalMap.selectedHex.location.settlement.title.heldBy;
                     Person them = hex.location.settlement.title.heldBy;
-                    float liking = (float)them.getRelation(me).getLiking();
+                    float liking = (float)me.getRelation(them).getLiking();
                     if (liking > 0)
                     {
                         if (liking > 100) { liking = 100; }

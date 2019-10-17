@@ -31,6 +31,7 @@ namespace Assets.Code
         public int turnSovreignAssigned = -1;
 
         public LogBox logbox;
+        public double data_societalStability;
 
         public Society(Map map) : base(map)
         {
@@ -107,13 +108,31 @@ namespace Assets.Code
                 }
             }
 
-            if (data_rebelLordsCap >= data_loyalLordsCap)
+            if (data_loyalLordsCap + data_rebelLordsCap <= 0)
+            {
+                data_societalStability = 1;
+            }
+            else
+            {
+                data_societalStability = (data_loyalLordsCap - data_rebelLordsCap) / (data_loyalLordsCap + data_rebelLordsCap);
+            }
+
+            double introBonus = 1;
+            if (posture == militaryPosture.introverted)
+            {
+                introBonus = 1.2;
+            }
+            if (data_rebelLordsCap >= data_loyalLordsCap*introBonus)
             {
                 instabilityTurns += 1;
                 if (instabilityTurns >= map.param.society_instablityTillRebellion)
                 {
                     triggerCivilWar(rebels);
                 }
+            }
+            else
+            {
+                instabilityTurns = 0;
             }
         }
 
@@ -234,20 +253,14 @@ namespace Assets.Code
 
             if (isRebellion)
             {
-                bool atWar = false;
-                foreach (SocialGroup sg in map.socialGroups)
+                if (isAtWar())
                 {
-                    if (this.getRel(sg).state == DipRel.dipState.war)
+                    if (this.getCapital() != null)
                     {
-                        atWar = true;
-                        break;
+                        isRebellion = false;
+                        World.log(this.getName() + " has successfully defended itself and broken away properly. Renaming now");
+                        this.setName(this.getCapital().shortName);
                     }
-                }
-                if (!atWar)
-                {
-                    isRebellion = false;
-                    World.log(this.getName() + " has successfully defended itself and broken away properly. Renaming now");
-                    this.setName(TextStore.getLocName());
                 }
             }
         }
@@ -405,7 +418,7 @@ namespace Assets.Code
                 {
                     proposer.lastVoteProposalTurn = map.turn;
                     VoteIssue issue = proposer.proposeVotingIssue();
-                    if (issue == null) { World.log(proposer.getFullName() + " elects not to submit a voting proposal on their turn");return; }
+                    if (issue == null) {return; }
 
                     //Otherwise, on with voting for this new thing
                     voteSession = new VoteSession();
@@ -502,6 +515,8 @@ namespace Assets.Code
                     }
                 }
             }
+            
+
             foreach (Title t in titles)
             {
                 t.turnTick();
@@ -546,6 +561,16 @@ namespace Assets.Code
                     people.Remove(lastUntitled);
                 }
             }
+        }
+
+        internal bool isAtWar()
+        {
+            foreach (DipRel rel in relations.Values)
+            {
+                if (rel.other(this).isGone()) { continue; }
+                if (rel.state == DipRel.dipState.war) { return true; }
+            }
+            return false;
         }
 
         public Person getSovreign()

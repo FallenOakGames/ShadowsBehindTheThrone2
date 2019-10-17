@@ -12,7 +12,9 @@ namespace Assets.Code
         public UIMaster master;
         public Text title;
         public Text body;
-        
+        public Text maskTitle;
+        public Text maskBody;
+
 
         public void Start()
         {
@@ -31,6 +33,8 @@ namespace Assets.Code
         public void checkData()
         {
             Hex hex = GraphicalMap.selectedHex;
+            maskTitle.text = GraphicalMap.map.masker.getTitleText();
+            maskBody.text = GraphicalMap.map.masker.getBodyText();
             if (hex == null)
             {
                 title.text = "";

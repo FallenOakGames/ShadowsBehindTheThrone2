@@ -40,9 +40,15 @@ namespace Assets.Code
             //1 if we're 100% of the balance, -1 if they are
             double relativeStrength = (ourStrength - theirStrength) / (ourStrength + theirStrength);
 
+            //Don't just always attack the weakest, it causes blobbing. Check military to avoid suicide charges, but attack should be modulated by threat
+            //As such, this modifier only applies when its negative (aversion to attacking stronger targets)
             localU = society.map.param.utility_militaryTargetRelStrengthOffensive*relativeStrength;
-            msgs.Add(new ReasonMsg("Relative Strength of Current Militaries", localU));
-            u += localU;
+            if (localU < 0)
+            {
+                msgs.Add(new ReasonMsg("Relative Strength of Current Militaries", localU));
+                u += localU;
+            }
+
 
             foreach (ThreatItem threat in voter.threatEvaluations)
             {
@@ -64,6 +70,7 @@ namespace Assets.Code
 
                 //1 if we're 100% of the balance, -1 if they are
                 relativeStrength = (ourStrength - theirStrength) / (ourStrength + theirStrength);
+                if (relativeStrength > 0) { relativeStrength = 0; }
 
                 //Add current target threat
                 foreach (ThreatItem threat in voter.threatEvaluations)

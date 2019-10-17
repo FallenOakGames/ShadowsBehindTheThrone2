@@ -20,6 +20,8 @@ namespace Assets.Code
             double advantageToEnemeies = 0;
             foreach (Person affected in society.people)
             {
+                double mult = 1;
+
                 if (affected.title_land != null)
                 {
                     double delta = 1;
@@ -49,15 +51,15 @@ namespace Assets.Code
             //If we're actually affected by this, don't care more about the wellbeing of others than of yourself
             if (Math.Abs(advtangeToMe) > 1)
             {
-                if (Math.Abs(advantageToAllies) > Math.Abs(advtangeToMe))
+                if (Math.Abs(advantageToAllies) > Math.Abs(advtangeToMe)/3)
                 {
-                    if (advantageToAllies > 0) { advantageToAllies = Math.Abs(advtangeToMe); }
-                    if (advantageToAllies < 0) { advantageToAllies = -Math.Abs(advtangeToMe); }
+                    if (advantageToAllies > 0) { advantageToAllies = Math.Abs(advtangeToMe)/3; }
+                    if (advantageToAllies < 0) { advantageToAllies = -Math.Abs(advtangeToMe)/3; }
                 }
-                if (Math.Abs(advantageToEnemeies) > Math.Abs(advtangeToMe))
+                if (Math.Abs(advantageToEnemeies) > Math.Abs(advtangeToMe)/3)
                 {
-                    if (advantageToEnemeies > 0) { advantageToEnemeies = Math.Abs(advtangeToMe); }
-                    if (advantageToEnemeies < 0) { advantageToEnemeies = -Math.Abs(advtangeToMe); }
+                    if (advantageToEnemeies > 0) { advantageToEnemeies = Math.Abs(advtangeToMe)/3; }
+                    if (advantageToEnemeies < 0) { advantageToEnemeies = -Math.Abs(advtangeToMe)/3; }
                 }
             }
 

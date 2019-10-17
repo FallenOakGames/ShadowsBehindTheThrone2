@@ -16,6 +16,7 @@ namespace Assets.Code
         public Dictionary<SocialGroup, DipRel> relations = new Dictionary<SocialGroup, DipRel>();
         public DipRel selfRel;
 
+        public double threat_mult = 0;
         public double maxMilitary;
         public double currentMilitary;
         public double militaryRegen;
@@ -119,15 +120,27 @@ namespace Assets.Code
 
         public virtual double getThreat(List<ReasonMsg> reasons)
         {
-            double threat = currentMilitary + maxMilitary;
+            double threat = currentMilitary + (maxMilitary/2);
             if (reasons != null)
             {
                 ReasonMsg msg = new ReasonMsg("Current Military", currentMilitary);
                 reasons.Add(msg);
-                msg = new ReasonMsg("Max Military", maxMilitary);
+                msg = new ReasonMsg("Max Military", (maxMilitary/2));
                 reasons.Add(msg);
             }
 
+            if (this.threat_mult != 0)
+            {
+                int percent = (int)(100 * this.threat_mult);
+                double addT = threat * this.threat_mult;
+                threat += addT;
+                if (reasons != null)
+                {
+                    ReasonMsg msg = new ReasonMsg("+" + percent + "% from type", addT);
+                    reasons.Add(msg);
+                }
+
+            }
             return threat;
         }
         
@@ -143,6 +156,7 @@ namespace Assets.Code
                 }
             }
             maxMilitary = Math.Pow(maxMilitary, map.param.combat_maxMilitaryCapExponent);
+            militaryRegen = Math.Pow(militaryRegen, map.param.combat_maxMilitaryCapExponent);
         }
 
         public void processMilitaryRegen() { 

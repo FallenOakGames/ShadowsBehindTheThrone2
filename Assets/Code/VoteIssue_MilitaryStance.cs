@@ -36,11 +36,20 @@ namespace Assets.Code
                 defUtility += (defStr - ourStr) / (ourStr + defStr)*voter.map.param.utility_militaryTargetRelStrengthDefensive;
             }
             double offUtility = 0;
+            double offUtilityStr = 0;
+            double offUtilityPersonality = 0;
             if (voter.society.offensiveTarget != null)
             {
                 //Negative if the offensive target is stronger
-                offUtility += (ourStr - offStr) / (ourStr + offStr) * voter.map.param.utility_militaryTargetRelStrengthOffensive;
+                offUtilityStr += (ourStr - offStr) / (ourStr + offStr) * voter.map.param.utility_militaryTargetRelStrengthOffensive;
+                offUtilityPersonality += voter.politics_militarism * voter.map.param.utility_militarism;
+                offUtility += offUtilityStr;
+                offUtility += offUtilityPersonality;
             }
+            double introUtility = 0;
+            introUtility = -(society.data_societalStability - 1);//0 if stability is 1, increasing to 1 if civil war is imminent, to 2 if every single person is a traitor
+            introUtility *= voter.map.param.utility_introversionFromInstability;
+            introUtility += 10;
 
 
             //Option 0 is DEFENSIVE
@@ -56,6 +65,11 @@ namespace Assets.Code
                 u -= offUtility;
                 msgs.Add(new ReasonMsg("Switching away from offensive", -offUtility));
             }
+            if (voter.society.posture == Society.militaryPosture.introverted && option.index != 2)
+            {
+                u -= offUtility;
+                msgs.Add(new ReasonMsg("Switching away from introversion", -introUtility));
+            }
 
             if (option.index == 0 && society.posture != Society.militaryPosture.defensive)
             {
@@ -65,7 +79,13 @@ namespace Assets.Code
             if (option.index == 1 && society.posture != Society.militaryPosture.offensive)
             {
                 u += offUtility;
-                msgs.Add(new ReasonMsg("Our relative strength against offensive target", offUtility));
+                msgs.Add(new ReasonMsg("Our relative strength against offensive target", offUtilityStr));
+                msgs.Add(new ReasonMsg("Militarism personality", offUtilityPersonality));
+            }
+            if (option.index == 2 && society.posture != Society.militaryPosture.introverted)
+            {
+                u += introUtility;
+                msgs.Add(new ReasonMsg("Instability internally",introUtility));
             }
 
 

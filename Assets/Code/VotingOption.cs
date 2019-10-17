@@ -60,7 +60,7 @@ namespace Assets.Code
             if (opt.group != null) { line += " group  " + Eleven.toFixedLen("" + opt.group.getName(), 10); }
             if (opt.location != null) { line += " loc    " + Eleven.toFixedLen("" + opt.location.getName(), 10); }
             if (opt.person != null) { line += " person " + Eleven.toFixedLen("" + opt.person.getFullName(), 10); }
-            line += " ind " + opt.index;
+            if (opt.index != -1) { line += " person " + Eleven.toFixedLen("" + opt.index, 10); }
             return line;
         }
     }

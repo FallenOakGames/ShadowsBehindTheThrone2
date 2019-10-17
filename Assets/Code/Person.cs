@@ -29,7 +29,6 @@ namespace Assets.Code
         {
             this.society = soc;
             firstName = TextStore.getName(isMale);
-            getRelation(this).setLiking(100);//Set self-relation to 100
 
             if (World.logging)
             {
@@ -141,7 +140,7 @@ namespace Assets.Code
                     item.reasons.Add(new ReasonMsg("Information (% kept)", intInfoAvailability));
                     value *= infoAvailability;
 
-                    value /= (society.currentMilitary + society.maxMilitary) + 1;
+                    value /= (society.currentMilitary + (society.maxMilitary/2)) + 1;
 
                     value *= map.param.person_threatMult;
 
@@ -170,7 +169,7 @@ namespace Assets.Code
             {
                 return relations[other];
             }
-            RelObj rel = new RelObj(this, other, map.param.relObj_defaultLiking);
+            RelObj rel = new RelObj(this, other);
             relations.Add(other, rel);
             return rel;
         }
@@ -472,6 +471,42 @@ namespace Assets.Code
                         }
                     }
                     logVote(issue);
+                }
+
+                //Check to see if you want to defensively vassalise yourself
+                //You need to be in defensive posture to be allowed to do so
+                if (society.offensiveTarget != null && society.posture == Society.militaryPosture.defensive && (society.isAtWar() == false))
+                {
+                    foreach (SocialGroup sg in society.getNeighbours())
+                    {
+                        if (sg is Society == false) { continue; }
+                        if (sg == this.society) { continue; }
+                        Society other = (Society)sg;
+                        if (other.defensiveTarget == this.society.defensiveTarget)
+                        {
+                            issue = new VoteIssue_Vassalise(society, other, this);
+                            VoteOption option = new VoteOption();
+                            option.index = 0;
+                            issue.options.Add(option);
+
+                            option = new VoteOption();
+                            option.index = 1;
+                            issue.options.Add(option);
+
+                            foreach (VoteOption opt in issue.options)
+                            {
+                                //if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
+                                //Random factor to prevent them all rushing a singular voting choice
+                                double localU = issue.computeUtility(this, opt, new List<ReasonMsg>()) * Eleven.random.NextDouble();
+                                if (localU > bestU)
+                                {
+                                    bestU = localU;
+                                    bestIssue = issue;
+                                }
+                            }
+                            logVote(issue);
+                        }
+                    }
                 }
             }
 

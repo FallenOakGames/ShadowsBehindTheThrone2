@@ -95,24 +95,24 @@ namespace Assets.Code
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha5))
                 {
-                    if (world.map.masker.mask == MapMaskManager.maskType.LIKING_FROM)
+                    if (world.map.masker.mask == MapMaskManager.maskType.LIKING_ME)
                     {
                         world.map.masker.mask = MapMaskManager.maskType.NONE;
                     }
                     else
                     {
-                        world.map.masker.mask = MapMaskManager.maskType.LIKING_FROM;
+                        world.map.masker.mask = MapMaskManager.maskType.LIKING_ME;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha6))
                 {
-                    if (world.map.masker.mask == MapMaskManager.maskType.LIKING_TO)
+                    if (world.map.masker.mask == MapMaskManager.maskType.LIKING_THEM)
                     {
                         world.map.masker.mask = MapMaskManager.maskType.NONE;
                     }
                     else
                     {
-                        world.map.masker.mask = MapMaskManager.maskType.LIKING_TO;
+                        world.map.masker.mask = MapMaskManager.maskType.LIKING_THEM;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha9))

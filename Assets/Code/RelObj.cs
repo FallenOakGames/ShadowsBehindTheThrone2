@@ -10,40 +10,66 @@ namespace Assets.Code
         public Person me;
         public Person them;
         //public double liking { get { return liking; } set { liking = value;liking = Math.Min(100, liking);liking = Math.Max(-100, liking); } } THIS IMPLEMENTATION CRASHES THE UNITY EDITOR
-        private double liking;
+        //private double liking;
 
-        public RelObj(Person person, Person other,double initialVal)
+        public LinkedList<RelEvent> events = new LinkedList<RelEvent>();
+
+        public RelObj(Person person, Person other)
         {
             this.me = person;
             this.them = other;
-            liking = initialVal;
         }
         public double getLiking()
         {
+            double liking = me.getRelBaseline(them);
+            foreach (RelEvent r in events)
+            {
+                liking += r.amount;
+            }
+
+            if (liking > 100) { liking = 100; }
+            if (liking < -100) { liking = -100; }
             return liking;
         }
-        
+
+        /*
         public void setLiking(double v)
         {
             liking += v;
             if (liking > 100) { liking = 100; }
             if (liking < -100) { liking = -100; }
         }
+        */
+
+        private List<RelEvent> rems = new List<RelEvent>();
         public void turnTick()
         {
-            if (them == me) { liking = 100; }//Be at least loyal to yourself (till traits override this)
+            //if (them == me) { liking = 100; }//Be at least loyal to yourself (till traits override this)
 
             double baseline = me.getRelBaseline(them);
-            liking -= baseline;
-            liking *= me.map.param.relObj_decayRate;
-            liking += baseline;
-            if (liking > 100) { liking = 100; }
-            if (liking < -100) { liking = -100; }
+
+            rems.Clear();
+            foreach (RelEvent ev in events)
+            {
+                ev.amount *= me.map.param.relObj_decayRate;
+                if (Math.Abs(ev.amount) < 2) { rems.Add(ev); }
+            }
+            foreach (RelEvent ev in rems)
+            {
+                events.Remove(ev);
+            }
         }
 
-        public void addLiking(double v)
+        public void addLiking(double v,string reason,int turn)
         {
-            liking += v;
+            if (them == me) { return; }//No events for yourself
+
+            RelEvent ev = new RelEvent();
+            ev.amount = v;
+            ev.reason = reason;
+            ev.turn = turn;
+            events.AddLast(ev);
+            //liking += v;
         }
     }
 }

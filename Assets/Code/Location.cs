@@ -92,7 +92,6 @@ namespace Assets.Code
         {
             if (settlement != null) {
                 double soaked = Math.Min(settlement.defensiveStrengthCurrent, amount);
-                World.log(this.settlement.name + " has " + settlement.defensiveStrengthCurrent + " dmg " + amount + " soaked " + soaked);
                 settlement.defensiveStrengthCurrent -= soaked;
                 amount -= soaked;
             }

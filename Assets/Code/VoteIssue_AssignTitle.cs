@@ -42,7 +42,7 @@ namespace Assets.Code
             //We know how much they would be advantaged. We now need to know how much we like them to determine
             //if this is a good thing or not
 
-            double benefitU = benefitToPerson * voter.getRelation(p).getLiking() * voter.map.param.society_unlandedTitleUtilityMult;
+            double benefitU = benefitToPerson * voter.getRelation(p).getLiking() * voter.map.param.utility_unlandedTitleMult;
 
             //Check if you should avoid voting for yourself
             bool wouldBeOutvoted = false;
@@ -73,7 +73,7 @@ namespace Assets.Code
             if (title.heldBy != null && title.heldBy != p)
             {
                 double damageToOther = title.getPrestige();
-                double localU = -damageToOther * voter.getRelation(title.heldBy).getLiking() * voter.map.param.society_unlandedTitleUtilityMult;
+                double localU = -damageToOther * voter.getRelation(title.heldBy).getLiking() * voter.map.param.utility_unlandedTitleMult;
                 if (wouldBeOutvoted)
                 {
                     localU *= voter.map.param.society_wouldBeOutvotedUtilityMult;
@@ -103,7 +103,7 @@ namespace Assets.Code
                 title.heldBy = null;
             }
 
-            World.log(option.person.getFullName() + " has been granded the title of " + title.getName());
+            World.log(option.person.getFullName() + " has been granted the title of " + title.getName());
             title.heldBy = option.person;
             option.person.titles.Add(title);
 

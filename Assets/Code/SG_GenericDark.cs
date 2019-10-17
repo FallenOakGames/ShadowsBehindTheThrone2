@@ -19,20 +19,31 @@ namespace Assets.Code
             this.setName("Darkness in " + startingLocation.shortName);
 
             startingLocation.soc = this;
+            startingLocation.settlement = new Set_DarkGeneric(startingLocation);
+            this.threat_mult = 2;
         }
 
         public override void turnTick()
         {
             base.turnTick();
+            int size = 0;
             foreach (Location loc in map.locations)
             {
                 if (loc.soc == this)
                 {
-                    loc.hex.purity = 0;
+                    if (loc.settlement == null)
+                    {
+                        loc.soc = null;
+                    }
+                    else
+                    {
+                        size += 1;
+                        loc.hex.purity = 0;
+                    }
                 }
             }
 
-            if (Eleven.random.NextDouble() < 0.25)
+            if (Eleven.random.NextDouble() < 0.25 && size < 3)
             {
                 Location expansion = null;
                 int c = 0;
@@ -56,6 +67,7 @@ namespace Assets.Code
                 if (expansion != null)
                 {
                     expansion.soc = this;
+                    expansion.settlement = new Set_DarkGeneric(expansion);
                 }
             }
         }

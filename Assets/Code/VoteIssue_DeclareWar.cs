@@ -39,14 +39,34 @@ namespace Assets.Code
             //1 if we're 100% of the balance, -1 if they are
             double relativeStrength = (ourStrength - theirStrength) / (ourStrength + theirStrength);
 
-            localU = society.map.param.utility_militaryTargetRelStrengthOffensive*relativeStrength * parityMult;
-            msgs.Add(new ReasonMsg("Relative strength of current militaries", localU));
-            u += localU;
+            double relMilU = society.map.param.utility_militaryTargetRelStrengthOffensive*relativeStrength * parityMult;
+            msgs.Add(new ReasonMsg("Relative strength of current militaries", relMilU));
+            u += relMilU;
 
-            localU = voter.politics_militarism * parityMult;
+            if (relMilU > 0 && target is Society)
+            {
+                //0 if stability is full, getting more negative as stability decreases
+                double stabilityU = (this.society.data_societalStability-1);
+                stabilityU = relMilU * stabilityU;//More negative the worse stability is, reaches the complement of relMilU when civil war is imminent
+                msgs.Add(new ReasonMsg("Our societal stability concerns", stabilityU));
+                u += stabilityU;
+            }
+
+            localU = voter.politics_militarism * parityMult * 50;
             msgs.Add(new ReasonMsg("Militarism of " + voter.getFullName(), localU));
             u += localU;
-            
+
+
+            foreach (ThreatItem threat in voter.threatEvaluations)
+            {
+                if (threat.group == option.group)
+                {
+                    localU = threat.threat;
+                    msgs.Add(new ReasonMsg("Perceived Threat", localU));
+                    u += localU;
+                    break;
+                }
+            }
 
             /*
             if (this.society.defensiveTarget != null && this.society.defensiveTarget != this.society.offensiveTarget)
@@ -61,7 +81,6 @@ namespace Assets.Code
                 u += localU;
             }
             */
-            
 
             return u;
         }
