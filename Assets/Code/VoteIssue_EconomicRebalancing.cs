@@ -20,8 +20,6 @@ namespace Assets.Code
             double advantageToEnemeies = 0;
             foreach (Person affected in society.people)
             {
-                double mult = 1;
-
                 if (affected.title_land != null)
                 {
                     double delta = 1;

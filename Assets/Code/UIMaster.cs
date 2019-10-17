@@ -97,6 +97,15 @@ namespace Assets.Code
             uiLeftPrimary.checkData();
         }
 
+        public void bActions()
+        {
+
+            if (world.turnLock) { return; }
+            if (blocker != null) { return; }
+
+            List<Ability> abilities = world.map.overmind.getAvailableAbilities(GraphicalMap.selectedHex);
+            addBlocker(world.prefabStore.getScrollSet(abilities, GraphicalMap.selectedHex).gameObject);
+        }
         /*
         public void bViewSociety()
         {
@@ -366,82 +375,5 @@ namespace Assets.Code
         {
             this.setToMainMenu();
         }
-
-        //public void bViewAlerts()
-        //{
-        //    if (world.turnLock) { return; }//Can't act while turn is advancing
-        //    if (blocker != null) { return; }//Can't take action with blocker onscreen
-        //    if (alertQueue.Count == 0) { return; }
-        //    Alert alert = alertQueue[0];
-        //    alertQueue.RemoveAt(0);
-        //    world.soundSource.singleNoteWood();
-        //    world.prefabStore.popupAlert(alert.title, alert.words, alert.targetVote, alert.targetSociety, alert.targetPerson, alert.targetHex, alert.lockout);
-        //}
-
-
-        //private void findAgentSoc()
-        //{
-        //    List<Person> opts = new List<Person>();
-        //    foreach (SocialGroup group in world.map.socialGroups)
-        //    {
-        //        if (group is Society)
-        //        {
-        //            Society soc = (Society)group;
-
-        //            foreach (Person p in soc.people)
-        //            {
-        //                if (p.enthralled)
-        //                {
-        //                    opts.Add(p);
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    if (opts.Count == 0)
-        //    {
-        //        return;
-        //    }
-        //    if (GraphicalSociety.focal != null && opts.Contains(GraphicalSociety.focal))
-        //    {
-        //        int ind = opts.IndexOf(GraphicalSociety.focal);
-        //        setToSociety(opts[ind + 1].society, opts[ind + 1].slot);
-        //        return;
-        //    }
-        //    else
-        //    {
-        //        setToSociety(opts[0].society, opts[0].slot);
-        //    }
-        //}
-
-
-        //private void findNobleOrFail()
-        //{
-        //    List<Person> opts = new List<Person>();
-        //    foreach (SocialGroup group in world.map.socialGroups)
-        //    {
-        //        if (group is Society)
-        //        {
-        //            Society soc = (Society)group;
-
-        //            foreach (Person p in soc.people)
-        //            {
-        //                if (p.enthralled)
-        //                {
-        //                    opts.Add(p);
-        //                }
-        //            }
-        //        }
-        //    }
-        //    if (opts.Count == 0)
-        //    {
-        //        world.prefabStore.popMsg("No enthralled (noble or agent) could be found.");
-        //        world.soundSource.failure();
-        //        return;
-        //    }
-
-        //    //Found someone. Set to them
-        //    setToSociety(opts[0].society, opts[0].slot);
-        //}
     }
 }

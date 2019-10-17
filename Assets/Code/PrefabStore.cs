@@ -34,6 +34,7 @@ namespace Assets.Code
         public GameObject menuBox;
         public GameObject menuIconicBox;
         public GameObject personBox;
+        public GameObject abilityBox;
         public GameObject xBoxDate;
         public GameObject xBoxThreat;
         public GameObject xScrollSet;
@@ -154,7 +155,73 @@ namespace Assets.Code
             return specific;
         }
 
+
+        private PopupScrollSet getInnerScrollSet()
+        {
+            GameObject obj = Instantiate(scrollSet) as GameObject;
+            PopupScrollSet specific = obj.GetComponent<PopupScrollSet>();
+            specific.ui = ui;
+            specific.next.onClick.AddListener(delegate { specific.bNext(); });
+            specific.prev.onClick.AddListener(delegate { specific.bPrev(); });
+            specific.cancel.onClick.AddListener(delegate { specific.bCancel(); });
+            specific.select.onClick.AddListener(delegate { specific.bSelect(); });
+            return specific;
+        }
+
+        public PopupScrollSet getScrollSet(List<int> indices)
+        {
+            PopupScrollSet specific = getInnerScrollSet();
+
+            foreach (int q in indices)
+            {
+                PopupBoxPerson box = getPersonBox();
+                box.gameObject.transform.SetParent(specific.gameObject.transform);
+                specific.scrollables.Add(box);
+            }
+
+            return specific;
+        }
+        public PopupScrollSet getScrollSet(List<Ability> abilities,Hex hex)
+        {
+            PopupScrollSet specific = getInnerScrollSet();
+
+            foreach (Ability b in abilities)
+            {
+                PopupBoxAbility box = getAbilityBox(b,hex);
+                box.gameObject.transform.SetParent(specific.gameObject.transform);
+                specific.scrollables.Add(box);
+            }
+
+            return specific;
+        }
+
+        public PopupBoxPerson getPersonBox()
+        {
+            GameObject obj = Instantiate(personBox) as GameObject;
+            PopupBoxPerson specific = obj.GetComponent<PopupBoxPerson>();
+            //specific.setTo(viewer, p, select);
+
+            return specific;
+        }
+        public PopupBoxAbility getAbilityBox(Ability a,Hex hex)
+        {
+            GameObject obj = Instantiate(abilityBox) as GameObject;
+            PopupBoxAbility specific = obj.GetComponent<PopupBoxAbility>();
+            specific.setTo(a,hex);
+
+            return specific;
+        }
+
+
         /*
+        public PopupBoxPerson getPersonBox(Person p, Selector_Person select, Person viewer)
+        {
+            GameObject obj = Instantiate(personBox) as GameObject;
+            PopupBoxPerson specific = obj.GetComponent<PopupBoxPerson>();
+            specific.setTo(viewer, p, select);
+
+            return specific;
+        }
         public void particleCombat(Hex a, Hex b)
         {
             if (a.outer == null && b.outer == null) { return; }//Particles may not be invisible
@@ -201,20 +268,6 @@ namespace Assets.Code
             for (int i = 0; i < actTexts.Count; i++)
             {
                 PopupXBoxDate box = getDateBox(actTexts[i], dateTexts[i], plotTexts[i]);
-                box.gameObject.transform.SetParent(specific.gameObject.transform);
-                specific.scrollables.Add(box);
-            }
-
-            return specific;
-        }
-
-        public PopupScrollSet getScrollSet(List<Invite> invites)
-        {
-            PopupScrollSet specific = getInnerScrollSet();
-
-            foreach (Invite act in invites)
-            {
-                PopupBoxInvite box = getBoxInvite(act);
                 box.gameObject.transform.SetParent(specific.gameObject.transform);
                 specific.scrollables.Add(box);
             }

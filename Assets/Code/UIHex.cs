@@ -33,6 +33,7 @@ namespace Assets.Code
         public void checkData()
         {
             title.text = "";
+
             // FIXME: check if this needs to be done?
             foreach (Transform t in listContent)
             {
@@ -115,8 +116,8 @@ namespace Assets.Code
             for (int i = 0; i < 3; i++)
             {
                 GameObject sp = Instantiate(testButtonObj, listContent);
-                ButtonPortrait script = sp.GetComponent<ButtonPortrait>();
-                script.button.onClick.AddListener(delegate { bTestClick(i); });
+                Button script = sp.GetComponent<Button>();
+                script.onClick.AddListener(delegate { bTestClick(i); });
             }
         }
         public void bTestClick(int i)

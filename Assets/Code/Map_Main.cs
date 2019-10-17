@@ -21,6 +21,7 @@ namespace Assets.Code
         //public StatRecorder stats;
         public float lastTurnTime;
         public Params param;
+        public Overmind overmind;
 
         public Map(Params param)
         {

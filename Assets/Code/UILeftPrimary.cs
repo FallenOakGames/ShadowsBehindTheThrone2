@@ -14,6 +14,7 @@ namespace Assets.Code
         public Text body;
         public Text maskTitle;
         public Text maskBody;
+        public Text abilityButtonText;
 
 
         public void Start()
@@ -33,6 +34,9 @@ namespace Assets.Code
         public void checkData()
         {
             Hex hex = GraphicalMap.selectedHex;
+
+            abilityButtonText.text = "Use Ability (" + master.world.map.overmind.countAvailableAbilities(hex) + ")";
+            
             maskTitle.text = GraphicalMap.map.masker.getTitleText();
             maskBody.text = GraphicalMap.map.masker.getBodyText();
             if (hex == null)

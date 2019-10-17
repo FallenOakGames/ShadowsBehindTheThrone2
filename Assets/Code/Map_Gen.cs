@@ -182,6 +182,9 @@ namespace Assets.Code
 
                 socialGroups.Add(soc);
             }
+
+
+            overmind = new Overmind(this);
         }
 
 

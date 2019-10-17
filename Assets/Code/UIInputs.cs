@@ -259,7 +259,7 @@ namespace Assets.Code
                         GraphicalMap.selectedProperty = clickedHex.location.properties[i];
                         //world.ui.uiUnit.setTo(GraphicalMap.selectedProperty);
                         GraphicalMap.selectedHex = null;
-                        return;
+                        break;
                     }
 
                     //Found no further units, want to select hex instead

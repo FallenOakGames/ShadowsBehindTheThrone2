@@ -82,7 +82,8 @@ namespace Assets.Code
 
         public string getTitle()
         {
-            return person.getFullName();
+            //return person.getFullName();
+            return "dummyTitle";
         }
 
         public string getBody()
