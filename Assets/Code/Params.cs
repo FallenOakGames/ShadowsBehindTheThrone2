@@ -51,6 +51,10 @@ namespace Assets.Code
         public double person_prestigeDeltaPerTurn = 2;
         public double person_threatMult = 100;
         internal double person_defaultPrestige = 5;
+        internal double person_evidencePerShadow = 0.033;
+        internal double person_suspicionPerEvidence = 0.033;
+        internal double person_dislikingFromSuspicion = -200;
+        internal double person_shadowContagionMult = 0.05;
 
         internal int econ_buffDuration = 50;
 

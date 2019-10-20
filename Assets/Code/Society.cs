@@ -270,7 +270,9 @@ namespace Assets.Code
             if (capital == null || capital.soc != this)
             {
                 computeCapital();
+                return capital;
             }
+            if (capital.settlement.location.soc != this) { computeCapital(); }
             return capital;
         }
 
@@ -331,7 +333,7 @@ namespace Assets.Code
                             loc.soc = null;
                         }
 
-                        if (loc.isForSocieties && loc.settlement == null)
+                        if (loc.isForSocieties && loc.settlement == null && loc.isForSocieties && loc.hex.getHabilitability() >= map.param.mapGen_minHabitabilityForHumans)
                         {
                             if (loc.isMajor)
                             {

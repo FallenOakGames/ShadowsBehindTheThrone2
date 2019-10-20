@@ -16,6 +16,7 @@ namespace Assets.Code
         public Overmind(Map map)
         {
             this.map = map;
+            abilities.Add(new Ab_TestAddShadow());
             abilities.Add(new Ab_UnholyFlesh_Attack());
             abilities.Add(new Ab_UnholyFlesh_Defend());
             abilities.Add(new Ab_UnholyFlesh_Grow());

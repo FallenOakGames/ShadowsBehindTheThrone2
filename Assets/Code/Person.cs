@@ -19,6 +19,9 @@ namespace Assets.Code
         public GraphicalSlot outer;
         public List<ThreatItem> threatEvaluations = new List<ThreatItem>();
         public LogBox log;
+        public double evidence;
+        public double shadow;
+
 
         public double politics_militarism = Eleven.random.NextDouble() * 2 - 1;
 
@@ -39,6 +42,8 @@ namespace Assets.Code
         public void turnTick()
         {
             if (World.logging) { log.takeLine("---------Turn " + map.turn + "------------"); }
+
+            processEnshadowment();
 
             double targetPrestige = map.param.person_defaultPrestige;
             if (title_land != null)
@@ -68,7 +73,59 @@ namespace Assets.Code
             }
             foreach (Title t in rems) { titles.Remove(t); }
 
+            computeSuspicionGain();
             processThreats();
+        }
+
+        private void computeSuspicionGain()
+        {
+            foreach (SocialGroup sg in map.socialGroups)
+            {
+                if (sg is Society == false) { continue; }
+                Society soc = (Society)sg;
+                foreach (Person p in soc.people)
+                {
+                    if (p == this) { continue; }
+                    double infoAvail = map.getInformationAvailability(this.getLocation(), sg);
+                    RelObj rel = getRelation(p);
+                    rel.suspicion += infoAvail * p.evidence * map.param.person_suspicionPerEvidence;
+                }
+            }
+        }
+
+        public Location getLocation()
+        {
+            if (this.title_land != null)
+            {
+                return this.title_land.settlement.location;
+            }
+            return this.society.getCapital();
+        }
+
+        private void processEnshadowment()
+        {
+            evidence += shadow * map.param.person_evidencePerShadow;
+            if (evidence > 1)
+            {
+                evidence = 1;
+            }
+            foreach (Person p in society.people)
+            {
+                if (p  == this) { continue; }
+                if (p.shadow == 0) { continue; }//Can't inherit if they don't have any, skip to save CPU
+
+                double basePrestige = 100;
+                if (society.getSovreign() != null) { basePrestige = society.getSovreign().prestige; }
+                if (basePrestige < 10) { basePrestige = 10; }
+                double multFromPrestige = p.prestige / basePrestige;
+                if (multFromPrestige < 0) { multFromPrestige = 0; }
+                if (multFromPrestige > 1) { multFromPrestige = 1; }
+
+                double likingMult = Math.Max(0, this.getRelation(p).getLiking())/100;
+
+                this.shadow += p.shadow * likingMult * map.param.person_shadowContagionMult * multFromPrestige;//You get enshadowed by people you like/trust
+                if (this.shadow > 1) { this.shadow = 1; }
+            }
         }
 
         public void processThreats()

@@ -9,9 +9,10 @@ namespace Assets.Code
     {
         public Person me;
         public Person them;
+        //Leave this crashing thing so it doesn't get reimplemented
         //public double liking { get { return liking; } set { liking = value;liking = Math.Min(100, liking);liking = Math.Max(-100, liking); } } THIS IMPLEMENTATION CRASHES THE UNITY EDITOR
         //private double liking;
-
+        public double suspicion;
         public LinkedList<RelEvent> events = new LinkedList<RelEvent>();
 
         public RelObj(Person person, Person other)
@@ -27,11 +28,20 @@ namespace Assets.Code
                 liking += r.amount;
             }
 
+            liking += getDislikingFromSuspicion();
+
             if (liking > 100) { liking = 100; }
             if (liking < -100) { liking = -100; }
             return liking;
         }
 
+        public double getDislikingFromSuspicion()
+        {
+            double evMult = (1 - me.shadow);//You care less about shadow the more enshadowed you are
+            evMult = Math.Min(evMult, 1);
+            evMult = Math.Max(0, evMult);
+            return suspicion * evMult * me.map.param.person_dislikingFromSuspicion;
+        }
         /*
         public void setLiking(double v)
         {

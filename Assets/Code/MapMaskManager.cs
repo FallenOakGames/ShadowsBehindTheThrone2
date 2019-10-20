@@ -9,7 +9,7 @@ namespace Assets.Code
     //[Serializable,HideInInspector]
     public class MapMaskManager
     {
-        public enum maskType { NONE, NATION, PROVINCE, INFORMATION,THREAT,LIKING_ME,LIKING_THEM,TESTING };
+        public enum maskType { NONE, NATION, PROVINCE, INFORMATION,THREAT,LIKING_ME,LIKING_THEM, EVIDENCE,SUSPICION, SUSPICION_FROM,TESTING };
         public maskType mask = maskType.NONE;
         public Map map;
         [NonSerialized]
@@ -53,6 +53,18 @@ namespace Assets.Code
             {
                 return "Mask: Liking for Selected Person";
             }
+            else if (mask == maskType.EVIDENCE)
+            {
+                return "Mask: Evidence";
+            }
+            else if (mask == maskType.SUSPICION)
+            {
+                return "Mask: Suspicion";
+            }
+            else if (mask == maskType.SUSPICION_FROM)
+            {
+                return "Mask: Suspicion of Others";
+            }
             return "";
         }
         public string getBodyText()
@@ -69,6 +81,11 @@ namespace Assets.Code
                     RelObj rel = me.getRelation(them);
                     words += "\nAmount: " + ((int)rel.getLiking());
 
+                    double sus = rel.getDislikingFromSuspicion();
+                    if (sus != 0)
+                    {
+                        words += "\nFROM SUSPICION: " + sus;
+                    }
                     List<RelEvent> sortedEvents = new List<RelEvent>();
                     sortedEvents.AddRange(rel.events);
                     sortedEvents.Sort();
@@ -80,7 +97,8 @@ namespace Assets.Code
                         if (nPrinted > 6) { break; }
                     }
                     return words;
-                }catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     return "";
                 }
@@ -96,6 +114,12 @@ namespace Assets.Code
                     string words = me.getFullName() + " liking for " + them.getFullName();
                     RelObj rel = me.getRelation(them);
                     words += "\nAmount: " + ((int)rel.getLiking());
+
+                    double sus = rel.getDislikingFromSuspicion();
+                    if (sus != 0)
+                    {
+                        words += "\nFROM SUSPICION: " + sus;
+                    }
 
                     List<RelEvent> sortedEvents = new List<RelEvent>();
                     sortedEvents.AddRange(rel.events);
@@ -283,6 +307,48 @@ namespace Assets.Code
                 }
                 return c;
             }
+            else if (mask == maskType.EVIDENCE)
+            {
+                try
+                {
+                    Person them = hex.settlement.title.heldBy;
+
+                    return new Color((float)them.evidence, 0, 0, 0.5f);
+                }
+                catch (Exception e)
+                {
+                    return new Color(0, 0, 0, 0.5f);
+                }
+            }
+            else if (mask == maskType.SUSPICION)
+            {
+                try
+                {
+                    Person me = GraphicalMap.selectedHex.settlement.title.heldBy;
+                    Person them = hex.settlement.title.heldBy;
+                    RelObj rel = me.getRelation(them);
+
+                    return new Color((float)rel.suspicion, 0, 0, 0.5f);
+                }catch(Exception e)
+                {
+                    return new Color(0, 0, 0, 0.5f);
+                }
+            }
+            else if (mask == maskType.SUSPICION_FROM)
+            {
+                try
+                {
+                    Person them = GraphicalMap.selectedHex.settlement.title.heldBy;
+                    Person me = hex.settlement.title.heldBy;
+                    RelObj rel = me.getRelation(them);
+
+                    return new Color((float)rel.suspicion, 0, 0, 0.5f);
+                }
+                catch (Exception e)
+                {
+                    return new Color(0, 0, 0, 0.5f);
+                }
+            }
             else if (mask == maskType.TESTING)
             {
                 if (hex.location != null)
@@ -298,10 +364,6 @@ namespace Assets.Code
                     }
                 }
 
-                return new Color(0f, 0f, 0f, 0.75f);
-            }
-            else if (mask == maskType.TESTING)
-            {
                 return new Color(0f, 0f, 0f, 0.75f);
             }
             else

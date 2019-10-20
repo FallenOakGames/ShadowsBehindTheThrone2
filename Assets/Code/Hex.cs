@@ -105,7 +105,7 @@ namespace Assets.Code
 
             if (settlement != null)
             {
-                purity = settlement.purity;
+
             }
             else
             {

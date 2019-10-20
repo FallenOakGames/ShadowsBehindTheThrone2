@@ -10,7 +10,6 @@ namespace Assets.Code
     {
         public Location location;
         public string name = "defaultSettlementName";
-        public float purity = 1;
         public TitleLanded title;
         public double basePrestige = 10;
         protected double militaryCapAdd = 0;
@@ -75,6 +74,11 @@ namespace Assets.Code
 
             defensiveStrengthCurrent += defensiveStrengthRegen;
             if (defensiveStrengthCurrent > defensiveStrengthMax) { defensiveStrengthCurrent = defensiveStrengthMax; }
+
+            if (title != null && title.heldBy != null)
+            {
+                location.hex.purity = (float)(1 - title.heldBy.shadow);
+            }
         }
 
         public void checkTitles() { 

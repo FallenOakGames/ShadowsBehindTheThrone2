@@ -169,46 +169,7 @@ namespace Assets.Code
          */
         public double getInformationAvailability(Location a,SocialGroup b)
         {
-            /*
-            int CUTOFF = 128;
-            HashSet<Location> closed = new HashSet<Location>();
-            closed.Add(a);
-            List<Location> working = new List<Location>();
-            working.Add(a);
-            List<double> distances = new List<double>();
-            distances.Add(1);
-
-            int steps = 0;
-            while(working.Count > 0)
-            {
-                steps += 1;
-                if (steps >= CUTOFF) { break; }
-                List<Location> next = new List<Location>();
-                List<double> nextDistances = new List<double>();
-                for (int i=0;i<working.Count;i++)
-                {
-                    Location l = working[i];
-                    double dist = distances[i];
-
-                    if (l.soc == b) { return Math.Max(param.minInformationAvailability,dist); }
-
-                    dist *= l.getInformationAvailability();
-
-                    foreach (Location n in l.getNeighbours())
-                    {
-                        if (closed.Contains(n)){continue;}
-
-                        closed.Add(n);
-                        nextDistances.Add(dist);
-                        next.Add(n);
-                    }
-                }
-
-                working = next;
-                distances = nextDistances;
-            }
-            return param.minInformationAvailability;
-            */
+            if (a.soc == b) { return 1; }
             if (a.information.ContainsKey(b))
             {
                 return a.information[b];

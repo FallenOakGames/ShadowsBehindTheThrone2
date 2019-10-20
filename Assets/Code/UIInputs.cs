@@ -115,7 +115,40 @@ namespace Assets.Code
                         world.map.masker.mask = MapMaskManager.maskType.LIKING_THEM;
                     }
                 }
+                else if (Input.GetKeyDown(KeyCode.Alpha7))
+                {
+                    if (world.map.masker.mask == MapMaskManager.maskType.EVIDENCE)
+                    {
+                        world.map.masker.mask = MapMaskManager.maskType.NONE;
+                    }
+                    else
+                    {
+                        world.map.masker.mask = MapMaskManager.maskType.EVIDENCE;
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha8))
+                {
+                    if (world.map.masker.mask == MapMaskManager.maskType.SUSPICION)
+                    {
+                        world.map.masker.mask = MapMaskManager.maskType.NONE;
+                    }
+                    else
+                    {
+                        world.map.masker.mask = MapMaskManager.maskType.SUSPICION;
+                    }
+                }
                 else if (Input.GetKeyDown(KeyCode.Alpha9))
+                {
+                    if (world.map.masker.mask == MapMaskManager.maskType.SUSPICION_FROM)
+                    {
+                        world.map.masker.mask = MapMaskManager.maskType.NONE;
+                    }
+                    else
+                    {
+                        world.map.masker.mask = MapMaskManager.maskType.SUSPICION_FROM;
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.End))
                 {
                     if (world.map.masker.mask == MapMaskManager.maskType.TESTING)
                     {
