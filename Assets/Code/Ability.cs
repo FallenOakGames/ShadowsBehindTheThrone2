@@ -11,5 +11,6 @@ namespace Assets.Code
         public virtual void cast(Map map, Hex hex) { }
         public abstract bool castable(Map map, Hex hex);
         public abstract Sprite getSprite(Map map);
+        public virtual string specialCost() { return null; }
     }
 }

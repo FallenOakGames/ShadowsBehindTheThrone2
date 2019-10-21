@@ -228,6 +228,7 @@ namespace Assets.Code
 
         public void mouseClicks()
         {
+            world.ui.checkData();
             if (world.ui.blocker != null) { return; }//Blocker on screen takes precedence
 
             if (EventSystem.current.IsPointerOverGameObject())

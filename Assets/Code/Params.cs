@@ -50,6 +50,9 @@ namespace Assets.Code
         public double utility_introversionFromSuspicion = 3;
         public double utility_killSuspectFromSuspicion = 150;
         internal double utility_killSuspectRelucatance = 75;
+        internal double utility_landedTitleMult = 0.33;
+        internal double utility_wouldBeOutvotedMult = 0.25;
+        internal double utility_landedTitleAssignBaseline = 100;
 
         public double person_prestigeDeltaPerTurn = 2;
         public double person_threatMult = 100;
@@ -76,15 +79,17 @@ namespace Assets.Code
         public double society_threatMultFromOffensivePosture = 0.5;
         public int society_minTimeBetweenLocReassignments = 40;
         public int society_minTimeBetweenTitleReassignments = 30;
-        internal double society_landedTitleUtilityMult = 0.33;
-        internal double society_wouldBeOutvotedUtilityMult = 0.25;
-        internal double society_landedTitleUtilityAssignBaseline = 100;
         internal int society_nPeopleForEmpire = 25;
         internal int society_nPeopleForKingdom = 12;
 
         public double ability_growFleshThreatAdd = 5;
+        internal int ability_shareEvidenceLikingCost = 20;
+
         internal double temporaryThreatDecay = 0.95;
         internal double threat_takeLocation = 3;
+        internal double ability_shareEvidencePercentage = 0.5;
+        internal int ability_enshadowCost = 4;
+        internal double victory_targetEnshadowmentAvrg = 0.75;
 
         public void loadFromFile()
         {

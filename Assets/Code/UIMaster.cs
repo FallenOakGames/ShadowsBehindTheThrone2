@@ -349,7 +349,6 @@ namespace Assets.Code
                     return;
                 }
             }
-            checkData();
         }
 
         public void removeBlocker(GameObject block)

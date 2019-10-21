@@ -126,7 +126,10 @@ namespace Assets.Code
             }
 
             ui.setToWorld();
+            displayMessages = true;
             Log("Got to end of initial startup");
+            ui.checkData();
+            prefabStore.popMsg("Test msg");
         }
 
         public void bEndTurn()

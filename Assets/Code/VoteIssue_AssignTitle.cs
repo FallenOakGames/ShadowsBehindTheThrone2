@@ -58,7 +58,7 @@ namespace Assets.Code
             }
             if (wouldBeOutvoted)
             {
-                benefitU *= voter.map.param.society_wouldBeOutvotedUtilityMult;
+                benefitU *= voter.map.param.utility_wouldBeOutvotedMult;
                 msgs.Add(new ReasonMsg("Benefit to (reduced by fears of being outvoted) " + p.getFullName(), benefitU));
                 u += benefitU;
             }
@@ -76,7 +76,7 @@ namespace Assets.Code
                 double localU = -damageToOther * voter.getRelation(title.heldBy).getLiking() * voter.map.param.utility_unlandedTitleMult;
                 if (wouldBeOutvoted)
                 {
-                    localU *= voter.map.param.society_wouldBeOutvotedUtilityMult;
+                    localU *= voter.map.param.utility_wouldBeOutvotedMult;
                 }
                 msgs.Add(new ReasonMsg("Harm to " + title.heldBy.getFullName(), localU));
                 u += localU;

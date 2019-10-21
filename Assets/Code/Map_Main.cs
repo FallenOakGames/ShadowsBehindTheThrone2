@@ -23,6 +23,7 @@ namespace Assets.Code
         public Params param;
         public Overmind overmind;
         public List<MsgEvent> turnMessages = new List<MsgEvent>();
+        public double data_avrgEnshadowment;
 
         public Map(Params param)
         {
