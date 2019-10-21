@@ -390,5 +390,18 @@ namespace Assets.Code
         {
             this.setToMainMenu();
         }
+
+        public void bViewThreats()
+        {
+            Person p = null;
+            try
+            {
+                p = GraphicalMap.selectedHex.location.person();
+            }catch(Exception e)
+            {
+                return;
+            }
+            addBlocker(world.prefabStore.getScrollSetThreats(p.threatEvaluations).gameObject);
+        }
     }
 }

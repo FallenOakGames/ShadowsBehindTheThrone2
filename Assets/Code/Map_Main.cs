@@ -320,7 +320,11 @@ namespace Assets.Code
         public void declareWar(SocialGroup att,SocialGroup def)
         {
             World.log(att.getName() + " declares war on " + def.getName());
-            turnMessages.Add(new MsgEvent("The war between " + att.getName() + " and " + def.getName() + " winds down", MsgEvent.LEVEL_ORANGE, false));
+            int priority = MsgEvent.LEVEL_ORANGE;
+            bool good = false;
+            if (att.isProtagonist()) { good = true;priority = MsgEvent.LEVEL_GREEN; }
+            if (def.isProtagonist()) { priority = MsgEvent.LEVEL_RED; }
+            turnMessages.Add(new MsgEvent(att.getName() + " launches an offensive against " + def.getName(),priority,good));
 
             att.getRel(def).state = DipRel.dipState.war;
             att.getRel(def).war = new War(this,att, def);

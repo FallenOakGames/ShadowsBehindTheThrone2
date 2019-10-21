@@ -60,7 +60,7 @@ namespace Assets.Code
         {
             Hex hex = GraphicalMap.selectedHex;
 
-            abilityButton.gameObject.SetActive(master.world.map.overmind.power > 0);
+            abilityButton.gameObject.SetActive(master.world.map.overmind.power > 0 && (master.world.map.overmind.hasTakenAction == false));
             abilityButtonText.text = "Use Ability (" + master.world.map.overmind.countAvailableAbilities(hex) + ")";
             maskTitle.text = GraphicalMap.map.masker.getTitleText();
             maskBody.text = GraphicalMap.map.masker.getBodyText();

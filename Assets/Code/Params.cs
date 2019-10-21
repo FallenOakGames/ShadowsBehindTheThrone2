@@ -21,6 +21,7 @@ namespace Assets.Code
 
         public int overmind_maxPower = 24;
         public float overmind_powerRegen = 2;
+        internal bool overmind_singleAbilityPerTurn = false;
 
         public double econ_multFromBuff = 0.75;//How much to mult/div by if a society rules in favour or against a given economic trait being priviledged/penalised
         
@@ -38,19 +39,19 @@ namespace Assets.Code
         internal float minInformationAvailability = 0.2f;
 
         internal double utility_econEffect = 0.5;
-        internal double utility_econEffectOther = 0.25;
+        internal double utility_econEffectOther = 0.20;
         public double utility_militaryTargetRelStrengthOffensive = 200;
         public double utility_militaryTargetRelStrengthDefensive = 300;
         internal double utility_vassaliseReluctance = -100;
-        internal double utility_vassaliseMilMult = 100;
+        internal double utility_vassaliseMilMult = 80;
         internal double utility_vassaliseThreatMult = 0.5;
-        internal double utility_introversionFromInstability = 100;
+        internal double utility_introversionFromInstability = 80;
         internal double utility_militarism = 50;
         public double utility_unlandedTitleMult = 0.5;
         public double utility_introversionFromSuspicion = 3;
         public double utility_killSuspectFromSuspicion = 150;
         internal double utility_killSuspectRelucatance = 75;
-        internal double utility_landedTitleMult = 0.33;
+        internal double utility_landedTitleMult = 0.25;
         internal double utility_wouldBeOutvotedMult = 0.25;
         internal double utility_landedTitleAssignBaseline = 100;
 
@@ -61,7 +62,7 @@ namespace Assets.Code
         internal double person_suspicionPerEvidence = 0.01;
         internal double person_dislikingFromSuspicion = -200;
         internal double person_shadowContagionMult = 0.1;
-        internal double person_threatFromSuspicion = 50;
+        internal double person_threatFromSuspicion = 400;
         internal double person_shadowDecayPerTurn = 0.005;
 
         internal int econ_buffDuration = 50;
@@ -79,7 +80,7 @@ namespace Assets.Code
         public double society_threatMultFromOffensivePosture = 0.5;
         public int society_minTimeBetweenLocReassignments = 40;
         public int society_minTimeBetweenTitleReassignments = 30;
-        internal int society_nPeopleForEmpire = 25;
+        internal int society_nPeopleForEmpire = 21;
         internal int society_nPeopleForKingdom = 12;
 
         public double ability_growFleshThreatAdd = 5;
