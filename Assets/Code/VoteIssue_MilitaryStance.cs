@@ -47,10 +47,12 @@ namespace Assets.Code
                 offUtility += offUtilityPersonality;
             }
             double introUtility = 0;
-            introUtility = -(society.data_societalStability - 1);//0 if stability is 1, increasing to 1 if civil war is imminent, to 2 if every single person is a traitor
-            introUtility *= voter.map.param.utility_introversionFromInstability;
+            double introUtilityStability = -(society.data_societalStability - 1);//0 if stability is 1, increasing to 1 if civil war is imminent, to 2 if every single person is a traitor
+            introUtilityStability *= voter.map.param.utility_introversionFromInstability;
+            double introFromInnerThreat = voter.threat_enshadowedNobles.threat*voter.map.param.utility_introversionFromSuspicion;
+            introUtility += introUtilityStability;
+            introUtility += introFromInnerThreat;
             introUtility += 10;
-
 
             //Option 0 is DEFENSIVE
             //Option 1 is OFFENSIVE
@@ -67,7 +69,7 @@ namespace Assets.Code
             }
             if (voter.society.posture == Society.militaryPosture.introverted && option.index != 2)
             {
-                u -= offUtility;
+                u -= introUtility;
                 msgs.Add(new ReasonMsg("Switching away from introversion", -introUtility));
             }
 
@@ -85,7 +87,8 @@ namespace Assets.Code
             if (option.index == 2 && society.posture != Society.militaryPosture.introverted)
             {
                 u += introUtility;
-                msgs.Add(new ReasonMsg("Instability internally",introUtility));
+                msgs.Add(new ReasonMsg("Instability internally",introUtilityStability));
+                msgs.Add(new ReasonMsg("Suspicion of nobles' darkness", introFromInnerThreat));
             }
 
 
@@ -100,7 +103,11 @@ namespace Assets.Code
             }
             else if (option.index == 1)
             {
-                society.posture = Society.militaryPosture.offensive; 
+                society.posture = Society.militaryPosture.offensive;
+            }
+            else if (option.index == 2)
+            {
+                society.posture = Society.militaryPosture.introverted;
             }
         }
         public override bool stillValid(Map map)

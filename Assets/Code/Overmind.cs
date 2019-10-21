@@ -12,6 +12,7 @@ namespace Assets.Code
 
         public List<Ability> abilities = new List<Ability>();
         public Map map;
+        public Person enthralled;
 
         public Overmind(Map map)
         {
@@ -28,8 +29,16 @@ namespace Assets.Code
             hasTakenAction = false;
             power += map.param.overmind_powerRegen;
             power = Math.Min(power, map.param.overmind_maxPower);
+
+            processEnthralled(); 
         }
 
+        public void processEnthralled()
+        {
+            if (enthralled == null) { return; }
+
+            if (enthralled.isDead) { enthralled = null; }
+        }
         public int countAvailableAbilities(Hex hex)
         {
             if (hex == null) { return 0; }

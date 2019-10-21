@@ -15,7 +15,7 @@ namespace Assets.Code
             
             militaryCapAdd += 5;
             militaryRegenAdd = 0.25;
-            this.defensiveStrengthMax = 15;
+            this.defensiveStrengthMax = 0;
         }
 
         public override Sprite getSprite()

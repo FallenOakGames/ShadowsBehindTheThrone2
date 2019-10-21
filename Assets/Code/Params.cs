@@ -44,17 +44,21 @@ namespace Assets.Code
         internal double utility_vassaliseReluctance = -100;
         internal double utility_vassaliseMilMult = 100;
         internal double utility_vassaliseThreatMult = 0.5;
-        internal double utility_introversionFromInstability = 200;
+        internal double utility_introversionFromInstability = 100;
         internal double utility_militarism = 50;
         public double utility_unlandedTitleMult = 0.5;
+        public double utility_introversionFromSuspicion = 3;
+        public double utility_killSuspectFromSuspicion = 150;
 
         public double person_prestigeDeltaPerTurn = 2;
         public double person_threatMult = 100;
         internal double person_defaultPrestige = 5;
-        internal double person_evidencePerShadow = 0.033;
-        internal double person_suspicionPerEvidence = 0.033;
+        internal double person_evidencePerShadow = 0.025;
+        internal double person_suspicionPerEvidence = 0.01;
         internal double person_dislikingFromSuspicion = -200;
-        internal double person_shadowContagionMult = 0.05;
+        internal double person_shadowContagionMult = 0.1;
+        internal double person_threatFromSuspicion = 50;
+        internal double person_shadowDecayPerTurn = 0.005;
 
         internal int econ_buffDuration = 50;
 
@@ -73,10 +77,12 @@ namespace Assets.Code
         public int society_minTimeBetweenTitleReassignments = 30;
         internal double society_landedTitleUtilityMult = 0.33;
         internal double society_wouldBeOutvotedUtilityMult = 0.25;
+        internal double society_landedTitleUtilityAssignBaseline = 100;
 
         public double ability_growFleshThreatAdd = 5;
         internal double temporaryThreatDecay = 0.95;
         internal double threat_takeLocation = 3;
+        internal double utility_killSuspectRelucatance = 75;
 
         public void loadFromFile()
         {

@@ -14,8 +14,8 @@ namespace Assets.Code
         public double threat;
         public List<ReasonMsg> reasons = new List<ReasonMsg>();
 
-        public enum form { NONE, DARK_AGENTS,DARK_GODS,PARAHUMANS,DISEASE,DARKNESS}
-        public form special = 0;
+        public enum formTypes { NONE, HOSTILE_NATION,ENSHADOWED_NOBLES}
+        public formTypes form = formTypes.HOSTILE_NATION;
 
         public int responseCode = RESPONSE_MILITARY;
         public static int RESPONSE_WEALTH = 0;
@@ -45,12 +45,12 @@ namespace Assets.Code
             {
                 return group == other.group;
             }
-            return special == other.special;
+            return form == other.form;
         }
         public void setTo(ThreatItem other)
         {
             group = other.group;
-            special = other.special;
+            form = other.form;
         }
 
         public void turnTick()
@@ -71,25 +71,13 @@ namespace Assets.Code
         {
             if (group == null)
             {
-                if (special == form.DARK_AGENTS)
+                if (form == formTypes.HOSTILE_NATION)
                 {
-                    return "Dark Agents";
+                    return "Hostile Nation";
                 }
-                if (special == form.DARK_GODS)
+                if (form == formTypes.ENSHADOWED_NOBLES)
                 {
-                    return "Dark Gods";
-                }
-                if (special == form.PARAHUMANS)
-                {
-                    return "Parahumans";
-                }
-                if (special == form.DISEASE)
-                {
-                    return "Disease";
-                }
-                if (special == form.DARKNESS)
-                {
-                    return "Darkness of the Soul";
+                    return "Enshadowed Nobles";
                 }
                 return "UNKNOWN";
             }else

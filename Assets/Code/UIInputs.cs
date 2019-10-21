@@ -270,6 +270,18 @@ namespace Assets.Code
             Hex clickedHex = GraphicalMap.getHexUnderMouse(Input.mousePosition).hex;
             bool deselectedProperty = false;
 
+
+            try
+            {
+                Person p = clickedHex.location.settlement.title.heldBy;
+                foreach (ThreatItem t in p.threatEvaluations)
+                {
+                    World.log(t.getTitle() + " " + t.threat);
+                }
+            }catch(Exception e)
+            {
+
+            }
             
             if (Input.GetKey(KeyCode.LeftControl))
             {

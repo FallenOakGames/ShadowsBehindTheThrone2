@@ -74,26 +74,29 @@ namespace Assets.Code
 
         public override void implement(VoteOption option)
         {
-            bool canVassalise = false;
-            Society receiever = (Society)target;
-            List<Location> trans = new List<Location>();
-            foreach (Location loc in society.map.locations)
+            if (option.index == 1)
             {
-                if (loc.soc == society)
+                bool canVassalise = false;
+                Society receiever = (Society)target;
+                List<Location> trans = new List<Location>();
+                foreach (Location loc in society.map.locations)
                 {
-                    trans.Add(loc);
+                    if (loc.soc == society)
+                    {
+                        trans.Add(loc);
+                    }
+                    if (loc.soc == target && loc.settlement != null)
+                    {
+                        canVassalise = true;
+                    }
                 }
-                if (loc.soc == target && loc.settlement != null)
+                if (canVassalise)
                 {
-                    canVassalise = true;
-                }
-            }
-            if (canVassalise)
-            {
-                World.log(society.getName() + " VASSALISES UNDER " + target.getName());
-                foreach (Location loc in trans)
-                {
-                    receiever.map.takeLocationFromOther(receiever, society, loc);
+                    World.log(society.getName() + " VASSALISES UNDER " + target.getName());
+                    foreach (Location loc in trans)
+                    {
+                        receiever.map.takeLocationFromOther(receiever, society, loc);
+                    }
                 }
             }
         }

@@ -22,11 +22,13 @@ namespace Assets.Code
         public double evidence;
         public double shadow;
 
+        public ThreatItem threat_enshadowedNobles;
 
         public double politics_militarism = Eleven.random.NextDouble() * 2 - 1;
 
         public enum personState { normal,enthralled,broken};
         public personState state = personState.normal;
+        public bool isDead;
 
         public Person(Society soc)
         {
@@ -37,6 +39,11 @@ namespace Assets.Code
             {
                 log = new LogBox(this);
             }
+
+            //Add permanent threats
+            threat_enshadowedNobles = new ThreatItem(map,this);
+            threat_enshadowedNobles.form = ThreatItem.formTypes.ENSHADOWED_NOBLES;
+            threatEvaluations.Add(threat_enshadowedNobles);
         }
 
         public void turnTick()
@@ -109,10 +116,15 @@ namespace Assets.Code
             {
                 evidence = 1;
             }
+            if (state != personState.broken && state != personState.enthralled) { 
+                shadow -= map.param.person_shadowDecayPerTurn;
+                if (shadow < 0) { shadow = 0; }
+            }
             foreach (Person p in society.people)
             {
-                if (p  == this) { continue; }
+                if (p == this) { continue; }
                 if (p.shadow == 0) { continue; }//Can't inherit if they don't have any, skip to save CPU
+                if (p.shadow <= shadow) { continue; }
 
                 double basePrestige = 100;
                 if (society.getSovreign() != null) { basePrestige = society.getSovreign().prestige; }
@@ -123,8 +135,15 @@ namespace Assets.Code
 
                 double likingMult = Math.Max(0, this.getRelation(p).getLiking())/100;
 
-                this.shadow += p.shadow * likingMult * map.param.person_shadowContagionMult * multFromPrestige;//You get enshadowed by people you like/trust
+                double shadowDelta = p.shadow * likingMult * map.param.person_shadowContagionMult * multFromPrestige;//You get enshadowed by people you like/trust
+                this.shadow = Math.Min(p.shadow, shadow + shadowDelta);//Don't exceed your donor's shadow
                 if (this.shadow > 1) { this.shadow = 1; }
+            }
+
+            if (state == personState.normal && shadow == 1)
+            {
+                this.state = personState.broken;
+                map.turnMessages.Add(new MsgEvent(this.getFullName() + " has been fully enshadowed, their soul can no longer resist the dark", MsgEvent.LEVEL_GREEN,true));
             }
         }
 
@@ -166,10 +185,24 @@ namespace Assets.Code
             //Actually do the evaluations here
             foreach (ThreatItem item in threatEvaluations)
             {
+                item.threat = 0;
                 item.reasons.Clear();
                 if (item.group == null)
                 {
-                    throw new NotImplementedException();
+                    if (item.form == ThreatItem.formTypes.ENSHADOWED_NOBLES)
+                    {
+                        if (this.state == personState.broken) { continue; }//Broken minded can't fear the darkness
+                        foreach (Person p in this.society.people)
+                        {
+                            RelObj rel = this.getRelation(p);
+                            double sus = rel.suspicion*map.param.person_threatFromSuspicion;
+                            item.threat += sus;
+                            if (sus > 1)
+                            {
+                                item.reasons.Add(new ReasonMsg("Supicion of " + p.getFullName(), sus));
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -269,6 +302,8 @@ namespace Assets.Code
             {
                 t.heldBy = null;
             }
+            isDead = true;
+            if (this == map.overmind.enthralled) { map.overmind.enthralled = null; }
         }
 
         public void logVote(VoteIssue issue)
@@ -508,24 +543,21 @@ namespace Assets.Code
                 if (society.offensiveTarget != null && society.posture == Society.militaryPosture.offensive && society.getRel(society.offensiveTarget).state != DipRel.dipState.war)
                 {
                     issue = new VoteIssue_DeclareWar(society, society.offensiveTarget, this);
-                    VoteOption option = new VoteOption();
-                    option.index = 0;
-                    issue.options.Add(option);
+                    VoteOption option_0 = new VoteOption();
+                    option_0.index = 0;
+                    issue.options.Add(option_0);
 
-                    option = new VoteOption();
-                    option.index = 1;
-                    issue.options.Add(option);
-
-                    foreach (VoteOption opt in issue.options)
+                    VoteOption option_1 = new VoteOption();
+                    option_1.index = 1;
+                    issue.options.Add(option_1);
+                    
+                    //if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
+                    //Random factor to prevent them all rushing a singular voting choice
+                    double localU = issue.computeUtility(this, option_1, new List<ReasonMsg>()) * Eleven.random.NextDouble();
+                    if (localU > bestU)
                     {
-                        //if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
-                                                                                                                   //Random factor to prevent them all rushing a singular voting choice
-                        double localU = issue.computeUtility(this, opt, new List<ReasonMsg>()) * Eleven.random.NextDouble();
-                        if (localU > bestU)
-                        {
-                            bestU = localU;
-                            bestIssue = issue;
-                        }
+                        bestU = localU;
+                        bestIssue = issue;
                     }
                     logVote(issue);
                 }
@@ -542,29 +574,54 @@ namespace Assets.Code
                         if (other.defensiveTarget == this.society.defensiveTarget)
                         {
                             issue = new VoteIssue_Vassalise(society, other, this);
-                            VoteOption option = new VoteOption();
-                            option.index = 0;
-                            issue.options.Add(option);
+                            VoteOption option_0 = new VoteOption();
+                            option_0.index = 0;
+                            issue.options.Add(option_0);
 
-                            option = new VoteOption();
-                            option.index = 1;
-                            issue.options.Add(option);
-
-                            foreach (VoteOption opt in issue.options)
+                            VoteOption option_1 = new VoteOption();
+                            option_1.index = 1;
+                            issue.options.Add(option_1);
+                            
+                            //if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
+                            //Random factor to prevent them all rushing a singular voting choice
+                            double localU = issue.computeUtility(this, option_1, new List<ReasonMsg>()) * Eleven.random.NextDouble();
+                            if (localU > bestU)
                             {
-                                //if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
-                                //Random factor to prevent them all rushing a singular voting choice
-                                double localU = issue.computeUtility(this, opt, new List<ReasonMsg>()) * Eleven.random.NextDouble();
-                                if (localU > bestU)
-                                {
-                                    bestU = localU;
-                                    bestIssue = issue;
-                                }
+                                bestU = localU;
+                                bestIssue = issue;
                             }
                             logVote(issue);
                         }
                     }
                 }
+                
+                //Check if you want to execute someone
+                if (society.posture == Society.militaryPosture.introverted)
+                {
+                    foreach (Person p in society.people)
+                    {
+                        if (p == this) { continue; }
+                        issue = new VoteIssue_JudgeSuspect(society, p, this);
+                        VoteOption option_0 = new VoteOption();
+                        option_0.index = 0;
+                        issue.options.Add(option_0);
+
+                        VoteOption option_1 = new VoteOption();
+                        option_1.index = 1;
+                        issue.options.Add(option_1);
+                        
+                        //if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
+                        //Random factor to prevent them all rushing a singular voting choice
+                        double localU = issue.computeUtility(this, option_1, new List<ReasonMsg>()) * Eleven.random.NextDouble();
+                        if (localU > bestU)
+                        {
+                            bestU = localU;
+                            bestIssue = issue;
+                        }
+                        logVote(issue);
+                    }
+                }
+                
             }
 
             if (bestIssue != null)

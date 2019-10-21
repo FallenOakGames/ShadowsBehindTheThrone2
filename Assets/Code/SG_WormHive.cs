@@ -35,7 +35,7 @@ namespace Assets.Code
                     {
                         loc.soc = null;
                     }
-                    else
+                    else if (loc.settlement is Set_WormNest)
                     {
                         size += 1;
                     }
@@ -70,6 +70,16 @@ namespace Assets.Code
                     expansion.soc = this;
                     expansion.settlement = new Set_WormNest(expansion);
                 }
+            }
+        }
+
+        public override void takeLocationFromOther(SocialGroup def, Location taken)
+        {
+            base.takeLocationFromOther(def, taken);
+
+            if (def is Society && taken.settlement != null)
+            {
+                taken.settlement = new Set_Ruins(taken);
             }
         }
     }

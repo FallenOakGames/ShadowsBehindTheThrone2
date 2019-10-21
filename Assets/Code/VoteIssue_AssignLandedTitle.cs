@@ -50,6 +50,13 @@ namespace Assets.Code
             msgs.Add(new ReasonMsg("Benefit to " + p.getFullName(), localU));
             u += localU;
 
+            if (title.heldBy == null)
+            {
+                localU = voter.map.param.society_landedTitleUtilityAssignBaseline;
+                msgs.Add(new ReasonMsg("Need to assign the title", localU));
+                u += localU;
+            }
+
             //We need to know if someone's going to lose out here
             //(Note this is irrelevant if they're the person who's being voted on)
             if (title.heldBy != null && title.heldBy != p)
@@ -72,6 +79,7 @@ namespace Assets.Code
             {
                 World.log("Title: " + title.getName() + " remains held by " + option.person.getFullName());
             }
+
 
             //Person already has a title
             if (option.person.title_land != null)

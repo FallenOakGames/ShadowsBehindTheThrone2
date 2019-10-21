@@ -22,6 +22,7 @@ namespace Assets.Code
         public float lastTurnTime;
         public Params param;
         public Overmind overmind;
+        public List<MsgEvent> turnMessages = new List<MsgEvent>();
 
         public Map(Params param)
         {
@@ -37,6 +38,7 @@ namespace Assets.Code
             turn += 1;
 
             lastTurnTime = UnityEngine.Time.fixedTime;
+            turnMessages.Clear();
             //eventManager.turnTick();
             //overmind.turnTick();
             //panic.turnTick();
