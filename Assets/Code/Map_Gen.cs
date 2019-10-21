@@ -326,12 +326,6 @@ namespace Assets.Code
                         }
                     }
                     next.econTraits.Add(globalist.allEconTraits[minInd]);
-
-                    for (int i = 0; i < useCounts.Length; i++)
-                    {
-                        World.log("i " + useCounts[i] + " " + globalist.allEconTraits[i].name);
-                    }
-                    World.log("Chose " + minInd);
                 }
             }
         }

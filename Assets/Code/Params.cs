@@ -29,12 +29,12 @@ namespace Assets.Code
 
         public double combat_prestigeLossFromConquest = 0.333;//multiplier on captured lords' prestige
         public double combat_thresholdAttackStrength = 0.25;
-        public double combat_lethality = 1.25;//How much of an army is destroyed in a battle at maximum roll against an equivalent force
+        public double combat_lethality = 0.8;//How much of an army is destroyed in a battle at maximum roll against an equivalent force
         public double combat_takeLandThreshold = 1.25;//How much over their strength do you have to be to take some land
         internal double combat_maxMilitaryCapExponent = 0.75;//Used to reduce the power of larger nations
         public double combat_defensivePostureDmgMult = 0.666;
 
-        public int war_defaultLength = 10;
+        public int war_defaultLength = 8;
         internal float minInformationAvailability = 0.2f;
 
         internal double utility_econEffect = 0.5;
@@ -49,6 +49,7 @@ namespace Assets.Code
         public double utility_unlandedTitleMult = 0.5;
         public double utility_introversionFromSuspicion = 3;
         public double utility_killSuspectFromSuspicion = 150;
+        internal double utility_killSuspectRelucatance = 75;
 
         public double person_prestigeDeltaPerTurn = 2;
         public double person_threatMult = 100;
@@ -78,11 +79,12 @@ namespace Assets.Code
         internal double society_landedTitleUtilityMult = 0.33;
         internal double society_wouldBeOutvotedUtilityMult = 0.25;
         internal double society_landedTitleUtilityAssignBaseline = 100;
+        internal int society_nPeopleForEmpire = 25;
+        internal int society_nPeopleForKingdom = 12;
 
         public double ability_growFleshThreatAdd = 5;
         internal double temporaryThreatDecay = 0.95;
         internal double threat_takeLocation = 3;
-        internal double utility_killSuspectRelucatance = 75;
 
         public void loadFromFile()
         {

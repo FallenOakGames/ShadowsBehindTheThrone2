@@ -288,6 +288,37 @@ namespace Assets.Code
                 }
             }
         }
+        public override bool isProtagonist()
+        {
+            foreach (Person p in people)
+            {
+                if (p.state == Person.personState.enthralled) { return true; }
+            }
+            return false;
+        }
+        public override string getName()
+        {
+            string basic = base.getName();
+            if (this.people.Count > map.param.society_nPeopleForEmpire)
+            {
+                return "Empire of " + basic;
+            }
+            else if (this.people.Count > map.param.society_nPeopleForKingdom)
+            {
+                if (this.getSovreign() == null || this.getSovreign().isMale)
+                {
+                    return "Kingdom of " + basic;
+                }
+                else
+                {
+                    return "Queendom of " + basic;
+                }
+            }
+            else
+            {
+                return "Duchy of " + basic;
+            }
+        }
 
         public Location getCapital()
         {

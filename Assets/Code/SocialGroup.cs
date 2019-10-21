@@ -63,6 +63,11 @@ namespace Assets.Code
             return cachedGone;
         }
 
+        public virtual bool isProtagonist()
+        {
+            return false;
+        }
+
         public int getSize()
         {
             int reply = 0;

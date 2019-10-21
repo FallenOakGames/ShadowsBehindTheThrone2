@@ -14,12 +14,12 @@ namespace Assets.Code{
         {
             base.turnTick();
 
-            if (society.people.Count > 25)
+            if (society.people.Count > World.staticMap.param.society_nPeopleForEmpire)
             {
                 nameM = "Emperor";
                 nameF = "Empress";
             }
-            else if (society.people.Count > 12)
+            else if (society.people.Count > World.staticMap.param.society_nPeopleForKingdom)
             {
                 nameM = "King";
                 nameF = "Queen";

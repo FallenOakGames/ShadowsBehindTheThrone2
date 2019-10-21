@@ -44,6 +44,7 @@ namespace Assets.Code
         public GameObject prefabPersonInspect;
         public GameObject prefabSocietyInspect;
         public GameObject pfbGraphicalProperty;
+        public GameObject mapMsg;
 
 
         public PopupNameTag getNameTag(string name, Color color)
@@ -193,6 +194,12 @@ namespace Assets.Code
             }
 
             return specific;
+        }
+        public MonoMapMsg getMapMsg(MsgEvent ev)
+        {
+            GameObject obj = Instantiate(mapMsg) as GameObject;
+            MonoMapMsg msg = obj.GetComponent<MonoMapMsg>();
+            return msg;
         }
 
         public PopupBoxPerson getPersonBox()

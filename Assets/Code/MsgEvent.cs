@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Code
 {
-    public class MsgEvent
+    public class MsgEvent : IComparable<MsgEvent>
     {
         public static int LEVEL_BLUE   = -1;
         public static int LEVEL_RED = 0;
@@ -15,6 +15,7 @@ namespace Assets.Code
 
         public static int LEVEL_GREEN = 0;
         public static int LEVEL_DARK_GREEN = 1;
+        public static int LEVEL_DARK_GREEN2 = 2;
         /*
          * Basically an int, but implemented as doubles to allow fine-grain control.
          * -1: Blue. Action available
@@ -34,6 +35,11 @@ namespace Assets.Code
             this.msg = v;
             this.priority = u;
             this.beneficial = positive;
+        }
+
+        public int CompareTo(MsgEvent other)
+        {
+            return Math.Sign(priority - other.priority);
         }
     }
 }

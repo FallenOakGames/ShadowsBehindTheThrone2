@@ -11,6 +11,7 @@ namespace Assets.Code
     {
         public UIMaster master;
         public Text title;
+        public Text socTitle;
         public Text locText;
         public Text body;
         public Text personTitle;
@@ -110,10 +111,19 @@ namespace Assets.Code
                 {
                     title.text = "";
                     body.text = "";
+                    socTitle.text = "";
                 }
                 else
                 {
                     title.text = GraphicalMap.selectedHex.getName();
+                    if (GraphicalMap.selectedHex.location != null && GraphicalMap.selectedHex.location.soc != null)
+                    {
+                        socTitle.text = GraphicalMap.selectedHex.location.soc.getName();
+                    }
+                    else
+                    {
+                        socTitle.text = "";
+                    }
                     string bodyText = "Body text for hex " + GraphicalMap.selectedHex.getName();
 
                     bodyText += "\nAttachedTo " + GraphicalMap.selectedHex.territoryOf.hex.getName();

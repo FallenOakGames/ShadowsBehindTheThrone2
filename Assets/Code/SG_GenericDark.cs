@@ -22,6 +22,10 @@ namespace Assets.Code
             startingLocation.settlement = new Set_DarkGeneric(startingLocation);
             this.threat_mult = 2;
         }
+        public override bool isProtagonist()
+        {
+            return true;
+        }
 
         public override void turnTick()
         {

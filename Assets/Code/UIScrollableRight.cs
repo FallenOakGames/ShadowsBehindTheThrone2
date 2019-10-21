@@ -20,14 +20,14 @@ namespace Assets.Code
         public Toggle bPeople;
         public Toggle bPlaces;
         public Toggle bVotes;
-        public Toggle bActions;
+        public Toggle bMessages;
 
-        public enum Tab { People, Places, Votes, Actions };
+        public enum Tab { People, Places, Votes,Messages, Actions };
         private Tab currentTab;
 
         public void Start()
         {
-            currentTab = Tab.People;
+            currentTab = Tab.Messages;
         }
 
         int nCalls;
@@ -41,9 +41,10 @@ namespace Assets.Code
                 GameObject.Destroy(t.gameObject);
             }
 
-            if (currentTab == Tab.Actions)
+            if (currentTab == Tab.Messages)
             {
-                fillActionsInTab();
+                title.text = "EVENT MESSAGES";
+                fillMessagesTab();
                 return;
             }
             Society soc = getSociety(GraphicalMap.selectedHex);
@@ -104,21 +105,19 @@ namespace Assets.Code
                         }
                         break;
                     }
-
-                case Tab.Actions:
-                    {
-                        break;
-                    }
             }
         }
 
-        public void fillActionsInTab()
+        public void fillMessagesTab()
         {
-            for (int i = 0; i < 3; i++)
+            if (master.world == null) { return; }
+            if (master.world.map == null) { return; }
+
+            master.world.map.turnMessages.Sort();
+            foreach (MsgEvent msg in master.world.map.turnMessages)
             {
-                GameObject sp = Instantiate(testButtonObj, listContent);
-                Button script = sp.GetComponent<Button>();
-                script.onClick.AddListener(delegate { bTestClick(i); });
+                GameObject obj = Instantiate(master.world.prefabStore.mapMsg, listContent);
+                obj.GetComponent<MonoMapMsg>().SetInfo(msg);
             }
         }
         public void bTestClick(int i)
@@ -131,7 +130,7 @@ namespace Assets.Code
             if (bPeople.isOn) currentTab = Tab.People;
             else if (bPlaces.isOn) currentTab = Tab.Places;
             else if (bVotes.isOn) currentTab = Tab.Votes;
-            else if (bActions.isOn) currentTab = Tab.Actions;
+            else if (bMessages.isOn) currentTab = Tab.Messages;
 
             checkData();
         }

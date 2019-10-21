@@ -296,6 +296,25 @@ namespace Assets.Code
         public void die(string v)
         {
             World.log(v);
+            double priority = 0;
+            bool benefit = true;
+            if (state == Person.personState.enthralled)
+            {
+                benefit = false;
+                priority = MsgEvent.LEVEL_RED;
+            }
+            else if (state == Person.personState.broken)
+            {
+                benefit = false;
+                priority = MsgEvent.LEVEL_ORANGE;
+            }
+            else
+            {
+                benefit = true;
+                priority = MsgEvent.LEVEL_DARK_GREEN;
+            }
+            map.turnMessages.Add(new MsgEvent(this.getFullName() + " dies! " + v, priority, benefit));
+
             society.people.Remove(this);
             if (this.title_land != null)
             {

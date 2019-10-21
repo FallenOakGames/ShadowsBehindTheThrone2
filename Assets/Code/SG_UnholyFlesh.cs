@@ -41,6 +41,10 @@ namespace Assets.Code
                 }
             }
         }
+        public override bool isProtagonist()
+        {
+            return true;
+        }
 
         public override void takeLocationFromOther(SocialGroup def, Location taken)
         {
