@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Assets.Code
 {
-    public class UIHex : MonoBehaviour
+    public class UIScrollableRight : MonoBehaviour
     {
         public UIMaster master;
         public Text title;
@@ -30,6 +30,7 @@ namespace Assets.Code
             currentTab = Tab.People;
         }
 
+        int nCalls;
         public void checkData()
         {
             title.text = "";
@@ -48,7 +49,7 @@ namespace Assets.Code
             Society soc = getSociety(GraphicalMap.selectedHex);
             if (soc == null) return;
 
-            title.text = soc.getName();
+            //title.text = soc.getName();
             switch (currentTab)
             {
                 case Tab.People:

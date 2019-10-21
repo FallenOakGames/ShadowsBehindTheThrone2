@@ -10,7 +10,7 @@ namespace Assets.Code
     public class UIMaster : MonoBehaviour
     {
         public World world;
-        public UIHex uiHex;
+        public UIScrollableRight uiScrollables;
         public UIMidTop uiMidTop;
         public UILeftPrimary uiLeftPrimary;
         // public UICity uiCity;
@@ -52,11 +52,11 @@ namespace Assets.Code
                     if (GraphicalMap.selectedHex == null)
                     {
                         //uiCity.gameObject.SetActive(false);
-                        uiHex.gameObject.SetActive(true);
+                        uiScrollables.gameObject.SetActive(true);
                     }
                     else
                     {
-                       uiHex.gameObject.SetActive(true);
+                       uiScrollables.gameObject.SetActive(true);
                     }
                 }
                 else if (state == uiState.SOCIETY || state == uiState.SELECT_SOC)
@@ -85,6 +85,12 @@ namespace Assets.Code
             world.map.turnTick();
             world.turnLock = false;
 
+            checkData();
+        }
+
+        public void checkData()
+        {
+
             if (state == uiState.SELECT_SOC || state == uiState.SOCIETY)
             {
                 //GraphicalSociety.checkData();
@@ -97,6 +103,8 @@ namespace Assets.Code
 
             uiLeftPrimary.checkData();
             uiMidTop.checkData();
+            uiScrollables.checkData();
+            
         }
 
         public void bActions()
@@ -166,7 +174,7 @@ namespace Assets.Code
 
             state = uiState.BACKGROUND;
             //uiWorldRight.gameObject.SetActive(false);
-            uiHex.gameObject.SetActive(false);
+            uiScrollables.gameObject.SetActive(false);
             //uiMainMenu.gameObject.SetActive(false);
             //uiSociety.gameObject.SetActive(false);
             uiMaster.gameObject.SetActive(false);
@@ -180,7 +188,7 @@ namespace Assets.Code
 
             state = uiState.WORLD;
             //uiWorldRight.gameObject.SetActive(true);
-            uiHex.gameObject.SetActive(true);
+            uiScrollables.gameObject.SetActive(true);
             //uiMainMenu.gameObject.SetActive(false);
             //uiSociety.gameObject.SetActive(false);
             uiMaster.gameObject.SetActive(true);
@@ -193,7 +201,7 @@ namespace Assets.Code
 
             state = uiState.MAIN_MENU;
             //uiWorldRight.gameObject.SetActive(false);
-            uiHex.gameObject.SetActive(false);
+            uiScrollables.gameObject.SetActive(false);
             //uiMainMenu.gameObject.SetActive(true);
             //uiSociety.gameObject.SetActive(false);
             uiMaster.gameObject.SetActive(false);
@@ -271,6 +279,7 @@ namespace Assets.Code
                 blockerQueue.Add(block);
                 block.SetActive(false);//Hide all non-main items
             }
+            checkData();
         }
         public void addBlockerToDelayedQueue(GameObject block)
         {
@@ -283,6 +292,7 @@ namespace Assets.Code
                 blockerQueueDelayed.Add(block);
                 block.SetActive(false);//Hide all non-main items
             }
+            checkData();
         }
         public void addBlockerToQueueFrontDontHide(GameObject block)
         {
@@ -294,6 +304,7 @@ namespace Assets.Code
             {
                 blockerQueue.Insert(0, block);
             }
+            checkData();
         }
 
         public void addBlockerDontHide(GameObject block)
@@ -312,6 +323,7 @@ namespace Assets.Code
             {
                 blockerQueue.Add(block);
             }
+            checkData();
         }
 
         public void checkBlockerQueue()
@@ -337,6 +349,7 @@ namespace Assets.Code
                     return;
                 }
             }
+            checkData();
         }
 
         public void removeBlocker(GameObject block)
@@ -371,6 +384,7 @@ namespace Assets.Code
             {
                 //GraphicalSociety.checkData();
             }
+            checkData();
         }
 
         public void bMainMenu()

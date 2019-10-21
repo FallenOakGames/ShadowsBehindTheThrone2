@@ -139,7 +139,7 @@ namespace Assets.Code
             }
 
             turnLock = false;
-            ui.uiHex.checkData();
+            ui.checkData();
         }
         public void b10Turns()
         {
@@ -155,7 +155,7 @@ namespace Assets.Code
             }
 
             turnLock = false;
-            ui.uiHex.checkData();
+            ui.checkData();
         }
 
         public void b100Turns()
@@ -172,7 +172,7 @@ namespace Assets.Code
             }
 
             turnLock = false;
-            ui.uiHex.checkData();
+            ui.checkData();
         }
         public static void Log(string str)
         {

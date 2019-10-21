@@ -18,6 +18,7 @@ namespace Assets.Code
         {
             this.map = map;
             abilities.Add(new Ab_TestAddShadow());
+            abilities.Add(new Ab_Enth_Enthrall());
             abilities.Add(new Ab_UnholyFlesh_Attack());
             abilities.Add(new Ab_UnholyFlesh_Defend());
             abilities.Add(new Ab_UnholyFlesh_Grow());

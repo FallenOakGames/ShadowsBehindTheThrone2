@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.Code
 {
@@ -21,6 +22,8 @@ namespace Assets.Code
         public LogBox log;
         public double evidence;
         public double shadow;
+        public int imgIndBack = -1;
+        public int imgIndFore = -1;
 
         public ThreatItem threat_enshadowedNobles;
 
@@ -633,6 +636,41 @@ namespace Assets.Code
             }
             lastProposedIssue = bestIssue;
             return bestIssue;
+        }
+
+        public Sprite getImageBack()
+        {
+            if (imgIndBack == -1)
+            {
+                imgIndBack = Eleven.random.Next(map.world.textureStore.layerBack.Count);
+            }
+            return map.world.textureStore.layerBack[imgIndBack];
+        }
+
+        public Sprite getImageMid()
+        {
+            if (state == personState.normal)
+            {
+                return map.world.textureStore.person_basic;
+            }
+            if (state == personState.enthralled)
+            {
+                return map.world.textureStore.person_dark;
+            }
+            if (state == personState.broken)
+            {
+                return map.world.textureStore.person_halfDark;
+            }
+
+            return map.world.textureStore.person_basic;
+        }
+        public Sprite getImageFore()
+        {
+            if (imgIndFore == -1)
+            {
+                imgIndFore = Eleven.random.Next(map.world.textureStore.layerFore.Count);
+            }
+            return map.world.textureStore.layerFore[imgIndFore];
         }
     }
 }

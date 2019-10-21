@@ -73,6 +73,30 @@ namespace Assets.Code
             }
         }
 
+        public List<Person> getEnthrallables()
+        {
+            List<Person> opts = new List<Person>();
+            foreach (Person p in people)
+            {
+                if (p.title_land != null)
+                {
+                    opts.Add(p);
+                }
+            }
+            int nToChoose = opts.Count / 4;
+            if (nToChoose < 1) { nToChoose = 1; }
+            
+
+            opts.Sort(new Sorter_PersonByPrestige());
+
+            List<Person> reply = new List<Person>();
+            for (int i = 0; i < nToChoose; i++)
+            {
+                reply.Add(opts[i]);
+            }
+            return reply;
+        }
+
         public void processKillOrders()
         {
             foreach (KillOrder order in killOrders)

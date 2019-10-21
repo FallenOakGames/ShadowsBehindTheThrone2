@@ -47,6 +47,7 @@ namespace Assets.Code
                 if (Input.GetKey(KeyCode.Alpha0))
                 {
                     world.map.masker.mask = MapMaskManager.maskType.NONE;
+                    GraphicalMap.checkData();
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha1))
                 {
@@ -59,6 +60,7 @@ namespace Assets.Code
                         World.log("Set to nation");
                         world.map.masker.mask = MapMaskManager.maskType.NATION;
                     }
+                    GraphicalMap.checkData();
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha2))
                 {
@@ -70,6 +72,7 @@ namespace Assets.Code
                     {
                         world.map.masker.mask = MapMaskManager.maskType.PROVINCE;
                     }
+                    GraphicalMap.checkData();
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha3))
                 {
@@ -81,6 +84,7 @@ namespace Assets.Code
                     {
                         world.map.masker.mask = MapMaskManager.maskType.INFORMATION;
                     }
+                    GraphicalMap.checkData();
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha4))
                 {
@@ -92,6 +96,7 @@ namespace Assets.Code
                     {
                         world.map.masker.mask = MapMaskManager.maskType.THREAT;
                     }
+                    GraphicalMap.checkData();
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha5))
                 {
@@ -103,6 +108,7 @@ namespace Assets.Code
                     {
                         world.map.masker.mask = MapMaskManager.maskType.LIKING_ME;
                     }
+                    GraphicalMap.checkData();
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha6))
                 {
@@ -114,6 +120,7 @@ namespace Assets.Code
                     {
                         world.map.masker.mask = MapMaskManager.maskType.LIKING_THEM;
                     }
+                    GraphicalMap.checkData();
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha7))
                 {
@@ -125,6 +132,7 @@ namespace Assets.Code
                     {
                         world.map.masker.mask = MapMaskManager.maskType.EVIDENCE;
                     }
+                    GraphicalMap.checkData();
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha8))
                 {
@@ -136,6 +144,7 @@ namespace Assets.Code
                     {
                         world.map.masker.mask = MapMaskManager.maskType.SUSPICION;
                     }
+                    GraphicalMap.checkData();
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha9))
                 {
@@ -147,6 +156,7 @@ namespace Assets.Code
                     {
                         world.map.masker.mask = MapMaskManager.maskType.SUSPICION_FROM;
                     }
+                    GraphicalMap.checkData();
                 }
                 else if (Input.GetKeyDown(KeyCode.End))
                 {
@@ -158,9 +168,9 @@ namespace Assets.Code
                     {
                         world.map.masker.mask = MapMaskManager.maskType.TESTING;
                     }
+                    GraphicalMap.checkData();
                 }
             }
-            GraphicalMap.checkData();
         }
 
         public void scaling()
@@ -270,18 +280,7 @@ namespace Assets.Code
             Hex clickedHex = GraphicalMap.getHexUnderMouse(Input.mousePosition).hex;
             bool deselectedProperty = false;
 
-
-            try
-            {
-                Person p = clickedHex.location.settlement.title.heldBy;
-                foreach (ThreatItem t in p.threatEvaluations)
-                {
-                    World.log(t.getTitle() + " " + t.threat);
-                }
-            }catch(Exception e)
-            {
-
-            }
+            
             
             if (Input.GetKey(KeyCode.LeftControl))
             {
@@ -337,7 +336,7 @@ namespace Assets.Code
             }
 
             GraphicalMap.selectedHex = clickedHex;
-            world.ui.uiHex.checkData();
+            world.ui.uiScrollables.checkData();
         }
 
         public void rightClickOnHex()
