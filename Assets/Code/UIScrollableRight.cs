@@ -13,6 +13,8 @@ namespace Assets.Code
         public Text title;
         //public Text body;
 
+        public Society activeSociety;
+
         public GameObject portraitPrefab;
         public GameObject testButtonObj;
         public RectTransform listContent;
@@ -28,9 +30,9 @@ namespace Assets.Code
         public void Start()
         {
             currentTab = Tab.Messages;
+            activeSociety = null;
         }
 
-        int nCalls;
         public void checkData()
         {
             title.text = "";
@@ -41,21 +43,22 @@ namespace Assets.Code
                 GameObject.Destroy(t.gameObject);
             }
 
+            activeSociety = getSociety(GraphicalMap.selectedHex);
             if (currentTab == Tab.Messages)
             {
                 title.text = "EVENT MESSAGES";
                 fillMessagesTab();
                 return;
             }
-            Society soc = getSociety(GraphicalMap.selectedHex);
-            if (soc == null) return;
+
+            if (activeSociety == null) return;
 
             //title.text = soc.getName();
             switch (currentTab)
             {
                 case Tab.People:
                     {
-                        foreach (Person p in soc.people)
+                        foreach (Person p in activeSociety.people)
                         {
                             GameObject pp = Instantiate(portraitPrefab, listContent);
                             pp.GetComponent<Portrait>().SetInfo(p);
@@ -65,7 +68,7 @@ namespace Assets.Code
                     }
                 case Tab.Places:
                     {
-                        foreach (Settlement s in getSettlements(soc))
+                        foreach (Settlement s in getSettlements(activeSociety))
                         {
                             GameObject sp = Instantiate(portraitPrefab, listContent);
                             sp.GetComponent<Portrait>().SetInfo(s);
@@ -75,17 +78,17 @@ namespace Assets.Code
                     }
                 case Tab.Votes:
                     {
-                        if (soc.voteSession != null)
+                        if (activeSociety.voteSession != null)
                         {
-                            List<VoteOption> vs = soc.voteSession.issue.options;
-                            foreach (Person p in soc.people)
+                            List<VoteOption> vs = activeSociety.voteSession.issue.options;
+                            foreach (Person p in activeSociety.people)
                             {
                                 double highestWeight = 0;
                                 VoteOption bestChoice = null;
                                 foreach (VoteOption option in vs)
                                 {
                                     List<ReasonMsg> msgs = new List<ReasonMsg>();
-                                    double u = soc.voteSession.issue.computeUtility(p, option, msgs);
+                                    double u = activeSociety.voteSession.issue.computeUtility(p, option, msgs);
                                     if (u > highestWeight || bestChoice == null)
                                     {
                                         bestChoice = option;
@@ -103,6 +106,7 @@ namespace Assets.Code
                                 v.votingWeight = 0.0;
                             }
                         }
+
                         break;
                     }
             }
@@ -133,6 +137,17 @@ namespace Assets.Code
             else if (bMessages.isOn) currentTab = Tab.Messages;
 
             checkData();
+        }
+
+        public void onClick()
+        {
+            if (activeSociety == null) { return; }
+
+            Debug.Log("poop");
+            if (master.state == UIMaster.uiState.WORLD)
+                master.setToSociety(activeSociety);
+            else
+                master.setToWorld();
         }
 
         private Society getSociety(Hex h)

@@ -119,7 +119,7 @@ namespace Assets.Code
             {
                 evidence = 1;
             }
-            if (state != personState.broken && state != personState.enthralled) { 
+            if (state != personState.broken && state != personState.enthralled) {
                 shadow -= map.param.person_shadowDecayPerTurn;
                 if (shadow < 0) { shadow = 0; }
             }
@@ -572,7 +572,7 @@ namespace Assets.Code
                     VoteOption option_1 = new VoteOption();
                     option_1.index = 1;
                     issue.options.Add(option_1);
-                    
+
                     //if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
                     //Random factor to prevent them all rushing a singular voting choice
                     double localU = issue.computeUtility(this, option_1, new List<ReasonMsg>()) * Eleven.random.NextDouble();
@@ -603,7 +603,7 @@ namespace Assets.Code
                             VoteOption option_1 = new VoteOption();
                             option_1.index = 1;
                             issue.options.Add(option_1);
-                            
+
                             //if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
                             //Random factor to prevent them all rushing a singular voting choice
                             double localU = issue.computeUtility(this, option_1, new List<ReasonMsg>()) * Eleven.random.NextDouble();
@@ -616,7 +616,7 @@ namespace Assets.Code
                         }
                     }
                 }
-                
+
                 //Check if you want to execute someone
                 if (society.posture == Society.militaryPosture.introverted)
                 {
@@ -631,7 +631,7 @@ namespace Assets.Code
                         VoteOption option_1 = new VoteOption();
                         option_1.index = 1;
                         issue.options.Add(option_1);
-                        
+
                         //if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
                         //Random factor to prevent them all rushing a singular voting choice
                         double localU = issue.computeUtility(this, option_1, new List<ReasonMsg>()) * Eleven.random.NextDouble();
@@ -643,7 +643,7 @@ namespace Assets.Code
                         logVote(issue);
                     }
                 }
-                
+
             }
 
             if (bestIssue != null)
