@@ -19,6 +19,8 @@ namespace Assets.Code
             this.map = map;
             abilities.Add(new Ab_TestAddShadow());
             abilities.Add(new Ab_Enth_Enthrall());
+            abilities.Add(new Ab_Enth_Enshadow());
+            abilities.Add(new Ab_Soc_ShareEvidence());
             abilities.Add(new Ab_UnholyFlesh_Attack());
             abilities.Add(new Ab_UnholyFlesh_Defend());
             abilities.Add(new Ab_UnholyFlesh_Grow());
@@ -31,7 +33,19 @@ namespace Assets.Code
             power += map.param.overmind_powerRegen;
             power = Math.Min(power, map.param.overmind_maxPower);
 
-            processEnthralled(); 
+            processEnthralled();
+            int count = 0;
+            double sum = 0;
+            foreach (Location loc in map.locations)
+            {
+                if (loc.person() != null) { sum += loc.person().shadow;count += 1; }
+            }
+            map.data_avrgEnshadowment = sum / count;
+            if (map.data_avrgEnshadowment > map.param.victory_targetEnshadowmentAvrg)
+            {
+                World.log("VICTORY DETECTED");
+                map.world.prefabStore.popMsg("VICTORY ACHIEVED. Well done");
+            }
         }
 
         public void processEnthralled()

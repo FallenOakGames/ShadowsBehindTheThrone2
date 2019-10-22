@@ -21,6 +21,7 @@ namespace Assets.Code
         public Image profileBack;
         public Image profileMid;
         public Image profileFore;
+        public Image bodyTextDarkener;
         public GameObject screenPerson;
         public GameObject screenSociety;
 
@@ -59,10 +60,11 @@ namespace Assets.Code
         {
             Hex hex = GraphicalMap.selectedHex;
 
-            abilityButton.gameObject.SetActive(master.world.map.overmind.power > 0);
+            abilityButton.gameObject.SetActive(master.world.map.overmind.power > 0 && (master.world.map.overmind.hasTakenAction == false));
             abilityButtonText.text = "Use Ability (" + master.world.map.overmind.countAvailableAbilities(hex) + ")";
             maskTitle.text = GraphicalMap.map.masker.getTitleText();
             maskBody.text = GraphicalMap.map.masker.getBodyText();
+            bodyTextDarkener.enabled = GraphicalMap.map.masker.mask == MapMaskManager.maskType.LIKING_ME || GraphicalMap.map.masker.mask == MapMaskManager.maskType.LIKING_THEM;
 
             if (state == tabState.PERSON)
             {
@@ -74,6 +76,10 @@ namespace Assets.Code
                     profileBack.enabled = true;
                     profileMid.enabled = true;
                     profileFore.enabled = true;
+                    //Done to unfuck the distortion of images which periodically occurs
+                    profileBack.sprite = null;
+                    profileMid.sprite = null;
+                    profileFore.sprite = null;
                     profileBack.sprite = p.getImageBack();
                     profileMid.sprite = p.getImageMid();
                     profileFore.sprite = p.getImageFore();
@@ -182,15 +188,20 @@ namespace Assets.Code
                                 }
                                 bodyText += "\nRebel cap " + locSoc.data_rebelLordsCap;
                                 bodyText += "\nLoyal cap " + locSoc.data_loyalLordsCap;
+                                bodyText += "\nStability: " + (int)(locSoc.data_societalStability * 100) + "%";
+                                if (locSoc.instabilityTurns > 0)
+                                {
+                                    bodyText += "\nTURNS TILL CIVIL WAR: " + (locSoc.map.param.society_instablityTillRebellion - locSoc.instabilityTurns);
+                                }
 
                             }
 
                             List<ReasonMsg> msgs = new List<ReasonMsg>();
                             double threat = hex.location.soc.getThreat(msgs);
-                            bodyText += "\nThreat: " + threat;
+                            bodyText += "\nThreat: " + (int)threat;
                             foreach (ReasonMsg msg in msgs)
                             {
-                                bodyText += "\n   " + msg.msg + " " + msg.value;
+                                bodyText += "\n   " + msg.msg + " " + (int)msg.value;
                             }
                         }
                     }

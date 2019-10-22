@@ -169,8 +169,8 @@ namespace Assets.Code
          */
         public double getInformationAvailability(Location a,SocialGroup b)
         {
-            if (a.soc == b) { return 1; }
             if (a == null) { return 0; }
+            if (a.soc == b) { return 1; }
             if (a.information.ContainsKey(b))
             {
                 return a.information[b];

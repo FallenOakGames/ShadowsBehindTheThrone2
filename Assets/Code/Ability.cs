@@ -8,8 +8,13 @@ namespace Assets.Code
         public abstract string getName();
         public abstract string getDesc();
         public abstract int getCost();
-        public virtual void cast(Map map, Hex hex) { }
         public abstract bool castable(Map map, Hex hex);
         public abstract Sprite getSprite(Map map);
+        public virtual string specialCost() { return null; }
+
+        public virtual void cast(Map map, Hex hex) {
+            map.overmind.power -= getCost();
+            if (map.param.overmind_singleAbilityPerTurn) { map.overmind.hasTakenAction = true; }
+        }
     }
 }

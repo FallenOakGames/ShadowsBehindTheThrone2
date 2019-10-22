@@ -36,8 +36,9 @@ namespace Assets.Code
             this.hex = hex;
             title.text = a.getName();
             body.text = a.getDesc();
-            cost.text = ""+a.getCost();
             icon.sprite = a.getSprite(hex.map);
+            if (a.specialCost() != null) { cost.text = a.specialCost(); }
+            else { cost.text = "" + a.getCost(); }
         }
 
         public float ySize()

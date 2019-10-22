@@ -128,7 +128,9 @@ namespace Assets.Code
             }
 
             ui.setToWorld();
+            displayMessages = true;
             Log("Got to end of initial startup");
+            ui.checkData();
         }
 
         public void bEndTurn()
