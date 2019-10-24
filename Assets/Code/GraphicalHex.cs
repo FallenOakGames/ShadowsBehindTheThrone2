@@ -53,6 +53,16 @@ namespace Assets.Code
 
                 try
                 {
+                    if (hex.location != null)
+                    {
+                        foreach (Property p in hex.location.properties)
+                        {
+                            if (p.outer != null)
+                            {
+                                Destroy(p.outer.gameObject);
+                            }
+                        }
+                    }
                     Destroy(this.gameObject);
                 }
                 catch (Exception e)
@@ -379,6 +389,17 @@ namespace Assets.Code
                 if (borders2[i] != null)
                 {
                     borders2[i].gameObject.transform.localScale = new Vector3(1, 1, 1);
+                }
+            }
+
+            if (hex.location != null)
+            {
+                foreach (Property p in hex.location.properties)
+                {
+                    if (p.outer == null)
+                    {
+                        p.outer = map.world.prefabStore.getGraphicalProperty(map, p);
+                    }
                 }
             }
         }

@@ -116,6 +116,7 @@ namespace Assets.Code
             GraphicalMap.map = map;
             GraphicalMap.world = this;
 
+            Property_Prototype.loadProperties(map);
             EconTrait.loadTraits(map);
             map.world = this;
             map.gen();

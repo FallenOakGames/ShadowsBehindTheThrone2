@@ -279,7 +279,6 @@ namespace Assets.Code
         public void clickOnHex()
         {
             Hex clickedHex = GraphicalMap.getHexUnderMouse(Input.mousePosition).hex;
-            bool deselectedProperty = false;
 
             
             
@@ -291,12 +290,14 @@ namespace Assets.Code
             }
 
 
+            bool deselectedProperty = false;
+            bool selectedAProperty = false;
             if (GraphicalMap.selectedProperty != null)
             {
                 //If we've clicked on his hex we want to cycle to the next unit in the cycle
-                if (GraphicalMap.selectedProperty.getLoc().hex == clickedHex)
+                if (GraphicalMap.selectedProperty.location.hex == clickedHex)
                 {
-                    int index = GraphicalMap.selectedProperty.getLoc().properties.IndexOf(GraphicalMap.selectedProperty);
+                    int index = GraphicalMap.selectedProperty.location.properties.IndexOf(GraphicalMap.selectedProperty);
                     bool foundAny = false;
                     for (int i = index + 1; i < clickedHex.location.properties.Count; i++)
                     {
@@ -304,6 +305,7 @@ namespace Assets.Code
                         GraphicalMap.selectedProperty = clickedHex.location.properties[i];
                         //world.ui.uiUnit.setTo(GraphicalMap.selectedProperty);
                         GraphicalMap.selectedHex = null;
+                        selectedAProperty = true;
                         break;
                     }
 
@@ -336,8 +338,12 @@ namespace Assets.Code
                 }
             }
 
-            GraphicalMap.selectedHex = clickedHex;
-            world.ui.uiScrollables.checkData();
+            if (!selectedAProperty)
+            {
+                GraphicalMap.selectedHex = clickedHex;
+            }
+
+            world.ui.checkData();
         }
 
         public void rightClickOnHex()

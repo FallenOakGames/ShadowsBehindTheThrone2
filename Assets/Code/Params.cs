@@ -91,6 +91,9 @@ namespace Assets.Code
         internal double ability_shareEvidencePercentage = 0.5;
         internal int ability_enshadowCost = 4;
         internal double victory_targetEnshadowmentAvrg = 0.75;
+        internal int ability_militaryAidDur = 20;
+        public int ability_militaryAidAmount = 10;
+        public int ability_militaryAidCost = 10;
 
         public void loadFromFile()
         {

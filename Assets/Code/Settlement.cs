@@ -28,15 +28,12 @@ namespace Assets.Code
 
         public double getMilitaryCap()
         {
-            if (location.properties.Count > 0)
+            double cap = militaryCapAdd;
+            foreach (Property p in location.properties)
             {
-                double v = militaryCapAdd;
-                foreach (Property p in location.properties)
-                {
-                    v *= p.militaryCapMult;
-                }
+                cap += p.proto.milCapAdd;
             }
-            return militaryCapAdd;
+            return cap;
         }
         public double getEconEffectMult()
         {

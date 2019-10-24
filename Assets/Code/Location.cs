@@ -127,7 +127,7 @@ namespace Assets.Code
                 {
                     p.charge -= 1;
                 }
-                if (p.proto.deleteOnZeroTimeRemaining && p.charge <= 0)
+                if (p.charge <= 0)
                 {
                     rems.Add(p);
                 }

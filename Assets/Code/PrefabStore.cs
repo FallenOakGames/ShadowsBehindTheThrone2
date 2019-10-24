@@ -11,6 +11,7 @@ namespace Assets.Code
         public World world;
         public UIMaster ui { get { return world.ui; } }
 
+        public GameObject graphicalProperty;
         public GameObject graphicalHex;
         public GameObject graphicalUnit;
         public GameObject prefabBaseHex;
@@ -228,6 +229,14 @@ namespace Assets.Code
             specific.text.text = words;
             specific.bDismiss.onClick.AddListener(delegate { specific.dismiss(); });
             ui.addBlocker(specific.gameObject);
+        }
+
+        internal GraphicalProperty getGraphicalProperty(Map map, Property p)
+        {
+            GameObject obj = Instantiate(graphicalProperty) as GameObject;
+            GraphicalProperty property = obj.GetComponent<GraphicalProperty>();
+            property.setTo(p,world);
+            return property;
         }
 
 

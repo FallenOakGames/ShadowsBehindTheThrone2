@@ -17,6 +17,7 @@ namespace Assets.Code
         public Overmind(Map map)
         {
             this.map = map;
+            abilities.Add(new Ab_Enth_MiliaryAid());
             abilities.Add(new Ab_TestAddShadow());
             abilities.Add(new Ab_Enth_Enthrall());
             abilities.Add(new Ab_Enth_Enshadow());

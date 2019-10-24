@@ -26,6 +26,12 @@ namespace Assets.Code
 
         public void Update()
         {
+            if (location.properties.Contains(property) == false)
+            {
+                property.outer = null;
+                Destroy(gameObject);
+                return;
+            }
             if (location.hex.outer == null)
             {
                 property.outer = null;
@@ -87,6 +93,13 @@ namespace Assets.Code
                     //}
                 }
             }
+        }
+
+        public void setTo(Property p,World world)
+        {
+            this.property = p;
+            this.location = p.location;
+            this.unitLayer.sprite = p.proto.getSprite(world);
         }
 
         public void checkData()

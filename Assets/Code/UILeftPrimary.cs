@@ -66,7 +66,22 @@ namespace Assets.Code
             maskBody.text = GraphicalMap.map.masker.getBodyText();
             bodyTextDarkener.enabled = GraphicalMap.map.masker.mask == MapMaskManager.maskType.LIKING_ME || GraphicalMap.map.masker.mask == MapMaskManager.maskType.LIKING_THEM;
 
-            if (state == tabState.PERSON)
+            if (GraphicalMap.selectedProperty != null)
+            {
+                screenSociety.SetActive(true);
+                socTitle.text = GraphicalMap.selectedProperty.proto.name;
+                if (GraphicalMap.selectedProperty.proto.decaysOverTime)
+                {
+                    title.text = "Turns Remaining: " + GraphicalMap.selectedProperty.charge;
+                }
+                else
+                {
+                    title.text = "Indefinite Effect";
+                }
+                string bodyText = GraphicalMap.selectedProperty.proto.getDescription();
+                body.text = bodyText;
+            }
+            else if (state == tabState.PERSON)
             {
                 screenPerson.SetActive(true);
                 screenSociety.SetActive(false);
@@ -134,6 +149,7 @@ namespace Assets.Code
 
                     bodyText += "\nAttachedTo " + GraphicalMap.selectedHex.territoryOf.hex.getName();
                     bodyText += "\nProvince: " + hex.province.name;
+
                     if (hex.location != null)
                     {
                         if (hex.location.settlement != null)
@@ -150,6 +166,8 @@ namespace Assets.Code
 
                                 }
                             }
+                            bodyText += "\nMilitary Cap Add: " + hex.location.settlement.getMilitaryCap();
+                            bodyText += "\nMilitary Regen: " + hex.location.settlement.militaryRegenAdd;
                         }
 
                         if (hex.location.soc != null)
@@ -203,6 +221,11 @@ namespace Assets.Code
                             {
                                 bodyText += "\n   " + msg.msg + " " + (int)msg.value;
                             }
+                        }
+
+                        foreach (Property p in hex.location.properties)
+                        {
+                            bodyText += "\nProperty " + p.proto.name;
                         }
                     }
                     foreach (EconTrait t in hex.province.econTraits)
