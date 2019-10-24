@@ -1,0 +1,16 @@
+Voting:
+	What the current vote is, which options are available, how much prestige total is behind each one, which was the map.overmind.enthralled (if non-null) is voting
+	Expanded info (popup presumably):
+		Who is voting for what. Worse case is that a soc has 64 people, all of them voting. Can limit max number of voting options to 8, if need be, but otherwise assume worse case is also 64
+		
+	When the next vote is, if none are available, and who will propose it (if the enthralled doesn't jump in)
+	The queue for voting order
+		Should be determinable from the society thing, since it calls them in some manner of order, which should be algorithmically deducible
+Suspicion:
+	Who suspects whom
+Liking:
+	Who likes whom
+Threat:
+	Overall what is the top threat of the society (on average)
+	Sidebar scrollable for average threat of all, then specific threat assessments of selected indiviudual
+	Each person can then have a scrollable set appear which says which threats they fear, and why (implemented already in prefabstore)
