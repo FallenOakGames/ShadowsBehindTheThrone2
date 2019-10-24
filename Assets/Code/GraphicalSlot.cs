@@ -23,25 +23,41 @@ namespace Assets.Code
         public Text riseBox;
         public Text fallBox;
 
+        public Vector3 targetPosition = Vector3.zero;
+
         public bool apoptose;
-        public float param_scaleReductPerTurn = 0.9f;
         public int param_apoptosisTime = 30;
         public int apoptosisCount = 0;
 
-        public Vector3 loc;
+        public void setTo(Person p)
+        {
+            inner = p;
 
+            title.text = p.getFullName();
+            subtitle.text = (p.title_land == null) ? "" : p.title_land.getName();
+            // FIXME
+            upperRightText.text = lowerRightText.text = riseBox.text = fallBox.text = "";
+        }
+
+        public void OnMouseDown()
+        {
+            Debug.Log("poop2");
+            GraphicalSociety.refresh(inner);
+        }
 
         public void Update()
         {
-            if (loc != null)
-            {
-                Vector3 delta = GraphicalSociety.offset + loc - transform.position;
-                if (delta.magnitude > 0.02f)
-                {
-                    delta *= 0.04f;
-                }
-                transform.Translate(delta);
-            }
+            // if (loc != null)
+            // {
+            //     Vector3 delta = GraphicalSociety.offset + loc - transform.position;
+            //     if (delta.magnitude > 0.02f)
+            //     {
+            //         delta *= 0.04f;
+            //     }
+            //     transform.Translate(delta);
+            // }
+
+            transform.position = Vector3.Lerp(transform.position, targetPosition, 0.1f);
 
             if (GraphicalSociety.loadedSlots.Contains(this) == false)
             {
@@ -52,8 +68,8 @@ namespace Assets.Code
             {
                 try
                 {
-                    GraphicalSociety.loadedSlots.Remove(this);
-                    if (inner != null) { inner.outer = null; }
+                    //GraphicalSociety.loadedSlots.Remove(this);
+                    //if (inner != null) { inner.outer = null; }
                     Destroy(this.gameObject);
                 }
                 catch (Exception e)

@@ -84,6 +84,18 @@ namespace Assets.Code
             return specific;
         }
 
+        public GraphicalSlot getGraphicalSlot(Person p)
+        {
+            GameObject obj = Instantiate(prefabSlot) as GameObject;
+            GraphicalSlot specific = obj.GetComponent<GraphicalSlot>();
+
+            GraphicalSociety.loadedSlots.Add(specific);
+            specific.world = world;
+
+            specific.setTo(p);
+            return specific;
+        }
+
         public GameObject getHexEdgeSprite()
         {
             return Instantiate(prefabHexEdgeSprite) as GameObject;

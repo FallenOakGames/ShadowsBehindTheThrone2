@@ -88,6 +88,8 @@ namespace Assets.Code
             GraphicalMap.world = this;
             //Activity.load();
 
+            GraphicalSociety.world = this;
+
             if (logging)
             {
                 foreach (string f in Directory.GetFiles("logging" + separator + "people"))

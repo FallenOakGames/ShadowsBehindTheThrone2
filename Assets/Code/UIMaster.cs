@@ -59,7 +59,7 @@ namespace Assets.Code
                        uiScrollables.gameObject.SetActive(true);
                     }
                 }
-                else if (state == uiState.SOCIETY || state == uiState.SELECT_SOC)
+                else if (state == uiState.SOCIETY)
                 {
                     //GraphicalSociety.tick();
                 }
@@ -91,7 +91,7 @@ namespace Assets.Code
         public void checkData()
         {
 
-            if (state == uiState.SELECT_SOC || state == uiState.SOCIETY)
+            if (state == uiState.SOCIETY)
             {
                 //GraphicalSociety.checkData();
                 //uiSociety.setTo(GraphicalSociety.focal);
@@ -104,7 +104,7 @@ namespace Assets.Code
             uiLeftPrimary.checkData();
             uiMidTop.checkData();
             uiScrollables.checkData();
-            
+
         }
 
         public void bActions()
@@ -194,8 +194,25 @@ namespace Assets.Code
             uiMaster.gameObject.SetActive(true);
             //uiCity.gameObject.SetActive(false);
 
-            //GraphicalSociety.purge();
+            uiLeftPrimary.gameObject.SetActive(true);
+            hexSelector.SetActive(true);
+
+            GraphicalSociety.purge();
         }
+
+        public void setToSociety(Society soc)
+        {
+            state = uiState.SOCIETY;
+
+            uiMaster.gameObject.SetActive(false);
+            uiLeftPrimary.gameObject.SetActive(false);
+            uiMidTop.gameObject.SetActive(false);
+            hexSelector.SetActive(false);
+
+            GraphicalMap.purge();
+            GraphicalSociety.setup(soc);
+        }
+
         public void setToMainMenu()
         {
 
