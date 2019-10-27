@@ -3,7 +3,7 @@ using UnityEditor;
 
 namespace Assets.Code
 {
-    public class Ab_UnholyFlesh_Seed : Ability
+    public class Ab_Fishman_Lair : Ability
     {
         public override void cast(Map map, Hex hex)
         {
@@ -11,24 +11,24 @@ namespace Assets.Code
             if (!castable(map, hex)) { return; }
 
 
-            SG_UnholyFlesh soc = null;
+            SG_Fishmen soc = null;
             foreach (SocialGroup sg in map.socialGroups)
             {
-                if (sg is SG_UnholyFlesh)
+                if (sg is SG_Fishmen)
                 {
-                    soc = (SG_UnholyFlesh)sg;
+                    soc = (SG_Fishmen)sg;
                 }
             }
             if (soc == null)
             {
-                map.socialGroups.Add(new SG_UnholyFlesh(map, hex.location));
+                map.socialGroups.Add(new SG_Fishmen(map, hex.location));
             }
             else
             {
                 hex.location.soc = soc;
             }
             
-            hex.location.settlement = new Set_UnholyFlesh_Seed(hex.location);
+            hex.location.settlement = new Set_Fishman_Lair(hex.location);
         }
 
         public override bool castable(Map map, Hex hex)
@@ -36,30 +36,29 @@ namespace Assets.Code
             if (hex.location == null) { return false; }
             if (hex.location.soc != null) { return false; }
             if (hex.location.settlement != null) { return false; }
-            if (hex.location.isOcean) { return false; }
+            if (!hex.location.isOcean) { return false; }
             return true;
         }
 
         public override int getCost()
         {
-            return 12;
+            return World.staticMap.param.ability_fishmanLairCost;
         }
 
         public override string getDesc()
         {
-            return "Creates a seed from which the unholy flesh can erupt. Violent and horrifying, the flesh is unsubtle and obvious, and will quickly attract the attention of the nations of men."
-                 + "\nCan be expanded with further abilities once seeded."
-                 + "\n[Requires an empty land location]";
+            return "Creates a fishman lair. This creates or expands your fishman civilisation. Fishmen are covert and difficult to notice until revealed by taking action, but must raid to build population."
+                + "\n[Requires an empty ocean location]";
         }
 
         public override string getName()
         {
-            return "Seed the flesh";
+            return "Establish Fishman Lair";
         }
 
         public override Sprite getSprite(Map map)
         {
-            return map.world.textureStore.icon_ghoul;
+            return map.world.textureStore.icon_fishman;
         }
     }
 }

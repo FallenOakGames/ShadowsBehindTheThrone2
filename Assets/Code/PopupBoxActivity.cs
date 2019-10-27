@@ -140,5 +140,10 @@ namespace Assets.Code
         {
             return true;
         }
+
+        public bool selectable()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

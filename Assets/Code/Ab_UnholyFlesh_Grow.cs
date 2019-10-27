@@ -46,7 +46,8 @@ namespace Assets.Code
         public override string getDesc()
         {
             return "Grows the unholy flesh outwards, forming new structures able to provide combat-ready appendages and extrusions."
-                 + "\nAdds " + (int)(World.staticMap.param.ability_growFleshThreatAdd) + " temporary threat to the growing flesh.";
+                 + "\nAdds " + (int)(World.staticMap.param.ability_growFleshThreatAdd) + " temporary threat to the growing flesh."
+                 + "\n[Requires a land location adjacent to an existing unholy flesh location]";
         }
 
         public override string getName()

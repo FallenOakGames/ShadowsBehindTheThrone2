@@ -24,6 +24,7 @@ namespace Assets.Code
         public List<GameObject> blockerQueueDelayed = new List<GameObject>();
         public GameObject blocker;
         public GameObject hexSelector;
+        public InputField cheatField;
         //public ViewSelector_Person viewSelector;
 
         //public List<Alert> alertQueue = new List<Alert>();
@@ -73,6 +74,12 @@ namespace Assets.Code
         }
 
 
+        public void takeCheatCommand()
+        {
+            Cheat.takeCommand(world.map, cheatField.text);
+            cheatField.text = "";
+        }
+
         public void bEndTurn()
         {
             if (world.turnLock) { return; }
@@ -114,7 +121,14 @@ namespace Assets.Code
             if (blocker != null) { return; }
 
             List<Ability> abilities = world.map.overmind.getAvailableAbilities(GraphicalMap.selectedHex);
-            addBlocker(world.prefabStore.getScrollSet(abilities, GraphicalMap.selectedHex).gameObject);
+            List<Ability> uncastables = new List<Ability>();
+            foreach (Ability a in world.map.overmind.abilities){
+                if (abilities.Contains(a) == false)
+                {
+                    uncastables.Add(a);
+                }
+            }
+            addBlocker(world.prefabStore.getScrollSet(abilities,uncastables, GraphicalMap.selectedHex).gameObject);
         }
         /*
         public void bViewSociety()

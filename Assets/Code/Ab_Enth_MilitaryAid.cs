@@ -14,6 +14,7 @@ namespace Assets.Code
 
         public override bool castable(Map map, Hex hex)
         {
+            if (hex.map.overmind.enthralled == null) { return false; }
             if (hex.location == null) { return false; }
             if (hex.location.settlement == null) { return false; }
             if (hex.location.soc == null || (hex.location.soc is Society == false)) { return false; }
@@ -31,7 +32,8 @@ namespace Assets.Code
         public override string getDesc()
         {
             return "Supplies a location not held by an enthralled noble with weapons and supplies, granting it +" + World.staticMap.param.ability_militaryAidAmount + " military cap for " + World.staticMap.param.ability_militaryAidDur + " turns."
-                + " Useful for creating civil wars by arming dissidents.";
+                + " Useful for creating civil wars by arming dissidents."
+                + "\n[Requires a non-enthralled noble, and for you to have an enthralled in existence]";
         }
 
         public override string getName()

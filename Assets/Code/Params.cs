@@ -83,17 +83,26 @@ namespace Assets.Code
         internal int society_nPeopleForEmpire = 21;
         internal int society_nPeopleForKingdom = 12;
 
-        public double ability_growFleshThreatAdd = 5;
-        internal int ability_shareEvidenceLikingCost = 20;
-
         internal double temporaryThreatDecay = 0.95;
         internal double threat_takeLocation = 3;
+        internal double victory_targetEnshadowmentAvrg = 0.75;
+
+        public double ability_growFleshThreatAdd = 5;
+        internal int ability_shareEvidenceLikingCost = 20;
         internal double ability_shareEvidencePercentage = 0.5;
         internal int ability_enshadowCost = 4;
-        internal double victory_targetEnshadowmentAvrg = 0.75;
         internal int ability_militaryAidDur = 20;
-        public int ability_militaryAidAmount = 10;
-        public int ability_militaryAidCost = 10;
+        public int ability_militaryAidAmount = 5;
+        public int ability_militaryAidCost = 5;
+        public int ability_fishmanRaidCost = 5;
+        internal int ability_fishmanRaidMilAdd = 4;
+        internal int ability_fishmanRaidTemporaryThreat = 20;
+        internal double dark_evilThreatMult = 1.5;
+        internal double dark_fleshThreatMult = 2;
+        internal int ability_fishmanLairCost = 8;
+        internal double dark_fishmanStartingThreatMult = -0.25;
+        internal int ability_boycottVoteCost = 15;
+        internal int ability_cancelVoteCost = 10;
 
         public void loadFromFile()
         {

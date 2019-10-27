@@ -60,7 +60,7 @@ namespace Assets.Code
         {
             Hex hex = GraphicalMap.selectedHex;
 
-            abilityButton.gameObject.SetActive(master.world.map.overmind.power > 0 && (master.world.map.overmind.hasTakenAction == false));
+            //abilityButton.gameObject.SetActive(master.world.map.overmind.power > 0 && (master.world.map.overmind.hasTakenAction == false));
             abilityButtonText.text = "Use Ability (" + master.world.map.overmind.countAvailableAbilities(hex) + ")";
             maskTitle.text = GraphicalMap.map.masker.getTitleText();
             maskBody.text = GraphicalMap.map.masker.getBodyText();
@@ -145,10 +145,14 @@ namespace Assets.Code
                     {
                         socTitle.text = "";
                     }
-                    string bodyText = "Body text for hex " + GraphicalMap.selectedHex.getName();
-
-                    bodyText += "\nAttachedTo " + GraphicalMap.selectedHex.territoryOf.hex.getName();
+                    string bodyText = "";
+                    //bodyText += "Body text for hex " + GraphicalMap.selectedHex.getName();
+                    //bodyText += "\nAttachedTo " + GraphicalMap.selectedHex.territoryOf.hex.getName();
                     bodyText += "\nProvince: " + hex.province.name;
+                    foreach (EconTrait t in hex.province.econTraits)
+                    {
+                        bodyText += "\n  Industry: " + t.name;
+                    }
 
                     if (hex.location != null)
                     {
@@ -177,6 +181,10 @@ namespace Assets.Code
                             {
                                 Society locSoc = (Society)hex.location.soc;
 
+                                if (locSoc.voteSession != null)
+                                {
+                                    bodyText += "\nVoting on: " + locSoc.voteSession.issue.ToString();
+                                }
                                 foreach (EconEffect effect in locSoc.econEffects)
                                 {
                                     bodyText += "\nEcon from " + effect.from.name + " to " + effect.to.name;
@@ -227,10 +235,6 @@ namespace Assets.Code
                         {
                             bodyText += "\nProperty " + p.proto.name;
                         }
-                    }
-                    foreach (EconTrait t in hex.province.econTraits)
-                    {
-                        bodyText += "\n  Industry: " + t.name;
                     }
                     body.text = bodyText;
                 }

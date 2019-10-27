@@ -61,6 +61,7 @@ namespace Assets.Code
         public Sprite icon_ghoul;
         public Sprite icon_axes;
         public Sprite icon_shield;
+        public Sprite icon_fishman;
 
         public Sprite icon_combat;
 

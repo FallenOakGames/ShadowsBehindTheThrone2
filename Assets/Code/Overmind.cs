@@ -17,15 +17,22 @@ namespace Assets.Code
         public Overmind(Map map)
         {
             this.map = map;
-            abilities.Add(new Ab_Enth_MiliaryAid());
-            abilities.Add(new Ab_TestAddShadow());
             abilities.Add(new Ab_Enth_Enthrall());
+
+            //abilities.Add(new Ab_TestAddShadow());
+
+            abilities.Add(new Ab_Fishman_Lair());
+            abilities.Add(new Ab_Fishman_Raid());
+            abilities.Add(new Ab_Fishman_Attack());
+            abilities.Add(new Ab_Enth_MiliaryAid());
             abilities.Add(new Ab_Enth_Enshadow());
             abilities.Add(new Ab_Soc_ShareEvidence());
+            abilities.Add(new Ab_Soc_BoycottVote());
             abilities.Add(new Ab_UnholyFlesh_Attack());
             abilities.Add(new Ab_UnholyFlesh_Defend());
             abilities.Add(new Ab_UnholyFlesh_Grow());
             abilities.Add(new Ab_UnholyFlesh_Seed());
+            abilities.Add(new Ab_Over_CancelVote());
         }
 
         public void turnTick()
@@ -71,8 +78,8 @@ namespace Assets.Code
         }
         public List<Ability> getAvailableAbilities(Hex hex)
         {
-            if (hex == null) { return null; }
-            if (hex.location == null) { return null; }
+            if (hex == null) { return new List<Ability>(); }
+            if (hex.location == null) { return new List<Ability>(); }
             List<Ability> reply = new List<Ability>();
             foreach (Ability a in abilities)
             {

@@ -195,13 +195,19 @@ namespace Assets.Code
 
             return specific;
         }
-        public PopupScrollSet getScrollSet(List<Ability> abilities,Hex hex)
+        public PopupScrollSet getScrollSet(List<Ability> abilities, List<Ability> abilities_uncastable, Hex hex)
         {
             PopupScrollSet specific = getInnerScrollSet();
 
             foreach (Ability b in abilities)
             {
                 PopupBoxAbility box = getAbilityBox(b,hex);
+                box.gameObject.transform.SetParent(specific.gameObject.transform);
+                specific.scrollables.Add(box);
+            }
+            foreach (Ability b in abilities_uncastable)
+            {
+                PopupBoxAbility box = getAbilityBox(b, hex);
                 box.gameObject.transform.SetParent(specific.gameObject.transform);
                 specific.scrollables.Add(box);
             }

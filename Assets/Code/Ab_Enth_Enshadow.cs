@@ -28,7 +28,8 @@ namespace Assets.Code
 
         public override string getDesc()
         {
-            return "Drapes the enthralled noble in shadow, which they can then spread. The shadow spreads to those who like the enthralled within the society, and spreads faster with higher prestige.";
+            return "Drapes the enthralled noble in shadow, which they can then spread. The shadow spreads to those who like the enthralled within the society, and spreads faster with higher prestige."
+                + "\n[Requires a noble]";
         }
 
         public override string getName()

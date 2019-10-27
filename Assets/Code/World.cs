@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using UnityEngine.UI;
 using UnityEngine;
 using FullSerializer;
 
@@ -34,6 +35,7 @@ namespace Assets.Code
         public string pathPrefix = "";
         public static string separator = "";
         public bool isWindows = false;
+
 
         public void Start()
         {

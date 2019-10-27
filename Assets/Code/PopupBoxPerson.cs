@@ -96,5 +96,10 @@ namespace Assets.Code
         {
             return true;
         }
+
+        public bool selectable()
+        {
+            return true;
+        }
     }
 }

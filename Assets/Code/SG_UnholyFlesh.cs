@@ -19,8 +19,7 @@ namespace Assets.Code
             this.setName("Unholy Flesh from " + startingLocation.shortName);
 
             startingLocation.soc = this;
-            startingLocation.settlement = new Set_UnholyFlesh_Seed(startingLocation);
-            this.threat_mult = 2;
+            this.threat_mult = map.param.dark_fleshThreatMult;
         }
 
         public override void turnTick()

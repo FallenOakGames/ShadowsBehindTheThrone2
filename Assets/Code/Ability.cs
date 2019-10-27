@@ -15,6 +15,7 @@ namespace Assets.Code
         public virtual void cast(Map map, Hex hex) {
             map.overmind.power -= getCost();
             if (map.param.overmind_singleAbilityPerTurn) { map.overmind.hasTakenAction = true; }
+            World.log("Cast " + this.ToString() + " " + this.getName());
         }
     }
 }

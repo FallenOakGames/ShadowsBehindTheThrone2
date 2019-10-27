@@ -16,7 +16,17 @@ namespace Assets.Code
             militaryCapAdd += 5;
             militaryRegenAdd = 0.25;
             this.defensiveStrengthMax = 0;
+
+           
         }
+
+        public override void turnTick()
+        {
+            base.turnTick();
+
+            this.location.hex.purity = 0.5f;
+        }
+
 
         public override Sprite getSprite()
         {

@@ -17,6 +17,8 @@ namespace Assets.Code
         public float targetY;
         public Ability ability;
         public Hex hex;
+        public bool usable = false;
+        public Image background;
 
 
         public void Update()
@@ -39,6 +41,13 @@ namespace Assets.Code
             icon.sprite = a.getSprite(hex.map);
             if (a.specialCost() != null) { cost.text = a.specialCost(); }
             else { cost.text = "" + a.getCost(); }
+            usable = a.castable(hex.map, hex);
+
+            if (!usable)
+            {
+                background.color = new Color(1, 1, 1, 0.5f);
+                icon.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+            }
         }
 
         public float ySize()
@@ -74,6 +83,11 @@ namespace Assets.Code
         public bool overwriteSidebar()
         {
             return true;
+        }
+
+        public bool selectable()
+        {
+            return usable;
         }
     }
 }

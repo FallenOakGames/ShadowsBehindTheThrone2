@@ -3,7 +3,7 @@ using UnityEditor;
 
 namespace Assets.Code
 {
-    public class Ab_UnholyFlesh_Attack : Ability
+    public class Ab_Fishman_Attack : Ability
     {
         public override void cast(Map map, Hex hex)
         {
@@ -12,10 +12,12 @@ namespace Assets.Code
 
             foreach (Location l in hex.location.getNeighbours())
             {
-                if (l.soc != null && (l.soc is SG_UnholyFlesh))
+                if (l.soc != null && (l.soc is SG_Fishmen))
                 {
                     if (l.soc.getRel(hex.location.soc).state == DipRel.dipState.war) { continue; }
                     map.declareWar(l.soc, hex.location.soc);
+                    l.soc.threat_mult = map.param.dark_evilThreatMult;
+                    l.soc.setName("Fishman Civilisation");
                 }
             }
         }
@@ -24,11 +26,11 @@ namespace Assets.Code
         {
             if (hex.location == null) { return false; }
             if (hex.location.soc == null) { return false; }
-            if (hex.location.soc is SG_UnholyFlesh) { return false; }
+            if (hex.location.soc is SG_Fishmen) { return false; }
 
             foreach (Location l in hex.location.getNeighbours())
             {
-                if (l.soc != null && (l.soc is SG_UnholyFlesh))
+                if (l.soc != null && (l.soc is SG_Fishmen))
                 {
                     if (l.soc.getRel(hex.location.soc).state == DipRel.dipState.war) { continue; }
                     return true;
@@ -44,18 +46,18 @@ namespace Assets.Code
 
         public override string getDesc()
         {
-            return "Causes flesh from all neighbouring hives to rise up and attack the inhabitants of the selected location."
-                 + "\n[Requires a land location adjacent to an existing unholy flesh location]";
+            return "Causes the fishmen to rise from the deep and attack the inhabitants of the chosen location. Reveals the fishmen if they are not already, setting their threat perception to normal."
+                 + "\n[Requires a human location adjacent to an existing fishman location]";
         }
 
         public override string getName()
         {
-            return "Rally the Flesh";
+            return "War on the Surface";
         }
 
         public override Sprite getSprite(Map map)
         {
-            return map.world.textureStore.icon_ghoul;
+            return map.world.textureStore.icon_fishman;
         }
     }
 }

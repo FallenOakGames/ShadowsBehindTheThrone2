@@ -20,7 +20,7 @@ namespace Assets.Code
 
             startingLocation.soc = this;
             startingLocation.settlement = new Set_WormNest(startingLocation);
-            this.threat_mult = 2;
+            this.threat_mult = map.param.dark_evilThreatMult;
         }
 
         public override void turnTick()

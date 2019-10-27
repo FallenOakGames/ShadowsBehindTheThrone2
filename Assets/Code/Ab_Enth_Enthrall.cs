@@ -36,7 +36,8 @@ namespace Assets.Code
 
         public override string getDesc()
         {
-            return "Enthralls a lower-prestige member of a society.";
+            return "Enthralls a lower-prestige member of a society."
+                + "\n[Only certain low ranked nobles can be enthralled. You may only have one enthralled at a time]";
         }
 
         public override string getName()

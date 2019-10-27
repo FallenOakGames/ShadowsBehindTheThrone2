@@ -45,6 +45,7 @@ namespace Assets.Code
                     body.text = scrollables[index].getBody();
                 }
             }
+            select.gameObject.SetActive(scrollables[index].selectable());
         }
         public void bSelect()
         {

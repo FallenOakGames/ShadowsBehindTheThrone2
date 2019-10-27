@@ -43,6 +43,15 @@ namespace Assets.Code
             relations.Add(this, rel);
         }
 
+        public bool isAtWar()
+        {
+            foreach (SocialGroup sg in map.socialGroups)
+            {
+                if (this.getRel(sg).state == DipRel.dipState.war) { return true; }
+            }
+            return false;
+        }
+
         /*
          * By default, a social group is gone if it holds no territory. Can be overriden by specials
          */
@@ -144,7 +153,8 @@ namespace Assets.Code
                 threat += addT;
                 if (reasons != null)
                 {
-                    msg = new ReasonMsg("+" + percent + "% from type", addT);
+                    string sign = addT > 0 ? "+" : "";//An advanced programing thingy to make Wyatt think I know how to program
+                    msg = new ReasonMsg(sign + percent + "% from type", addT);
                     reasons.Add(msg);
                 }
 

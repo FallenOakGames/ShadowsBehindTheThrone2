@@ -13,5 +13,6 @@ namespace Assets.Code
         string getBody();
         void setTargetY(float y);
         bool overwriteSidebar();
+        bool selectable();
     }
 }
