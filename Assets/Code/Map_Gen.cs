@@ -158,6 +158,11 @@ namespace Assets.Code
                 if (isSea(loc)) { loc.isForSocieties = false; continue; }
                 float cityPlaceVal = cityPlacementMap[loc.hex.x][loc.hex.y];
                 if (cityPlaceVal < habThreshold) { loc.isForSocieties = false; continue; }
+            }
+
+            foreach (Location loc in locations)
+            {
+                if (!loc.isForSocieties) { continue; }
                 if (loc.hex.getHabilitability() < param.mapGen_minHabitabilityForHumans) { continue; }
 
                 if (loc.isMajor)

@@ -42,7 +42,7 @@ namespace Assets.Code
         public override string getDesc()
         {
             return "Requests another noble to take up to " + (int)(World.staticMap.param.ability_shareEvidencePercentage*100) + "% of the enthralled's evidence, as a favour."
-                + "\n[Requires a noble  in your enthralled's society with a positive attitude towards you enthralled]";
+                + "\n[Requires a noble in your enthralled's society with a positive attitude towards you enthralled]";
         }
 
         public override string getName()

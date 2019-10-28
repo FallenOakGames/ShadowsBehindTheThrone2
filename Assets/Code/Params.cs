@@ -89,7 +89,7 @@ namespace Assets.Code
 
         public double ability_growFleshThreatAdd = 5;
         internal int ability_shareEvidenceLikingCost = 20;
-        internal double ability_shareEvidencePercentage = 0.5;
+        internal double ability_shareEvidencePercentage = 0.75;
         internal int ability_enshadowCost = 4;
         internal int ability_militaryAidDur = 20;
         public int ability_militaryAidAmount = 5;
@@ -103,6 +103,7 @@ namespace Assets.Code
         internal double dark_fishmanStartingThreatMult = -0.25;
         internal int ability_boycottVoteCost = 15;
         internal int ability_cancelVoteCost = 10;
+        internal double society_pExpandIntoEmpty = 0.1;
 
         public void loadFromFile()
         {

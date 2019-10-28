@@ -28,6 +28,7 @@ namespace Assets.Code
             abilities.Add(new Ab_Enth_Enshadow());
             abilities.Add(new Ab_Soc_ShareEvidence());
             abilities.Add(new Ab_Soc_BoycottVote());
+            abilities.Add(new Ab_Soc_DenounceOther());
             abilities.Add(new Ab_UnholyFlesh_Attack());
             abilities.Add(new Ab_UnholyFlesh_Defend());
             abilities.Add(new Ab_UnholyFlesh_Grow());

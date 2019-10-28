@@ -400,6 +400,20 @@ namespace Assets.Code
                             }
                         }
                     }
+                    else
+                    {
+                        //Expand into lost territory
+                        foreach (Location l2 in loc.getNeighbours())
+                        {
+                            if (l2.soc == null && l2.isForSocieties && l2.hex.getHabilitability() > map.param.mapGen_minHabitabilityForHumans)
+                            {
+                                if (Eleven.random.NextDouble() < map.param.society_pExpandIntoEmpty)
+                                {
+                                    l2.soc = this;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -630,16 +644,6 @@ namespace Assets.Code
                     people.Remove(lastUntitled);
                 }
             }
-        }
-
-        internal bool isAtWar()
-        {
-            foreach (DipRel rel in relations.Values)
-            {
-                if (rel.other(this).isGone()) { continue; }
-                if (rel.state == DipRel.dipState.war) { return true; }
-            }
-            return false;
         }
 
         public Person getSovreign()

@@ -20,12 +20,20 @@ namespace Assets.Code
                 {
                     map.overmind.power = 100;
                 }
+                if (command == "shadow")
+                {
+                    GraphicalMap.selectedHex.location.person().shadow = 1;
+                }
                 if (command == "love")
                 {
                     foreach (Person p in map.overmind.enthralled.society.people)
                     {
                         p.getRelation(map.overmind.enthralled).addLiking(100, "Cheat love", map.turn);
                     }
+                }
+                if (command == "evidence")
+                {
+                    GraphicalMap.selectedHex.location.person().evidence = 1;
                 }
             }
             catch(Exception e)
