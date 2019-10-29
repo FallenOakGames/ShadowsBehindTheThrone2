@@ -242,6 +242,23 @@ namespace Assets.Code
             }
         }
 
+        public ThreatItem getGreatestThreat()
+        {
+            ThreatItem g = null;
+            double s = 0.0;
+
+            foreach (ThreatItem t in threatEvaluations)
+            {
+                if (t.threat > s)
+                {
+                    g = t;
+                    s = t.threat;
+                }
+            }
+
+            return g;
+        }
+
         public double getRelBaseline(Person other)
         {
             if (other == this) { return 100; }

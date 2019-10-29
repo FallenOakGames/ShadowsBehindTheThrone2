@@ -67,6 +67,23 @@ namespace Assets.Code
             return reply;
         }
 
+        public string getGreatestReason()
+        {
+            string g = null;
+            double v = 0.0;
+
+            foreach (ReasonMsg r in reasons)
+            {
+                if (r.value > v)
+                {
+                    g = r.msg;
+                    v = r.value;
+                }
+            }
+
+            return g + " (" + (int)v + ")";
+        }
+
         public string getTitle()
         {
             if (group == null)

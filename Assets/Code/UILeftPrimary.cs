@@ -56,6 +56,61 @@ namespace Assets.Code
             state = tabState.SOCIETY;
             checkData();
         }
+
+        public void showPersonInfo(Person p)
+        {
+            profileBack.enabled = true;
+            profileMid.enabled = true;
+            profileFore.enabled = true;
+            //Done to unfuck the distortion of images which periodically occurs
+            profileBack.sprite = null;
+            profileMid.sprite = null;
+            profileFore.sprite = null;
+            profileBack.sprite = p.getImageBack();
+            profileMid.sprite = p.getImageMid();
+            profileFore.sprite = p.getImageFore();
+            personTitle.text = p.getFullName();
+            TitleLanded title = p.title_land;
+            if (title == null)
+            {
+                locText.text = "No Landed Title";
+            }
+            else
+            {
+                locText.text = "of " + title.settlement.name;
+            }
+            string bodyText = "Prestige: " + (int)(p.prestige);
+            bodyText += "\nShadow: " + (int)(p.shadow*100) + "%";
+            bodyText += "\nEvidence: " + (int)(p.evidence*100) + "%";
+
+            bodyText += "\n";
+
+            VoteIssue vote = null;
+            if (vote != null)
+            {
+                //
+            }
+            else
+            {
+                bodyText += "\nNot voting.";
+            }
+
+            bodyText += "\n";
+
+            ThreatItem threat = p.getGreatestThreat();
+            if (threat != null)
+            {
+                bodyText += "\nGreatest Threat: " + threat.getTitle();
+                bodyText += "\n    because " + threat.getGreatestReason();
+            }
+            else
+            {
+                bodyText += "\nNot feeling threatened.";
+            }
+
+            personBody.text = bodyText;
+        }
+
         public void checkData()
         {
             Hex hex = GraphicalMap.selectedHex;
@@ -85,34 +140,15 @@ namespace Assets.Code
             {
                 screenPerson.SetActive(true);
                 screenSociety.SetActive(false);
-                if (hex != null && hex.settlement != null && hex.settlement.title != null && hex.settlement.title.heldBy != null)
+                if (master.state == UIMaster.uiState.SOCIETY && GraphicalSociety.focus != null)
+                {
+                    Person p = GraphicalSociety.focus;
+                    showPersonInfo(p);
+                }
+                else if (hex != null && hex.settlement != null && hex.settlement.title != null && hex.settlement.title.heldBy != null)
                 {
                     Person p = hex.settlement.title.heldBy;
-                    profileBack.enabled = true;
-                    profileMid.enabled = true;
-                    profileFore.enabled = true;
-                    //Done to unfuck the distortion of images which periodically occurs
-                    profileBack.sprite = null;
-                    profileMid.sprite = null;
-                    profileFore.sprite = null;
-                    profileBack.sprite = p.getImageBack();
-                    profileMid.sprite = p.getImageMid();
-                    profileFore.sprite = p.getImageFore();
-                    personTitle.text = p.getFullName();
-                    Location loc = p.getLocation();
-                    if (loc == null)
-                    {
-                        locText.text = "No Landed Title";
-                    }
-                    else
-                    {
-                        locText.text = "of " + hex.settlement.name;
-                    }
-                    string bodyText = "Prestige: " + (int)(p.prestige);
-                    bodyText += "\nShadow: " + (int)(p.shadow*100) + "%";
-                    bodyText += "\nEvidence: " + (int)(p.evidence*100) + "%";
-
-                    personBody.text = bodyText;
+                    showPersonInfo(p);
                 }
                 else
                 {

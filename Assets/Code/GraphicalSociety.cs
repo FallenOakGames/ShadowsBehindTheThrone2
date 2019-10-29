@@ -39,15 +39,29 @@ namespace Assets.Code
                 else
                 {
                     RelObj rel = focus.relations[s.inner];
+                    float liking = (float)rel.getLiking() / 100;
+                    if (i == 0)
+                        Debug.Log(rel.suspicion.ToString());
 
-                    float radius = 3 + ((float)rel.getLiking() / 50);
+                    float radius = 3.5f - liking * 0.75f;
                     float x = Mathf.Cos(6.28f / n * i) * radius;
                     float y = Mathf.Sin(6.28f / n * i) * radius;
 
                     s.targetPosition = new Vector3(x, y, 0);
+                    if (liking < 0)
+                        s.targetColor = Color.Lerp(s.neutralColor, s.badColor, -liking);
+                    else
+                        s.targetColor = Color.Lerp(s.neutralColor, s.goodColor, liking);
+                    s.targetColor.a = 0.1f + ((float)rel.suspicion / 100);
+
                     i += 1;
                 }
             }
+        }
+
+        public static void showHover(Person p)
+        {
+            //
         }
 
         public static void purge()

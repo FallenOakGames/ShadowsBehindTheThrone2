@@ -22,8 +22,14 @@ namespace Assets.Code
         public Text lowerRightText;
         public Text riseBox;
         public Text fallBox;
+        public LineRenderer line;
+
+        public Color goodColor;
+        public Color neutralColor;
+        public Color badColor;
 
         public Vector3 targetPosition = Vector3.zero;
+        public Color targetColor;
 
         public bool apoptose;
         public int param_apoptosisTime = 30;
@@ -33,16 +39,32 @@ namespace Assets.Code
         {
             inner = p;
 
+            layerBack.sprite = p.getImageBack();
+            layerMid.sprite  = p.getImageMid();
+            layerFore.sprite = p.getImageFore();
+
             title.text = p.getFullName();
             subtitle.text = (p.title_land == null) ? "" : p.title_land.getName();
             // FIXME
             upperRightText.text = lowerRightText.text = riseBox.text = fallBox.text = "";
+
+            targetColor = neutralColor;
         }
 
         public void OnMouseDown()
         {
             Debug.Log("poop2");
             GraphicalSociety.refresh(inner);
+        }
+
+        public void OnMouseEnter()
+        {
+            GraphicalSociety.showHover(inner);
+        }
+
+        public void OnMouseExit()
+        {
+            GraphicalSociety.showHover(null);
         }
 
         public void Update()
@@ -58,6 +80,11 @@ namespace Assets.Code
             // }
 
             transform.position = Vector3.Lerp(transform.position, targetPosition, 0.1f);
+            line.SetPosition(0, transform.position);
+            line.SetPosition(1, Vector3.zero);
+
+            line.startColor = Color.Lerp(line.startColor, targetColor, 0.1f);
+            line.endColor   = line.startColor;
 
             if (GraphicalSociety.loadedSlots.Contains(this) == false)
             {

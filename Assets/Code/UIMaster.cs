@@ -219,7 +219,7 @@ namespace Assets.Code
             state = uiState.SOCIETY;
 
             uiMaster.gameObject.SetActive(false);
-            uiLeftPrimary.gameObject.SetActive(false);
+            uiLeftPrimary.gameObject.SetActive(true);
             uiMidTop.gameObject.SetActive(false);
             hexSelector.SetActive(false);
 
