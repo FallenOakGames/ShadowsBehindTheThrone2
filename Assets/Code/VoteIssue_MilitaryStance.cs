@@ -12,6 +12,11 @@ namespace Assets.Code
         {
         }
 
+        public override string ToString()
+        {
+            return "Set Military Stance";
+        }
+
         public override double computeUtility(Person voter, VoteOption option,List<ReasonMsg> msgs)
         {
             double u = option.getBaseUtility(voter);

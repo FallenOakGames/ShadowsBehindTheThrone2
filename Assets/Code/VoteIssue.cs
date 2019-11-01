@@ -45,5 +45,10 @@ namespace Assets.Code
                 }
             }
         }
+
+        public virtual string getIndexInfo(int index)
+        {
+            return "Index: " + index;
+        }
     }
 }

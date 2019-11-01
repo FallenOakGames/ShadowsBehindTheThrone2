@@ -18,8 +18,7 @@ namespace Assets.Code
         {
             if (hex.location == null) { return false; }
             if (hex.location.soc == null) { return false; }
-
-
+            if (hex.location.soc is Society == false) { return false; }
 
             Society soc = (Society)hex.location.soc;
             if (soc.voteSession == null) { return false; }

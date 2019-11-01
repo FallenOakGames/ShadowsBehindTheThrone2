@@ -16,6 +16,7 @@ namespace Assets.Code
         public stackStyleEnum stackStyle = stackStyleEnum.NONE;
 
         public double milCapAdd;
+        internal double informationAvailabilityMult = 1;
 
         public Property_Prototype(Map map,string name)
         {

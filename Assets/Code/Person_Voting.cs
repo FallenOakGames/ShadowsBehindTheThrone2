@@ -8,7 +8,11 @@ namespace Assets.Code
 {
     public partial class Person
     {
-       
+
+
+        public VoteSession forcedVoteSession;
+        public VoteOption forcedVoteOption;
+
         public void logVote(VoteIssue issue)
         {
             if (World.logging)
@@ -339,5 +343,44 @@ namespace Assets.Code
             lastProposedIssue = bestIssue;
             return bestIssue;
         }
+
+        public VoteOption getVote(VoteSession voteSession)
+        {
+            if (World.logging) { this.log.takeLine("Voting on " + voteSession.issue); }
+            double highestWeight = 0;
+            VoteOption bestChoice = null;
+            foreach (VoteOption option in voteSession.issue.options)
+            {
+                List<ReasonMsg> msgs = new List<ReasonMsg>();
+                double u = voteSession.issue.computeUtility(this, option, msgs);
+
+                if (forcedVoteSession == voteSession && option == forcedVoteOption)
+                {
+                    ReasonMsg msg = new ReasonMsg("Obligated to vote for this option", 0);
+                    msgs.Add(msg);
+                }
+                option.msgs[this] = msgs;
+                if (u > highestWeight || bestChoice == null)
+                {
+                    bestChoice = option;
+                    highestWeight = u;
+                }
+                if (World.logging)
+                {
+                    log.takeLine(" " + option.fixedLenInfo() + "  " + u);
+                    foreach (ReasonMsg msg in msgs)
+                    {
+                        log.takeLine("     " + Eleven.toFixedLen(msg.value, 5) + msg.msg);
+                    }
+                }
+            }
+
+            if (this.forcedVoteSession == voteSession)
+            {
+                return forcedVoteOption;
+            }
+            return bestChoice;
+        }
     }
+
 }

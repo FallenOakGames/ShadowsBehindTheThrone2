@@ -344,7 +344,7 @@ namespace Assets.Code
             isDead = true;
             if (this == map.overmind.enthralled) { map.overmind.enthralled = null; }
         }
-
+        
         public Sprite getImageBack()
         {
             if (imgIndBack == -1)

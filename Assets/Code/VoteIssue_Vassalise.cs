@@ -14,6 +14,11 @@ namespace Assets.Code
             this.target = target;
         }
 
+        public override string ToString()
+        {
+            return "Vassalise under " + target.getName();
+        }
+
         public override double computeUtility(Person voter, VoteOption option,List<ReasonMsg> msgs)
         {
             double u = option.getBaseUtility(voter);

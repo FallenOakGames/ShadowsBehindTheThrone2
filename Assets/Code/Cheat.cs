@@ -35,6 +35,21 @@ namespace Assets.Code
                 {
                     GraphicalMap.selectedHex.location.person().evidence = 1;
                 }
+                if (command == "vote")
+                {
+                    foreach (Location l in map.locations)
+                    {
+                        if (l.person() != null && l.person().state == Person.personState.enthralled)
+                        {
+                            World.log("Found enthralled");
+                            Society soc = (Society)l.soc;
+                            if (soc.voteSession != null) {
+                                World.log("Attempting to build blocker");
+                                map.world.ui.addBlocker(map.world.prefabStore.getScrollSet(soc.voteSession, soc.voteSession.issue.options).gameObject);
+                            }
+                        }
+                    }
+                }
             }
             catch(Exception e)
             {

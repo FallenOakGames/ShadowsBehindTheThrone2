@@ -11,6 +11,11 @@ namespace Assets.Code
         {
         }
 
+        public override string ToString()
+        {
+            return "Rebalance Economy";
+        }
+
         public override double computeUtility(Person p, VoteOption option, List<ReasonMsg> msgs)
         {
             double u = option.getBaseUtility(p);

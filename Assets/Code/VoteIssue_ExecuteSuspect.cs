@@ -14,6 +14,11 @@ namespace Assets.Code
             this.target = target;
         }
 
+        public override string ToString()
+        {
+            return "Judge Suspect " + this.target.getFullName();
+        }
+
         public override double computeUtility(Person voter, VoteOption option,List<ReasonMsg> msgs)
         {
             double u = option.getBaseUtility(voter);

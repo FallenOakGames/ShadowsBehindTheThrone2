@@ -14,6 +14,29 @@ namespace Assets.Code
             this.target = target;
         }
 
+        public override string ToString()
+        {
+            if (society.offensiveTarget.getName() != null)
+            {
+                return "Declare War on " + society.offensiveTarget.getName();
+            }
+            else
+            {
+                return "Declare War";
+            }
+        }
+        public override string getIndexInfo(int index)
+        {
+            if (index == 0)
+            {
+                return "Maintain Peace";
+            }
+            else
+            {
+                return "Declare War";
+            }
+        }
+
         public override double computeUtility(Person voter, VoteOption option,List<ReasonMsg> msgs)
         {
             double u = option.getBaseUtility(voter);

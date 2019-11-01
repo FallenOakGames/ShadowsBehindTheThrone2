@@ -522,30 +522,10 @@ namespace Assets.Code
                 
                 foreach (Person p in people)
                 {
-                    if (World.logging) { p.log.takeLine("Voting on " + voteSession.issue); }
-                    double highestWeight = 0;
-                    VoteOption bestChoice = null;
-                    foreach (VoteOption option in voteSession.issue.options)
-                    {
-                        List<ReasonMsg> msgs = new List<ReasonMsg>();
-                        double u = voteSession.issue.computeUtility(p, option, msgs);
-                        option.msgs.Add(p, msgs);
-                        if (u > highestWeight || bestChoice == null)
-                        {
-                            bestChoice = option;
-                            highestWeight = u;
-                        }
-                        if (World.logging) {
-                            p.log.takeLine(" " + option.fixedLenInfo() + "  " + u);
-                            foreach (ReasonMsg msg in msgs)
-                            {
-                                p.log.takeLine("     " + Eleven.toFixedLen(msg.value, 5) +  msg.msg);
-                            }
-                        }
-                    }
-                    bestChoice.votesFor.Add(p);
-                    bestChoice.votingWeight += p.prestige;
+                    if (p.state == Person.personState.enthralled) { continue; }
 
+                    VoteOption bestChoice = p.getVote(voteSession);
+                    bestChoice.votesFor.Add(p);
                 }
 
                 double topVote = 0;

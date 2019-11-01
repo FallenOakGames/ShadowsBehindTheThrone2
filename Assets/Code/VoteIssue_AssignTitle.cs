@@ -20,13 +20,13 @@ namespace Assets.Code
             string add = ""; 
             if (title.heldBy != null)
             {
-                add = " (" + title.heldBy.getFullName() + ")";
+                add = " (now held by " + title.heldBy.getFullName() + ")";
             }
             else
             {
                 add = " (unassigned)";
             }
-            return "VoteIssue\"Assign " + title.getName() + "\" " + add;
+            return "Assign " + title.getName() + " " + add;
         }
 
         public override double computeUtility(Person voter, VoteOption option,List<ReasonMsg> msgs)

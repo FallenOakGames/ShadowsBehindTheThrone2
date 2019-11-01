@@ -21,6 +21,7 @@ namespace Assets.Code
         public Image profileBack;
         public Image profileMid;
         public Image profileFore;
+        public Image titleTextDarkener;
         public Image bodyTextDarkener;
         public GameObject screenPerson;
         public GameObject screenSociety;
@@ -119,6 +120,7 @@ namespace Assets.Code
             abilityButtonText.text = "Use Ability (" + master.world.map.overmind.countAvailableAbilities(hex) + ")";
             maskTitle.text = GraphicalMap.map.masker.getTitleText();
             maskBody.text = GraphicalMap.map.masker.getBodyText();
+            titleTextDarkener.enabled = GraphicalMap.map.masker.mask != MapMaskManager.maskType.NONE;
             bodyTextDarkener.enabled = GraphicalMap.map.masker.mask == MapMaskManager.maskType.LIKING_ME || GraphicalMap.map.masker.mask == MapMaskManager.maskType.LIKING_THEM;
 
             if (GraphicalMap.selectedProperty != null)

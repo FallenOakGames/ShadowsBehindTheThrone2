@@ -15,14 +15,14 @@ namespace Assets.Code
 
         public override string ToString()
         {
-            string reply = "SetOffensiveTarget";
+            string reply = "Set Offensive Target ";
             if (society.offensiveTarget == null)
             {
-                reply += "(cur:None)";
+                reply += "(now None)";
             }
             else
             {
-                reply += "(cur:" + society.offensiveTarget.getName() + ")";
+                reply += "(now " + society.offensiveTarget.getName() + ")";
             }
             return reply;
         }

@@ -35,6 +35,7 @@ namespace Assets.Code
         public GameObject menuBox;
         public GameObject menuIconicBox;
         public GameObject personBox;
+        public GameObject voteBox;
         public GameObject abilityBox;
         public GameObject xBoxDate;
         public GameObject xBoxThreat;
@@ -211,6 +212,27 @@ namespace Assets.Code
                 box.gameObject.transform.SetParent(specific.gameObject.transform);
                 specific.scrollables.Add(box);
             }
+
+            return specific;
+        }
+        public PopupScrollSet getScrollSet(VoteSession sess,List<VoteOption> votes)
+        {
+            PopupScrollSet specific = getInnerScrollSet();
+
+            foreach (VoteOption b in votes)
+            {
+                PopupBoxVote box = getVoteBox(sess,b);
+                box.gameObject.transform.SetParent(specific.gameObject.transform);
+                specific.scrollables.Add(box);
+            }
+
+            return specific;
+        }
+        public PopupBoxVote getVoteBox(VoteSession sess,VoteOption option)
+        {
+            GameObject obj = Instantiate(voteBox) as GameObject;
+            PopupBoxVote specific = obj.GetComponent<PopupBoxVote>();
+            specific.setTo(sess,option);
 
             return specific;
         }

@@ -95,15 +95,12 @@ namespace Assets.Code
                                         highestWeight = u;
                                     }
                                 }
-                                bestChoice.votingWeight += p.prestige;
                             }
 
                             foreach (VoteOption v in vs)
                             {
                                 GameObject vp = Instantiate(portraitPrefab, listContent);
                                 vp.GetComponent<Portrait>().SetInfo(v);
-
-                                v.votingWeight = 0.0;
                             }
                         }
 

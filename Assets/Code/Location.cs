@@ -53,6 +53,11 @@ namespace Assets.Code
 
         public double getInformationAvailability()
         {
+            double mult = 1;
+            foreach (Property p in properties)
+            {
+                mult *= p.proto.informationAvailabilityMult;
+            }
             return inherentInformationAvailability;
         }
         

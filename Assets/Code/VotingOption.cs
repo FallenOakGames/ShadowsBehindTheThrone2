@@ -20,8 +20,24 @@ namespace Assets.Code
         public Dictionary<Person, double> randomUtility = new Dictionary<Person, double>();
         public Dictionary<Person, List<ReasonMsg>> msgs = new Dictionary<Person, List<ReasonMsg>>();
         public List<Person> votesFor = new List<Person>();
+        
 
-        public double votingWeight;
+        public double votingWeight
+        {
+            get
+            {
+                double sum = 0;
+                foreach (Person p in votesFor)
+                {
+                    sum += p.prestige;
+                }
+                return sum;
+            }
+            private set
+            {
+
+            }
+        }
 
 
         public double getBaseUtility(Person voter)
@@ -37,6 +53,23 @@ namespace Assets.Code
         public override string ToString()
         {
             return info();
+        }
+        public string info(VoteIssue issue)
+        {
+            string reply = "";
+            if (econ_from != null)
+            {
+                return "Move economic priority away from " + econ_from.name + " to benefit " + econ_to.name;
+            }
+
+            if (person != null) { reply += person.getFullName() + " "; }
+            if (location != null) { reply += location.getName() + " "; }
+            if (group != null) { reply += group.getName() + " "; }
+            if (econ_from != null) { reply += econ_from.name + " "; }
+            if (econ_to != null) { reply += econ_to.name + " "; }
+            if (index != -1) { reply += issue.getIndexInfo(index) + " "; }
+
+            return reply;
         }
         public string info()
         {
