@@ -46,6 +46,11 @@ namespace Assets.Code
             }
         }
 
+        public virtual string getLargeDesc()
+        {
+            return "Voting on issue: " + this.ToString();
+        }
+
         public virtual string getIndexInfo(int index)
         {
             return "Index: " + index;

@@ -19,6 +19,12 @@ namespace Assets.Code
             return "Judge Suspect " + this.target.getFullName();
         }
 
+        public override string getLargeDesc()
+        {
+            string reply = "Vote to execute a suspect for the crime of association with dark forces. This primarily happens if nobles have high suspicion. This will cause the society to kill the target noble on sight, if they are found guilty.";
+            return reply;
+        }
+
         public override double computeUtility(Person voter, VoteOption option,List<ReasonMsg> msgs)
         {
             double u = option.getBaseUtility(voter);

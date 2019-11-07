@@ -25,6 +25,12 @@ namespace Assets.Code
                 return "Declare War";
             }
         }
+        public override string getLargeDesc()
+        {
+            string reply = "Vote to declare war on " + target.getName() +".";
+            return reply;
+        }
+
         public override string getIndexInfo(int index)
         {
             if (index == 0)

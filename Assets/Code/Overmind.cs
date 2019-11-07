@@ -22,7 +22,7 @@ namespace Assets.Code
             //abilities.Add(new Ab_TestAddShadow());
 
             abilities.Add(new Ab_Fishman_Lair());
-            abilities.Add(new Ab_Fishman_Raid());
+            abilities.Add(new Ab_Fishman_Call());
             abilities.Add(new Ab_Fishman_Attack());
             abilities.Add(new Ab_Enth_MiliaryAid());
             abilities.Add(new Ab_Enth_Enshadow());

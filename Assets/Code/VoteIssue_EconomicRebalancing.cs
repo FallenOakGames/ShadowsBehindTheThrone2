@@ -16,6 +16,13 @@ namespace Assets.Code
             return "Rebalance Economy";
         }
 
+        public override string getLargeDesc()
+        {
+            string reply = "Vote to rebalance the economy. This process will increase the prestige of particular industries (Each province has an industry) at the cost of another.";
+            reply += "\nVoting for an option will anger nobles who are harmed by the economic changes, while somewhat pleasing those who benefit. This creates divisions in societies as provinces compete for economic gain.";
+            return reply;
+        }
+
         public override double computeUtility(Person p, VoteOption option, List<ReasonMsg> msgs)
         {
             double u = option.getBaseUtility(p);

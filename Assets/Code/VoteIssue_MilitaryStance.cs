@@ -17,6 +17,16 @@ namespace Assets.Code
             return "Set Military Stance";
         }
 
+
+        public override string getLargeDesc()
+        {
+            string reply = "Three military stances exist: Offensive, Defensive and Introverted.";
+            reply += "\nOffensive Stance allows for declaration of war against the offensive target a society has set.";
+            reply += "\nDefensive Stance provides additional defence against a threat, should they declare war.";
+            reply += "\nIntroverted Stance allows socities to defend against internal threats. It allows execution of nobles suspected of association with dark powers, and slightly reduces the risk of civil war.";
+            return reply;
+        }
+
         public override double computeUtility(Person voter, VoteOption option,List<ReasonMsg> msgs)
         {
             double u = option.getBaseUtility(voter);

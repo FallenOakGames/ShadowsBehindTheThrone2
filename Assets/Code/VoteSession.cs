@@ -9,5 +9,23 @@ namespace Assets.Code
     {
         public VoteIssue issue;
         public int timeRemaining;
+
+        internal void assignVoters()
+        {
+
+            foreach (VoteOption opt in issue.options)
+            {
+                opt.votesFor.Clear();
+                opt.msgs.Clear();
+            }
+
+            foreach (Person p in this.issue.society.people)
+            {
+                //if (p.state == Person.personState.enthralled) { continue; }
+
+                VoteOption bestChoice = p.getVote(this);
+                bestChoice.votesFor.Add(p);
+            }
+        }
     }
 }

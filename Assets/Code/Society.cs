@@ -519,14 +519,8 @@ namespace Assets.Code
                     return;
                 }
                 if (voteSession.timeRemaining > 0) { voteSession.timeRemaining -= 1; return; }
-                
-                foreach (Person p in people)
-                {
-                    if (p.state == Person.personState.enthralled) { continue; }
 
-                    VoteOption bestChoice = p.getVote(voteSession);
-                    bestChoice.votesFor.Add(p);
-                }
+                voteSession.assignVoters();
 
                 double topVote = 0;
                 VoteOption winner = null;

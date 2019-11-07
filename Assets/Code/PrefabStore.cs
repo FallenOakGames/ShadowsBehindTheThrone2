@@ -270,6 +270,18 @@ namespace Assets.Code
             specific.bDismiss.onClick.AddListener(delegate { specific.dismiss(); });
             ui.addBlocker(specific.gameObject);
         }
+        public void popImgMsg(string body,string flavour)
+        {
+            if (world.displayMessages == false) { return; }
+
+            GameObject obj = Instantiate(prefabImgMsg) as GameObject;
+            PopupImgMsg specific = obj.GetComponent<PopupImgMsg>();
+            specific.ui = ui;
+            specific.textBody.text = body;
+            specific.textFlavour.text = flavour;
+            specific.bDismiss.onClick.AddListener(delegate { specific.dismiss(); });
+            ui.addBlocker(specific.gameObject);
+        }
 
         internal GraphicalProperty getGraphicalProperty(Map map, Property p)
         {

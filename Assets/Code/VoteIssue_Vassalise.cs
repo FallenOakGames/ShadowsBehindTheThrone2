@@ -19,6 +19,15 @@ namespace Assets.Code
             return "Vassalise under " + target.getName();
         }
 
+
+        public override string getLargeDesc()
+        {
+            string reply = "Vote to vassalise under another society for protection.";
+            reply += "\nIf passed, this motion will cause this society to be absorbed by another which shares a common defensive target.";
+            reply += "\nA last resort measure against a feared threat.";
+            return reply;
+        }
+
         public override double computeUtility(Person voter, VoteOption option,List<ReasonMsg> msgs)
         {
             double u = option.getBaseUtility(voter);

@@ -24,6 +24,31 @@ namespace Assets.Code
                 {
                     GraphicalMap.selectedHex.location.person().shadow = 1;
                 }
+                if (command == "enthrall")
+                {
+                    if (GraphicalMap.selectedHex.location.person() == null) {
+                        int c = 0;
+                        Person choice = null;
+                        foreach (Person p in ((Society)GraphicalMap.selectedHex.location.soc).people)
+                        {
+                            if (p.getLocation() == GraphicalMap.selectedHex.location)
+                            {
+                                c += 1;
+                                if (Eleven.random.Next(c) == 0)
+                                {
+                                    choice = p;
+                                }
+                            }
+                        }
+                        choice.state = Person.personState.enthralled;
+                        map.overmind.enthralled = choice;
+                    }
+                    else
+                    {
+                        map.overmind.enthralled = GraphicalMap.selectedHex.location.person();
+                        map.overmind.enthralled.state = Person.personState.enthralled;
+                    }
+                }
                 if (command == "love")
                 {
                     foreach (Person p in map.overmind.enthralled.society.people)
@@ -37,18 +62,13 @@ namespace Assets.Code
                 }
                 if (command == "vote")
                 {
-                    foreach (Location l in map.locations)
-                    {
-                        if (l.person() != null && l.person().state == Person.personState.enthralled)
-                        {
-                            World.log("Found enthralled");
-                            Society soc = (Society)l.soc;
-                            if (soc.voteSession != null) {
-                                World.log("Attempting to build blocker");
-                                map.world.ui.addBlocker(map.world.prefabStore.getScrollSet(soc.voteSession, soc.voteSession.issue.options).gameObject);
-                            }
-                        }
+                    Society soc = map.overmind.enthralled.society;
+                    if (soc.voteSession != null) {
+                        soc.voteSession.assignVoters();
+                        World.log("Attempting to build blocker");
+                        map.world.ui.addBlocker(map.world.prefabStore.getScrollSet(soc.voteSession, soc.voteSession.issue.options).gameObject);
                     }
+                    
                 }
             }
             catch(Exception e)

@@ -29,6 +29,14 @@ namespace Assets.Code
             return "Assign " + title.getName() + " " + add;
         }
 
+        public override string getLargeDesc()
+        {
+            string reply = "Assignment of a non-landed title is underway. Specifically " + title.getName() + ".";
+            reply += "\nUnlanded titles often confer prestige (This particular title confers " + (int)(title.getPrestige()) + " additional prestige)";
+            reply += "\nNobles will resent titles being assigned to their political enemies, and an important title assignment can often be a prelude to civil war.";
+            return reply;
+        }
+
         public override double computeUtility(Person voter, VoteOption option,List<ReasonMsg> msgs)
         {
             double u = option.getBaseUtility(voter);

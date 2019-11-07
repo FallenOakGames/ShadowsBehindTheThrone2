@@ -22,6 +22,15 @@ namespace Assets.Code
             }
             return reply;
         }
+
+        public override string getLargeDesc()
+        {
+            string reply = "A society assigns a defensive target to organise its military response to the outside world. If a society's defensive target attacks while the society is in the defensive military stance"
+                + " they only take " + (int)(society.map.param.combat_defensivePostureDmgMult*100) + "% damage when in combat, as their prepared defensive afford their troops an advantage."
+                + "\n\nNations may also collaborate against a common defensive target.";
+            return reply;
+        }
+
         public override double computeUtility(Person voter, VoteOption option,List<ReasonMsg> msgs)
         {
             double u = option.getBaseUtility(voter);

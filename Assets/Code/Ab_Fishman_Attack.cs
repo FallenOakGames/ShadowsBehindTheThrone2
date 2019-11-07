@@ -9,7 +9,7 @@ namespace Assets.Code
         {
             base.cast(map, hex);
             if (!castable(map, hex)) { return; }
-
+            
             foreach (Location l in hex.location.getNeighbours())
             {
                 if (l.soc != null && (l.soc is SG_Fishmen))
@@ -17,7 +17,10 @@ namespace Assets.Code
                     if (l.soc.getRel(hex.location.soc).state == DipRel.dipState.war) { continue; }
                     map.declareWar(l.soc, hex.location.soc);
                     l.soc.threat_mult = map.param.dark_evilThreatMult;
-                    l.soc.setName("Fishman Civilisation");
+                    l.soc.setName("Deep Ones");
+                    map.world.prefabStore.popImgMsg(
+                        "The Deep Ones rise from the ocean and begin war on " + hex.location.soc.getName() + ". They are now revealed to the world.",
+                        map.world.wordStore.lookup("ABILITY_FISHMAN_WAR"));
                 }
             }
         }
@@ -46,8 +49,8 @@ namespace Assets.Code
 
         public override string getDesc()
         {
-            return "Causes the fishmen to rise from the deep and attack the inhabitants of the chosen location. Reveals the fishmen if they are not already, setting their threat perception to normal."
-                 + "\n[Requires a human location adjacent to an existing fishman location]";
+            return "Causes the Deep Ones to rise from the deep and attack the inhabitants of the chosen location. Reveals the Deep Ones if they are not already, setting their threat perception to normal."
+                 + "\n[Requires a human location adjacent to an existing deep one location]";
         }
 
         public override string getName()

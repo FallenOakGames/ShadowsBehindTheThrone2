@@ -11,6 +11,11 @@ namespace Assets.Code
 
             hex.location.person().state = Person.personState.enthralled;
             map.overmind.enthralled = hex.location.person();
+
+            map.world.prefabStore.popImgMsg(
+                "You enthrall " + map.overmind.enthralled.getFullName() + ". They are now, until they die, your instrument in this world. Their votes are guided by your hand, and they will"
+                + " act as you command within their society.",
+                map.world.wordStore.lookup("ABILITY_ENTHRALL"));
         }
 
         public override bool castable(Map map, Hex hex)

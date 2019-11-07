@@ -4,7 +4,7 @@ using System;
 
 namespace Assets.Code
 {
-    public class Ab_Fishman_Raid : Ability
+    public class Ab_Fishman_Call : Ability
     {
         public override void cast(Map map, Hex hex)
         {
@@ -24,8 +24,13 @@ namespace Assets.Code
                     receiver = (SG_Fishmen)l.soc;
                 }
             }
+            double start = receiver.currentMilitary;
             receiver.currentMilitary = Math.Min(receiver.currentMilitary + map.param.ability_fishmanRaidMilAdd, receiver.maxMilitary);
             receiver.temporaryThreat += map.param.ability_fishmanRaidTemporaryThreat;
+            double delta = receiver.currentMilitary - start;
+
+            map.world.prefabStore.popImgMsg("You call to the land, and enough land dweller slip into the sea to add " + (int)(delta+0.4) + " military might to your Deep Ones.",
+                map.world.wordStore.lookup("ABILITY_FISHMAN_CALL"));
         }
 
         public override bool castable(Map map, Hex hex)
@@ -52,14 +57,14 @@ namespace Assets.Code
 
         public override string getDesc()
         {
-            return "Fishmen raiders rise from the deep to drag away captives to turn into fishmen soldiers. Adds " + World.staticMap.param.ability_fishmanRaidMilAdd + " military, but adds "
+            return "Deep One sirens lure humans from coastal cities to turn into Deep One soldiers. Adds " + World.staticMap.param.ability_fishmanRaidMilAdd + " military, but adds "
                 + World.staticMap.param.ability_fishmanRaidTemporaryThreat + " temporary threat."
-                 + "\n[Requires a human settlement bordering a fishman-held location]";
+                 + "\n[Requires a human settlement bordering a Deep One-held location]";
         }
 
         public override string getName()
         {
-            return "Raid the Coasts";
+            return "Call of the Deep";
         }
 
         public override Sprite getSprite(Map map)

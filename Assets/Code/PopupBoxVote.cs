@@ -31,8 +31,9 @@ namespace Assets.Code
 
         public void setTo(VoteSession session,VoteOption option)
         {
-            title.text = session.issue.ToString();
-            body.text = option.info(session.issue);
+            //title.text = session.issue.ToString();
+            title.text = option.info(session.issue);
+            body.text = "Voters: " + option.votesFor.Count + " Total Prestige: " + (int)(option.votingWeight);
             this.option = option;
             this.sess = session;
         }
@@ -48,16 +49,21 @@ namespace Assets.Code
         }
         public void clicked(Map map)
         {
+            if (map.overmind.enthralled != null)
+            {
+                map.overmind.enthralled.forcedVoteOption = this.option;
+                map.overmind.enthralled.forcedVoteSession = this.sess;
+            }
         }
 
         public string getTitle()
         {
-            return option.info();
+            return sess.issue.ToString();
         }
 
         public string getBody()
         {
-            string reply = "Voting.";
+            string reply = sess.issue.getLargeDesc();
 
             return reply;
         }

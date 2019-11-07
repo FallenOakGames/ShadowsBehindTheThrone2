@@ -1,0 +1,34 @@
+Voting:
+A button to click to vote
+A button to propose a vote
+A view of who will propose voting next
+A view of a given person's voting reasons
+Voting needs to be sorted before it is passed into scrollable
+A view of who is voting for which option (I guess just order it by voting option, with dividers if possible, in some manner of scroll set)
+	Scroll set appears (maybe using an existing one, maybe a new popup), it has the votes ordered by current assigned prestige. Titles of each option appear, then the folks voting for it
+Society view:
+	See existing file (If that file still exists?)
+A way to see what any given society is voting, what that vote means (large desc) and which options are available (at the very least which is the current top option)
+
+Tutorial:
+An overview of the game, so people aren't 100% lost 100% of the time
+
+Ability:
+More society stuff
+
+Screens:
+Save/Load (to single file) (if possible)
+Main menu with fixed seed world-gen option?
+
+Flavour:
+All abilities need flavour
+[DONE] All voting needs large desc
+
+Playtesting:
+At least once
+
+Cheat menu:
+Togglable on/off, default to off
+
+Side-bar:
+Decide what is a valuable tab, remove others (some seem glitched)

@@ -26,6 +26,12 @@ namespace Assets.Code
             }
             return reply;
         }
+        public override string getLargeDesc()
+        {
+            string reply = "A society sets an offensive target as a prelude to war. War may usually only be declared against the offensive target, and only when the society is in the Offensive military stance.";
+            reply += "\n\nNobles will prefer to set offensive targets which they regard as high-threat but low military strength.";
+            return reply;
+        }
 
         public override double computeUtility(Person voter, VoteOption option,List<ReasonMsg> msgs)
         {

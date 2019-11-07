@@ -61,6 +61,18 @@ namespace Assets.Code
             {
                 return "Move economic priority away from " + econ_from.name + " to benefit " + econ_to.name;
             }
+            if (issue is VoteIssue_MilitaryStance)
+            {
+                return new string[] { "Defensive Stance", "Offensive Stance", "Introspective Stance" }[index];
+            }
+            if (issue is VoteIssue_DeclareWar)
+            {
+                return new string[] { "Maintain Peace","Declare War" }[index];
+            }
+            if (issue is VoteIssue_JudgeSuspect)
+            {
+                return new string[] { "Pronounce Innocent", "Pronounce Guilty" }[index];
+            }
 
             if (person != null) { reply += person.getFullName() + " "; }
             if (location != null) { reply += location.getName() + " "; }

@@ -27,8 +27,12 @@ namespace Assets.Code
             {
                 hex.location.soc = soc;
             }
-            
+
+            map.world.prefabStore.popImgMsg("You create a Deep One colony at " + hex.location.getName() + ". Deep Ones are stealthy, but need to raid the surface to build up numbers."
+                + " Doing so will create temporary threat (which in turn will create some permanent threat), so be sure to distract the surface and to avoid drawing too much attention when the human nobles aren't busy.",
+                map.world.wordStore.lookup("ABILITY_FISHMAN_LAIR"));
             hex.location.settlement = new Set_Fishman_Lair(hex.location);
+
         }
 
         public override bool castable(Map map, Hex hex)
@@ -47,13 +51,13 @@ namespace Assets.Code
 
         public override string getDesc()
         {
-            return "Creates a fishman lair. This creates or expands your fishman civilisation. Fishmen are covert and difficult to notice until revealed by taking action, but must raid to build population."
+            return "Creates a Deep One lair. This creates or expands your Deep One civilisation. Deep One are covert and difficult to notice until revealed by taking action, but must raid to build population."
                 + "\n[Requires an empty ocean location]";
         }
 
         public override string getName()
         {
-            return "Establish Fishman Lair";
+            return "Establish Deep One Lair";
         }
 
         public override Sprite getSprite(Map map)
