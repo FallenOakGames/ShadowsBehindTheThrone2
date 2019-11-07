@@ -10,6 +10,11 @@ namespace Assets.Code
             base.cast(map, hex);
 
             Property.addProperty(map, hex.location, "Military Aid");
+
+            map.world.prefabStore.popImgMsg(
+                "You add military support to " + hex.getName() + ". This will increase its military cap, allowing more levies, once the men-at-arms are recruited. It also gives aid to nobles who"
+                + " would rebel against their nation.",
+                map.world.wordStore.lookup("ABILITY_MILITARY_AID"));
         }
 
         public override bool castable(Map map, Hex hex)

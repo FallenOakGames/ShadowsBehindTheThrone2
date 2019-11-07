@@ -10,6 +10,9 @@ Society view:
 	See existing file (If that file still exists?)
 A way to see what any given society is voting, what that vote means (large desc) and which options are available (at the very least which is the current top option)
 
+Alerts:
+Make sure at least most of the important things are properly popped up as alerts
+
 Tutorial:
 An overview of the game, so people aren't 100% lost 100% of the time
 

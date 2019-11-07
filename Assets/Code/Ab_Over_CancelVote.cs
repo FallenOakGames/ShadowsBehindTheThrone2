@@ -23,6 +23,10 @@ namespace Assets.Code
             Society soc = (Society)hex.location.soc;
             if (soc.voteSession == null) { return false; }
 
+            map.world.prefabStore.popImgMsg(
+                "You cancel the voting session of " + soc.getName() + ". This current session is cancelled, and no result will occur, nor will nobles likings for each other change."
+                + " Of course the next vote proposer may still simply re-table the same motion",
+                map.world.wordStore.lookup("ABILITY_CANCEL_VOTE"));
             return true;
         }
         

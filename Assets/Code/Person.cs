@@ -269,7 +269,7 @@ namespace Assets.Code
 
         public string getFullName()
         {
-            return getTitles() + " " + firstName;
+            return ((state == personState.enthralled || state == personState.broken) ? "Dark ":"") +  getTitles() + " " + firstName;
         }
 
         public RelObj getRelation(Person other)

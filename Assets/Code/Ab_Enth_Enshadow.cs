@@ -10,6 +10,13 @@ namespace Assets.Code
             base.cast(map, hex);
 
             hex.location.person().shadow = 1;
+
+            map.world.prefabStore.popImgMsg(
+                "You enshadow " + map.overmind.enthralled.getFullName() + ". Shadow is the path to your victory over this world. It spreads from person to person, if they like the enshadowed other."
+                + " Shadow constantly creates evidence on a person.",
+                map.world.wordStore.lookup("ABILITY_ENSHADOW"));
+
+            hex.location.person().shadow = 1;
         }
 
         public override bool castable(Map map, Hex hex)
