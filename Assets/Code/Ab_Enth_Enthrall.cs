@@ -31,7 +31,16 @@ namespace Assets.Code
             if (hex.location.soc is Society == false) { return false; }
 
             Society soc = (Society)hex.location.soc;
-            return soc.getEnthrallables().Contains(hex.location.settlement.title.heldBy);
+            double minPrestige = 1000000;
+            foreach (Person p in soc.people){
+                if (p.title_land == null) { continue; }
+                if (p.prestige < minPrestige){
+                    minPrestige = p.prestige;
+                }
+            }
+            
+            //return soc.getEnthrallables().Contains(hex.location.settlement.title.heldBy);
+            return hex.location.person().prestige < (1+minPrestige);
         }
 
         public override int getCost()

@@ -15,6 +15,11 @@ namespace Assets.Code
                 p.getRelation(map.overmind.enthralled).addLiking(-map.param.ability_boycottVoteCost,"Boycotted vote",map.turn);
             }
             soc.voteSession = null;
+            
+            map.world.prefabStore.popImgMsg(
+                "Your enthralled noble uses political motions to cancel the ongoing vote session, angering the nobles somewhat, but temporarily (or perhaps permanently"
+                + ") stopping the voting issue.",
+                map.world.wordStore.lookup("SOC_BOYCOTT_VOTE"));
         }
 
         public override bool castable(Map map, Hex hex)
@@ -23,7 +28,7 @@ namespace Assets.Code
             if (hex.location.soc == null) { return false; }
             if (map.overmind.enthralled == null) { return false; }
             if (hex.location.soc != map.overmind.enthralled.society) { return false; }
-
+            
 
 
             Society soc = (Society)hex.location.soc;

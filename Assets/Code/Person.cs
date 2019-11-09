@@ -58,7 +58,7 @@ namespace Assets.Code
             double targetPrestige = map.param.person_defaultPrestige;
             if (title_land != null)
             {
-                targetPrestige += title_land.settlement.basePrestige;
+                targetPrestige += title_land.settlement.getPrestige();
             }
             foreach (Title t in titles) { targetPrestige += t.getPrestige(); }
             if (Math.Abs(prestige-targetPrestige) < map.param.person_prestigeDeltaPerTurn)
