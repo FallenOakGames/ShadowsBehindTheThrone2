@@ -70,6 +70,7 @@
     <Compile Include="Assets\Code\Ab_Soc_JoinRebels.cs" />
     <Compile Include="Assets\Code\Ab_Soc_ShareEvidence.cs" />
     <Compile Include="Assets\Code\Ab_Soc_SwitchVote.cs" />
+    <Compile Include="Assets\Code\Ab_Soc_ProposeVote.cs" />
     <Compile Include="Assets\Code\Ab_Soc_Vote.cs" />
     <Compile Include="Assets\Code\Ab_Test.cs" />
     <Compile Include="Assets\Code\Ab_TestAddShadow.cs" />

@@ -211,7 +211,7 @@ namespace Assets.Code
                 else
                 {
                     double value = item.group.getThreat(null);
-                    item.reasons.Add(new ReasonMsg("Group Threat", value));
+                    item.reasons.Add(new ReasonMsg("Social Group's total threat Threat", value));
                     Location sourceLoc = null;
                     //Fear things which are nearby
                     if (this.title_land != null)

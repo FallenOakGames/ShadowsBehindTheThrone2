@@ -11,14 +11,18 @@ namespace Assets.Code
             base.cast(map, hex);
 
 
+            map.overmind.enthralled.rebellingFrom = map.overmind.enthralled.society;
+
             map.world.prefabStore.popImgMsg(
-                "Your enthralled will now add its military weight to the rebel nobles in their society, and will join a civil war if one breaks out.",
+                "Your enthralled will now add its military weight to the rebel nobles in their society, and will join a civil war if one breaks out."
+                + "\nThis change will be reflected next turn",
                 map.world.wordStore.lookup("SOC_JOIN_REBELS"));
         }
 
         public override bool castable(Map map, Hex hex)
         {
             if (map.overmind.enthralled == null) { return false; }
+            if (map.overmind.enthralled == map.overmind.enthralled.society.getSovreign()) { return false; }
             if (map.overmind.enthralled.rebellingFrom == map.overmind.enthralled.society) { return false; }
 
             return true;

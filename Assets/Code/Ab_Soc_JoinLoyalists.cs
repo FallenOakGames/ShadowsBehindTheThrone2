@@ -12,14 +12,16 @@ namespace Assets.Code
 
 
             map.world.prefabStore.popImgMsg(
-                "Your enthralled will now add its military weight to the loyal nobles in their society, and will remain loyal in a civil war if one breaks out.",
+                "Your enthralled will now add its military weight to the loyal nobles in their society, and will remain loyal in a civil war if one breaks out."
+                +"\nThis change will be reflected next turn",
                 map.world.wordStore.lookup("SOC_JOIN_LOYALISTS"));
         }
 
         public override bool castable(Map map, Hex hex)
         {
             if (map.overmind.enthralled == null) { return false; }
-            if (map.overmind.enthralled.rebellingFrom == map.overmind.enthralled.society) { return false; }
+            if (map.overmind.enthralled == map.overmind.enthralled.society.getSovreign()) { return false; }
+                if (map.overmind.enthralled.rebellingFrom != map.overmind.enthralled.society) { return false; }
 
             return true;
         }

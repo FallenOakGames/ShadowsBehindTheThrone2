@@ -36,6 +36,11 @@ namespace Assets.Code
             other.forcedVoteSession = soc.voteSession;
             other.forcedVoteOption = enthOpt;
             hex.location.person().getRelation(map.overmind.enthralled).addLiking(-World.staticMap.param.ability_switchVoteLikingCost, "Asked to change vote", map.turn);
+
+
+            map.world.prefabStore.popImgMsg(
+                other.getFullName() + " is now voting for " + enthOpt.info(soc.voteSession.issue),
+                map.world.wordStore.lookup("SOC_CHANGE_VOTE"));
         }
 
         public override bool castable(Map map, Hex hex)
