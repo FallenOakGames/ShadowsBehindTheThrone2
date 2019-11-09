@@ -32,6 +32,7 @@ namespace Assets.Code
         public enum personState { normal,enthralled,broken};
         public personState state = personState.normal;
         public bool isDead;
+        internal Society rebellingFrom;
 
         public Person(Society soc)
         {

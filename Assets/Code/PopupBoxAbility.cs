@@ -74,9 +74,13 @@ namespace Assets.Code
         public string getBody()
         {
             string reply = "Ability selection.";
-            reply += "\n\nAbilities are performed on locations. Actions have restrictions on which locations are valid targets.";
-            reply += "\n\nYou may cast any ability as long as you have more than zero power. ";
-                reply += "Your power may go negative, allowing you to perform an expensive in an emergency, but you will then have a negative power period.";
+            reply += "\n\nAbilities are performed on locations or people. They have restrictions on which locations are valid targets.";
+            if (World.staticMap.param.overmind_singleAbilityPerTurn)
+            {
+                reply += " Only one ability may be performed per turn.";
+            }
+            reply += "\n\nAbilities come in two forms: actions and powers. Actions are societal, are performed by your enthralled and may be done at any time.";
+            reply += "\nPowers require you to spend power to perform them. Your power may go negative, allowing you to perform an expensive in an emergency.";
             return reply;
         }
 

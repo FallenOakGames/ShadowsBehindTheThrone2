@@ -31,6 +31,9 @@ namespace Assets.Code
             powers.Add(new Ab_UnholyFlesh_Seed());
             powers.Add(new Ab_Over_CancelVote());
 
+            abilities.Add(new Ab_Soc_Vote());
+            abilities.Add(new Ab_Soc_JoinRebels());
+            abilities.Add(new Ab_Soc_JoinLoyalists());
             abilities.Add(new Ab_Soc_ShareEvidence());
             abilities.Add(new Ab_Soc_BoycottVote());
             abilities.Add(new Ab_Soc_DenounceOther());
@@ -50,7 +53,8 @@ namespace Assets.Code
             {
                 if (loc.person() != null) { sum += loc.person().shadow;count += 1; }
             }
-            map.data_avrgEnshadowment = sum / count;
+            if (count == 0) { map.data_avrgEnshadowment = 0; }
+            else { map.data_avrgEnshadowment = sum / count; }
             if (map.data_avrgEnshadowment > map.param.victory_targetEnshadowmentAvrg)
             {
                 World.log("VICTORY DETECTED");

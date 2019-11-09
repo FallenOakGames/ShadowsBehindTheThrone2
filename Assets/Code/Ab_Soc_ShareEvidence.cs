@@ -16,6 +16,11 @@ namespace Assets.Code
             map.overmind.enthralled.evidence -= shared;
             hex.location.person().evidence += shared;
             hex.location.person().getRelation(map.overmind.enthralled).addLiking(-World.staticMap.param.ability_shareEvidenceLikingCost, "Asked to receive evidence of dubious nature", map.turn);
+
+            map.world.prefabStore.popImgMsg(
+                "You transfer evidence from your enthralled, " + map.overmind.enthralled.getFullName() + " to " + hex.location.person().getFullName() + "."
+                + " " + (int)(0.5+(100*shared)) + " evidence transferred",
+                map.world.wordStore.lookup("SOC_TRANSFER_EVIDENCE"));
         }
 
         public override bool castable(Map map, Hex hex)

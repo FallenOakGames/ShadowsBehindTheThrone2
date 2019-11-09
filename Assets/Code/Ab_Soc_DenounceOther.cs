@@ -35,6 +35,12 @@ namespace Assets.Code
                     World.log(p.getFullName() + " gain " + gain);
                 }
             }
+
+
+            map.world.prefabStore.popImgMsg(
+                "You denounce another, unexpectedly revealing the evidence of evil which they hold to the world. " +
+                " By denouncing a villain, the suspicion towards your enthralled is reduced.",
+                map.world.wordStore.lookup("SOC_DENOUNCE_OTHER"));
         }
 
         public override bool castable(Map map, Hex hex)

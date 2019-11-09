@@ -24,7 +24,7 @@ namespace Assets.Code
         public float param_minSeaLocSeparation = 4f;
 
         //public int param_stepsPerIsland = 2;
-        public double param_pPlaceOceanLoc = 0.6;
+        public double param_pPlaceOceanLoc = 0.75;
         public float param_maxLinkDist = 26f;//NB: This is comparing against distance squared, also note minLocSep to avoid issues
         public float param_maxSeaLinkDist = 49f;//NB: This is comparing against distance squared, also note minLocSep to avoid issues
         public int param_nLinksDefault = 2;
