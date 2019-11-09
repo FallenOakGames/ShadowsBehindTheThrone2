@@ -114,6 +114,22 @@ namespace Assets.Code
 
         }
 
+        public void bPowers()
+        {
+
+            if (world.turnLock) { return; }
+            if (blocker != null) { return; }
+
+            List<Ability> abilities = world.map.overmind.getAvailablePowers(GraphicalMap.selectedHex);
+            List<Ability> uncastables = new List<Ability>();
+            foreach (Ability a in world.map.overmind.powers){
+                if (abilities.Contains(a) == false)
+                {
+                    uncastables.Add(a);
+                }
+            }
+            addBlocker(world.prefabStore.getScrollSet(abilities,uncastables, GraphicalMap.selectedHex).gameObject);
+        }
         public void bActions()
         {
 

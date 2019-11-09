@@ -11,30 +11,30 @@ namespace Assets.Code
         public bool hasTakenAction;
 
         public List<Ability> abilities = new List<Ability>();
+        public List<Ability> powers = new List<Ability>();
         public Map map;
         public Person enthralled;
 
         public Overmind(Map map)
         {
             this.map = map;
-            abilities.Add(new Ab_Enth_Enthrall());
-
+            powers.Add(new Ab_Enth_Enthrall());
             //abilities.Add(new Ab_TestAddShadow());
+            powers.Add(new Ab_Fishman_Lair());
+            powers.Add(new Ab_Fishman_Call());
+            powers.Add(new Ab_Fishman_Attack());
+            powers.Add(new Ab_Enth_MiliaryAid());
+            powers.Add(new Ab_Enth_Enshadow());
+            powers.Add(new Ab_UnholyFlesh_Attack());
+            powers.Add(new Ab_UnholyFlesh_Defend());
+            powers.Add(new Ab_UnholyFlesh_Grow());
+            powers.Add(new Ab_UnholyFlesh_Seed());
+            powers.Add(new Ab_Over_CancelVote());
 
-            abilities.Add(new Ab_Fishman_Lair());
-            abilities.Add(new Ab_Fishman_Call());
-            abilities.Add(new Ab_Fishman_Attack());
-            abilities.Add(new Ab_Enth_MiliaryAid());
-            abilities.Add(new Ab_Enth_Enshadow());
             abilities.Add(new Ab_Soc_ShareEvidence());
             abilities.Add(new Ab_Soc_BoycottVote());
             abilities.Add(new Ab_Soc_DenounceOther());
             abilities.Add(new Ab_Soc_SwitchVote());
-            abilities.Add(new Ab_UnholyFlesh_Attack());
-            abilities.Add(new Ab_UnholyFlesh_Defend());
-            abilities.Add(new Ab_UnholyFlesh_Grow());
-            abilities.Add(new Ab_UnholyFlesh_Seed());
-            abilities.Add(new Ab_Over_CancelVote());
         }
 
         public void turnTick()
@@ -78,12 +78,40 @@ namespace Assets.Code
             }
             return n;
         }
+        public int countAvailablePowers(Hex hex)
+        {
+            if (hex == null) { return 0; }
+            if (hex.location == null) { return 0; }
+            int n = 0;
+            foreach (Ability a in powers)
+            {
+                if (a.castable(map, hex))
+                {
+                    n += 1;
+                }
+            }
+            return n;
+        }
         public List<Ability> getAvailableAbilities(Hex hex)
         {
             if (hex == null) { return new List<Ability>(); }
             if (hex.location == null) { return new List<Ability>(); }
             List<Ability> reply = new List<Ability>();
             foreach (Ability a in abilities)
+            {
+                if (a.castable(map, hex))
+                {
+                    reply.Add(a);
+                }
+            }
+            return reply;
+        }
+        public List<Ability> getAvailablePowers(Hex hex)
+        {
+            if (hex == null) { return new List<Ability>(); }
+            if (hex.location == null) { return new List<Ability>(); }
+            List<Ability> reply = new List<Ability>();
+            foreach (Ability a in powers)
             {
                 if (a.castable(map, hex))
                 {

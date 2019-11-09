@@ -26,6 +26,8 @@ namespace Assets.Code
         public GameObject screenPerson;
         public GameObject screenSociety;
 
+        public Button powerButton;
+        public Text powerButtonText;
         public Button abilityButton;
         public Text abilityButtonText;
 
@@ -118,6 +120,7 @@ namespace Assets.Code
 
             //abilityButton.gameObject.SetActive(master.world.map.overmind.power > 0 && (master.world.map.overmind.hasTakenAction == false));
             abilityButtonText.text = "Use Ability (" + master.world.map.overmind.countAvailableAbilities(hex) + ")";
+            powerButtonText.text = "Use Power (" + master.world.map.overmind.countAvailablePowers(hex) + ")";
             maskTitle.text = GraphicalMap.map.masker.getTitleText();
             maskBody.text = GraphicalMap.map.masker.getBodyText();
             titleTextDarkener.enabled = GraphicalMap.map.masker.mask != MapMaskManager.maskType.NONE;
