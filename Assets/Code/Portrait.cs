@@ -9,6 +9,8 @@ namespace Assets.Code
     {
         public Text name;
         public Text info;
+        public Text name2;
+        public Text info2;
 
         public Image foreground;
         public Image background;
@@ -22,6 +24,7 @@ namespace Assets.Code
         {
             foreground.sprite = personHead;
             background.sprite = personFrame;
+            foreground.enabled = true;
             background.enabled = true;
 
             name.text  = p.getFullName();
@@ -31,11 +34,15 @@ namespace Assets.Code
                 info.text = "Resident";
 
             info.text += "\n" + p.prestige + " Prestige";
+
+            name2.text = "";
+            info2.text = "";
         }
 
         public void SetInfo(Settlement s)
         {
             foreground.sprite = s.getSprite();
+            foreground.enabled = true;
             background.enabled = false;
 
             name.text = s.name;
@@ -45,15 +52,23 @@ namespace Assets.Code
                 info.text = "No Overseer";
 
             info.text += "\n" + s.getPrestige() + " Prestige";
+
+            name2.text = "";
+            info2.text = "";
         }
 
-        public void SetInfo(VoteOption v)
+        public void SetInfo(VoteIssue i, VoteOption v)
         {
             foreground.sprite = votesIcon;
+            foreground.enabled = false;
             background.enabled = false;
 
-            name.text = "For " + v.info();
-            info.text = v.votingWeight + " Influence";
+            name.text = "";
+            info.text = "";
+
+            name2.text = "For " + v.info(i, true);
+            info2.text = v.votingWeight + " Influence";
+            info2.text += "\n" + v.votesFor.Count + " Votes";
         }
     }
 }

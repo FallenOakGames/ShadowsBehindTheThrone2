@@ -175,6 +175,14 @@ namespace Assets.Code
 
         public void scaling()
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                if (EventSystem.current.currentSelectedGameObject != null)
+                {
+                    return;
+                }
+            }
+
             if (world.ui.state == UIMaster.uiState.WORLD)
             {
                 if (Input.GetKeyDown("z") || Input.GetAxis("Mouse ScrollWheel") > 0)
@@ -280,8 +288,8 @@ namespace Assets.Code
         {
             Hex clickedHex = GraphicalMap.getHexUnderMouse(Input.mousePosition).hex;
 
-            
-            
+
+
             if (Input.GetKey(KeyCode.LeftControl))
             {
                 GraphicalMap.selectedProperty = null;

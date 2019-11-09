@@ -20,7 +20,7 @@ namespace Assets.Code
         public Dictionary<Person, double> randomUtility = new Dictionary<Person, double>();
         public Dictionary<Person, List<ReasonMsg>> msgs = new Dictionary<Person, List<ReasonMsg>>();
         public List<Person> votesFor = new List<Person>();
-        
+
 
         public double votingWeight
         {
@@ -54,24 +54,36 @@ namespace Assets.Code
         {
             return info();
         }
-        public string info(VoteIssue issue)
+        public string info(VoteIssue issue, bool shrt = false)
         {
             string reply = "";
             if (econ_from != null)
             {
-                return "Move economic priority away from " + econ_from.name + " to benefit " + econ_to.name;
+                if (shrt)
+                    return econ_from.name + " -> " + econ_to.name;
+                else
+                    return "Move economic priority away from " + econ_from.name + " to benefit " + econ_to.name;
             }
             if (issue is VoteIssue_MilitaryStance)
             {
-                return new string[] { "Defensive Stance", "Offensive Stance", "Introspective Stance" }[index];
+                if (shrt)
+                    return new string[] { "Defensive", "Offensive", "Introspective" }[index];
+                else
+                    return new string[] { "Defensive Stance", "Offensive Stance", "Introspective Stance" }[index];
             }
             if (issue is VoteIssue_DeclareWar)
             {
-                return new string[] { "Maintain Peace","Declare War" }[index];
+                if (shrt)
+                    return new string[] { "Maintain Peace","Declare War" }[index];
+                else
+                    return new string[] { "Peace", "War" }[index];
             }
             if (issue is VoteIssue_JudgeSuspect)
             {
-                return new string[] { "Pronounce Innocent", "Pronounce Guilty" }[index];
+                if (shrt)
+                    return new string[] { "Innocent", "Guilty" }[index];
+                else
+                    return new string[] { "Pronounce Innocent", "Pronounce Guilty" }[index];
             }
 
             if (person != null) { reply += person.getFullName() + " "; }

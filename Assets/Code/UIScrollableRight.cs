@@ -80,27 +80,11 @@ namespace Assets.Code
                     {
                         if (activeSociety.voteSession != null)
                         {
-                            List<VoteOption> vs = activeSociety.voteSession.issue.options;
-                            foreach (Person p in activeSociety.people)
-                            {
-                                double highestWeight = 0;
-                                VoteOption bestChoice = null;
-                                foreach (VoteOption option in vs)
-                                {
-                                    List<ReasonMsg> msgs = new List<ReasonMsg>();
-                                    double u = activeSociety.voteSession.issue.computeUtility(p, option, msgs);
-                                    if (u > highestWeight || bestChoice == null)
-                                    {
-                                        bestChoice = option;
-                                        highestWeight = u;
-                                    }
-                                }
-                            }
-
-                            foreach (VoteOption v in vs)
+                            activeSociety.voteSession.assignVoters();
+                            foreach (VoteOption v in activeSociety.voteSession.issue.options)
                             {
                                 GameObject vp = Instantiate(portraitPrefab, listContent);
-                                vp.GetComponent<Portrait>().SetInfo(v);
+                                vp.GetComponent<Portrait>().SetInfo(activeSociety.voteSession.issue, v);
                             }
                         }
 

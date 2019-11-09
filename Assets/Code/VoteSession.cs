@@ -26,6 +26,8 @@ namespace Assets.Code
                 VoteOption bestChoice = p.getVote(this);
                 bestChoice.votesFor.Add(p);
             }
+
+            issue.options.Sort(delegate(VoteOption a, VoteOption b) { return b.votingWeight.CompareTo(a.votingWeight); });
         }
     }
 }
