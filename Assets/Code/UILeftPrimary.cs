@@ -129,6 +129,7 @@ namespace Assets.Code
             if (GraphicalMap.selectedProperty != null)
             {
                 screenSociety.SetActive(true);
+                screenPerson.SetActive(false);
                 socTitle.text = GraphicalMap.selectedProperty.proto.name;
                 if (GraphicalMap.selectedProperty.proto.decaysOverTime)
                 {

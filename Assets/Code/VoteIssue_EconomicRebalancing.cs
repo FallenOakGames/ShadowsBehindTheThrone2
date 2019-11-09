@@ -7,13 +7,18 @@ namespace Assets.Code
 {
     public class VoteIssue_EconomicRebalancing : VoteIssue
     {
-        public VoteIssue_EconomicRebalancing(Society soc,Person proposer) : base(soc,proposer)
+        private EconTrait econFrom;
+        private EconTrait econTo;
+
+        public VoteIssue_EconomicRebalancing(Society soc,Person proposer,EconTrait from,EconTrait to) : base(soc,proposer)
         {
+            this.econFrom = from;
+            this.econTo = to;
         }
 
         public override string ToString()
         {
-            return "Rebalance Economy";
+            return "Rebalance Economy (" + econFrom.name + "/" + econTo.name + ")";
         }
 
         public override string getLargeDesc()

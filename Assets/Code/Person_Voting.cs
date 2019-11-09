@@ -142,7 +142,7 @@ namespace Assets.Code
                             if (mine.Contains(econ_from)) { continue; }//Don't take from yourself
                             foreach (EconTrait econ_to in mine)
                             {
-                                issue = new VoteIssue_EconomicRebalancing(society, this);
+                                issue = new VoteIssue_EconomicRebalancing(society, this,econ_from,econ_to);
                                 //Allow them to spam econ votes
                                 //if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
 

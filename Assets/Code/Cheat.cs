@@ -24,6 +24,11 @@ namespace Assets.Code
                 {
                     GraphicalMap.selectedHex.location.person().shadow = 1;
                 }
+                if (command == "testproperty")
+                {
+                    Property.addProperty(map, GraphicalMap.selectedHex.location, "Military Aid");
+                    World.staticMap.world.ui.checkData();
+                }
                 if (command == "enthrall")
                 {
                     if (GraphicalMap.selectedHex.location.person() == null) {

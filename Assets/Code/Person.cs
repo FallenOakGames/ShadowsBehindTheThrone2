@@ -230,7 +230,7 @@ namespace Assets.Code
                     }
 
                     double infoAvailability = map.getInformationAvailability(sourceLoc, item.group);
-                    int intInfoAvailability = (int)(infoAvailability);
+                    int intInfoAvailability = (int)(infoAvailability*100);
                     item.reasons.Add(new ReasonMsg("Information (% kept)", intInfoAvailability));
                     value *= infoAvailability;
 

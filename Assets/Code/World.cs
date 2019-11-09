@@ -139,6 +139,7 @@ namespace Assets.Code
         public void bEndTurn()
         {
             if (turnLock) { return; }
+            if (ui.blocker != null) { return; }
 
             turnLock = true;
             if (map != null) {
@@ -151,6 +152,7 @@ namespace Assets.Code
         public void b10Turns()
         {
             if (turnLock) { return; }
+            if (ui.blocker != null) { return; }
 
             turnLock = true;
             if (map != null)
@@ -168,6 +170,7 @@ namespace Assets.Code
         public void b100Turns()
         {
             if (turnLock) { return; }
+            if (ui.blocker != null) { return; }
 
             turnLock = true;
             if (map != null)

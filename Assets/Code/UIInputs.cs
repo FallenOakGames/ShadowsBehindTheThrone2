@@ -236,7 +236,6 @@ namespace Assets.Code
 
         public void mouseClicks()
         {
-            world.ui.checkData();
             if (world.ui.blocker != null) { return; }//Blocker on screen takes precedence
 
             if (EventSystem.current.IsPointerOverGameObject())
@@ -273,6 +272,7 @@ namespace Assets.Code
                 //    world.soundSource.select();
                 //}
             }
+            world.ui.checkData();
         }
 
         public void rightClick()
@@ -281,6 +281,7 @@ namespace Assets.Code
             {
                 rightClickOnHex();
             }
+            world.ui.checkData();
 
         }
 
