@@ -80,11 +80,19 @@ namespace Assets.Code
                     {
                         if (activeSociety.voteSession != null)
                         {
+                            Person p = null;
+                            if (master.state == UIMaster.uiState.SOCIETY && GraphicalSociety.focus != null)
+                                p = GraphicalSociety.focus;
+
+                            Hex hex = GraphicalMap.selectedHex;
+                            if (hex != null && hex.settlement != null && hex.settlement.title != null && hex.settlement.title.heldBy != null)
+                                p = hex.settlement.title.heldBy;
+
                             activeSociety.voteSession.assignVoters();
                             foreach (VoteOption v in activeSociety.voteSession.issue.options)
                             {
                                 GameObject vp = Instantiate(portraitPrefab, listContent);
-                                vp.GetComponent<Portrait>().SetInfo(activeSociety.voteSession.issue, v);
+                                vp.GetComponent<Portrait>().SetInfo(activeSociety.voteSession.issue, v, p);
                             }
                         }
 

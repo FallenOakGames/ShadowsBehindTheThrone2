@@ -33,7 +33,7 @@ namespace Assets.Code
             else
                 info.text = "Resident";
 
-            info.text += "\n" + p.prestige + " Prestige";
+            info.text += "\n" + p.prestige.ToString("N2") + " prestige";
 
             name2.text = "";
             info2.text = "";
@@ -51,13 +51,13 @@ namespace Assets.Code
             else
                 info.text = "No Overseer";
 
-            info.text += "\n" + s.getPrestige() + " Prestige";
+            info.text += "\n" + s.getPrestige().ToString("N2") + " prestige";
 
             name2.text = "";
             info2.text = "";
         }
 
-        public void SetInfo(VoteIssue i, VoteOption v)
+        public void SetInfo(VoteIssue i, VoteOption v, Person p)
         {
             foreground.sprite = votesIcon;
             foreground.enabled = false;
@@ -67,8 +67,14 @@ namespace Assets.Code
             info.text = "";
 
             name2.text = "For " + v.info(i, true);
-            info2.text = v.votingWeight + " Influence";
-            info2.text += "\n" + v.votesFor.Count + " Votes";
+            info2.text = v.votingWeight.ToString("N2") + " influence across " + v.votesFor.Count + " votes";
+
+            if (p != null)
+            {
+                // FIXME: use the list of reasons somewhere
+                double utility = i.computeUtility(p, v, new List<ReasonMsg>());
+                info2.text += "\n" + utility.ToString("N2") + " utility for current person";
+            }
         }
     }
 }

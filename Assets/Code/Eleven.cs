@@ -62,6 +62,5 @@ namespace Assets.Code
             }
             return s;
         }
-        
     }
 }
