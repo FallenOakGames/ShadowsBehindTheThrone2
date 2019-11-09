@@ -73,7 +73,7 @@ namespace Assets.Code
             {
                 // FIXME: use the list of reasons somewhere
                 double utility = i.computeUtility(p, v, new List<ReasonMsg>());
-                info2.text += "\n" + utility.ToString("N2") + " utility for current person";
+                info2.text += "\n" + p.getFullName() + " values at " + utility.ToString("N2");
             }
         }
     }
