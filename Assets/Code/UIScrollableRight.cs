@@ -80,7 +80,7 @@ namespace Assets.Code
                     {
                         if (activeSociety.voteSession != null)
                         {
-                            title.text = activeSociety.voteSession.ToString();
+                            title.text = activeSociety.voteSession.issue.ToString();
 
                             Person p = null;
                             if (master.state == UIMaster.uiState.SOCIETY && GraphicalSociety.focus != null)

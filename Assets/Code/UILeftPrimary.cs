@@ -88,10 +88,12 @@ namespace Assets.Code
 
             bodyText += "\n";
 
-            VoteIssue vote = null;
+            Society soc = getSociety(GraphicalMap.selectedHex);
+            VoteSession vote = (soc != null) ? soc.voteSession : null;
+
             if (vote != null)
             {
-                //
+                bodyText += "\nVoting on: " + vote.issue.ToString();
             }
             else
             {
