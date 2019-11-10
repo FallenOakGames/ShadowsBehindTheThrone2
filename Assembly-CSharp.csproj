@@ -117,6 +117,7 @@
      <Compile Include="Assets\Code\PopupBoxActivity.cs" />
      <Compile Include="Assets\Code\PopupBoxPerson.cs" />
      <Compile Include="Assets\Code\PopupBoxVote.cs" />
+     <Compile Include="Assets\Code\PopupBoxVoteIssue.cs" />
      <Compile Include="Assets\Code\PopupImgMsg.cs" />
      <Compile Include="Assets\Code\PopupMsg.cs" />
      <Compile Include="Assets\Code\PopupNameTag.cs" />

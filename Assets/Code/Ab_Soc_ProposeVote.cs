@@ -1,16 +1,48 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
+using System.Collections.Generic;
 
 namespace Assets.Code
 {
-    public class Ab_Soc_Popose_Vote : Ability
+    public class Ab_Soc_ProposeVote : Ability
     {
         public override void cast(Map map, Hex hex)
         {
             base.cast(map, hex);
 
             Society soc = map.overmind.enthralled.society;
+
+            Person proposer = map.overmind.enthralled;
+
+            List<VoteIssue> potentialIssues = new List<VoteIssue>();
+            if (soc.posture == Society.militaryPosture.offensive && soc.offensiveTarget != null)
+            {
+                VoteIssue_DeclareWar war = new VoteIssue_DeclareWar(soc, soc.offensiveTarget, proposer);
+                potentialIssues.Add(war);
+            }
+
+            VoteIssue issue = new VoteIssue_MilitaryStance(soc,proposer);
+            potentialIssues.Add(issue);
+
+            foreach (Title t in soc.titles)
+            {
+                if (t.turnLastAssigned - map.turn > map.param.society_minTimeBetweenTitleReassignments)
+                {
+                    issue = new VoteIssue_AssignTitle(soc, proposer, t);
+                    potentialIssues.Add(issue);
+                }
+            }
+            foreach (Location loc in map.locations)
+            {
+                if (loc.soc == soc && loc.settlement != null && loc.settlement.title != null)
+                {
+                    issue = new VoteIssue_AssignLandedTitle(soc, proposer, loc.settlement.title);
+                    potentialIssues.Add(issue);
+                }
+            }
+
+            map.world.prefabStore.getScrollSet(soc,potentialIssues);
         }
 
         public override bool castable(Map map, Hex hex)
