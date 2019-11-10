@@ -48,7 +48,9 @@ namespace Assets.Code
         }
         public void clicked(Map map)
         {
-            //selector.selected(person,agent);
+            soc.voteSession = new VoteSession();
+            soc.voteSession.issue = issue;
+            soc.voteSession.assignVoters();
         }
 
         public string getTitle()

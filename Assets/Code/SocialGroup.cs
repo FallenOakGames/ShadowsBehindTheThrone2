@@ -139,12 +139,12 @@ namespace Assets.Code
         public virtual double getThreat(List<ReasonMsg> reasons)
         {
             ReasonMsg msg;
-            double threat = currentMilitary + (maxMilitary/2);
+            double threat = (currentMilitary + (maxMilitary/2));
             if (reasons != null)
             {
                 msg = new ReasonMsg("Current Military", currentMilitary);
                 reasons.Add(msg);
-                msg = new ReasonMsg("Max Military", (maxMilitary/2));
+                msg = new ReasonMsg("Max Military", (maxMilitary/ 2));
                 reasons.Add(msg);
             }
 

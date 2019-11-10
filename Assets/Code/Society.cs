@@ -334,11 +334,12 @@ namespace Assets.Code
             if (this.posture == militaryPosture.offensive)
             {
                 int percent = (int)(100 * map.param.society_threatMultFromOffensivePosture);
+                double add = map.param.society_threatMultFromOffensivePosture * threat;
                 if (msgs != null)
                 {
-                    msgs.Add(new ReasonMsg("Offensive Posture (+" + percent + "%)", threat));
+                    msgs.Add(new ReasonMsg("Offensive Posture (+" + percent + "%)", (int)add));
                 }
-                threat *= 1 + (map.param.society_threatMultFromOffensivePosture);
+                threat += add;
             }
             return threat;
         }

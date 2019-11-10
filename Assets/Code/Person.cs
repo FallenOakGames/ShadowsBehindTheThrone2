@@ -211,7 +211,7 @@ namespace Assets.Code
                 else
                 {
                     double value = item.group.getThreat(null);
-                    item.reasons.Add(new ReasonMsg("Social Group's total threat Threat", value));
+                    item.reasons.Add(new ReasonMsg("Social Group's total threat: ", value));
                     Location sourceLoc = null;
                     //Fear things which are nearby
                     if (this.title_land != null)
@@ -234,9 +234,10 @@ namespace Assets.Code
                     item.reasons.Add(new ReasonMsg("Information (% kept)", intInfoAvailability));
                     value *= infoAvailability;
 
-                    value /= (society.currentMilitary + (society.maxMilitary/2)) + 1;
-
-                    value *= map.param.person_threatMult;
+                    double militaryStrengthMult = 100 / ((society.currentMilitary + (society.maxMilitary / 2)) + 1);
+                    //if (militaryStrengthMult < 50) { militaryStrengthMult = 50; }
+                    item.reasons.Add(new ReasonMsg("Military Strength Comparison (% multiplier)", (int)(100*militaryStrengthMult)));
+                    value *= militaryStrengthMult; 
 
                     item.threat = value;
                 }
