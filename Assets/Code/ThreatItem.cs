@@ -18,12 +18,9 @@ namespace Assets.Code
         public formTypes form = formTypes.HOSTILE_NATION;
 
         public int responseCode = RESPONSE_MILITARY;
-        public static int RESPONSE_WEALTH = 0;
+        public static int RESPONSE_DARKNESSWITHIN = 0;
         public static int RESPONSE_MILITARY = 1;
-        public static int RESPONSE_INFECTION = 2;
-        public static int RESPONSE_DARK = 3;
-        public static int RESPONSE_AGENTS = 4;
-        public static string[] responseNames = new string[] { "Wealth","Military", "Quarantine", "Enlightment", "Inquisition" };
+        public static string[] responseNames = new string[] { "Introspection","Military"};
 
         public static float param_at_war = 5;
         public static float param_strength = 2;

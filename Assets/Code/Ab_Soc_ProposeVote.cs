@@ -64,6 +64,50 @@ namespace Assets.Code
                 issue.options.Add(option);
             }
 
+            //Check if you want to vassalise yourself
+            if (soc.offensiveTarget != null && soc.posture == Society.militaryPosture.defensive && (soc.isAtWar() == false))
+            {
+                foreach (SocialGroup sg in soc.getNeighbours())
+                {
+                    if (sg is Society == false) { continue; }
+                    if (sg == soc) { continue; }
+                    Society other = (Society)sg;
+                    if (other.defensiveTarget == soc.defensiveTarget)
+                    {
+                        issue = new VoteIssue_Vassalise(soc, other, proposer);
+                        VoteOption option_0 = new VoteOption();
+                        option_0.index = 0;
+                        issue.options.Add(option_0);
+
+                        VoteOption option_1 = new VoteOption();
+                        option_1.index = 1;
+                        issue.options.Add(option_1);
+
+                        potentialIssues.Add(issue);
+                    }
+                }
+            }
+
+
+            //Check if you want to execute someone
+            if (soc.posture == Society.militaryPosture.introverted)
+            {
+                foreach (Person p in soc.people)
+                {
+                    if (p == proposer) { continue; }
+                    issue = new VoteIssue_JudgeSuspect(soc, p, proposer);
+                    VoteOption option_0 = new VoteOption();
+                    option_0.index = 0;
+                    issue.options.Add(option_0);
+
+                    VoteOption option_1 = new VoteOption();
+                    option_1.index = 1;
+                    issue.options.Add(option_1);
+
+                    potentialIssues.Add(issue);
+                }
+            }
+
             foreach (Title t in soc.titles)
             {
                 if (t.turnLastAssigned - map.turn > map.param.society_minTimeBetweenTitleReassignments)
@@ -102,8 +146,8 @@ namespace Assets.Code
         {
 
             List<VoteIssue> reply = new List<VoteIssue>();
-            List<EconTrait> all = new List<EconTrait>();
-            List<EconTrait> mine = new List<EconTrait>();
+            HashSet<EconTrait> all = new HashSet<EconTrait>();
+            HashSet<EconTrait> mine = new HashSet<EconTrait>();
 
             foreach (EconTrait trait in p.title_land.settlement.econTraits())
             {

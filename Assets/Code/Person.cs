@@ -47,6 +47,7 @@ namespace Assets.Code
             //Add permanent threats
             threat_enshadowedNobles = new ThreatItem(map,this);
             threat_enshadowedNobles.form = ThreatItem.formTypes.ENSHADOWED_NOBLES;
+            threat_enshadowedNobles.responseCode = ThreatItem.RESPONSE_DARKNESSWITHIN;
             threatEvaluations.Add(threat_enshadowedNobles);
         }
 
@@ -235,7 +236,7 @@ namespace Assets.Code
                     value *= infoAvailability;
 
                     double militaryStrengthMult = 100 / ((society.currentMilitary + (society.maxMilitary / 2)) + 1);
-                    //if (militaryStrengthMult < 50) { militaryStrengthMult = 50; }
+                    if (militaryStrengthMult < 0.5) { militaryStrengthMult = 0.5; }
                     item.reasons.Add(new ReasonMsg("Military Strength Comparison (% multiplier)", (int)(100*militaryStrengthMult)));
                     value *= militaryStrengthMult; 
 

@@ -48,9 +48,14 @@ namespace Assets.Code
         }
         public void clicked(Map map)
         {
+            soc.voteCooldown = 0;
             soc.voteSession = new VoteSession();
             soc.voteSession.issue = issue;
             soc.voteSession.assignVoters();
+            soc.voteSession.timeRemaining = map.param.society_votingDuration;
+
+            map.world.prefabStore.popImgMsg("Voting session called. You may now cast your vote on the issue of: " + issue.ToString(),
+                map.world.wordStore.lookup("SOC_VOTE_SESSION_CALLED"));
         }
 
         public string getTitle()

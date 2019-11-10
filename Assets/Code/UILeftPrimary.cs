@@ -127,20 +127,8 @@ namespace Assets.Code
             //abilityButton.gameObject.SetActive(master.world.map.overmind.power > 0 && (master.world.map.overmind.hasTakenAction == false));
             abilityButtonText.text = "Use Ability (" + master.world.map.overmind.countAvailableAbilities(hex) + ")";
             powerButtonText.text = "Use Power (" + master.world.map.overmind.countAvailablePowers(hex) + ")";
-            if (master.state == UIMaster.uiState.WORLD)
-            {
-                maskTitle.text = GraphicalMap.map.masker.getTitleText();
-                maskBody.text = GraphicalMap.map.masker.getBodyText();
-                titleTextDarkener.enabled = GraphicalMap.map.masker.mask != MapMaskManager.maskType.NONE;
-                bodyTextDarkener.enabled = GraphicalMap.map.masker.mask == MapMaskManager.maskType.LIKING_ME || GraphicalMap.map.masker.mask == MapMaskManager.maskType.LIKING_THEM;
-            }
-            else
-            {
-                maskTitle.text = "";
-                maskBody.text = "";
-                titleTextDarkener.enabled = false;
-                bodyTextDarkener.enabled = false;
-            }
+
+            maskTitle.text = GraphicalMap.map.masker.getTitleText();
 
             if (GraphicalMap.selectedProperty != null)
             {

@@ -70,6 +70,25 @@ namespace Assets.Code
 
                 hexSelector.SetActive(false);
             }
+
+            if (state == uiState.WORLD)
+            {
+                uiLeftPrimary.titleTextDarkener.enabled = GraphicalMap.map.masker.mask != MapMaskManager.maskType.NONE;
+                uiLeftPrimary.bodyTextDarkener.enabled = GraphicalMap.map.masker.mask == MapMaskManager.maskType.LIKING_ME || GraphicalMap.map.masker.mask == MapMaskManager.maskType.LIKING_THEM;
+                if (world.map.masker.mask != MapMaskManager.maskType.NONE)
+                {
+                    uiLeftPrimary.maskTitle.text = GraphicalMap.map.masker.getTitleText();
+                    uiLeftPrimary.maskBody.text = GraphicalMap.map.masker.getBodyText();
+                }
+            }
+            else
+            {
+                uiLeftPrimary.maskTitle.text = "";
+                uiLeftPrimary.maskBody.text = "";
+                uiLeftPrimary.titleTextDarkener.enabled = false;
+                uiLeftPrimary.bodyTextDarkener.enabled = false;
+            }
+
             checkBlockerQueue();
         }
 
