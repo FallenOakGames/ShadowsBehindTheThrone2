@@ -85,6 +85,13 @@ namespace Assets.Code
                 else
                     return new string[] { "Pronounce Innocent", "Pronounce Guilty" }[index];
             }
+            if (issue is VoteIssue_Vassalize)
+            {
+                if (shrt)
+                    return new string[] { "Stay", "Merge" }[index];
+                else
+                    return new string[] { "Remain Independent", "Become a Vassal" }[index];
+            }
 
             if (person != null) { reply += person.getFullName() + " "; }
             if (location != null) { reply += location.getName() + " "; }
