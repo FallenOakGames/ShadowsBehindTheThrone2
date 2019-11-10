@@ -37,6 +37,7 @@ namespace Assets.Code
         public GameObject personBox;
         public GameObject voteBox;
         public GameObject abilityBox;
+        public GameObject popScrollVoteIssue;
         public GameObject xBoxDate;
         public GameObject xBoxThreat;
         public GameObject xScrollSet;
@@ -181,6 +182,28 @@ namespace Assets.Code
             specific.cancel.onClick.AddListener(delegate { specific.bCancel(); });
             specific.select.onClick.AddListener(delegate { specific.bSelect(); });
             return specific;
+        }
+
+        public PopupScrollSet getScrollSet(Society soc,List<VoteIssue> issues)
+        {
+            PopupScrollSet specific = getInnerScrollSet();
+
+            foreach (VoteIssue issue in issues)
+            {
+                PopupBoxVoteIssue box = getVoteIssueBox(soc,issue);
+                box.gameObject.transform.SetParent(specific.gameObject.transform);
+                specific.scrollables.Add(box);
+            }
+
+            return specific;
+        }
+
+        private PopupBoxVoteIssue getVoteIssueBox(Society soc, VoteIssue issue)
+        {
+            GameObject obj = Instantiate(popScrollVoteIssue) as GameObject;
+            PopupBoxVoteIssue msg = obj.GetComponent<PopupBoxVoteIssue>();
+            msg.setTo(soc, issue);
+            return msg;
         }
 
         public PopupScrollSet getScrollSet(List<int> indices)
