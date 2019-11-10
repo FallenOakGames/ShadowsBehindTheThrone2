@@ -181,6 +181,7 @@ namespace Assets.Code
             GameObject obj = Instantiate(xBoxThreat) as GameObject;
             PopupXBoxThreat specific = obj.GetComponent<PopupXBoxThreat>();
             specific.setTo(item);
+            specific.body = "The perceived threats and a breakdown of the reasons.";
 
             return specific;
         }
@@ -190,6 +191,7 @@ namespace Assets.Code
             GameObject obj = Instantiate(xBoxThreat) as GameObject;
             PopupXBoxThreat specific = obj.GetComponent<PopupXBoxThreat>();
             specific.setTo(vi, vo, p);
+            specific.body = "The available vote options and the reasons behind each choice.";
 
             return specific;
         }

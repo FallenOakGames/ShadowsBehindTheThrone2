@@ -35,6 +35,9 @@ namespace Assets.Code
                 if (s.inner == focus)
                 {
                     s.targetPosition = Vector3.zero;
+
+                    s.subtitle.text = "";
+                    s.lowerRightText.text = "";
                 }
                 else
                 {
@@ -54,6 +57,10 @@ namespace Assets.Code
                         s.targetColor = Color.Lerp(s.neutralColor, s.goodColor, liking);
                     s.targetColor.a = 0.5f;
                     //s.targetColor.a = 0.1f + ((float)rel.suspicion / 100);
+
+                    s.subtitle.text = "Relationship with " + focus.firstName;
+                    s.lowerRightText.text  = "Liked by: " + focus.relations[s.inner].getLiking().ToString("N0");
+                    s.lowerRightText.text += "\nLikes: " + s.inner.relations[focus].getLiking().ToString("N0");
 
                     i += 1;
                 }
