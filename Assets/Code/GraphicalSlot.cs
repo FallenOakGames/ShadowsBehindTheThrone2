@@ -80,8 +80,8 @@ namespace Assets.Code
             // }
 
             transform.position = Vector3.Lerp(transform.position, targetPosition, 0.1f);
-            line.SetPosition(0, transform.position);
-            line.SetPosition(1, Vector3.zero);
+            line.SetPosition(0, new Vector3(transform.position.x, transform.position.y, 0.1f));
+            line.SetPosition(1, new Vector3(0.0f, 0.0f, 0.1f));
 
             line.startColor = Color.Lerp(line.startColor, targetColor, 0.1f);
             line.endColor   = line.startColor;
