@@ -311,6 +311,21 @@ namespace Assets.Code
             }
         }
 
+        public string getMilitarismInfo()
+        {
+            int m = (int)(100*politics_militarism) + 100;
+            if (m <= 40)
+                return "Very Pacifist";
+            else if (m <= 80)
+                return "Somewhat Pacifist";
+            else if (m <= 120)
+                return "No Tendency";
+            else if (m <= 160)
+                return "Somewhat Walike";
+            else
+                return "Very Warlike";
+        }
+
         public void die(string v)
         {
             World.log(v);
@@ -345,7 +360,7 @@ namespace Assets.Code
             isDead = true;
             if (this == map.overmind.enthralled) { map.overmind.enthralled = null; }
         }
-        
+
         public Sprite getImageBack()
         {
             if (imgIndBack == -1)

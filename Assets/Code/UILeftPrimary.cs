@@ -85,6 +85,8 @@ namespace Assets.Code
             string bodyText = "Prestige: " + (int)(p.prestige);
             bodyText += "\nShadow: " + (int)(p.shadow*100) + "%";
             bodyText += "\nEvidence: " + (int)(p.evidence*100) + "%";
+            bodyText += "\nMilitarism: " + (int)(p.politics_militarism*100) + "%";
+            bodyText += " (" + p.getMilitarismInfo() + ")";
 
             bodyText += "\n";
 
