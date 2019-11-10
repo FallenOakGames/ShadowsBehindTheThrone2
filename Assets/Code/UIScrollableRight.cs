@@ -139,6 +139,8 @@ namespace Assets.Code
                 master.setToSociety(activeSociety);
             else
                 master.setToWorld();
+
+            master.checkData();
         }
 
         public Society getSociety(Hex h)
