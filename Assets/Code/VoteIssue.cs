@@ -21,7 +21,7 @@ namespace Assets.Code
         {
         }
         public abstract bool stillValid(Map map);
-        
+
         public void changeLikingForVotes(VoteOption option)
         {
             //Everyone affected/concerned about the vote now changes their opinion of all the voters for the winning option

@@ -11,10 +11,8 @@ namespace Assets.Code
     {
         public Text mainText;
         public Text titleText;
-        public ThreatItem item;
         public GameObject mover;
         public float targetX;
-
 
         public void Update()
         {
@@ -29,7 +27,6 @@ namespace Assets.Code
 
         public void setTo(ThreatItem item)
         {
-            this.item = item;
             titleText.text = item.getTitle();
             if (item.p != null)
             {
@@ -48,6 +45,23 @@ namespace Assets.Code
             }
         }
 
+        public void setTo(VoteIssue vi, VoteOption vo, Person p)
+        {
+            titleText.text = "For " + vo.info(vi);
+
+            List<ReasonMsg> rs = new List<ReasonMsg>();
+            double total = vi.computeUtility(p, vo, rs);
+
+            string t = "";
+            foreach (ReasonMsg r in rs)
+            {
+                t += "Influenced (" + r.value.ToString("N2") + ") by\n" + r.msg + "\n\n";
+            }
+
+            t += "\n\nTotal Influence: " + total.ToString("N2");
+            mainText.text = t;
+        }
+
         public float xSize()
         {
             return 300;
@@ -60,13 +74,15 @@ namespace Assets.Code
 
         public string getTitle()
         {
-            return item.getTitle();
+            return titleText.text;
         }
 
         public string getBody()
         {
-            return "Each character evaluates the threats to their society independently. Their society then aggregates these together into a singular concensus of what to be afraid of."
-                + "\nA society gains responses to its highest-rated threat, if this threat scores over 100. This occurs by allowing new types of vote for new types of action and by triggering zeitgeist events.";
+            return "";
+
+            // return "Each character evaluates the threats to their society independently. Their society then aggregates these together into a singular concensus of what to be afraid of."
+            //     + "\nA society gains responses to its highest-rated threat, if this threat scores over 100. This occurs by allowing new types of vote for new types of action and by triggering zeitgeist events.";
         }
     }
 }

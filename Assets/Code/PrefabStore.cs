@@ -162,6 +162,20 @@ namespace Assets.Code
             return specific;
         }
 
+        public PopupXScroll getScrollSetVotes(Person p, VoteIssue vi)
+        {
+            PopupXScroll specific = getInnerXScrollSet();
+
+            foreach (VoteOption vo in vi.options)
+            {
+                PopupXBoxThreat box = getVoteReasonBox(vi, vo, p);
+                box.gameObject.transform.SetParent(specific.gameObject.transform);
+                specific.scrollables.Add(box);
+            }
+
+            return specific;
+        }
+
         public PopupXBoxThreat getThreatBox(ThreatItem item)
         {
             GameObject obj = Instantiate(xBoxThreat) as GameObject;
@@ -171,6 +185,14 @@ namespace Assets.Code
             return specific;
         }
 
+        public PopupXBoxThreat getVoteReasonBox(VoteIssue vi, VoteOption vo, Person p)
+        {
+            GameObject obj = Instantiate(xBoxThreat) as GameObject;
+            PopupXBoxThreat specific = obj.GetComponent<PopupXBoxThreat>();
+            specific.setTo(vi, vo, p);
+
+            return specific;
+        }
 
         private PopupScrollSet getInnerScrollSet()
         {

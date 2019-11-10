@@ -47,12 +47,13 @@ namespace Assets.Code
                     float x = Mathf.Cos(6.28f / n * i) * radius;
                     float y = Mathf.Sin(6.28f / n * i) * radius;
 
-                    s.targetPosition = new Vector3(x, y, 0);
+                    s.targetPosition = new Vector3(x, y, 0.0f);
                     if (liking < 0)
                         s.targetColor = Color.Lerp(s.neutralColor, s.badColor, -liking);
                     else
                         s.targetColor = Color.Lerp(s.neutralColor, s.goodColor, liking);
-                    s.targetColor.a = 0.1f + ((float)rel.suspicion / 100);
+                    s.targetColor.a = 0.5f;
+                    //s.targetColor.a = 0.1f + ((float)rel.suspicion / 100);
 
                     i += 1;
                 }
