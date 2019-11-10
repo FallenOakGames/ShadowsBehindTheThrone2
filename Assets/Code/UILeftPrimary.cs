@@ -94,6 +94,9 @@ namespace Assets.Code
             if (vote != null)
             {
                 bodyText += "\nVoting on: " + vote.issue.ToString();
+
+                VoteOption vo = p.getVote(vote);
+                bodyText += "\n\tto " + vo.ToString();
             }
             else
             {
