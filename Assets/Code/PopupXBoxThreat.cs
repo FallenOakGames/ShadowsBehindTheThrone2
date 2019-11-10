@@ -62,7 +62,7 @@ namespace Assets.Code
                 t += "Influenced (" + r.value.ToString("N0") + ") by\n" + r.msg + "\n\n";
             }
 
-            t += "\nTotal Influence: " + total.ToString("N0");
+            t += "\nTotal Desirability: " + total.ToString("N0");
             mainText.text = t;
         }
 
