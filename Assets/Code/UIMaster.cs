@@ -10,15 +10,11 @@ namespace Assets.Code
     public class UIMaster : MonoBehaviour
     {
         public World world;
+        public GameObject uiMaster;
+        public GameObject uiMainMenu;
         public UIScrollableRight uiScrollables;
         public UIMidTop uiMidTop;
         public UILeftPrimary uiLeftPrimary;
-        // public UICity uiCity;
-        //public UIWorldRight uiWorldRight;
-        //public UISociety uiSociety;
-        // public UIMainMenu uiMainMenu;
-        //public UICityFullscreen uiCityFullscreen;
-        public GameObject uiMaster;
 
         public List<GameObject> blockerQueue;
         public List<GameObject> blockerQueueDelayed = new List<GameObject>();
@@ -222,28 +218,27 @@ namespace Assets.Code
         {
 
             state = uiState.BACKGROUND;
-            //uiWorldRight.gameObject.SetActive(false);
+
+            uiMaster.SetActive(false);
+            uiMainMenu.SetActive(false);
+            uiLeftPrimary.gameObject.SetActive(false);
             uiScrollables.gameObject.SetActive(false);
-            //uiMainMenu.gameObject.SetActive(false);
-            //uiSociety.gameObject.SetActive(false);
-            uiMaster.gameObject.SetActive(false);
-            //uiCity.gameObject.SetActive(false);
+            uiMidTop.gameObject.SetActive(false);
+            hexSelector.SetActive(false);
+
             GraphicalMap.purge();
-            //GraphicalSociety.purge();
+            GraphicalSociety.purge();
         }
 
         public void setToWorld()
         {
-
             state = uiState.WORLD;
-            //uiWorldRight.gameObject.SetActive(true);
-            uiScrollables.gameObject.SetActive(true);
-            //uiMainMenu.gameObject.SetActive(false);
-            //uiSociety.gameObject.SetActive(false);
-            uiMaster.gameObject.SetActive(true);
-            //uiCity.gameObject.SetActive(false);
 
+            uiMaster.SetActive(true);
+            uiMainMenu.SetActive(false);
             uiLeftPrimary.gameObject.SetActive(true);
+            uiScrollables.gameObject.SetActive(true);
+            uiMidTop.gameObject.SetActive(true);
             hexSelector.SetActive(true);
 
             GraphicalSociety.purge();
@@ -253,8 +248,10 @@ namespace Assets.Code
         {
             state = uiState.SOCIETY;
 
-            uiMaster.gameObject.SetActive(false);
+            uiMaster.SetActive(true);
+            uiMainMenu.SetActive(false);
             uiLeftPrimary.gameObject.SetActive(true);
+            uiScrollables.gameObject.SetActive(true);
             uiMidTop.gameObject.SetActive(false);
             hexSelector.SetActive(false);
 
@@ -266,14 +263,15 @@ namespace Assets.Code
         {
 
             state = uiState.MAIN_MENU;
-            //uiWorldRight.gameObject.SetActive(false);
-            uiScrollables.gameObject.SetActive(false);
-            //uiMainMenu.gameObject.SetActive(true);
-            //uiSociety.gameObject.SetActive(false);
-            uiMaster.gameObject.SetActive(false);
-            //uiCity.gameObject.SetActive(false);
 
-            //GraphicalSociety.purge();
+            uiMaster.gameObject.SetActive(false);
+            uiMainMenu.SetActive(true);
+            uiLeftPrimary.gameObject.SetActive(false);
+            uiScrollables.gameObject.SetActive(false);
+            uiMidTop.gameObject.SetActive(false);
+            hexSelector.SetActive(false);
+
+            GraphicalSociety.purge();
             GraphicalMap.purge();
         }
 

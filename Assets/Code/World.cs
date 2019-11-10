@@ -19,7 +19,8 @@ namespace Assets.Code
      */
     public class World : MonoBehaviour
     {
-        public static bool logging = false;
+        public static bool logging   = false;
+        public static bool developer = true;
 
         public UIMaster ui;
         public TextureStore textureStore;
@@ -39,8 +40,13 @@ namespace Assets.Code
 
         public void Start()
         {
+            if (developer)
+                startup();
+            else
+                ui.setToMainMenu();
+
             //ui.setToMainMenu();
-            startup();
+            //startup();
             //ui.setToWorld();
         }
 
@@ -134,6 +140,17 @@ namespace Assets.Code
             displayMessages = true;
             Log("Got to end of initial startup");
             ui.checkData();
+        }
+
+        public void bStartGame()
+        {
+            startup();
+        }
+
+        public void bStartSeedlessGame()
+        {
+            Eleven.random = new System.Random(42069);
+            startup();
         }
 
         public void bEndTurn()
