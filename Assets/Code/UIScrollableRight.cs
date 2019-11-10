@@ -36,7 +36,7 @@ namespace Assets.Code
         public void checkData()
         {
             title.text = "";
-            
+
             // FIXME: check if this needs to be done?
             foreach (Transform t in listContent)
             {
@@ -139,7 +139,7 @@ namespace Assets.Code
                 master.setToWorld();
         }
 
-        private Society getSociety(Hex h)
+        public Society getSociety(Hex h)
         {
             if (h == null) return null;
             if (h.location == null) return null;

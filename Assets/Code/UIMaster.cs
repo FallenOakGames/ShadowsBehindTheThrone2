@@ -450,5 +450,26 @@ namespace Assets.Code
             }
             addBlocker(world.prefabStore.getScrollSetThreats(p.threatEvaluations).gameObject);
         }
+
+        public void bViewVotes()
+        {
+            Person p = null;
+            if (state == uiState.SOCIETY && GraphicalSociety.focus != null)
+                p = GraphicalSociety.focus;
+
+            Hex hex = GraphicalMap.selectedHex;
+            if (hex != null && hex.settlement != null && hex.settlement.title != null && hex.settlement.title.heldBy != null)
+                p = hex.settlement.title.heldBy;
+
+            if (p == null)
+                return;
+
+            VoteSession vs = p.society.voteSession;
+            if (vs == null)
+                return;
+
+            vs.assignVoters();
+            addBlocker(world.prefabStore.getScrollSetVotes(p, vs.issue).gameObject);
+        }
     }
 }
