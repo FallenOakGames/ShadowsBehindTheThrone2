@@ -13,6 +13,7 @@ namespace Assets.Code
         public Text titleText;
         public GameObject mover;
         public float targetX;
+        public string body = "";
 
         public void Update()
         {
@@ -30,14 +31,17 @@ namespace Assets.Code
             titleText.text = item.getTitle();
             if (item.p != null)
             {
+                string t = "";
+
                 List<string> list = item.getReasons();
-                string t = "Threat: " + (int)(item.threat);
                 foreach (string s in list)
                 {
-                    t += "\n" + s;
+                    t += s + "\n\n";
                 }
 
+                t += "\nTotal Threat: " + (int)(item.threat);
                 t += "\n\nResponse: " + ThreatItem.responseNames[item.responseCode];
+
                 mainText.text = t;
             }else
             {
@@ -58,7 +62,7 @@ namespace Assets.Code
                 t += "Influenced (" + r.value.ToString("N0") + ") by\n" + r.msg + "\n\n";
             }
 
-            t += "\n\nTotal Influence: " + total.ToString("N0");
+            t += "\nTotal Influence: " + total.ToString("N0");
             mainText.text = t;
         }
 
@@ -79,7 +83,7 @@ namespace Assets.Code
 
         public string getBody()
         {
-            return "";
+            return body;
 
             // return "Each character evaluates the threats to their society independently. Their society then aggregates these together into a singular concensus of what to be afraid of."
             //     + "\nA society gains responses to its highest-rated threat, if this threat scores over 100. This occurs by allowing new types of vote for new types of action and by triggering zeitgeist events.";
