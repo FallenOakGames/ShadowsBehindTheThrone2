@@ -106,7 +106,6 @@ namespace Assets.Code
             if (threat != null)
             {
                 bodyText += "\nBelieved Greatest Threat: " + threat.getTitle();
-                bodyText += "\n    because " + threat.getGreatestReason();
             }
             else
             {
