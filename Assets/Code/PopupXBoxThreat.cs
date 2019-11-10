@@ -55,10 +55,10 @@ namespace Assets.Code
             string t = "";
             foreach (ReasonMsg r in rs)
             {
-                t += "Influenced (" + r.value.ToString("N2") + ") by\n" + r.msg + "\n\n";
+                t += "Influenced (" + r.value.ToString("N0") + ") by\n" + r.msg + "\n\n";
             }
 
-            t += "\n\nTotal Influence: " + total.ToString("N2");
+            t += "\n\nTotal Influence: " + total.ToString("N0");
             mainText.text = t;
         }
 
