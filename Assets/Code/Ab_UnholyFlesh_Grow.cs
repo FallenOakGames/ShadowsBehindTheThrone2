@@ -17,6 +17,10 @@ namespace Assets.Code
                     hex.location.soc = l.soc;
                     hex.location.settlement = new Set_UnholyFlesh_Ganglion(hex.location);
                     l.soc.temporaryThreat += map.param.ability_growFleshThreatAdd;
+
+                    map.world.prefabStore.popImgMsg(
+                        "You grow a new fleshy growth, as it matures it will become capable of war against human forces.",
+                        map.world.wordStore.lookup("UNHOLY_FLESH_GROW"));
                     return;
                 }
             }

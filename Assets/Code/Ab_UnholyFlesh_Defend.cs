@@ -17,6 +17,10 @@ namespace Assets.Code
                     hex.location.soc = l.soc;
                     hex.location.settlement = new Set_UnholyFlesh_Carapace(hex.location);
                     l.soc.temporaryThreat += map.param.ability_growFleshThreatAdd;
+
+                    map.world.prefabStore.popImgMsg(
+                        "You grow a new fleshy growth, this one heavily clad in armoured carapace, to resist attack. This growth has increased the temporary threat of the flesh.",
+                        map.world.wordStore.lookup("UNHOLY_FLESH_DEFEND"));
                     return;
                 }
             }

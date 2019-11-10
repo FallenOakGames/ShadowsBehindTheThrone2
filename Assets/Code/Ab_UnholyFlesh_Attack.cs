@@ -16,8 +16,13 @@ namespace Assets.Code
                 {
                     if (l.soc.getRel(hex.location.soc).state == DipRel.dipState.war) { continue; }
                     map.declareWar(l.soc, hex.location.soc);
+
+                    map.world.prefabStore.popImgMsg(
+                        "The unholy flesh suddenly turns hostile, and begins its attack on " + hex.location.soc.getName(),
+                        map.world.wordStore.lookup("UNHOLY_FLESH_ATTACK"));
                 }
             }
+
         }
 
         public override bool castable(Map map, Hex hex)

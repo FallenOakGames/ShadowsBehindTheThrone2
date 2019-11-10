@@ -20,7 +20,7 @@ namespace Assets.Code
         public int mapGen_burnInSteps = 0;
 
         public int overmind_maxPower = 24;
-        public float overmind_powerRegen = 2;
+        public float overmind_powerRegen = 1.5f;
         internal bool overmind_singleAbilityPerTurn = false;
 
         public double econ_multFromBuff = 0.75;//How much to mult/div by if a society rules in favour or against a given economic trait being priviledged/penalised
@@ -104,8 +104,11 @@ namespace Assets.Code
         internal double dark_fishmanStartingThreatMult = -0.25;
         internal int ability_boycottVoteCost = 15;
         internal int ability_cancelVoteCost = 10;
+        internal int ability_shortMemories = 5;
         internal double society_pExpandIntoEmpty = 0.1;
         internal double temporaryThreatConversion = 0.025;
+        internal int ability_fleshScreamThreatAdd = 10;
+        internal int ability_fleshScreamCost = 5;
 
         public void loadFromFile()
         {

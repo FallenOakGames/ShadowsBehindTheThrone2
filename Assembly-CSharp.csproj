@@ -75,7 +75,9 @@
      <Compile Include="Assets\Code\Ab_UnholyFlesh_Attack.cs" />
      <Compile Include="Assets\Code\Ab_UnholyFlesh_Defend.cs" />
      <Compile Include="Assets\Code\Ab_UnholyFlesh_Grow.cs" />
+     <Compile Include="Assets\Code\Ab_UnholyFlesh_Screeching.cs" />
      <Compile Include="Assets\Code\Ab_UnholyFlesh_Seed.cs" />
+     <Compile Include="Assets\Code\Ab_UNIMPLEMENTED_Over_ShortMemories.cs" />
      <Compile Include="Assets\Code\Ability.cs" />
      <Compile Include="Assets\Code\Background.cs" />
      <Compile Include="Assets\Code\ButtonPortrait.cs" />

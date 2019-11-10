@@ -29,6 +29,11 @@ namespace Assets.Code
             }
             
             hex.location.settlement = new Set_UnholyFlesh_Seed(hex.location);
+
+            map.world.prefabStore.popImgMsg(
+                "You begin a growth of Unholy Flesh. This swarm of fleshy protrustions is a reasonable combattant, but excells at instilling fear in nobles, aiding political goals."
+                + "\nYou may continue to grow and control this social group with further actions",
+                map.world.wordStore.lookup("UNHOLY_FLESH_SEED"));
         }
 
         public override bool castable(Map map, Hex hex)

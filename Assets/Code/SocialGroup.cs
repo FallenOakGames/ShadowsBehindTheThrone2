@@ -165,7 +165,7 @@ namespace Assets.Code
             threat += temporaryThreat;
             if (reasons != null)
             {
-                msg = new ReasonMsg("Transient Threat", temporaryThreat);
+                msg = new ReasonMsg("Temporary Threat", temporaryThreat);
                 reasons.Add(msg);
             }
             threat += permanentThreat;

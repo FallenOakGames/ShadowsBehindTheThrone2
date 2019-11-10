@@ -25,10 +25,11 @@ namespace Assets.Code
             powers.Add(new Ab_Fishman_Attack());
             powers.Add(new Ab_Enth_MiliaryAid());
             powers.Add(new Ab_Enth_Enshadow());
+            powers.Add(new Ab_UnholyFlesh_Seed());
+            powers.Add(new Ab_UnholyFlesh_Screetching());
             powers.Add(new Ab_UnholyFlesh_Attack());
             powers.Add(new Ab_UnholyFlesh_Defend());
             powers.Add(new Ab_UnholyFlesh_Grow());
-            powers.Add(new Ab_UnholyFlesh_Seed());
             powers.Add(new Ab_Over_CancelVote());
 
             abilities.Add(new Ab_Soc_Vote());
