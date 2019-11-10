@@ -19,7 +19,7 @@ namespace Assets.Code
         {
             if (hex.location == null) { return false; }
             if (hex.location.soc == null) { return false; }
-            if (hex.location.soc is SG_UnholyFlesh) { return false; }
+            if (!(hex.location.soc is SG_UnholyFlesh)) { return false; }
             
             return true;
         }
@@ -37,7 +37,7 @@ namespace Assets.Code
 
         public override string getName()
         {
-            return "Screamning Flesh";
+            return "Screaming Flesh";
         }
 
         public override Sprite getSprite(Map map)
