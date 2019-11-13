@@ -20,7 +20,7 @@ namespace Assets.Code
     public class World : MonoBehaviour
     {
         public static bool logging   = false;
-        public static bool developer = true;
+        public static bool developer = false;
 
         public UIMaster ui;
         public TextureStore textureStore;

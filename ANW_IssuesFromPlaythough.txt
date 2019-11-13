@@ -1,0 +1,44 @@
+What do I actually DO?
+
+Can declare war when at war
+
+One ability per turn
+
+Vote response
+
+Text doesn't disappear
+
+Utilility values too high on some things (title assignment, it seems)
+
+Barely any liking gain from voting on-side
+
+Turns left on vote
+
+Reduce permanent threat gain?
+
+Colours a bit strong in dislike view? -26 seemed very red
+
+Way to sway people towards particular fears
+
+Suspicion string in map mask needs rounding
+
+Doesn't say which way the judgement votes are going
+
+No info should be given for liking reasons if the source is enthralled
+
+Society collapsed without me being given enough warning
+
+Fishmen should grow much slower
+More sea tiles
+
+Society lacked unlanded people
+
+Events should say how many there are, and how strong the highest one is
+
+Add liking as skill. Adds evidence, I guess, to counteract ease of use
+
+Ideally a second-level title to be awarded
+
+Utility too low on judge suspect
+
+Add preference to voting for high-prestige people for sovreign

@@ -53,6 +53,8 @@ namespace Assets.Code
             if (hex.location.person().getRelation(map.overmind.enthralled).getLiking() < World.staticMap.param.ability_switchVoteLikingCost) { return false; }
 
             Society soc = map.overmind.enthralled.society;
+            if (soc.voteSession == null) { return false; }
+
             //Check the enthralled was actually voting one way or the other
             foreach (VoteOption opt in soc.voteSession.issue.options)
             {
