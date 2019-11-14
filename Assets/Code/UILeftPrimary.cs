@@ -83,6 +83,7 @@ namespace Assets.Code
                 locText.text = "of " + title.settlement.name;
             }
             string bodyText = "Prestige: " + (int)(p.prestige);
+            bodyText += "\nPrestige Moving towards: " + (int)(p.targetPrestige);
             bodyText += "\nShadow: " + (int)(p.shadow*100) + "%";
             bodyText += "\nEvidence: " + (int)(p.evidence*100) + "%";
             bodyText += "\nMilitarism: " + (int)(p.politics_militarism*100) + "%";
@@ -124,7 +125,19 @@ namespace Assets.Code
         {
             Hex hex = GraphicalMap.selectedHex;
 
-            //abilityButton.gameObject.SetActive(master.world.map.overmind.power > 0 && (master.world.map.overmind.hasTakenAction == false));
+            if (World.staticMap != null)
+            {
+                if (World.staticMap.param.overmind_singleAbilityPerTurn)
+                {
+                    powerButton.gameObject.SetActive(master.world.map.overmind.power > 0 && (master.world.map.overmind.hasTakenAction == false));
+                    abilityButton.gameObject.SetActive((master.world.map.overmind.hasTakenAction == false));
+                }
+                else
+                {
+                    powerButton.gameObject.SetActive(master.world.map.overmind.power > 0);
+                }
+            }
+
             abilityButtonText.text = "Use Ability (" + master.world.map.overmind.countAvailableAbilities(hex) + ")";
             powerButtonText.text = "Use Power (" + master.world.map.overmind.countAvailablePowers(hex) + ")";
 

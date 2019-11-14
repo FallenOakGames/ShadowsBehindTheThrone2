@@ -66,12 +66,13 @@ namespace Assets.Code
             }
 
             //1 if we're 100% of the balance, -1 if they are
-            double relativeStrength = (ourStrength - theirStrength) / (ourStrength + theirStrength);
+            double relativeStrength = (ourStrength - theirStrength) / (ourStrength + theirStrength + 1);
 
             double relMilU = society.map.param.utility_militaryTargetRelStrengthOffensive*relativeStrength * parityMult;
             msgs.Add(new ReasonMsg("Relative strength of current militaries", relMilU));
             u += relMilU;
 
+            /*
             if (relMilU > 0 && target is Society)
             {
                 //0 if stability is full, getting more negative as stability decreases
@@ -80,6 +81,7 @@ namespace Assets.Code
                 msgs.Add(new ReasonMsg("Our societal stability concerns", stabilityU));
                 u += stabilityU;
             }
+            */
 
             localU = voter.politics_militarism * parityMult * 50;
             msgs.Add(new ReasonMsg("Militarism of " + voter.getFullName(), localU));

@@ -11,6 +11,7 @@ namespace Assets.Code
         public Map map;
         public Person p;
         public double zeitgeist = 1;
+        public double temporaryDread;
         public double threat;
         public List<ReasonMsg> reasons = new List<ReasonMsg>();
 

@@ -4,9 +4,7 @@ Need UI Vote result message
 
 Text doesn't disappear
 
-Utilility values too high on some things (title assignment, it seems)
-
-[TRIAL FIX] Barely any liking gain from voting on-side
+[Possibly fixed] Utilility values too high on some things (title assignment, it seems)
 
 Turns left on vote
 
@@ -28,10 +26,6 @@ Events should say how many there are, and how strong the highest one is
 
 Ideally a second-level title to be awarded
 
-Utility too low on judge suspect
-
-One ability per turn
-
 Combat damage stats on event screen
 
 Say who called vote on the events
@@ -42,7 +36,6 @@ Indicate which way you are already voting on vote screen
 
 Prestige gains too slow
 
-Need prestige target indicator on main screen
 
 Vote reasons go off screen if there are too many suspicious people
 
@@ -60,17 +53,13 @@ Suspicion gain far too slow
 
 Remove introspection's stability gain
 
-Reduce reluctance to condemn
-
 Too many people on soc screen. Highly cursed
 
 People need to fear societies with highly suspicious nobles
 
-Cap max liking gain from vote?
 
 More liking from being voted for with titles
 
-Declare war on worms: 250 liking
 
 Suspicion string in map mask needs rounding
 
@@ -78,6 +67,19 @@ Victory multiply achieved
 
 Cheat box needs togglable hiding
 ------------
+
+
+[FIXED] Need prestige target indicator on main screen
+
+[TRIAL FIX] Barely any liking gain from voting on-side
+[FIXED] Reduce reluctance to condemn
+[FIXED] Cap max liking gain from vote?
+[FIXED] Declare war on worms: 250 liking
+
+[FIXED] Utility too low on judge suspect
+
+[FIXED] One ability per turn
+
 
 
 [FIXED] Reduce permanent threat gain?

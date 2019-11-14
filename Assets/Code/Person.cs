@@ -15,6 +15,7 @@ namespace Assets.Code
         public Society society;
         public Dictionary<Person, RelObj> relations = new Dictionary<Person, RelObj>();
         public double prestige = 1;
+        public double targetPrestige = 1;
         public int lastVoteProposalTurn;
         public VoteIssue lastProposedIssue;
         public GraphicalSlot outer;
@@ -27,7 +28,7 @@ namespace Assets.Code
 
         public ThreatItem threat_enshadowedNobles;
 
-        public double politics_militarism = Eleven.random.NextDouble() * 2 - 1;
+        public double politics_militarism;
 
         public enum personState { normal,enthralled,broken};
         public personState state = personState.normal;
@@ -44,6 +45,10 @@ namespace Assets.Code
                 log = new LogBox(this);
             }
 
+            politics_militarism = Math.Pow(Eleven.random.NextDouble(), 0.75);//Bias towards 0
+            politics_militarism = 1 - politics_militarism;//0 to 1, bias towards 1
+            politics_militarism = (2*politics_militarism)-1;//1 to -1, bias towards 1
+
             //Add permanent threats
             threat_enshadowedNobles = new ThreatItem(map,this);
             threat_enshadowedNobles.form = ThreatItem.formTypes.ENSHADOWED_NOBLES;
@@ -57,7 +62,7 @@ namespace Assets.Code
 
             processEnshadowment();
 
-            double targetPrestige = map.param.person_defaultPrestige;
+            this.targetPrestige = map.param.person_defaultPrestige;
             if (title_land != null)
             {
                 targetPrestige += title_land.settlement.getPrestige();
@@ -191,21 +196,24 @@ namespace Assets.Code
             foreach (ThreatItem item in threatEvaluations)
             {
                 item.threat = 0;
+                item.temporaryDread *= map.param.threat_temporaryDreadDecay;
                 item.reasons.Clear();
                 if (item.group == null)
                 {
                     if (item.form == ThreatItem.formTypes.ENSHADOWED_NOBLES)
                     {
                         if (this.state == personState.broken) { continue; }//Broken minded can't fear the darkness
+                        double totalSus = 0;
                         foreach (Person p in this.society.people)
                         {
                             RelObj rel = this.getRelation(p);
                             double sus = rel.suspicion*map.param.person_threatFromSuspicion;
                             item.threat += sus;
-                            if (sus > 1)
-                            {
-                                item.reasons.Add(new ReasonMsg("Supicion of " + p.getFullName(), sus));
-                            }
+                            totalSus += sus;
+                        }
+                        if (totalSus > 1)
+                        {
+                            item.reasons.Add(new ReasonMsg("Supicion of enshadowed nobles", totalSus));
                         }
                     }
                 }
@@ -242,6 +250,15 @@ namespace Assets.Code
 
                     item.threat = value;
                 }
+
+                if (Math.Abs(item.temporaryDread) > 1)
+                {
+                    item.threat += item.temporaryDread;
+                    item.reasons.Add(new ReasonMsg("Temporary Dread", item.temporaryDread));
+                }
+
+                if (item.threat < 0) { item.threat = 0; }
+                if (item.threat > 200) { item.threat = 200; }
             }
         }
 

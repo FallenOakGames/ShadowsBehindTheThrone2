@@ -39,6 +39,14 @@ namespace Assets.Code
                 {
                     deltaRel *= p.map.param.society_votingRelChangePerUtilityNegative;
                 }
+                if (deltaRel > p.map.param.person_maxLikingGainFromVoteAccordance)
+                {
+                    deltaRel = p.map.param.person_maxLikingGainFromVoteAccordance;
+                }
+                if (deltaRel < p.map.param.person_maxLikingLossFromVoteDiscord)
+                {
+                    deltaRel = p.map.param.person_maxLikingLossFromVoteDiscord;
+                }
                 foreach (Person voter in option.votesFor)
                 {
                     p.getRelation(voter).addLiking(deltaRel,"Vote on issue " + this.ToString(),society.map.turn);

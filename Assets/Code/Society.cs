@@ -114,6 +114,11 @@ namespace Assets.Code
                 }
             }
 
+            if (posture == militaryPosture.introverted)
+            {
+                data_loyalLordsCap *= map.param.society_introversionStabilityGain;
+            }
+
             if (data_loyalLordsCap + data_rebelLordsCap <= 0)
             {
                 data_societalStability = 1;
@@ -122,13 +127,8 @@ namespace Assets.Code
             {
                 data_societalStability = (data_loyalLordsCap - data_rebelLordsCap) / (data_loyalLordsCap + data_rebelLordsCap);
             }
-
-            double introBonus = 1;
-            if (posture == militaryPosture.introverted)
-            {
-                introBonus = 1.2;
-            }
-            if (data_rebelLordsCap >= data_loyalLordsCap*introBonus)
+            
+            if (data_rebelLordsCap >= data_loyalLordsCap)
             {
                 instabilityTurns += 1;
                 if (instabilityTurns >= map.param.society_instablityTillRebellion)

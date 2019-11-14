@@ -40,22 +40,24 @@ namespace Assets.Code
 
         internal double utility_econEffect = 0.5;
         internal double utility_econEffectOther = 0.20;
-        public double utility_militaryTargetRelStrengthOffensive = 200;
+        public double utility_militaryTargetRelStrengthOffensive = 250;
         public double utility_militaryTargetRelStrengthDefensive = 300;
         internal double utility_vassaliseReluctance = -100;
         internal double utility_vassaliseMilMult = 80;
-        internal double utility_vassaliseThreatMult = 0.5;
-        internal double utility_introversionFromInstability = 80;
-        internal double utility_militarism = 50;
+        internal double utility_vassaliseThreatMult = 0.75;
+        internal double utility_introversionFromInstability = 50;
+        internal double utility_militarism = 100;
         internal double utility_landedTitleMult = 0.1;
         public double utility_unlandedTitleMult = 0.1;
         public double utility_introversionFromSuspicion = 3;
-        public double utility_killSuspectFromSuspicion = 150;
-        internal double utility_killSuspectRelucatance = 75;
+        public double utility_killSuspectFromSuspicion = 350;
+        internal double utility_killSuspectRelucatance = 66;
         internal double utility_wouldBeOutvotedMult = 0.25;
         internal double utility_landedTitleAssignBaseline = 100;
         public double utility_prestigeMultForTitle = 1.5;
 
+        public double person_maxLikingGainFromVoteAccordance = 35;
+        public double person_maxLikingLossFromVoteDiscord = -50;
         public double person_prestigeDeltaPerTurn = 2;
         public double person_threatMult = 100;
         internal double person_defaultPrestige = 5;
@@ -82,6 +84,7 @@ namespace Assets.Code
         public int society_minTimeBetweenTitleReassignments = 30;
         internal int society_nPeopleForEmpire = 21;
         internal int society_nPeopleForKingdom = 12;
+        internal double society_introversionStabilityGain = 1.2;
 
         internal double temporaryThreatDecay = 0.95;
         internal double threat_takeLocation = 3;
@@ -109,6 +112,7 @@ namespace Assets.Code
         internal double temporaryThreatConversion = 0.01;
         internal int ability_fleshScreamThreatAdd = 10;
         internal int ability_fleshScreamCost = 5;
+        internal double threat_temporaryDreadDecay = 0.97;
 
         public void loadFromFile()
         {
