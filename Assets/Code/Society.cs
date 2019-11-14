@@ -536,11 +536,13 @@ namespace Assets.Code
                     if (p.title_land.settlement.location.settlement != p.title_land.settlement)
                     {
                         log(p.getFullName() + " has lost title " + p.title_land.getName() + " has it no longer exists.");
+                        p.title_land.heldBy = null;
                         p.title_land = null;
                     }
                     if (p.title_land.settlement.location.soc != this)
                     {
                         log(p.getFullName() + " has lost title " + p.title_land.getName() + " has it is no longer owned by their society, " + this.getName());
+                        p.title_land.heldBy = null;
                         p.title_land = null;
                     }
                 }

@@ -17,7 +17,7 @@ namespace Assets.Code
             VoteIssue issue = null;
 
             List<VoteIssue> potentialIssues = new List<VoteIssue>();
-            if (soc.posture == Society.militaryPosture.offensive && soc.offensiveTarget != null)
+            if (soc.posture == Society.militaryPosture.offensive && soc.offensiveTarget != null && (soc.isAtWar() == false))
             {
                 issue = new VoteIssue_DeclareWar(soc, soc.offensiveTarget, proposer);
                 potentialIssues.Add(issue);

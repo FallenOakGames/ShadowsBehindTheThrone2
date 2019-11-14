@@ -21,7 +21,7 @@ namespace Assets.Code
 
         public int overmind_maxPower = 24;
         public float overmind_powerRegen = 1.5f;
-        internal bool overmind_singleAbilityPerTurn = false;
+        internal bool overmind_singleAbilityPerTurn = true;
 
         public double econ_multFromBuff = 0.75;//How much to mult/div by if a society rules in favour or against a given economic trait being priviledged/penalised
         
@@ -47,13 +47,14 @@ namespace Assets.Code
         internal double utility_vassaliseThreatMult = 0.5;
         internal double utility_introversionFromInstability = 80;
         internal double utility_militarism = 50;
-        public double utility_unlandedTitleMult = 0.5;
+        internal double utility_landedTitleMult = 0.1;
+        public double utility_unlandedTitleMult = 0.1;
         public double utility_introversionFromSuspicion = 3;
         public double utility_killSuspectFromSuspicion = 150;
         internal double utility_killSuspectRelucatance = 75;
-        internal double utility_landedTitleMult = 0.25;
         internal double utility_wouldBeOutvotedMult = 0.25;
         internal double utility_landedTitleAssignBaseline = 100;
+        public double utility_prestigeMultForTitle = 1.5;
 
         public double person_prestigeDeltaPerTurn = 2;
         public double person_threatMult = 100;
@@ -70,13 +71,12 @@ namespace Assets.Code
         public int soc_untitledPeople = 3;
         public int soc_maxUntitledPeople = 7;
         internal int society_votingDuration = 2;
-        internal double society_votingRelChangePerUtilityPositive = 0.04;//If benefitted by a vote
+        internal double society_votingRelChangePerUtilityPositive = 0.06;//If benefitted by a vote
         internal double society_votingRelChangePerUtilityNegative = 0.1;//If harmed by a vote
         public int society_instablityTillRebellion = 10;
         public int society_rebelLikingThreshold = -5;
         internal int society_zeitDuration = 3;
         internal double society_sovreignPrestige = 10;
-        internal double society_chancellorPrestige = 10;
         public double society_threatMultFromOffensivePosture = 0.5;
         public int society_minTimeBetweenLocReassignments = 40;
         public int society_minTimeBetweenTitleReassignments = 30;
@@ -106,7 +106,7 @@ namespace Assets.Code
         internal int ability_cancelVoteCost = 10;
         internal int ability_shortMemories = 5;
         internal double society_pExpandIntoEmpty = 0.1;
-        internal double temporaryThreatConversion = 0.025;
+        internal double temporaryThreatConversion = 0.01;
         internal int ability_fleshScreamThreatAdd = 10;
         internal int ability_fleshScreamCost = 5;
 

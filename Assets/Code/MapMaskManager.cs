@@ -118,7 +118,7 @@ namespace Assets.Code
                     double sus = rel.getDislikingFromSuspicion();
                     if (sus != 0)
                     {
-                        words += "\nFROM SUSPICION: " + sus;
+                        words += "\nFROM SUSPICION: " + (int)sus;
                     }
 
                     List<RelEvent> sortedEvents = new List<RelEvent>();
@@ -256,7 +256,7 @@ namespace Assets.Code
                     }
                     else
                     {
-                        liking *= liking;
+                        liking *= -1;
                         if (liking > 100) { liking = 100; }
                         liking /= 100;
                         c = new Color(liking, 0, 0, 0.5f);
@@ -290,7 +290,7 @@ namespace Assets.Code
                     }
                     else
                     {
-                        liking *= liking;
+                        liking *= -1;
                         if (liking > 100) { liking = 100; }
                         liking /= 100;
                         c = new Color(liking, 0, 0, 0.5f);

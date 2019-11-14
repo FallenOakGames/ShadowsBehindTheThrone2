@@ -89,7 +89,11 @@ namespace Assets.Code
                 msgs.Add(new ReasonMsg("Harm to " + title.heldBy.getFullName(), localU));
                 u += localU;
             }
-            
+
+            //Existing prestige of person being voted on
+            double prestigeU = p.prestige*society.map.param.utility_prestigeMultForTitle;
+            msgs.Add(new ReasonMsg("Prestige of " + p.getFullName(), prestigeU));
+            u += prestigeU;
 
             return u;
         }
