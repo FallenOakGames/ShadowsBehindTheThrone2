@@ -157,46 +157,14 @@ namespace Assets.Code
             }
         }
 
-        public void processThreats()
+        public void computeThreats()
         {
-            //First up, see if anything needs to be added/removed
-            List<ThreatItem> rems = new List<ThreatItem>();
-            HashSet<SocialGroup> groups = new HashSet<SocialGroup>();
-            foreach (ThreatItem item in threatEvaluations)
-            {
-                if (item.group != null){
-                    if (item.group.isGone())
-                    {
-                        rems.Add(item);
-                    }
-                    else if (item.group == society)
-                    {
-                        rems.Add(item);
-                    }
-                    else
-                    {
-                        groups.Add(item.group);
-                    }
-                }
-                item.turnTick();
-            }
-            foreach (ThreatItem item in rems) { threatEvaluations.Remove(item); }
 
-            foreach (SocialGroup sg in map.socialGroups)
-            {
-                if (groups.Contains(sg) == false && (sg != society))
-                {
-                    ThreatItem item = new ThreatItem(map, this);
-                    item.group = sg;
-                    threatEvaluations.Add(item);
-                }
-            }
 
             //Actually do the evaluations here
             foreach (ThreatItem item in threatEvaluations)
             {
                 item.threat = 0;
-                item.temporaryDread *= map.param.threat_temporaryDreadDecay;
                 item.reasons.Clear();
                 if (item.group == null)
                 {
@@ -207,7 +175,7 @@ namespace Assets.Code
                         foreach (Person p in this.society.people)
                         {
                             RelObj rel = this.getRelation(p);
-                            double sus = rel.suspicion*map.param.person_threatFromSuspicion;
+                            double sus = rel.suspicion * map.param.person_threatFromSuspicion;
                             item.threat += sus;
                             totalSus += sus;
                         }
@@ -239,14 +207,14 @@ namespace Assets.Code
                     }
 
                     double infoAvailability = map.getInformationAvailability(sourceLoc, item.group);
-                    int intInfoAvailability = (int)(infoAvailability*100);
+                    int intInfoAvailability = (int)(infoAvailability * 100);
                     item.reasons.Add(new ReasonMsg("Information (% kept)", intInfoAvailability));
                     value *= infoAvailability;
 
-                    double militaryStrengthMult = 100 / ((society.currentMilitary + (society.maxMilitary / 2)) + 1);
+                    double militaryStrengthMult = 50 / ((society.currentMilitary + (society.maxMilitary / 2)) + 1);
                     if (militaryStrengthMult < 0.5) { militaryStrengthMult = 0.5; }
-                    item.reasons.Add(new ReasonMsg("Military Strength Comparison (% multiplier)", (int)(100*militaryStrengthMult)));
-                    value *= militaryStrengthMult; 
+                    item.reasons.Add(new ReasonMsg("Military Strength Comparison (% multiplier)", (int)(100 * militaryStrengthMult)));
+                    value *= militaryStrengthMult;
 
                     item.threat = value;
                 }
@@ -260,6 +228,50 @@ namespace Assets.Code
                 if (item.threat < 0) { item.threat = 0; }
                 if (item.threat > 200) { item.threat = 200; }
             }
+            threatEvaluations.Sort();
+        }
+        public void processThreats()
+        {
+            //First up, see if anything needs to be added/removed
+            List<ThreatItem> rems = new List<ThreatItem>();
+            HashSet<SocialGroup> groups = new HashSet<SocialGroup>();
+            foreach (ThreatItem item in threatEvaluations)
+            {
+                if (item.group != null)
+                {
+                    if (item.group.isGone())
+                    {
+                        rems.Add(item);
+                    }
+                    else if (item.group == society)
+                    {
+                        rems.Add(item);
+                    }
+                    else
+                    {
+                        groups.Add(item.group);
+                    }
+                }
+                item.turnTick();
+            }
+            foreach (ThreatItem item in rems) { threatEvaluations.Remove(item); }
+
+            foreach (SocialGroup sg in map.socialGroups)
+            {
+                if (groups.Contains(sg) == false && (sg != society))
+                {
+                    ThreatItem item = new ThreatItem(map, this);
+                    item.group = sg;
+                    threatEvaluations.Add(item);
+                }
+            }
+            
+            foreach (ThreatItem item in threatEvaluations)
+            {
+                item.temporaryDread *= map.param.threat_temporaryDreadDecay;
+            }
+
+            computeThreats();
         }
 
         public ThreatItem getGreatestThreat()
@@ -289,7 +301,15 @@ namespace Assets.Code
 
         public string getFullName()
         {
-            return ((state == personState.enthralled || state == personState.broken) ? "Dark ":"") +  getTitles() + " " + firstName;
+            if (state == personState.enthralled)
+            {
+                return "Dark " + getTitles() + " " + firstName;
+            }
+            if (state == personState.broken)
+            {
+                return "Mad " + getTitles() + " " + firstName;
+            }
+            return getTitles() + " " + firstName;
         }
 
         public RelObj getRelation(Person other)

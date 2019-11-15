@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Code
 {
-    public class ThreatItem
+    public class ThreatItem : IComparable<ThreatItem>
     {
         public SocialGroup group;
         public Map map;
@@ -99,6 +99,19 @@ namespace Assets.Code
             {
                 return group.getName();
             }
+        }
+
+        public int CompareTo(ThreatItem obj)
+        {
+            if (obj.threat > threat)
+            {
+                return 1;
+            }
+            else if (obj.threat < threat)
+            {
+                return -1;
+            }
+            return 0;
         }
     }
 }

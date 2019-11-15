@@ -37,7 +37,6 @@ Indicate which way you are already voting on vote screen
 Prestige gains too slow
 
 
-Vote reasons go off screen if there are too many suspicious people
 
 Need a way to get suspicion's actual value
 
@@ -66,8 +65,12 @@ Suspicion string in map mask needs rounding
 Victory multiply achieved
 
 Cheat box needs togglable hiding
+
+Remove "You may propose a vote with your enthralled". Since it may be in cooldown
+
 ------------
 
+[FIXED] Vote reasons go off screen if there are too many suspicious people
 
 [FIXED] Need prestige target indicator on main screen
 

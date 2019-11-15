@@ -55,6 +55,11 @@ namespace Assets.Code
             return true;
         }
 
+        public override int getCooldown()
+        {
+            return World.staticMap.param.ability_denounceOtherCooldown;
+        }
+
         public override string specialCost()
         {
             return "Cost: -100 liking (victim)";

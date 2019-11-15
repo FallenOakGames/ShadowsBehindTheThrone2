@@ -12,6 +12,7 @@ namespace Assets.Code
         public Text title;
         public Text body;
         public Text cost;
+        public Text cooldown;
         public Image icon;
         public GameObject mover;
         public float targetY;
@@ -42,6 +43,22 @@ namespace Assets.Code
             if (a.specialCost() != null) { cost.text = a.specialCost(); }
             else { cost.text = "" + a.getCost(); }
             usable = a.castable(hex.map, hex);
+            if (a.getCooldown() > 0)
+            {
+                if (hex.map.turn - a.turnLastCast  < a.getCooldown())
+                {
+                    cooldown.text = "On Cooldown (" + (a.getCooldown() - (hex.map.turn - a.turnLastCast)) + ")";
+                    usable = false;
+                }
+                else
+                {
+                    cooldown.text = "Cooldown: " + a.getCooldown();
+                }
+            }
+            else
+            {
+                cooldown.text = "";
+            }
 
             if (!usable)
             {

@@ -120,6 +120,10 @@ namespace Assets.Code
                 settlement.turnTick();
             }
             
+            foreach (Property p in properties)
+            {
+                p.proto.turnTick(this);
+            }
             checkPropertiesEndOfTurn();
         }
 

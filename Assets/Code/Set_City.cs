@@ -14,6 +14,7 @@ namespace Assets.Code
             name = "City of " + loc.shortName;
             basePrestige = 25;
             militaryCapAdd += 10;
+            defensiveStrengthMax = 5;
             militaryRegenAdd = 0.15;
             isHuman = true;
         }

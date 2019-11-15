@@ -21,9 +21,11 @@ namespace Assets.Code
             powers.Add(new Ab_Enth_Enthrall());
             //abilities.Add(new Ab_TestAddShadow());
             powers.Add(new Ab_Fishman_Lair());
-            powers.Add(new Ab_Fishman_Call());
+            powers.Add(new Ab_Fishman_CultOfTheDeep());
+            //powers.Add(new Ab_Fishman_Call());
             powers.Add(new Ab_Fishman_Attack());
             powers.Add(new Ab_Enth_MiliaryAid());
+            powers.Add(new Ab_Enth_TrustingFool());
             powers.Add(new Ab_Enth_Enshadow());
             powers.Add(new Ab_UnholyFlesh_Seed());
             powers.Add(new Ab_UnholyFlesh_Screetching());
@@ -31,6 +33,7 @@ namespace Assets.Code
             powers.Add(new Ab_UnholyFlesh_Defend());
             powers.Add(new Ab_UnholyFlesh_Grow());
             powers.Add(new Ab_Over_CancelVote());
+            powers.Add(new Ab_Over_InformationBlackout());
 
             abilities.Add(new Ab_Soc_Vote());
             abilities.Add(new Ab_Soc_ProposeVote());
@@ -38,6 +41,7 @@ namespace Assets.Code
             abilities.Add(new Ab_Soc_JoinLoyalists());
             abilities.Add(new Ab_Soc_ShareEvidence());
             abilities.Add(new Ab_Soc_BoycottVote());
+            abilities.Add(new Ab_Soc_Fearmonger());
             abilities.Add(new Ab_Soc_DenounceOther());
             abilities.Add(new Ab_Soc_SwitchVote());
         }

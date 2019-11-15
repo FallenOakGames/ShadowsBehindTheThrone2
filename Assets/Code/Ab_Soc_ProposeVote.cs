@@ -225,6 +225,11 @@ namespace Assets.Code
             return "Propose Vote";
         }
 
+        public override int getCooldown()
+        {
+            return World.staticMap.param.ability_proposeVoteCooldown;
+        }
+
         public override Sprite getSprite(Map map)
         {
             return map.world.textureStore.icon_mask;

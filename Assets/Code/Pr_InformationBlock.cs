@@ -12,6 +12,9 @@ namespace Assets.Code
         public Pr_InformationBlock(Map map,string name) : base(map,name)
         {
             this.informationAvailabilityMult = 0.5;
+            this.baseCharge = map.param.ability_informationBlackoutDuration;
+            this.decaysOverTime = true;
+            this.stackStyle = stackStyleEnum.ADD_CHARGE;
         }
 
         public override void turnTick(Location location)
@@ -25,7 +28,7 @@ namespace Assets.Code
 
         internal override string getDescription()
         {
-            return "The description of a property would go here";
+            return "Halves the information going through the selected location. This reduces the rate at which nobles gain suspicion from evidence, and reduces the amount they fear other social groups.";
         }
     }
 }

@@ -56,15 +56,15 @@ namespace Assets.Code
         internal double utility_landedTitleAssignBaseline = 100;
         public double utility_prestigeMultForTitle = 1.5;
 
-        public double person_maxLikingGainFromVoteAccordance = 35;
+        public double person_maxLikingGainFromVoteAccordance = 30;
         public double person_maxLikingLossFromVoteDiscord = -50;
         public double person_prestigeDeltaPerTurn = 2;
         public double person_threatMult = 100;
         internal double person_defaultPrestige = 5;
         internal double person_evidencePerShadow = 0.025;
-        internal double person_suspicionPerEvidence = 0.01;
+        internal double person_suspicionPerEvidence = 0.075;
         internal double person_dislikingFromSuspicion = -200;
-        internal double person_shadowContagionMult = 0.1;
+        internal double person_shadowContagionMult = 0.05;
         internal double person_threatFromSuspicion = 400;
         internal double person_shadowDecayPerTurn = 0.005;
 
@@ -74,7 +74,7 @@ namespace Assets.Code
         public int soc_maxUntitledPeople = 7;
         internal int society_votingDuration = 2;
         internal double society_votingRelChangePerUtilityPositive = 0.06;//If benefitted by a vote
-        internal double society_votingRelChangePerUtilityNegative = 0.1;//If harmed by a vote
+        internal double society_votingRelChangePerUtilityNegative = 0.13;//If harmed by a vote
         public int society_instablityTillRebellion = 10;
         public int society_rebelLikingThreshold = -5;
         internal int society_zeitDuration = 3;
@@ -87,9 +87,15 @@ namespace Assets.Code
         internal double society_introversionStabilityGain = 1.2;
 
         internal double temporaryThreatDecay = 0.95;
-        internal double threat_takeLocation = 3;
+        internal double threat_takeLocation = 5;
         internal double victory_targetEnshadowmentAvrg = 0.75;
 
+        internal double dark_evilThreatMult = 1.5;
+        internal double dark_fleshThreatMult = 2;
+        internal double dark_fishmanStartingThreatMult = -0.25;
+
+        public int ability_denounceOtherCooldown = 32;
+        public int ability_proposeVoteCooldown = 7;
         public double ability_growFleshThreatAdd = 5;
         internal int ability_shareEvidenceLikingCost = 20;
         internal int ability_switchVoteLikingCost = 20;
@@ -101,10 +107,8 @@ namespace Assets.Code
         public int ability_fishmanRaidCost = 5;
         internal int ability_fishmanRaidMilAdd = 4;
         internal int ability_fishmanRaidTemporaryThreat = 20;
-        internal double dark_evilThreatMult = 1.5;
-        internal double dark_fleshThreatMult = 2;
         internal int ability_fishmanLairCost = 8;
-        internal double dark_fishmanStartingThreatMult = -0.25;
+        public int ability_fishmanCultOfTheDeep = 7;
         internal int ability_boycottVoteCost = 15;
         internal int ability_cancelVoteCost = 10;
         internal int ability_shortMemories = 5;
@@ -113,6 +117,16 @@ namespace Assets.Code
         internal int ability_fleshScreamThreatAdd = 10;
         internal int ability_fleshScreamCost = 5;
         internal double threat_temporaryDreadDecay = 0.97;
+        public int ability_informationBlackoutCost = 4;
+        public int ability_informationBlackoutDuration = 15;
+        public int ability_FishmanCultDuration = 15;
+        internal double ability_fishmanCultMilRegen = 0.5;
+        internal double ability_fishmanCultTempThreat = 1;
+        internal double ability_fishmanCultDread = 6;
+        public int ability_trustingFoolCost = 5;
+        public int ability_trustingFoolCooldown = 25;
+        public int ability_fearmongerTempThreat = 25;
+        public int ability_fearmongerCooldown = 15;
 
         public void loadFromFile()
         {

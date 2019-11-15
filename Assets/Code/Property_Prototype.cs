@@ -30,7 +30,15 @@ namespace Assets.Code
 
         public static void loadProperties(Map map)
         {
-            Pr_MilitaryAid proto = new Pr_MilitaryAid(map,"Military Aid");
+            Property_Prototype proto = new Pr_MilitaryAid(map,"Military Aid");
+            map.globalist.allProperties.Add(proto);
+            map.globalist.propertyMap.Add(proto.name, proto);
+
+            proto = new Pr_InformationBlock(map, "Information Blackout");
+            map.globalist.allProperties.Add(proto);
+            map.globalist.propertyMap.Add(proto.name, proto);
+
+            proto = new Pr_DeepOneCult(map, "Cult of the Deep");
             map.globalist.allProperties.Add(proto);
             map.globalist.propertyMap.Add(proto.name, proto);
         }
