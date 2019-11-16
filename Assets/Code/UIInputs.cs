@@ -42,6 +42,10 @@ namespace Assets.Code
             else if (Input.GetKeyDown(KeyCode.Q))
             {
             }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                world.ui.setToMainMenu();
+            }
 
             if (world.ui.state == UIMaster.uiState.WORLD || world.ui.state == UIMaster.uiState.BACKGROUND)
             {

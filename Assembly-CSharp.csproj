@@ -173,6 +173,7 @@
      <Compile Include="Assets\Code\Trait.cs" />
      <Compile Include="Assets\Code\UIInputs.cs" />
      <Compile Include="Assets\Code\UILeftPrimary.cs" />
+     <Compile Include="Assets\Code\UIMainMenu.cs" />
      <Compile Include="Assets\Code\UIMaster.cs" />
      <Compile Include="Assets\Code\UIMidTop.cs" />
      <Compile Include="Assets\Code\UIScrollableRight.cs" />

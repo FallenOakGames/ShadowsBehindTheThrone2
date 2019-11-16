@@ -1,6 +1,9 @@
+Escape goes to main menu
+Quit button from main menu
+
 What do I actually DO?
 
-Need UI Vote result message
+Ideally have a "selected item glow" on scrollables
 
 Text doesn't disappear
 

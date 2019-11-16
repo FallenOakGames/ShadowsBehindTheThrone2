@@ -142,9 +142,18 @@ namespace Assets.Code
             ui.checkData();
         }
 
+        public void bQuit()
+        {
+            Application.Quit();
+        }
         public void bStartGame()
         {
             startup();
+        }
+
+        public void bContinue()
+        {
+            ui.setToWorld();
         }
 
         public void bStartSeedlessGame()
