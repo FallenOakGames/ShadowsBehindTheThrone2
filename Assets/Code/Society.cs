@@ -526,7 +526,7 @@ namespace Assets.Code
                     if (issue == null) {return; }
 
                     bool positive = true;
-                    int priority = (this.isProtagonist()) ? 1 : 3;
+                    int priority = (this.hasEnthralled()) ? 1 : 3;
                     string msg = this.getName() + " now voting on " + issue.ToString();
 
                     World.staticMap.addMessage(msg, priority, positive);
