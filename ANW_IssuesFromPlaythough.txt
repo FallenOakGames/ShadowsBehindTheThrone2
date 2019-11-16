@@ -29,17 +29,11 @@ Big message for "You are in a new society"
 
 Indicate which way you are already voting on vote screen
 
-Need a way to get suspicion's actual value
-
 Unsure if map mask manager sees real suspicion
-
-It says "View society" for switching back to world from society screen
 
 [Possible feature] Unholy flesh military growth hella slow
 
 Military stance utilities seem too high
-
-Too many people on soc screen. Highly cursed
 
 [HELLA BROKEN] Suspicion string in map mask needs rounding
 
@@ -49,10 +43,13 @@ Too many people on soc screen. Highly cursed
 [DONE] People need to fear societies with highly suspicious nobles
 
 
+[DONE] Need a way to get suspicion's actual value
 
 [DONE] People need to fear societies with highly suspicious nobles
 
 [DONE] Society collapsed without me being given enough warning
+
+[FIXED] It says "View society" for switching back to world from society screen
 
 [FIXED] Remove "You may propose a vote with your enthralled". Since it may be in cooldown
 
