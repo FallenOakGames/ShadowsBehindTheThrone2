@@ -36,13 +36,13 @@ namespace Assets.Code
         public override double computeUtility(Person voter, VoteOption option,List<ReasonMsg> msgs)
         {
             double u = option.getBaseUtility(voter);
-            
+
 
             double ourStrength = society.currentMilitary;
             double theirStrength = option.group.currentMilitary;
             double localU = 0;
-            
-            
+
+
             //1 if we're 100% of the balance, -1 if they are
             double relativeStrength = (ourStrength - theirStrength) / (ourStrength + theirStrength);
 
@@ -92,13 +92,14 @@ namespace Assets.Code
                 msgs.Add(new ReasonMsg("Desirability of current target (" + society.offensiveTarget.getName() + ")", localU));
                 u += localU;
             }
-            
+
 
             return u;
         }
 
         public override void implement(VoteOption option)
         {
+            base.implement(option);
             society.offensiveTarget = option.group;
         }
         public override bool stillValid(Map map)
