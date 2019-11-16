@@ -8,7 +8,7 @@ Text doesn't disappear
 
 Turns left on vote
 
-Way to sway people towards particular fears
+[Partially done] Way to sway people towards particular fears
 
 Doesn't say which way the judgement votes are going
 	Main screen, left "Voting on: set military stance to 2"
@@ -17,10 +17,7 @@ No info should be given for liking reasons if the source is enthralled
 
 Society collapsed without me being given enough warning
 
-Fishmen should grow much slower
 More sea tiles
-
-[TRIAL FIX] Society lacked unlanded people
 
 Events should say how many there are, and how strong the highest one is
 
@@ -33,8 +30,6 @@ Say who called vote on the events
 Big message for "You are in a new society"
 
 Indicate which way you are already voting on vote screen
-
-
 
 Need a way to get suspicion's actual value
 
@@ -51,16 +46,17 @@ Too many people on soc screen. Highly cursed
 People need to fear societies with highly suspicious nobles
 
 
-
-
 Suspicion string in map mask needs rounding
 
 Remove "You may propose a vote with your enthralled". Since it may be in cooldown
 
 ------------
 
+[TRIAL FIX] Society lacked unlanded people
+
 [POSSIBLE FIX] More liking from being voted for with titles
 
+[FIXED] Fishmen should grow much slower
 
 [FIXED?] Suspicion gain far too slow
 [FEATURE NOT BUG] Remove introspection's stability gain

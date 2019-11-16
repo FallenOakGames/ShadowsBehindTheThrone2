@@ -118,6 +118,7 @@ namespace Assets.Code
 
         public override void implement(VoteOption option)
         {
+            base.implement(option);
             if (option.index == 1 && society.posture == Society.militaryPosture.offensive)
             {
                 society.map.declareWar(society, target);

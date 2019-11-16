@@ -43,7 +43,7 @@ namespace Assets.Code
             {
                 defStr = voter.society.defensiveTarget.currentMilitary + (voter.society.defensiveTarget.maxMilitary / 2);
             }
-            
+
             double defUtility = 0;
             if (voter.society.defensiveTarget != null)
             {
@@ -112,6 +112,7 @@ namespace Assets.Code
 
         public override void implement(VoteOption option)
         {
+            base.implement(option);
             if (option.index == 0)
             {
                 society.posture = Society.militaryPosture.defensive;

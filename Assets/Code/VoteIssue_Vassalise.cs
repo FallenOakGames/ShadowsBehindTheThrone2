@@ -82,12 +82,13 @@ namespace Assets.Code
             msgs.Add(new ReasonMsg("Threat from defensive target", relThreatU));
             u += relThreatU;
 
-            
+
             return u;
         }
 
         public override void implement(VoteOption option)
         {
+            base.implement(option);
             if (option.index == 1)
             {
                 bool canVassalise = false;

@@ -9,18 +9,24 @@ namespace Assets.Code
     {
         public Person proposer;
         public Society society;
+        public List<VoteOption> options = new List<VoteOption>();
 
         public VoteIssue(Society society,Person proposer)
         {
             this.society = society;
             this.proposer = proposer;
         }
-        public List<VoteOption> options = new List<VoteOption>();
+
         public abstract double computeUtility(Person p,VoteOption option, List<ReasonMsg> msgs);
+        public abstract bool stillValid(Map map);
+
         public virtual void implement(VoteOption option)
         {
+            bool positive = true;
+            int priority = (society.isProtagonist()) ? 1 : 3;
+
+            World.staticMap.addMessage("Voted to " + option.info(this), priority, positive);
         }
-        public abstract bool stillValid(Map map);
 
         public void changeLikingForVotes(VoteOption option)
         {

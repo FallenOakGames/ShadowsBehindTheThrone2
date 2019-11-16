@@ -34,8 +34,8 @@ namespace Assets.Code
         public override double computeUtility(Person voter, VoteOption option,List<ReasonMsg> msgs)
         {
             double u = option.getBaseUtility(voter);
-            
-            
+
+
             double localU = 0;
 
             foreach (ThreatItem threat in voter.threatEvaluations)
@@ -54,7 +54,7 @@ namespace Assets.Code
             if (society.defensiveTarget != null)
             {
                 localU = 0;
-                
+
                 //Add current target threat
                 foreach (ThreatItem threat in voter.threatEvaluations)
                 {
@@ -66,15 +66,16 @@ namespace Assets.Code
                         break;
                     }
                 }
-                
+
             }
-            
+
 
             return u;
         }
 
         public override void implement(VoteOption option)
         {
+            base.implement(option);
             society.defensiveTarget = option.group;
         }
         public override bool stillValid(Map map)
