@@ -62,7 +62,7 @@ namespace Assets.Code
             {
                 society.killOrders.Add(new KillOrder(target,"Judged guilty of conspiracy with dark forces"));
                 bool isGood = (target.state != Person.personState.enthralled) && (target.state != Person.personState.broken) && (target.shadow < 0.5);
-                society.map.turnMessages.Add(new MsgEvent(society.getName() + " has voted to execute " + target.getFullName() + ", having judged them guilty of conspiracy with dark forces",MsgEvent.LEVEL_RED,isGood));
+                //society.map.turnMessages.Add(new MsgEvent(society.getName() + " has voted to execute " + target.getFullName() + ", having judged them guilty of conspiracy with dark forces",MsgEvent.LEVEL_RED,isGood));
 
                 World.log("EXECUTION ORDER GONE THROUGH FOR SUSPICION OF DARKNESS " + society.getName() + " " + target.getFullName() + " true shadow (" + target.shadow + ")");
             }

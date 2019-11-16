@@ -69,14 +69,14 @@ namespace Assets.Code
                 if (shrt)
                     return new string[] { "Defensive", "Offensive", "Introspective" }[index];
                 else
-                    return new string[] { "Defensive Stance", "Offensive Stance", "Introspective Stance" }[index];
+                    return new string[] { "take Defensive Stance", "take Offensive Stance", "take Introspective Stance" }[index];
             }
             if (issue is VoteIssue_DeclareWar)
             {
                 if (shrt)
-                    return new string[] { "Maintain Peace","Declare War" }[index];
-                else
                     return new string[] { "Peace", "War" }[index];
+                else
+                    return new string[] { "Maintain Peace","Declare War" }[index];
             }
             if (issue is VoteIssue_JudgeSuspect)
             {
