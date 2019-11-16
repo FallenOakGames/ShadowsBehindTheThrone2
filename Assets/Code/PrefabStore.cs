@@ -48,6 +48,7 @@ namespace Assets.Code
         public GameObject prefabSocietyInspect;
         public GameObject pfbGraphicalProperty;
         public GameObject mapMsg;
+        public GameObject prefabVictoryBox;
 
 
         public PopupNameTag getNameTag(string name, Color color)
@@ -360,6 +361,15 @@ namespace Assets.Code
             return h;
         }
 
+        public void popVictoryBox()
+        {
+            if (world.displayMessages == false) { return; }
+
+            GameObject obj = Instantiate(prefabVictoryBox) as GameObject;
+            PopupVictory specific = obj.GetComponent<PopupVictory>();
+            specific.bDismiss.onClick.AddListener(delegate { specific.dismiss(); });
+            ui.addBlocker(specific.gameObject);
+        }
         /*
         public PopupBoxPerson getPersonBox(Person p, Selector_Person select, Person viewer)
         {
