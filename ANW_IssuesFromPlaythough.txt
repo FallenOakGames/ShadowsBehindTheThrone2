@@ -1,6 +1,3 @@
-Escape goes to main menu
-Quit button from main menu
-
 What do I actually DO?
 
 Ideally have a "selected item glow" on scrollables
@@ -18,8 +15,6 @@ Doesn't say which way the judgement votes are going
 
 No info should be given for liking reasons if the source is enthralled
 
-Society collapsed without me being given enough warning
-
 More sea tiles
 
 Events should say how many there are, and how strong the highest one is
@@ -27,6 +22,8 @@ Events should say how many there are, and how strong the highest one is
 Ideally a second-level title to be awarded
 
 Combat damage stats on event screen
+
+Wrong number of abilities displayed on button
 
 Say who called vote on the events
 
@@ -46,14 +43,16 @@ Military stance utilities seem too high
 
 Too many people on soc screen. Highly cursed
 
-People need to fear societies with highly suspicious nobles
-
-
 Suspicion string in map mask needs rounding
-
-Remove "You may propose a vote with your enthralled". Since it may be in cooldown
-
 ------------
+[DONE] Escape goes to main menu
+[DONE] Quit button from main menu
+
+[DONE] People need to fear societies with highly suspicious nobles
+
+[DONE] Society collapsed without me being given enough warning
+
+[FIXED] Remove "You may propose a vote with your enthralled". Since it may be in cooldown
 
 [TRIAL FIX] Society lacked unlanded people
 
@@ -68,6 +67,9 @@ Remove "You may propose a vote with your enthralled". Since it may be in cooldow
 [FIXED] Cheat box needs togglable hiding
 
 [NOT BUG] Prestige gains too slow
+
+[FIXED] Need UI Vote result message
+
 
 [FIXED] Vote reasons go off screen if there are too many suspicious people
 

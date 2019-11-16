@@ -156,7 +156,7 @@ namespace Assets.Code
                 {
                     int level = MsgEvent.LEVEL_ORANGE;
                     bool goodThing = true;
-                    if (this.isProtagonist())
+                    if (this.hasEnthralled())
                     {
                         goodThing = false;
                         level = MsgEvent.LEVEL_RED;
@@ -177,7 +177,7 @@ namespace Assets.Code
 
             int level = MsgEvent.LEVEL_ORANGE;
             bool goodThing = true;
-            if (this.isProtagonist())
+            if (this.hasEnthralled())
             {
                 goodThing = false;
                 level = MsgEvent.LEVEL_RED;
@@ -309,7 +309,7 @@ namespace Assets.Code
                 }
             }
         }
-        public override bool isProtagonist()
+        public override bool hasEnthralled()
         {
             foreach (Person p in people)
             {

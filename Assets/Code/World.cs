@@ -146,6 +146,10 @@ namespace Assets.Code
         {
             Application.Quit();
         }
+        public void bViewPlayback()
+        {
+            ui.addBlocker(prefabStore.getPlayback(this, map).gameObject);
+        }
         public void bStartGame()
         {
             startup();

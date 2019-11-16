@@ -243,6 +243,8 @@ namespace Assets.Code
             uiMidTop.gameObject.SetActive(true);
             hexSelector.SetActive(true);
 
+            uiScrollables.viewSocButtonText.text = "View Society";
+
             GraphicalSociety.purge();
         }
 
@@ -255,6 +257,8 @@ namespace Assets.Code
             uiScrollables.gameObject.SetActive(true);
             uiMidTop.gameObject.SetActive(false);
             hexSelector.SetActive(false);
+
+            uiScrollables.viewSocButtonText.text = "View World";
 
             GraphicalMap.purge();
             GraphicalSociety.setup(soc);
@@ -461,11 +465,11 @@ namespace Assets.Code
             try
             {
                 p = GraphicalMap.selectedHex.location.person();
+                addBlocker(world.prefabStore.getScrollSetThreats(p.threatEvaluations).gameObject);
             }catch(Exception e)
             {
                 return;
             }
-            addBlocker(world.prefabStore.getScrollSetThreats(p.threatEvaluations).gameObject);
         }
 
         public void bViewVotes()

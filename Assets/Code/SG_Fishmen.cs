@@ -47,7 +47,7 @@ namespace Assets.Code
                 }
             }
         }
-        public override bool isProtagonist()
+        public override bool hasEnthralled()
         {
             return true;
         }

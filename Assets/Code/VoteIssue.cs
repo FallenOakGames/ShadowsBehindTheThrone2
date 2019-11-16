@@ -23,9 +23,10 @@ namespace Assets.Code
         public virtual void implement(VoteOption option)
         {
             bool positive = true;
-            int priority = (society.isProtagonist()) ? 1 : 3;
+            int priority = (society.hasEnthralled()) ? 1 : 3;
+            string msg = society.getName() + ": chose " + option.info(this) + " for " + this.ToString();
 
-            World.staticMap.addMessage("Voted to " + option.info(this), priority, positive);
+            World.staticMap.addMessage(msg, priority, positive);
         }
 
         public void changeLikingForVotes(VoteOption option)

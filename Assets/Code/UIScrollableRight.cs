@@ -13,6 +13,8 @@ namespace Assets.Code
         public Text title;
         //public Text body;
 
+        public Text viewSocButtonText;
+
         public Society activeSociety;
 
         public GameObject portraitPrefab;

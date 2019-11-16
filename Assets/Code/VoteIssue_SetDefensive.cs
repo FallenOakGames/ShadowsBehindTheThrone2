@@ -14,12 +14,12 @@ namespace Assets.Code
 
         public override string ToString()
         {
-            string reply = "Set Defensive Target ";
-            if (society.defensiveTarget == null){
-                reply += "(now None)";
-            }else{
-                reply += "(now " + society.defensiveTarget.getName() + ")";
-            }
+            string reply = "Set Defensive Target";
+            // if (society.defensiveTarget == null){
+            //     reply += "(now None)";
+            // }else{
+            //     reply += "(now " + society.defensiveTarget.getName() + ")";
+            // }
             return reply;
         }
 

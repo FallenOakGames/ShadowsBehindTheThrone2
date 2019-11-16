@@ -18,7 +18,7 @@ namespace Assets.Code
         public List<SocialGroup> socialGroups = new List<SocialGroup>();
         public HashSet<string> permaDismissed = new HashSet<string>();
         //public MapEventManager eventManager;
-        //public StatRecorder stats;
+        public StatRecorder stats;
         public float lastTurnTime;
         public Params param;
         public Overmind overmind;
@@ -31,7 +31,7 @@ namespace Assets.Code
             masker = new MapMaskManager(this);
             //overmind = new Overmind(this);
             //eventManager = new MapEventManager(this);
-           // stats = new StatRecorder(this);
+           stats = new StatRecorder(this);
         }
 
         public void turnTick()
@@ -83,7 +83,7 @@ namespace Assets.Code
             }
 
             overmind.turnTick();
-            //stats.turnTick();
+            stats.turnTick();
             addEnthralledNextTurnMessages();
         }
         
@@ -249,11 +249,11 @@ namespace Assets.Code
         {
             World.log(att.getName() + " takes " + taken.getName() + " from " + def.getName());
             int priority = MsgEvent.LEVEL_YELLOW;
-            bool benefit = !def.isProtagonist();
-            if (att.isProtagonist())
+            bool benefit = !def.hasEnthralled();
+            if (att.hasEnthralled())
             {
                 priority = MsgEvent.LEVEL_GREEN;
-            }else if (def.isProtagonist())
+            }else if (def.hasEnthralled())
             {
                 priority = MsgEvent.LEVEL_RED;
             }
@@ -322,8 +322,8 @@ namespace Assets.Code
             World.log(att.getName() + " declares war on " + def.getName());
             int priority = MsgEvent.LEVEL_ORANGE;
             bool good = false;
-            if (att.isProtagonist()) { good = true;priority = MsgEvent.LEVEL_GREEN; }
-            if (def.isProtagonist()) { priority = MsgEvent.LEVEL_RED; }
+            if (att.hasEnthralled()) { good = true;priority = MsgEvent.LEVEL_GREEN; }
+            if (def.hasEnthralled()) { priority = MsgEvent.LEVEL_RED; }
             turnMessages.Add(new MsgEvent(att.getName() + " launches an offensive against " + def.getName(),priority,good));
 
             att.getRel(def).state = DipRel.dipState.war;

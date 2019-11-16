@@ -338,6 +338,27 @@ namespace Assets.Code
             return property;
         }
 
+        public PopupBaseHex getBaseHex()
+        {
+            GameObject obj = Instantiate(prefabBaseHex) as GameObject;
+            PopupBaseHex specific = obj.GetComponent<PopupBaseHex>();
+
+            return specific;
+        }
+
+        public PopupPlayback getPlayback(World world, Map map)
+        {
+
+            GameObject objHex = Instantiate(prefabPlayback) as GameObject;
+            PopupPlayback h = objHex.GetComponent<PopupPlayback>();
+            h.back.onClick.AddListener(delegate { h.buttonBack(); });
+            h.pause.onClick.AddListener(delegate { h.buttonPause(); });
+            h.replay.onClick.AddListener(delegate { h.buttonReplay(); });
+
+
+            h.setup(world, map);
+            return h;
+        }
 
         /*
         public PopupBoxPerson getPersonBox(Person p, Selector_Person select, Person viewer)
@@ -438,26 +459,6 @@ namespace Assets.Code
             specific.setTo(invite);
 
             return specific;
-        }
-        public PopupBaseHex getBaseHex()
-        {
-            GameObject obj = Instantiate(prefabBaseHex) as GameObject;
-            PopupBaseHex specific = obj.GetComponent<PopupBaseHex>();
-
-            return specific;
-        }
-        public PopupPlayback getPlayback(World world, Map map)
-        {
-
-            GameObject objHex = Instantiate(prefabPlayback) as GameObject;
-            PopupPlayback h = objHex.GetComponent<PopupPlayback>();
-            h.back.onClick.AddListener(delegate { h.buttonBack(); });
-            h.pause.onClick.AddListener(delegate { h.buttonPause(); });
-            h.replay.onClick.AddListener(delegate { h.buttonReplay(); });
-
-
-            h.setup(world, map);
-            return h;
         }
 
         public PopupXBoxDate getDateBox(string act, string date, string plot)

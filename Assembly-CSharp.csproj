@@ -120,6 +120,7 @@
      <Compile Include="Assets\Code\ParticleCombat.cs" />
      <Compile Include="Assets\Code\Person.cs" />
      <Compile Include="Assets\Code\Person_Voting.cs" />
+     <Compile Include="Assets\Code\PopupBaseHex.cs" />
      <Compile Include="Assets\Code\PopupBoxAbility.cs" />
      <Compile Include="Assets\Code\PopupBoxActivity.cs" />
      <Compile Include="Assets\Code\PopupBoxPerson.cs" />
@@ -128,6 +129,7 @@
      <Compile Include="Assets\Code\PopupImgMsg.cs" />
      <Compile Include="Assets\Code\PopupMsg.cs" />
      <Compile Include="Assets\Code\PopupNameTag.cs" />
+     <Compile Include="Assets\Code\PopupPlayback.cs" />
      <Compile Include="Assets\Code\PopupScrollable.cs" />
      <Compile Include="Assets\Code\PopupScrollSet.cs" />
      <Compile Include="Assets\Code\PopupXBoxThreat.cs" />
@@ -163,6 +165,8 @@
      <Compile Include="Assets\Code\SocialGroup.cs" />
      <Compile Include="Assets\Code\Society.cs" />
      <Compile Include="Assets\Code\Sorter_PersonByPrestige.cs" />
+     <Compile Include="Assets\Code\StatRecorder.cs" />
+     <Compile Include="Assets\Code\StatSnapshot.cs" />
      <Compile Include="Assets\Code\TestButtonAdder.cs" />
      <Compile Include="Assets\Code\TextStore.cs" />
      <Compile Include="Assets\Code\TextureStore.cs" />

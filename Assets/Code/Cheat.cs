@@ -29,6 +29,10 @@ namespace Assets.Code
                     Property.addProperty(map, GraphicalMap.selectedHex.location, "Military Aid");
                     World.staticMap.world.ui.checkData();
                 }
+                if (command == "playback")
+                {
+                    World.staticMap.world.ui.addBlocker(World.staticMap.world.prefabStore.getPlayback(World.staticMap.world, World.staticMap).gameObject);
+                }
                 if (command == "enthrall")
                 {
                     if (GraphicalMap.selectedHex.location.person() == null) {

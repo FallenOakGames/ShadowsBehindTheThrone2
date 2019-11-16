@@ -159,8 +159,6 @@ namespace Assets.Code
 
         public void computeThreats()
         {
-
-
             //Actually do the evaluations here
             foreach (ThreatItem item in threatEvaluations)
             {
@@ -217,6 +215,22 @@ namespace Assets.Code
                     value *= militaryStrengthMult;
 
                     item.threat = value;
+
+                    if (item.group is Society)
+                    {
+                        double susThreat = 0;
+                        Society soc = (Society)item.group;
+                        foreach (Person p in soc.people)
+                        {
+                            susThreat += this.getRelation(p).suspicion*100;
+                        }
+                        if (susThreat > 200)
+                        {
+                            susThreat = 200;
+                        }
+                        item.reasons.Add(new ReasonMsg("Suspicion that nobles are enshadowed", (int)susThreat));
+                        item.threat += susThreat;
+                    }
                 }
 
                 if (Math.Abs(item.temporaryDread) > 1)

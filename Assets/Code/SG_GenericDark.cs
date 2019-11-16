@@ -22,7 +22,7 @@ namespace Assets.Code
             startingLocation.settlement = new Set_DarkGeneric(startingLocation);
             this.threat_mult = 2;
         }
-        public override bool isProtagonist()
+        public override bool hasEnthralled()
         {
             return true;
         }

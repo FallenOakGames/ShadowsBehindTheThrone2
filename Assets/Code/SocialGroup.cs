@@ -73,7 +73,7 @@ namespace Assets.Code
             return cachedGone;
         }
 
-        public virtual bool isProtagonist()
+        public virtual bool hasEnthralled()
         {
             return false;
         }
