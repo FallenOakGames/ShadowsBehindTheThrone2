@@ -23,8 +23,6 @@ Ideally a second-level title to be awarded
 
 Combat damage stats on event screen
 
-Say who called vote on the events
-
 Big message for "You are in a new society"
 
 Indicate which way you are already voting on vote screen
@@ -49,6 +47,8 @@ Suspicion string in map mask needs rounding
 Remove "You may propose a vote with your enthralled". Since it may be in cooldown
 
 ------------
+
+[FIXED] Say who called vote on the events
 
 [TRIAL FIX] Society lacked unlanded people
 
