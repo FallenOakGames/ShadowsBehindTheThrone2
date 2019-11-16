@@ -13,6 +13,7 @@ namespace Assets.Code
         public Text info2;
 
         public Image foreground;
+        public Image midground;
         public Image background;
 
         // FIXME
@@ -22,9 +23,11 @@ namespace Assets.Code
 
         public void SetInfo(Person p)
         {
-            foreground.sprite = personHead;
-            background.sprite = personFrame;
+            foreground.sprite = p.getImageFore();
+            midground.sprite  = p.getImageMid();
+            background.sprite = p.getImageBack();
             foreground.enabled = true;
+            midground.enabled = true;
             background.enabled = true;
 
             name.text  = p.getFullName();
@@ -43,6 +46,7 @@ namespace Assets.Code
         {
             foreground.sprite = s.getSprite();
             foreground.enabled = true;
+            midground.enabled = false;
             background.enabled = false;
 
             name.text = s.name;
@@ -61,6 +65,7 @@ namespace Assets.Code
         {
             foreground.sprite = votesIcon;
             foreground.enabled = false;
+            midground.enabled = false;
             background.enabled = false;
 
             name.text = "";
