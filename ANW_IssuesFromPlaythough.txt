@@ -8,9 +8,6 @@ Turns left on vote
 
 [Partially done] Way to sway people towards particular fears
 
-Doesn't say which way the judgement votes are going
-	Main screen, left "Voting on: set military stance to 2"
-
 No info should be given for liking reasons if the source is enthralled
 
 More sea tiles
@@ -19,19 +16,21 @@ Events should say how many there are, and how strong the highest one is
 
 Ideally a second-level title to be awarded
 
-Combat damage stats on event screen
-
 Wrong number of abilities displayed on button
 
 Big message for "You are in a new society"
 
 Indicate which way you are already voting on vote screen
 
+Need a way to get suspicion's actual value
+
 Unsure if map mask manager sees real suspicion
 
-[Possible feature] Unholy flesh military growth hella slow
+It says "View society" for switching back to world from society screen
 
 Military stance utilities seem too high
+
+Too many people on soc screen. Highly cursed
 
 [HELLA BROKEN] Suspicion string in map mask needs rounding
 
@@ -41,15 +40,17 @@ Military stance utilities seem too high
 [DONE] People need to fear societies with highly suspicious nobles
 
 
-[DONE] Need a way to get suspicion's actual value
+
+[DONE] Combat damage stats on event screen
+[Possible feature] Unholy flesh military growth hella slow
+
+[FIXED] Doesn't say which way the judgement votes are going
+	Main screen, left "Voting on: set military stance to 2"
+
 
 [DONE] People need to fear societies with highly suspicious nobles
 
 [DONE] Society collapsed without me being given enough warning
-
-[FIXED] Text doesn't disappear
-
-[FIXED] It says "View society" for switching back to world from society screen
 
 [FIXED] Remove "You may propose a vote with your enthralled". Since it may be in cooldown
 

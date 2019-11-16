@@ -26,7 +26,7 @@ namespace Assets.Code
 
         public void hotkeys()
         {
-            //if (world.ui.blocker != null) { return; }
+            if (world.ui.blocker != null) { return; }
 
 
             if (Input.GetKeyDown(KeyCode.Backspace) && Input.GetKey(KeyCode.LeftControl))
