@@ -73,6 +73,10 @@ namespace Assets.Code
                 {
                     GraphicalMap.selectedHex.location.person().evidence = 1;
                 }
+                if (command == "victory")
+                {
+                    World.staticMap.overmind.victory();
+                }
                 if (command == "vote")
                 {
                     Society soc = map.overmind.enthralled.society;

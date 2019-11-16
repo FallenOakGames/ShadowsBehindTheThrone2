@@ -368,6 +368,7 @@ namespace Assets.Code
             GameObject obj = Instantiate(prefabVictoryBox) as GameObject;
             PopupVictory specific = obj.GetComponent<PopupVictory>();
             specific.bDismiss.onClick.AddListener(delegate { specific.dismiss(); });
+            specific.ui = ui;
             ui.addBlocker(specific.gameObject);
         }
         /*

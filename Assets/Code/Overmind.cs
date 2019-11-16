@@ -65,11 +65,14 @@ namespace Assets.Code
             else { map.data_avrgEnshadowment = sum / count; }
             if ((!victoryAchieved) && map.data_avrgEnshadowment > map.param.victory_targetEnshadowmentAvrg)
             {
-                victoryAchieved = true;
-                World.log("VICTORY DETECTED");
-                //map.world.prefabStore.popMsg("VICTORY ACHIEVED. Well done");
-                map.world.prefabStore.popVictoryBox();
+                victory();
             }
+        }
+        public void victory()
+        {
+            victoryAchieved = true;
+            World.log("VICTORY DETECTED");
+            map.world.prefabStore.popVictoryBox();
         }
 
         public void processEnthralled()

@@ -133,6 +133,7 @@
      <Compile Include="Assets\Code\PopupScrollable.cs" />
      <Compile Include="Assets\Code\PopupScrollSet.cs" />
      <Compile Include="Assets\Code\PopupVictory.cs" />
+     <Compile Include="Assets\Code\PopupWinMsg.cs" />
      <Compile Include="Assets\Code\PopupXBoxThreat.cs" />
      <Compile Include="Assets\Code\PopupXScroll.cs" />
      <Compile Include="Assets\Code\PopupXScrollable.cs" />
