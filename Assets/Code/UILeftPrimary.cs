@@ -99,7 +99,7 @@ namespace Assets.Code
                 bodyText += "\nVoting on: " + vote.issue.ToString();
 
                 VoteOption vo = p.getVote(vote);
-                bodyText += "\n\tto " + vo.ToString();
+                bodyText += "\n\tto " + vo.info(vote.issue);
             }
             else
             {

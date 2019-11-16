@@ -199,6 +199,9 @@ namespace Assets.Code
                     defender.currentMilitary -= theirLosses;
                     if (defender.currentMilitary < 0) { defender.currentMilitary = 0; }
 
+                    addMessage(sg.getName() + " attacks " + defender.getName() + ". Inflicts " + (int)(theirLosses) + " dmg, takes " + (int)(myLosses),
+                        MsgEvent.LEVEL_YELLOW, false);
+
                     //Can only take land if there are no defenses in place
                     if (myStr > theirStr * param.combat_takeLandThreshold && (attackTo.getMilitaryDefence() <= 0.01))
                     {
