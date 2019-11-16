@@ -23,7 +23,7 @@ namespace Assets.Code
          * 1: Orange: Major events (city taken, vote passes in enthralled soc...)
          * 2: Yellow: Irrelevant but bad (unknown, ideally rarely used)
          * 3: Grey other stuffs
-         * 
+         *
          * We then loop. Positive stuff gets the same priority values, to allow it to sort based on usefulness (red items are more exciting than boring greens)
          */
         public double priority;
@@ -33,7 +33,7 @@ namespace Assets.Code
         public MsgEvent(string v, double u,bool positive)
         {
             this.msg = v;
-            this.priority = u;
+            this.priority = u + (Eleven.random.NextDouble() * 0.001); // Skew for stable sort
             this.beneficial = positive;
         }
 
