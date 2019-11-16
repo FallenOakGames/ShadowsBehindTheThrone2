@@ -52,8 +52,10 @@ namespace Assets.Code
             if (hex.location.soc != map.overmind.enthralled.society) { return false; }
             if (hex.location.person().getRelation(map.overmind.enthralled).getLiking() < World.staticMap.param.ability_switchVoteLikingCost) { return false; }
 
+            if (map.overmind.enthralled.society == null) { throw new Exception("Enthralled didn't have a society?"); }
             Society soc = map.overmind.enthralled.society;
             if (soc.voteSession == null) { return false; }
+            if (soc.voteSession.issue == null) { throw new Exception("Vote session didn't have an issue? Why?"); }
 
             //Check the enthralled was actually voting one way or the other
             foreach (VoteOption opt in soc.voteSession.issue.options)
