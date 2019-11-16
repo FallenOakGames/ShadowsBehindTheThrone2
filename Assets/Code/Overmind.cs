@@ -67,7 +67,9 @@ namespace Assets.Code
             {
                 victoryAchieved = true;
                 World.log("VICTORY DETECTED");
-                map.world.prefabStore.popMsg("VICTORY ACHIEVED. Well done");
+
+                //map.world.prefabStore.popMsg("VICTORY ACHIEVED. Well done");
+                //map.world.prefabStore.winMsg();
             }
         }
 
