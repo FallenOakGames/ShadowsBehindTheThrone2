@@ -461,11 +461,11 @@ namespace Assets.Code
             try
             {
                 p = GraphicalMap.selectedHex.location.person();
+                addBlocker(world.prefabStore.getScrollSetThreats(p.threatEvaluations).gameObject);
             }catch(Exception e)
             {
                 return;
             }
-            addBlocker(world.prefabStore.getScrollSetThreats(p.threatEvaluations).gameObject);
         }
 
         public void bViewVotes()
