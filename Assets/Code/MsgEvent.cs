@@ -33,7 +33,13 @@ namespace Assets.Code
         public MsgEvent(string v, double u,bool positive)
         {
             this.msg = v;
-            this.priority = u + (Eleven.random.NextDouble() * 0.001); // Skew for stable sort
+            if (u < 0)
+            {
+                this.priority = u + (Eleven.random.NextDouble() * -0.001); // Skew for stable sort
+            }
+            else {
+                this.priority = u + (Eleven.random.NextDouble() * 0.001); // Skew for stable sort
+            }
             this.beneficial = positive;
         }
 
