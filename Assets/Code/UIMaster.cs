@@ -138,6 +138,7 @@ namespace Assets.Code
 
             if (world.turnLock) { return; }
             if (blocker != null) { return; }
+            if (GraphicalMap.selectedHex == null) { return; }
 
             List<Ability> abilities = world.map.overmind.getAvailablePowers(GraphicalMap.selectedHex);
             List<Ability> uncastables = new List<Ability>();
@@ -154,6 +155,7 @@ namespace Assets.Code
 
             if (world.turnLock) { return; }
             if (blocker != null) { return; }
+            if (GraphicalMap.selectedHex == null) { return; }
 
             List<Ability> abilities = world.map.overmind.getAvailableAbilities(GraphicalMap.selectedHex);
             List<Ability> uncastables = new List<Ability>();
