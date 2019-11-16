@@ -84,10 +84,10 @@ namespace Assets.Code
 
             overmind.turnTick();
             //stats.turnTick();
-            addNextTurnMessages();
+            addEnthralledNextTurnMessages();
         }
 
-        public void addNextTurnMessages()
+        public void addEnthralledNextTurnMessages()
         {
             if (overmind.enthralled == null)
             {
@@ -99,11 +99,6 @@ namespace Assets.Code
                 {
                     string msg = "Vote in session: " + overmind.enthralled.society.voteSession.issue.ToString();
                     turnMessages.Add(new MsgEvent(msg, MsgEvent.LEVEL_GREEN, true));
-                }
-                else
-                {
-                    string msg = "You may propose a vote with your enthralled";
-                    turnMessages.Add(new MsgEvent(msg, MsgEvent.LEVEL_BLUE, true));
                 }
             }
         }

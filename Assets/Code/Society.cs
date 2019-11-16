@@ -28,6 +28,7 @@ namespace Assets.Code
         public int instabilityTurns;
         public double data_loyalLordsCap;
         public double data_rebelLordsCap;
+        public int turnsNotInOffensiveStance;
         public int turnSovreignAssigned = -1;
 
         public LogBox logbox;
@@ -53,7 +54,20 @@ namespace Assets.Code
             processVoting();
             checkPopulation();//Add people last, so new people don't suddenly arrive and act before the player can see them
             checkAssertions();
+            misc();
             log();
+        }
+
+        public void misc()
+        {
+            if (posture == militaryPosture.offensive)
+            {
+                turnsNotInOffensiveStance = 0;
+            }
+            else
+            {
+                turnsNotInOffensiveStance += 1;
+            }
         }
 
         public void checkAssertions()
@@ -119,6 +133,7 @@ namespace Assets.Code
                 data_loyalLordsCap *= map.param.society_introversionStabilityGain;
             }
 
+
             if (data_loyalLordsCap + data_rebelLordsCap <= 0)
             {
                 data_societalStability = 1;
@@ -134,6 +149,9 @@ namespace Assets.Code
                 if (instabilityTurns >= map.param.society_instablityTillRebellion)
                 {
                     triggerCivilWar(rebels);
+                }
+                else
+                {
                 }
             }
             else
@@ -572,8 +590,17 @@ namespace Assets.Code
                 p.turnTick();
             }
 
+            int nUntitled = 0;
+            foreach (Person p in people)
+            {
+                if (p.title_land == null)
+                {
+                    nUntitled += 1;
+                }
+            }
+            int nNeeded = map.param.soc_maxUntitledPeople - nUntitled;
             //Insta-add enough to make up the numbers
-            while (people.Count < map.param.soc_untitledPeople + unclaimedTitles.Count)
+            for (int i=0;i<nNeeded;i++)
             {
                 Person p = new Person(this);
                 log(p.getFullName() + " has risen to note in the society of " + this.getName());

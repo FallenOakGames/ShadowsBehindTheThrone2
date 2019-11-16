@@ -127,6 +127,7 @@ namespace Assets.Code
         public int ability_trustingFoolCooldown = 25;
         public int ability_fearmongerTempThreat = 25;
         public int ability_fearmongerCooldown = 15;
+        internal int ability_apoptosisCost = 15;
 
         public void loadFromFile()
         {

@@ -14,6 +14,7 @@ namespace Assets.Code
         public List<Ability> powers = new List<Ability>();
         public Map map;
         public Person enthralled;
+        public bool victoryAchieved = false;
 
         public Overmind(Map map)
         {
@@ -27,6 +28,7 @@ namespace Assets.Code
             powers.Add(new Ab_Enth_MiliaryAid());
             powers.Add(new Ab_Enth_TrustingFool());
             powers.Add(new Ab_Enth_Enshadow());
+            powers.Add(new Ab_Enth_Apoptosis());
             powers.Add(new Ab_UnholyFlesh_Seed());
             powers.Add(new Ab_UnholyFlesh_Screetching());
             powers.Add(new Ab_UnholyFlesh_Attack());
@@ -61,8 +63,9 @@ namespace Assets.Code
             }
             if (count == 0) { map.data_avrgEnshadowment = 0; }
             else { map.data_avrgEnshadowment = sum / count; }
-            if (map.data_avrgEnshadowment > map.param.victory_targetEnshadowmentAvrg)
+            if ((!victoryAchieved) && map.data_avrgEnshadowment > map.param.victory_targetEnshadowmentAvrg)
             {
+                victoryAchieved = true;
                 World.log("VICTORY DETECTED");
                 map.world.prefabStore.popMsg("VICTORY ACHIEVED. Well done");
             }

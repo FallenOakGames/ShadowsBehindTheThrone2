@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 namespace Assets.Code
 {
@@ -12,6 +13,7 @@ namespace Assets.Code
         public UIMaster master;
         public Text powerText;
         public Text victoryText;
+        public InputField cheatField;
 
 
         public void Start()

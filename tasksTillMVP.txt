@@ -1,14 +1,14 @@
 Voting:
-A button to click to vote
-A button to propose a vote
+[DONE] A button to click to vote
+[DONE] A button to propose a vote
 A view of who will propose voting next
-A view of a given person's voting reasons
-Voting needs to be sorted before it is passed into scrollable
+[DONE] A view of a given person's voting reasons
+[DONE] Voting needs to be sorted before it is passed into scrollable
 A view of who is voting for which option (I guess just order it by voting option, with dividers if possible, in some manner of scroll set)
 	Scroll set appears (maybe using an existing one, maybe a new popup), it has the votes ordered by current assigned prestige. Titles of each option appear, then the folks voting for it
 Society view:
 	See existing file (If that file still exists?)
-A way to see what any given society is voting, what that vote means (large desc) and which options are available (at the very least which is the current top option)
+[Maybe done?] A way to see what any given society is voting, what that vote means (large desc) and which options are available (at the very least which is the current top option)
 
 Alerts:
 Make sure at least most of the important things are properly popped up as alerts

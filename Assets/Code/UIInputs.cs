@@ -28,9 +28,10 @@ namespace Assets.Code
         {
             //if (world.ui.blocker != null) { return; }
 
-            if (Input.GetKeyDown(KeyCode.Backspace))
+
+            if (Input.GetKeyDown(KeyCode.Backspace) && Input.GetKey(KeyCode.LeftControl))
             {
-                //world.uiHex.cheatField.gameObject.SetActive(!world.uiHex.cheatField.gameObject.activeInHierarchy);
+                world.ui.uiMidTop.cheatField.gameObject.SetActive(!world.ui.uiMidTop.cheatField.gameObject.activeSelf);
             }
             else if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Tab))
             {

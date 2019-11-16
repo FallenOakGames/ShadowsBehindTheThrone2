@@ -34,8 +34,6 @@ Big message for "You are in a new society"
 
 Indicate which way you are already voting on vote screen
 
-Prestige gains too slow
-
 
 
 Need a way to get suspicion's actual value
@@ -48,27 +46,29 @@ It says "View society" for switching back to world from society screen
 
 Military stance utilities seem too high
 
-Suspicion gain far too slow
-
-Remove introspection's stability gain
-
 Too many people on soc screen. Highly cursed
 
 People need to fear societies with highly suspicious nobles
 
 
-More liking from being voted for with titles
 
 
 Suspicion string in map mask needs rounding
 
-Victory multiply achieved
-
-Cheat box needs togglable hiding
-
 Remove "You may propose a vote with your enthralled". Since it may be in cooldown
 
 ------------
+
+[POSSIBLE FIX] More liking from being voted for with titles
+
+
+[FIXED?] Suspicion gain far too slow
+[FEATURE NOT BUG] Remove introspection's stability gain
+
+[FIXED] Victory multiply achieved
+[FIXED] Cheat box needs togglable hiding
+
+[NOT BUG] Prestige gains too slow
 
 [FIXED] Vote reasons go off screen if there are too many suspicious people
 
