@@ -142,7 +142,7 @@ namespace Assets.Code
             {
                 data_societalStability = (data_loyalLordsCap - data_rebelLordsCap) / (data_loyalLordsCap + data_rebelLordsCap);
             }
-            
+
             if (data_rebelLordsCap >= data_loyalLordsCap)
             {
                 instabilityTurns += 1;
@@ -525,6 +525,12 @@ namespace Assets.Code
                     VoteIssue issue = proposer.proposeVotingIssue();
                     if (issue == null) {return; }
 
+                    bool positive = true;
+                    int priority = (this.isProtagonist()) ? 1 : 3;
+                    string msg = this.getName() + " now voting on " + issue.ToString();
+
+                    World.staticMap.addMessage(msg, priority, positive);
+
                     //Otherwise, on with voting for this new thing
                     voteSession = new VoteSession();
                     voteSession.issue = issue;
@@ -596,14 +602,14 @@ namespace Assets.Code
                     }
                 }
             }
-            
+
 
             foreach (Title t in titles)
             {
                 t.turnTick();
             }
         }
-        
+
         public void checkPopulation()
         {
             foreach (Person p in people)

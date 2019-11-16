@@ -25,8 +25,6 @@ Combat damage stats on event screen
 
 Wrong number of abilities displayed on button
 
-Say who called vote on the events
-
 Big message for "You are in a new society"
 
 Indicate which way you are already voting on vote screen
@@ -43,16 +41,24 @@ Military stance utilities seem too high
 
 Too many people on soc screen. Highly cursed
 
-Suspicion string in map mask needs rounding
+[HELLA BROKEN] Suspicion string in map mask needs rounding
+
 ------------
 [DONE] Escape goes to main menu
 [DONE] Quit button from main menu
+[DONE] People need to fear societies with highly suspicious nobles
+
+
 
 [DONE] People need to fear societies with highly suspicious nobles
 
 [DONE] Society collapsed without me being given enough warning
 
 [FIXED] Remove "You may propose a vote with your enthralled". Since it may be in cooldown
+
+[FIXED] Too many people on soc screen. Highly cursed
+
+[FIXED] Say who called vote on the events
 
 [TRIAL FIX] Society lacked unlanded people
 
