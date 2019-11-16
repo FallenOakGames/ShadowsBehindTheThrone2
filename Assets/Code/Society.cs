@@ -146,12 +146,23 @@ namespace Assets.Code
             if (data_rebelLordsCap >= data_loyalLordsCap)
             {
                 instabilityTurns += 1;
-                if (instabilityTurns >= map.param.society_instablityTillRebellion)
+                int turnsTillCivilWar = map.param.society_instablityTillRebellion - instabilityTurns;
+
+                if (turnsTillCivilWar <= 0)
                 {
                     triggerCivilWar(rebels);
                 }
                 else
                 {
+                    int level = MsgEvent.LEVEL_ORANGE;
+                    bool goodThing = true;
+                    if (this.isProtagonist())
+                    {
+                        goodThing = false;
+                        level = MsgEvent.LEVEL_RED;
+                    }
+                    map.addMessage(this.getName() + " is unstable, as too many powerful nobles oppose the sovreign. " + turnsTillCivilWar + " turns till civil war.",
+                        level,goodThing);
                 }
             }
             else
@@ -163,6 +174,16 @@ namespace Assets.Code
         public void triggerCivilWar(List<Person> rebelsTotal)
         {
             World.log(this.getName() + " falls into civil war as " + rebelsTotal.Count + " out of " + people.Count + " nobles declare rebellion against " + getSovreign().getFullName());
+
+            int level = MsgEvent.LEVEL_ORANGE;
+            bool goodThing = true;
+            if (this.isProtagonist())
+            {
+                goodThing = false;
+                level = MsgEvent.LEVEL_RED;
+            }
+            map.addMessage(this.getName() + " falls into civil war! Provinces declare war on the sovreign's loyal forces.",
+                level, goodThing);
 
             List<Province> seenProvinces = new List<Province>();
             List<List<Person>> rebelsByProvince = new List<List<Person>>();
