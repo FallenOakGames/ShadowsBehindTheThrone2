@@ -52,7 +52,7 @@ namespace Assets.Code
 
         public void Update()
         {
-            staticMap = map;
+            //
         }
 
         public void specificStartup()
@@ -131,6 +131,7 @@ namespace Assets.Code
             map.world = this;
             map.gen();
 
+            staticMap = map;
             for (int i = 0; i < param.mapGen_burnInSteps; i++)
             {
                 map.turnTick();
