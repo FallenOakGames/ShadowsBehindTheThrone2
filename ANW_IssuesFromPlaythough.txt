@@ -34,6 +34,8 @@ Too many people on soc screen. Highly cursed
 
 [HELLA BROKEN] Suspicion string in map mask needs rounding
 
+Event Messages still invisible on startup
+
 ------------
 [DONE] Escape goes to main menu
 [DONE] Quit button from main menu

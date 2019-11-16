@@ -10,5 +10,6 @@ namespace Assets.Code
     public class UIMainMenu : MonoBehaviour
     {
         public Button continueButton;
+        public Text generateText;
     }
 }
