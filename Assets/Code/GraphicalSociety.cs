@@ -29,7 +29,9 @@ namespace Assets.Code
         {
             focus = pf;
 
-            int n = activeSociety.people.Count - 1, i = 0;
+            int tn = activeSociety.people.Count - 1;
+            int i = 0;
+
             foreach (GraphicalSlot s in loadedSlots)
             {
                 if (s.inner == focus)
@@ -41,14 +43,26 @@ namespace Assets.Code
                 }
                 else
                 {
+                    int n, ring;
+                    if (i < 12)
+                    {
+                        n = (tn < 12) ? tn : 12;
+                        ring = 0;
+                    }
+                    else
+                    {
+                        n = (tn - 12 < 52) ? tn - 12 : 52;
+                        ring = 1;
+                    }
+
                     RelObj rel = focus.relations[s.inner];
                     float liking = (float)rel.getLiking() / 100;
                     if (i == 0)
                         Debug.Log(rel.suspicion.ToString());
 
-                    float radius = 3.5f - liking * 0.75f;
-                    float x = Mathf.Cos(6.28f / n * i) * radius;
-                    float y = Mathf.Sin(6.28f / n * i) * radius;
+                    float radius = (1.75f * ring + 3.0f);
+                    float x = Mathf.Cos(6.28f / n * i + ring * 0.1f) * radius;
+                    float y = Mathf.Sin(6.28f / n * i + ring * 0.1f) * radius;
 
                     s.targetPosition = new Vector3(x, y, 0.0f);
                     if (liking < 0)
