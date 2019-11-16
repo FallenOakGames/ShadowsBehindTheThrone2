@@ -17,7 +17,7 @@ namespace Assets.Code
         public float mapGen_minHabitabilityForHumans = 0.15f;
         public int mapGen_stepsPerIsland = 12;
         public int mapGen_maxBrushSize = 5;
-        public int mapGen_burnInSteps = 0;
+        public int mapGen_burnInSteps = 100;
 
         public int overmind_maxPower = 24;
         public float overmind_powerRegen = 1.5f;

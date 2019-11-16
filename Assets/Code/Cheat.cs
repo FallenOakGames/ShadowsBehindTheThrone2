@@ -33,6 +33,10 @@ namespace Assets.Code
                 {
                     World.staticMap.world.ui.addBlocker(World.staticMap.world.prefabStore.getPlayback(World.staticMap.world, World.staticMap).gameObject);
                 }
+                if (command == "100")
+                {
+                    World.staticMap.world.b100Turns();
+                }
                 if (command == "enthrall")
                 {
                     if (GraphicalMap.selectedHex.location.person() == null) {
