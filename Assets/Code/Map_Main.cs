@@ -87,6 +87,11 @@ namespace Assets.Code
             addNextTurnMessages();
         }
 
+        public void addMessage(string msg, int level = 1, bool positive = true)
+        {
+            turnMessages.Add(new MsgEvent(msg, level, positive));
+        }
+
         public void addNextTurnMessages()
         {
             if (overmind.enthralled == null)
@@ -149,7 +154,7 @@ namespace Assets.Code
             foreach (SocialGroup sg in socialGroups)
             {
                 if (sg.lastBattle == turn) { continue; }//Only one battle permitted per social group (that they initiate, at least)
-                
+
                 if (checkDefensiveAttackHold(sg)) { continue; }//Should you stop attacking, to conserve strength?
 
                 if (sg.currentMilitary < sg.maxMilitary * param.combat_thresholdAttackStrength) { continue; }//Below min strength
