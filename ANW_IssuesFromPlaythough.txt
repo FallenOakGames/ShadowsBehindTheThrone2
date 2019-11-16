@@ -2,8 +2,6 @@ What do I actually DO?
 
 Ideally have a "selected item glow" on scrollables
 
-Text doesn't disappear
-
 [Possibly fixed] Utilility values too high on some things (title assignment, it seems)
 
 Turns left on vote
@@ -48,6 +46,8 @@ Military stance utilities seem too high
 [DONE] People need to fear societies with highly suspicious nobles
 
 [DONE] Society collapsed without me being given enough warning
+
+[FIXED] Text doesn't disappear
 
 [FIXED] It says "View society" for switching back to world from society screen
 

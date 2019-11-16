@@ -76,6 +76,11 @@ namespace Assets.Code
                     uiLeftPrimary.maskTitle.text = GraphicalMap.map.masker.getTitleText();
                     uiLeftPrimary.maskBody.text = GraphicalMap.map.masker.getBodyText();
                 }
+                else
+                {
+                    uiLeftPrimary.maskTitle.text = "";
+                    uiLeftPrimary.maskBody.text = "";
+                }
             }
             else
             {
@@ -224,7 +229,7 @@ namespace Assets.Code
         {
 
             state = uiState.BACKGROUND;
-            
+
             uiMainMenu.gameObject.SetActive(false);
             uiLeftPrimary.gameObject.SetActive(false);
             uiScrollables.gameObject.SetActive(false);
@@ -238,7 +243,7 @@ namespace Assets.Code
         public void setToWorld()
         {
             state = uiState.WORLD;
-            
+
             uiMainMenu.gameObject.SetActive(false);
             uiLeftPrimary.gameObject.SetActive(true);
             uiScrollables.gameObject.SetActive(true);
@@ -253,7 +258,7 @@ namespace Assets.Code
         public void setToSociety(Society soc)
         {
             state = uiState.SOCIETY;
-            
+
             uiMainMenu.gameObject.SetActive(false);
             uiLeftPrimary.gameObject.SetActive(true);
             uiScrollables.gameObject.SetActive(true);
@@ -270,7 +275,7 @@ namespace Assets.Code
         {
 
             state = uiState.MAIN_MENU;
-            
+
             uiMainMenu.gameObject.SetActive(true);
             uiLeftPrimary.gameObject.SetActive(false);
             uiScrollables.gameObject.SetActive(false);
