@@ -19,7 +19,7 @@ namespace Assets.Code
         public override bool castable(Map map, Hex hex)
         {
             if (map.overmind.enthralled == null) { return false; }
-            if (hex.location.person() == map.overmind.enthralled) { return false; }
+            if (hex.location.person() != map.overmind.enthralled) { return false; }
             return true;
 
         }

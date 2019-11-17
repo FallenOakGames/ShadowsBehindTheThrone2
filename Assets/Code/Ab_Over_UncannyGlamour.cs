@@ -12,7 +12,7 @@ namespace Assets.Code
 
             Person other = hex.location.person();
 
-            other.evidence += (100.0/map.param.ability_uncannyGlamourEvidence);
+            other.evidence += (map.param.ability_uncannyGlamourEvidence/100.0);
             other.prestige += map.param.ability_uncannyGlamourGain;
             if (other.evidence > 1) { other.evidence = 1; }
         }

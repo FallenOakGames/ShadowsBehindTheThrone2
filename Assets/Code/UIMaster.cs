@@ -470,9 +470,25 @@ namespace Assets.Code
         public void bViewThreats()
         {
             Person p = null;
+
+            if (state == uiState.SOCIETY && GraphicalSociety.focus != null)
+            {
+                p = GraphicalSociety.focus;
+            }
+            else
+            {
+                Hex hex = GraphicalMap.selectedHex;
+                if (hex != null && hex.settlement != null && hex.settlement.title != null && hex.settlement.title.heldBy != null)
+                    p = hex.settlement.title.heldBy;
+            }
+
+            if (p == null)
+            {
+                return;
+            }
+
             try
             {
-                p = GraphicalMap.selectedHex.location.person();
                 addBlocker(world.prefabStore.getScrollSetThreats(p.threatEvaluations).gameObject);
             }catch(Exception e)
             {
@@ -484,11 +500,15 @@ namespace Assets.Code
         {
             Person p = null;
             if (state == uiState.SOCIETY && GraphicalSociety.focus != null)
+            {
                 p = GraphicalSociety.focus;
-
-            Hex hex = GraphicalMap.selectedHex;
-            if (hex != null && hex.settlement != null && hex.settlement.title != null && hex.settlement.title.heldBy != null)
-                p = hex.settlement.title.heldBy;
+            }
+            else
+            {
+                Hex hex = GraphicalMap.selectedHex;
+                if (hex != null && hex.settlement != null && hex.settlement.title != null && hex.settlement.title.heldBy != null)
+                    p = hex.settlement.title.heldBy;
+            }
 
             if (p == null)
                 return;

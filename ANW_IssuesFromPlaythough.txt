@@ -1,8 +1,5 @@
 --------------HELLA CRITICAL---------------
 
-Apoptosis can kill anyone
-
-Society view doesn't give selected person's voting preferences
 
 --------------PRETTY BAD HONESTLY----------
 
@@ -30,10 +27,7 @@ Flashing mask in society view
 
 Ideally have a "selected item glow" on scrollables
 
-Desc for military aid missing
 
-
-[Possibly fixed] Utilility values too high on some things (title assignment, it seems)
 
 Turns left on vote
 
@@ -57,8 +51,14 @@ Event Messages still invisible on startup
 
 ------------NON-ZERO CHANCE THAT IT'S FIXED------------------
 
+[FIXED] Apoptosis can kill anyone
+[Possibly fixed] Utilility values too high on some things (title assignment, it seems)
+
+[FIXED] Society view doesn't give selected person's voting preferences
 [FIXED] Too many unlanded people
 
+
+[FIXED] Desc for military aid missing
 [FIXED] No info should be given for liking reasons if the source is enthralled
 [FIXED] Too many people on soc screen. Highly cursed
 [DONE] It says "View society" for switching back to world from society screen

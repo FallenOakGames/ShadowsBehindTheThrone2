@@ -14,6 +14,7 @@ namespace Assets.Code
             this.baseCharge = map.param.ability_militaryAidDur;
             this.milCapAdd = map.param.ability_militaryAidAmount;
             this.decaysOverTime = true;
+            this.stackStyle = stackStyleEnum.ADD_CHARGE;
         }
 
         public override void turnTick(Location location)
@@ -27,7 +28,9 @@ namespace Assets.Code
 
         internal override string getDescription()
         {
-            return "The description of a property would go here";
+            return "This location is receiving military aid, increasing its military cap by " + (int)this.milCapAdd + "."
+                + "\nThis will aid a nation in war, once the forces increase to match this new cap, and "
+                + "will also allow nobles to rebel against their sovreign with greater strength.";
         }
     }
 }
