@@ -14,6 +14,8 @@ No info should be given for liking reasons if the source is enthralled
 
 More sea tiles
 
+Mouse clicks still go through
+
 Events should say how many there are, and how strong the highest one is
 
 Ideally a second-level title to be awarded
