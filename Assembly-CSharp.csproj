@@ -73,6 +73,7 @@
     <Compile Include="Assets\Code\Ab_Fishman_Lair.cs" />
     <Compile Include="Assets\Code\Ab_Over_CancelVote.cs" />
     <Compile Include="Assets\Code\Ab_Over_InformationBlackout.cs" />
+    <Compile Include="Assets\Code\Ab_Over_SowDissent.cs" />
     <Compile Include="Assets\Code\Ab_Soc_BoycottVote.cs" />
     <Compile Include="Assets\Code\Ab_Soc_DenounceOther.cs" />
     <Compile Include="Assets\Code\Ab_Soc_Fearmonger.cs" />

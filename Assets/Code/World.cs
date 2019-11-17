@@ -51,9 +51,22 @@ namespace Assets.Code
             //ui.setToWorld();
         }
 
+        public float lastFrame;
         public void Update()
         {
-            //
+            if (lastFrame == -1) {
+                lastFrame = Time.realtimeSinceStartup;
+                return;
+            }
+            else
+            {
+                float dT = Time.realtimeSinceStartup - lastFrame;
+                float targetDT = 1 / 60;
+                if (dT < targetDT)
+                {
+                    new WaitForSecondsRealtime(targetDT-dT);
+                }
+            }
         }
 
         public void specificStartup()

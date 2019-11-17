@@ -20,7 +20,7 @@ namespace Assets.Code
         public int mapGen_burnInSteps = 100;
 
         public int overmind_maxPower = 24;
-        public float overmind_powerRegen = 1.5f;
+        public float overmind_powerRegen = 1f;
         internal bool overmind_singleAbilityPerTurn = true;
 
         public double econ_multFromBuff = 0.75;//How much to mult/div by if a society rules in favour or against a given economic trait being priviledged/penalised
@@ -62,7 +62,7 @@ namespace Assets.Code
         public double person_threatMult = 100;
         internal double person_defaultPrestige = 5;
         internal double person_evidencePerShadow = 0.025;
-        internal double person_suspicionPerEvidence = 0.075;
+        internal double person_suspicionPerEvidence = 0.06;
         internal double person_dislikingFromSuspicion = -200;
         internal double person_shadowContagionMult = 0.05;
         internal double person_threatFromSuspicion = 400;
@@ -71,10 +71,9 @@ namespace Assets.Code
         internal int econ_buffDuration = 50;
 
         public int soc_untitledPeople = 3;
-        public int soc_maxUntitledPeople = 7;
         internal int society_votingDuration = 2;
-        internal double society_votingRelChangePerUtilityPositive = 0.06;//If benefitted by a vote
-        internal double society_votingRelChangePerUtilityNegative = 0.13;//If harmed by a vote
+        internal double society_votingRelChangePerUtilityPositive = 0.085;//If benefitted by a vote
+        internal double society_votingRelChangePerUtilityNegative = 0.14;//If harmed by a vote
         public int society_instablityTillRebellion = 10;
         public int society_rebelLikingThreshold = -5;
         internal int society_zeitDuration = 3;
@@ -94,6 +93,8 @@ namespace Assets.Code
         internal double dark_fleshThreatMult = 2;
         internal double dark_fishmanStartingThreatMult = -0.25;
 
+        public int ability_sowDissentCost = 12;
+        public int ability_sowDissentLikingChange = -25;
         public int ability_denounceOtherCooldown = 32;
         public int ability_proposeVoteCooldown = 7;
         public double ability_growFleshThreatAdd = 5;

@@ -625,7 +625,7 @@ namespace Assets.Code
                     nUntitled += 1;
                 }
             }
-            int nNeeded = map.param.soc_maxUntitledPeople - nUntitled;
+            int nNeeded = map.param.soc_untitledPeople - nUntitled;
             //Insta-add enough to make up the numbers
             for (int i=0;i<nNeeded;i++)
             {
@@ -633,19 +633,16 @@ namespace Assets.Code
                 log(p.getFullName() + " has risen to note in the society of " + this.getName());
                 people.Add(p);
             }
-
-            //Remove one per turn if you're over cap
-            int untitledPeople = 0;
-            foreach (Person p in people)
-            {
-                if (p.title_land == null) { untitledPeople += 1; }
-                untitledPeople -= unclaimedTitles.Count;//These are presumably about to be handed out
-            }
-            if (untitledPeople > map.param.soc_maxUntitledPeople)
+            
+            if (nUntitled > map.param.soc_untitledPeople)
             {
                 Person lastUntitled = null;
                 foreach (Person p in people)
                 {
+                    if (p.state == Person.personState.enthralled)
+                    {
+                        continue;
+                    }
                     if (p.title_land == null)
                     {
                         lastUntitled = p;
@@ -653,8 +650,13 @@ namespace Assets.Code
                 }
                 if (lastUntitled != null)
                 {
-                    log(lastUntitled.getFullName() + " has no title, and has lost lordship in " + this.getName());
+                    string str = lastUntitled.getFullName() + " has no title, and has lost lordship in " + this.getName();
+                    log(str);
+                    World.log(str);
                     people.Remove(lastUntitled);
+                    if (this.hasEnthralled()) {
+                        map.addMessage(str);
+                    }
                 }
             }
         }

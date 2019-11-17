@@ -36,6 +36,7 @@ namespace Assets.Code
             powers.Add(new Ab_UnholyFlesh_Grow());
             powers.Add(new Ab_Over_CancelVote());
             powers.Add(new Ab_Over_InformationBlackout());
+            powers.Add(new Ab_Over_SowDissent());
 
             abilities.Add(new Ab_Soc_Vote());
             abilities.Add(new Ab_Soc_ProposeVote());

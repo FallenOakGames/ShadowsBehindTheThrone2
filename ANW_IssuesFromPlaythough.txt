@@ -20,8 +20,6 @@ Indicate which way you are already voting on vote screen
 
 [STILL BROKEN] Suspicion string in map mask needs rounding
 
-Too many unlanded people
-
 ------------BASICALLY A FEATURE, WHEN YOU THINK ABOUT IT--------------
 
 Wrong number of abilities displayed on button
@@ -52,7 +50,9 @@ Event Messages still invisible on startup
 
 
 
-------------
+------------NON-ZERO CHANCE THAT IT'S FIXED------------------
+
+[FIXED] Too many unlanded people
 
 [FIXED] Too many people on soc screen. Highly cursed
 [DONE] It says "View society" for switching back to world from society screen
