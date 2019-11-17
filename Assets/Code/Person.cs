@@ -13,7 +13,7 @@ namespace Assets.Code
         public List<Title> titles = new List<Title>();
         public TitleLanded title_land;
         public Society society;
-        public Dictionary<Person, RelObj> relations = new Dictionary<Person, RelObj>();
+        private Dictionary<Person, RelObj> relations = new Dictionary<Person, RelObj>();
         public double prestige = 1;
         public double targetPrestige = 1;
         public int lastVoteProposalTurn;

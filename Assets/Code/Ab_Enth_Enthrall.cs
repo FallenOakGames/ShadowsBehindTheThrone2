@@ -27,6 +27,8 @@ namespace Assets.Code
             if (hex.location.settlement.title == null) { return false; }
             if (hex.location.settlement.title.heldBy == null) { return false; }
 
+            if (hex.location.settlement.title.heldBy.state == Person.personState.broken) { return true; }
+
             if (hex.location.soc == null) { return false; }
             if (hex.location.soc is Society == false) { return false; }
 
@@ -51,7 +53,7 @@ namespace Assets.Code
         public override string getDesc()
         {
             return "Enthralls a lower-prestige member of a society."
-                + "\n[Only certain low ranked nobles can be enthralled. You may only have one enthralled at a time]";
+                + "\n[Only certain low ranked nobles and broken nobles can be enthralled. You may only have one enthralled at a time]";
         }
 
         public override string getName()

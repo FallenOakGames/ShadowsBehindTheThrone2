@@ -37,6 +37,7 @@ namespace Assets.Code
             powers.Add(new Ab_Over_CancelVote());
             powers.Add(new Ab_Over_InformationBlackout());
             powers.Add(new Ab_Over_SowDissent());
+            powers.Add(new Ab_Over_UncannyGlamour());
 
             abilities.Add(new Ab_Soc_Vote());
             abilities.Add(new Ab_Soc_ProposeVote());

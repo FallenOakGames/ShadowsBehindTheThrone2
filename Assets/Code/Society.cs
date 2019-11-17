@@ -354,6 +354,14 @@ namespace Assets.Code
 
         public void computeCapital()
         {
+            if (this.getSovreign() != null)
+            {
+                if (this.getSovreign().title_land != null)
+                {
+                    capital =  this.getSovreign().title_land.settlement.location;
+                    return;
+                }
+            }
             double bestPrestige = -100000;
             foreach (Location loc in map.locations)
             {

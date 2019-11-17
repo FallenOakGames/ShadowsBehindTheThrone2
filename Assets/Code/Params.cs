@@ -93,6 +93,9 @@ namespace Assets.Code
         internal double dark_fleshThreatMult = 2;
         internal double dark_fishmanStartingThreatMult = -0.25;
 
+        public int ability_uncannyGlamourEvidence = 10;
+        public int ability_uncannyGlamourGain = 25;
+        public int ability_uncannyGlamourCost = 10;
         public int ability_sowDissentCost = 12;
         public int ability_sowDissentLikingChange = -25;
         public int ability_denounceOtherCooldown = 32;

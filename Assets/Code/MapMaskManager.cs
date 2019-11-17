@@ -77,6 +77,10 @@ namespace Assets.Code
                     Person me = GraphicalMap.selectedHex.location.settlement.title.heldBy;
                     Person them = hex.location.settlement.title.heldBy;
 
+                    if (me.state == Person.personState.enthralled)
+                    {
+                        return me.getFullName() + " is enthralled, so does not have normal likings.";
+                    }
                     string words = me.getFullName() + " liking for " + them.getFullName();
                     RelObj rel = me.getRelation(them);
                     words += "\nAmount: " + ((int)rel.getLiking());
@@ -110,6 +114,11 @@ namespace Assets.Code
                     Hex hex = GraphicalMap.getHexUnderMouse(Input.mousePosition).hex;
                     Person them = GraphicalMap.selectedHex.location.settlement.title.heldBy;
                     Person me = hex.location.settlement.title.heldBy;
+
+                    if (me.state == Person.personState.enthralled)
+                    {
+                        return me.getFullName() + " is enthralled, so does not have normal likings.";
+                    }
 
                     string words = me.getFullName() + " liking for " + them.getFullName();
                     RelObj rel = me.getRelation(them);

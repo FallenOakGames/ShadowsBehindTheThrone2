@@ -24,15 +24,20 @@ Indicate which way you are already voting on vote screen
 
 Wrong number of abilities displayed on button
 
+Militarism flavour in left hand side typo
+
+Flashing mask in society view
+
 Ideally have a "selected item glow" on scrollables
+
+Desc for military aid missing
+
 
 [Possibly fixed] Utilility values too high on some things (title assignment, it seems)
 
 Turns left on vote
 
 [Partially done] Way to sway people towards particular fears
-
-No info should be given for liking reasons if the source is enthralled
 
 More sea tiles
 
@@ -54,6 +59,7 @@ Event Messages still invisible on startup
 
 [FIXED] Too many unlanded people
 
+[FIXED] No info should be given for liking reasons if the source is enthralled
 [FIXED] Too many people on soc screen. Highly cursed
 [DONE] It says "View society" for switching back to world from society screen
 [DONE] Escape goes to main menu
