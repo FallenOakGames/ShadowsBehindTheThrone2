@@ -34,8 +34,13 @@ namespace Assets.Code
             //title.text = session.issue.ToString();
             title.text = option.info(session.issue);
             body.text = "Voters: " + option.votesFor.Count + " Total Prestige: " + (int)(option.votingWeight);
+            if (option.votesFor.Contains(World.staticMap.overmind.enthralled))
+            {
+                body.text += "\n[Your enthralled is voting for this option]";
+            }
             this.option = option;
             this.sess = session;
+            this.sess.assignVoters();
         }
 
         public float ySize()

@@ -73,6 +73,10 @@ namespace Assets.Code
                 {
                     GraphicalMap.selectedHex.location.person().evidence = 1;
                 }
+                if (command == "refresh")
+                {
+                    World.staticMap.overmind.hasTakenAction = false;
+                }
                 if (command == "victory")
                 {
                     World.staticMap.overmind.victory();

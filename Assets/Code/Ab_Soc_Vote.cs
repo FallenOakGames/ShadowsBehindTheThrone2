@@ -8,7 +8,7 @@ namespace Assets.Code
     {
         public override void cast(Map map, Hex hex)
         {
-            base.cast(map, hex);
+            //base.cast(map, hex);
 
             Society soc = map.overmind.enthralled.society;
             if (soc.voteSession != null)

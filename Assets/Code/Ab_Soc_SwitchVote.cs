@@ -12,6 +12,7 @@ namespace Assets.Code
 
             Person other = hex.location.person();
             Society soc = map.overmind.enthralled.society;
+            soc.voteSession.assignVoters();
             VoteOption enthOpt = null;
             VoteOption otherOpt = null;
             foreach (VoteOption opt in soc.voteSession.issue.options)

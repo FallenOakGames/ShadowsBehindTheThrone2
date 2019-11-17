@@ -1,5 +1,6 @@
 --------------HELLA CRITICAL---------------
 
+Cancel causes you to skip your move
 
 --------------PRETTY BAD HONESTLY----------
 
