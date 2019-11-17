@@ -25,19 +25,9 @@ namespace Assets.Code
             if (hex.location.person() == hex.location.person().society.getSovreign()) { return false; }
             return true;
         }
-
-        public override string specialCost()
-        {
-            return "";
-        }
         public override int getCost()
         {
             return World.staticMap.param.ability_sowDissentCost;
-        }
-
-        public override int getCooldown()
-        {
-            return World.staticMap.param.ability_fearmongerCooldown;
         }
         public override string getDesc()
         {
