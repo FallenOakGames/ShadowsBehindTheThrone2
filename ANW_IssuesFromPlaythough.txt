@@ -1,5 +1,7 @@
 What do I actually DO?
 
+missing flavour text across the board
+
 Ideally have a "selected item glow" on scrollables
 
 [Possibly fixed] Utilility values too high on some things (title assignment, it seems)

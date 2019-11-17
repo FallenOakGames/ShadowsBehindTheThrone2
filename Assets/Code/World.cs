@@ -40,6 +40,7 @@ namespace Assets.Code
 
         public void Start()
         {
+            Screen.SetResolution(1920, 1080, true);
             if (developer)
                 startup();
             else
