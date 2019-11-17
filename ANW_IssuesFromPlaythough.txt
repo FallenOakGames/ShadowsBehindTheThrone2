@@ -1,6 +1,30 @@
+--------------HELLA CRITICAL---------------
+
+Apoptosis can kill anyone
+
+Society view doesn't give selected person's voting preferences
+
+--------------PRETTY BAD HONESTLY----------
+
 What do I actually DO?
 
 missing flavour text across the board
+
+Events should say how many there are, and how strong the highest one is
+
+Ideally a second-level title to be awarded
+
+Big message for "You are in a new society"
+
+Indicate which way you are already voting on vote screen
+
+[STILL BROKEN] Suspicion string in map mask needs rounding
+
+Too many unlanded people
+
+------------BASICALLY A FEATURE, WHEN YOU THINK ABOUT IT--------------
+
+Wrong number of abilities displayed on button
 
 Ideally have a "selected item glow" on scrollables
 
@@ -16,31 +40,22 @@ More sea tiles
 
 Mouse clicks still go through
 
-Events should say how many there are, and how strong the highest one is
-
-Ideally a second-level title to be awarded
-
-Wrong number of abilities displayed on button
-
-Big message for "You are in a new society"
-
-Indicate which way you are already voting on vote screen
-
 Need a way to get suspicion's actual value
 
 Unsure if map mask manager sees real suspicion
 
-It says "View society" for switching back to world from society screen
-
 Military stance utilities seem too high
 
-Too many people on soc screen. Highly cursed
-
-[HELLA BROKEN] Suspicion string in map mask needs rounding
+Mac support fails to cap framerates
 
 Event Messages still invisible on startup
 
+
+
 ------------
+
+[FIXED] Too many people on soc screen. Highly cursed
+[DONE] It says "View society" for switching back to world from society screen
 [DONE] Escape goes to main menu
 [DONE] Quit button from main menu
 [DONE] People need to fear societies with highly suspicious nobles
