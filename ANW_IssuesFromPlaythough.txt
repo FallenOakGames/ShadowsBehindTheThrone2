@@ -1,6 +1,5 @@
 --------------HELLA CRITICAL---------------
 
-Cancel causes you to skip your move
 
 --------------PRETTY BAD HONESTLY----------
 
@@ -14,8 +13,6 @@ Ideally a second-level title to be awarded
 
 Big message for "You are in a new society"
 
-Indicate which way you are already voting on vote screen
-
 [STILL BROKEN] Suspicion string in map mask needs rounding
 
 ------------BASICALLY A FEATURE, WHEN YOU THINK ABOUT IT--------------
@@ -28,7 +25,9 @@ Flashing mask in society view
 
 Ideally have a "selected item glow" on scrollables
 
+Words go off bottom of screen
 
+Typo in end of unholy flesh spawn message
 
 Turns left on vote
 
@@ -44,7 +43,7 @@ Unsure if map mask manager sees real suspicion
 
 Military stance utilities seem too high
 
-Mac support fails to cap framerates
+[Possibly fixed] Mac support fails to cap framerates
 
 Event Messages still invisible on startup
 
@@ -54,7 +53,7 @@ Event Messages still invisible on startup
 
 [FIXED] Apoptosis can kill anyone
 [Possibly fixed] Utilility values too high on some things (title assignment, it seems)
-
+[FIXED] Cancel causes you to skip your move
 [FIXED] Society view doesn't give selected person's voting preferences
 [FIXED] Too many unlanded people
 
@@ -89,6 +88,8 @@ Event Messages still invisible on startup
 [TRIAL FIX] Society lacked unlanded people
 
 [POSSIBLE FIX] More liking from being voted for with titles
+
+[DONE] Indicate which way you are already voting on vote screen
 
 [FIXED] Fishmen should grow much slower
 
