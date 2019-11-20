@@ -49,6 +49,7 @@ namespace Assets.Code
         public GameObject pfbGraphicalProperty;
         public GameObject mapMsg;
         public GameObject prefabVictoryBox;
+        public GameObject popTutorial;
 
 
         public PopupNameTag getNameTag(string name, Color color)
@@ -221,6 +222,16 @@ namespace Assets.Code
             }
 
             return specific;
+        }
+
+        public PopupTutorialMsg getTutorial(int item)
+        {
+            GameObject obj = Instantiate(popTutorial) as GameObject;
+            PopupTutorialMsg msg = obj.GetComponent<PopupTutorialMsg>();
+            msg.bDismiss.onClick.AddListener(delegate { msg.dismiss(); });
+            msg.ui = ui;
+            msg.setTo(item);
+            return msg;
         }
 
         private PopupBoxVoteIssue getVoteIssueBox(Society soc, VoteIssue issue)

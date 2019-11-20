@@ -94,6 +94,7 @@ namespace Assets.Code
         internal double dark_fleshThreatMult = 2;
         internal double dark_fishmanStartingThreatMult = -0.25;
 
+        public double ability_darkEmpireShadowPerTurn = 0.05;
         public int ability_denounceOtherCooldown = 32;
         public int ability_proposeVoteCooldown = 7;
         public double ability_growFleshThreatAdd = 5;
@@ -128,6 +129,8 @@ namespace Assets.Code
         public int ability_fearmongerTempThreat = 25;
         public int ability_fearmongerCooldown = 15;
         internal int ability_apoptosisCost = 15;
+        internal int ability_darkEmpireCost = 12;
+        internal double ability_darkEmpireThreatMultGain = 0.5;
 
         public void loadFromFile()
         {

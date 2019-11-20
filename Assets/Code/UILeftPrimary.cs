@@ -123,6 +123,7 @@ namespace Assets.Code
 
         public void checkData()
         {
+
             Hex hex = GraphicalMap.selectedHex;
 
             if (World.staticMap != null)

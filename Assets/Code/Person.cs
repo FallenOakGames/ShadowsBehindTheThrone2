@@ -149,6 +149,14 @@ namespace Assets.Code
                 this.shadow = Math.Min(p.shadow, shadow + shadowDelta);//Don't exceed your donor's shadow
                 if (this.shadow > 1) { this.shadow = 1; }
             }
+            if (society.isDarkEmpire)
+            {
+                if (society.getSovreign() != null && society.getSovreign().shadow > shadow)
+                {
+                    shadow += map.param.ability_darkEmpireShadowPerTurn;
+                }
+                if (shadow > 1) { shadow = 1; }
+            }
 
             if (state == personState.normal && shadow == 1)
             {
