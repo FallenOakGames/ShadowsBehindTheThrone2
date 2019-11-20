@@ -20,6 +20,7 @@ namespace Assets.Code
         {
             this.map = map;
             powers.Add(new Ab_Enth_Enthrall());
+            powers.Add(new Ab_Enth_DarkEmpire());
             //abilities.Add(new Ab_TestAddShadow());
             powers.Add(new Ab_Fishman_Lair());
             powers.Add(new Ab_Fishman_CultOfTheDeep());

@@ -31,6 +31,8 @@ namespace Assets.Code
         public int turnsNotInOffensiveStance;
         public int turnSovreignAssigned = -1;
 
+        public bool isDarkEmpire = false;
+
         public LogBox logbox;
         public double data_societalStability;
 
@@ -320,6 +322,10 @@ namespace Assets.Code
         public override string getName()
         {
             string basic = base.getName();
+            if (this.isDarkEmpire)
+            {
+                return "Dark Empire of " + basic;
+            }
             if (this.people.Count > map.param.society_nPeopleForEmpire)
             {
                 return "Empire of " + basic;

@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Code\Ab_Enth_Apoptosis.cs" />
+    <Compile Include="Assets\Code\Ab_Enth_DarkEmpire.cs" />
     <Compile Include="Assets\Code\Ab_Enth_Enshadow.cs" />
     <Compile Include="Assets\Code\Ab_Enth_Enthrall.cs" />
     <Compile Include="Assets\Code\Ab_Enth_MilitaryAid.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Assets\Code\PopupPlayback.cs" />
     <Compile Include="Assets\Code\PopupScrollable.cs" />
     <Compile Include="Assets\Code\PopupScrollSet.cs" />
+    <Compile Include="Assets\Code\PopupTutorialMsg.cs" />
     <Compile Include="Assets\Code\PopupVictory.cs" />
     <Compile Include="Assets\Code\PopupWinMsg.cs" />
     <Compile Include="Assets\Code\PopupXBoxThreat.cs" />

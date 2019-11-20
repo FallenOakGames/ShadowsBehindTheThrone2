@@ -133,6 +133,9 @@ namespace Assets.Code
                 GraphicalMap.checkData();
             }
 
+            if (state == uiState.BACKGROUND) { return; }
+            if (state == uiState.MAIN_MENU) { return; }
+
             uiLeftPrimary.checkData();
             uiMidTop.checkData();
             uiScrollables.checkData();
@@ -400,6 +403,16 @@ namespace Assets.Code
                 blockerQueue.Add(block);
             }
             checkData();
+        }
+
+
+        public void bTutorial()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                PopupTutorialMsg msg = world.prefabStore.getTutorial(i);
+                addBlocker(msg.gameObject);
+            }
         }
 
         public void checkBlockerQueue()
