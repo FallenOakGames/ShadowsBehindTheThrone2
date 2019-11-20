@@ -16,7 +16,26 @@ namespace Assets.Code
 
         public void setTo(int i)
         {
-
+            if (i == 0)
+            {
+                img.sprite = ui.world.textureStore.tutorial1;
+            }
+            if (i == 1)
+            {
+                img.sprite = ui.world.textureStore.tutorial2;
+            }
+            if (i == 2)
+            {
+                img.sprite = ui.world.textureStore.tutorial3;
+            }
+            if (i == 3)
+            {
+                img.sprite = ui.world.textureStore.tutorial4;
+            }
+            if (i == 4)
+            {
+                img.sprite = ui.world.textureStore.tutorial5;
+            }
         }
 
         public void dismiss()

@@ -92,6 +92,12 @@ namespace Assets.Code
         public Sprite unit_cyclops;
         public Sprite unit_fleshmaw;
 
+        public Sprite tutorial1;
+        public Sprite tutorial2;
+        public Sprite tutorial3;
+        public Sprite tutorial4;
+        public Sprite tutorial5;
+
         public Sprite cloud_plague;
 
         public Dictionary<string, Sprite> sprites;
