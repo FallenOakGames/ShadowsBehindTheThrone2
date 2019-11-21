@@ -10,7 +10,7 @@ namespace Assets.Code
         public List<Trait> allTraits = new List<Trait>();
         public List<EconTrait> allEconTraits = new List<EconTrait>();
         public List<Property_Prototype> allProperties = new List<Property_Prototype>();
-        public Dictionary<string, Property_Prototype> propertyMap = new Dictionary<string, Property_Prototype>();
+        public SavableMap<string, Property_Prototype> propertyMap = new SavableMap<string, Property_Prototype>();
 
         public EconTrait econTrait(string name)
         {

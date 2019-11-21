@@ -12,8 +12,8 @@ namespace Assets.Code
         private string name;
         public Color color;
         public Color color2;
-
-        public Dictionary<SocialGroup, DipRel> relations = new Dictionary<SocialGroup, DipRel>();
+        
+        public SavableMap<SocialGroup, DipRel> relations = new SavableMap<SocialGroup, DipRel>();
         public DipRel selfRel;
 
         public double threat_mult = 0;
@@ -90,11 +90,11 @@ namespace Assets.Code
 
         public DipRel getRel(SocialGroup soc)
         {
-            if (relations.ContainsKey(soc)) { return relations[soc]; }
+            if (relations.ContainsKey(soc)) { return relations.lookup(soc); }
             if (soc.relations.ContainsKey(this))
             {
-                relations.Add(soc,soc.relations[this]);
-                return relations[soc];
+                relations.Add(soc,soc.relations.lookup(this));
+                return relations.lookup(soc);
             }
             DipRel rel = new DipRel(map,this,soc);
             relations.Add(soc, rel);

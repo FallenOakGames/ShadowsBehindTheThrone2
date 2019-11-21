@@ -13,7 +13,7 @@ namespace Assets.Code
         public List<Title> titles = new List<Title>();
         public TitleLanded title_land;
         public Society society;
-        private Dictionary<Person, RelObj> relations = new Dictionary<Person, RelObj>();
+        private SavableMap<Person, RelObj> relations = new SavableMap<Person, RelObj>();
         public double prestige = 1;
         public double targetPrestige = 1;
         public int lastVoteProposalTurn;
@@ -75,7 +75,7 @@ namespace Assets.Code
             else if (prestige < targetPrestige) { prestige += map.param.person_prestigeDeltaPerTurn; }
             else if (prestige > targetPrestige) { prestige -= map.param.person_prestigeDeltaPerTurn; }
 
-            foreach (RelObj rel in relations.Values)
+            foreach (RelObj rel in relations.values)
             {
                 rel.turnTick();
             }
@@ -337,12 +337,12 @@ namespace Assets.Code
         public RelObj getRelation(Person other)
         {
             if (other == null) { throw new NullReferenceException(); }
-            if (relations.ContainsKey(other))
+            if (relations.keys.Contains(other))
             {
-                return relations[other];
+                return relations.lookup(other);
             }
             RelObj rel = new RelObj(this, other);
-            relations.Add(other, rel);
+            relations.add(other, rel);
             return rel;
         }
 

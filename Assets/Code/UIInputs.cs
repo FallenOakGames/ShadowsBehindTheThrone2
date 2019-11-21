@@ -26,14 +26,15 @@ namespace Assets.Code
 
         public void hotkeys()
         {
-            if (world.ui.blocker != null) { return; }
-
-
             if (Input.GetKeyDown(KeyCode.Backspace) && Input.GetKey(KeyCode.LeftControl))
             {
                 world.ui.uiMidTop.cheatField.gameObject.SetActive(!world.ui.uiMidTop.cheatField.gameObject.activeSelf);
             }
-            else if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Tab))
+
+            if (world.ui.blocker != null) { return; }
+
+
+            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Tab))
             {
             }
             else if (Input.GetKeyDown(KeyCode.LeftControl))

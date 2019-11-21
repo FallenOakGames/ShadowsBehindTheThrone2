@@ -17,8 +17,8 @@ namespace Assets.Code
         public EconTrait econ_to;
         public int index = -1;//For stuff which doesn't have a discrete target, such as "Declare war yes/no"
 
-        public Dictionary<Person, double> randomUtility = new Dictionary<Person, double>();
-        public Dictionary<Person, List<ReasonMsg>> msgs = new Dictionary<Person, List<ReasonMsg>>();
+        public SavableMap<Person, double> randomUtility = new SavableMap<Person, double>();
+        public SavableMap<Person, List<ReasonMsg>> msgs = new SavableMap<Person, List<ReasonMsg>>();
         public List<Person> votesFor = new List<Person>();
 
 
@@ -44,7 +44,7 @@ namespace Assets.Code
         {
             if (randomUtility.ContainsKey(voter))
             {
-                return randomUtility[voter];
+                return randomUtility.lookup(voter);
             }
             double u = Eleven.random.NextDouble()*0.0001;
             randomUtility.Add(voter, u);

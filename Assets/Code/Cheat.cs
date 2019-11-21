@@ -20,6 +20,14 @@ namespace Assets.Code
                 {
                     map.overmind.power = 100;
                 }
+                if (command == "testsave")
+                {
+                    map.world.save("testSave.sv");
+                }
+                if (command == "testload")
+                {
+                    map.world.load("testSave.sv");
+                }
                 if (command == "shadow")
                 {
                     GraphicalMap.selectedHex.location.person().shadow = 1;

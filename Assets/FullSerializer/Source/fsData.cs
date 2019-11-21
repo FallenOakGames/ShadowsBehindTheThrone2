@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Assets.Code;
 
 namespace FullSerializer {
     /// <summary>
@@ -244,7 +245,7 @@ namespace FullSerializer {
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public string AsString {
-            get {
+            get{
                 return Cast<string>();
             }
         }
@@ -255,7 +256,7 @@ namespace FullSerializer {
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public Dictionary<string, fsData> AsDictionary {
-            get {
+            get{
                 return Cast<Dictionary<string, fsData>>();
             }
         }

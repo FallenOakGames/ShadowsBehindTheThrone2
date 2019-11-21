@@ -90,6 +90,10 @@ namespace Assets.Code
 
         public static void purge()
         {
+            foreach (GraphicalSlot sl in loadedSlots)
+            {
+                sl.inner.outer = null;
+            }
             loadedSlots.Clear();
         }
     }

@@ -359,7 +359,7 @@ namespace Assets.Code
                     ReasonMsg msg = new ReasonMsg("Obligated to vote for this option", 0);
                     msgs.Add(msg);
                 }
-                option.msgs[this] = msgs;
+                option.msgs.set(this, msgs);
                 if (u > highestWeight || bestChoice == null)
                 {
                     bestChoice = option;

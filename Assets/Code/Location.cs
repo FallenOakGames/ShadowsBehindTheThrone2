@@ -28,7 +28,7 @@ namespace Assets.Code
         public int turnLastTaken = -1000;
         public double inherentInformationAvailability = 0.85;
         public int lastTaken;
-        public Dictionary<SocialGroup, double> information = new Dictionary<SocialGroup, double>();
+        public SavableMap<SocialGroup, double> information = new SavableMap<SocialGroup, double>();
         internal int debugVal;
         internal int turnLastAssigned;
         public Province province;

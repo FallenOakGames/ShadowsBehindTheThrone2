@@ -173,7 +173,7 @@ namespace Assets.Code
             if (a.soc == b) { return 1; }
             if (a.information.ContainsKey(b))
             {
-                return a.information[b];
+                return a.information.lookup(b);
             }
             else
             {
@@ -285,14 +285,7 @@ namespace Assets.Code
                     working.Add(a);
                     double dist = 1;
                     distances.Add(dist);
-                    if (a.information.ContainsKey(sg))
-                    {
-                        a.information[sg] = dist;
-                    }
-                    else
-                    {
-                        a.information.Add(sg, dist);
-                    }
+                    a.information.set(sg, dist);
                 }
 
             }
@@ -312,14 +305,7 @@ namespace Assets.Code
 
                     dist =  Math.Max(param.minInformationAvailability, dist);
 
-                    if (l.information.ContainsKey(sg))
-                    {
-                        l.information[sg] = dist;
-                    }
-                    else
-                    {
-                        l.information.Add(sg, dist);
-                    }
+                    l.information.set(sg, dist);
 
                     foreach (Location n in l.getNeighbours())
                     {

@@ -286,8 +286,11 @@ namespace Assets.Code
             uiMidTop.gameObject.SetActive(false);
             hexSelector.SetActive(false);
 
-            GraphicalSociety.purge();
-            GraphicalMap.purge();
+            if (World.staticMap != null)
+            {
+                GraphicalSociety.purge();
+                GraphicalMap.purge();
+            }
         }
 
         //public void bViewWorld()

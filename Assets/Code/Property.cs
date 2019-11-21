@@ -29,7 +29,7 @@ namespace Assets.Code
                 throw new Exception("Unable to find property named: " + name);
             }
             
-            Property_Prototype proto = map.globalist.propertyMap[name];
+            Property_Prototype proto = map.globalist.propertyMap.lookup(name);
 
             //Some, but not many, properties can be added multiply. Stackable defaults to false
             if (proto.stackStyle != Property_Prototype.stackStyleEnum.NONE)

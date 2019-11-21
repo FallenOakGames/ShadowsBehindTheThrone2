@@ -4,6 +4,7 @@
 [Bb]uild/
 [Bb]uilds/
 [Cc]ompiled/
+compiled*
 Assets/AssetStoreTools*
 
 # Visual Studio cache directory
@@ -37,5 +38,6 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
+*.sv
 
 *.log

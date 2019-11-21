@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FullSerializer.Internal;
+using Assets.Code;
 
 #if !UNITY_EDITOR && UNITY_WSA
 // For System.Reflection.TypeExtensions
@@ -104,13 +105,16 @@ namespace FullSerializer {
         /// This function converts legacy serialization data into the new format,
         /// so that the import process can be unified and ignore the old format.
         /// </summary>
-        private static void ConvertLegacyData(ref fsData data) {
+        private static void ConvertLegacyData(ref fsData data)
+        {
             if (data.IsDictionary == false) return;
-
+            
             var dict = data.AsDictionary;
+            
 
             // fast-exit: metadata never had more than two items
             if (dict.Count > 2) return;
+            
 
             // Key strings used in the legacy system
             string referenceIdString = "ReferenceId";
@@ -742,9 +746,10 @@ namespace FullSerializer {
                 Invoke_OnAfterDeserialize(processors, storageType, null);
                 return fsResult.Success;
             }
-
+            
             // Convert legacy data into modern style data
             ConvertLegacyData(ref data);
+            
 
             try {
                 // We wrap the entire deserialize call in a reference group so
@@ -752,6 +757,7 @@ namespace FullSerializer {
                 // references, ie, a list of objects that are cyclic w.r.t. the
                 // list
                 _references.Enter();
+                
 
                 List<fsObjectProcessor> processors;
                 var r = InternalDeserialize_1_CycleReference(overrideConverterType, data, storageType, ref result, out processors);

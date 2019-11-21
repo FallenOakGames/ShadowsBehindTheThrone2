@@ -36,7 +36,7 @@ namespace Assets.Code
         public string pathPrefix = "";
         public static string separator = "";
         public bool isWindows = false;
-
+        
 
         public void Start()
         {
@@ -146,9 +146,12 @@ namespace Assets.Code
             map.gen();
 
             staticMap = map;
-            for (int i = 0; i < param.mapGen_burnInSteps; i++)
+            if (!developer)
             {
-                map.turnTick();
+                for (int i = 0; i < param.mapGen_burnInSteps; i++)
+                {
+                    map.turnTick();
+                }
             }
 
             ui.setToWorld();
@@ -271,11 +274,11 @@ namespace Assets.Code
             }
             ui.addBlocker(prefabStore.getScrollSetThreats(threats).gameObject);
         }
-        /*
+
         public void save(string filename)
         {
             World world = this;
-            world.ui.setToBackground();
+            world.ui.setToMainMenu();
             GraphicalMap.purge();
             GraphicalSociety.purge();
             world.map.world = null;
@@ -284,7 +287,7 @@ namespace Assets.Code
             fsSerializer _serializer = new fsSerializer();
             fsData data;
             _serializer.TrySerialize(typeof(Map), map, out data).AssertSuccessWithoutWarnings();
-
+            
             // emit the data via JSON
             string saveString = fsJsonPrinter.CompressedJson(data);
             World.Log("Save exit point");
@@ -297,7 +300,8 @@ namespace Assets.Code
             File.WriteAllLines(filename, new string[] { saveString });
 
             world.map.world = world;
-
+            staticMap = map;
+            
             world.prefabStore.popMsg("Game saved as: " + filename);
 
             //// step 1: parse the JSON data
@@ -308,6 +312,14 @@ namespace Assets.Code
             //_serializer.TryDeserialize(data, type, ref deserialized).AssertSuccessWithoutWarnings();
         }
 
+        public void bQuicksave()
+        {
+            save("quicksave.sv");
+        }
+        public void bQuickload()
+        {
+            load("quicksave.sv");
+        }
         public void load(string filename)
         {
             try
@@ -319,7 +331,7 @@ namespace Assets.Code
                     map.world = null;
                     map = null;
                 }
-
+                
                 string serializedState = File.ReadAllText(filename);
                 fsSerializer _serializer = new fsSerializer();
                 fsData data = fsJsonParser.Parse(serializedState);
@@ -327,10 +339,9 @@ namespace Assets.Code
                 _serializer.TryDeserialize(data, typeof(Map), ref deserialized).AssertSuccessWithoutWarnings();
                 map = (Map)deserialized;
                 map.world = this;
-                map.makeGrid();
-                commonStartup();
+                staticMap = map;
                 GraphicalMap.map = map;
-                GraphicalSociety.map = map;
+                ui.setToMainMenu();
                 //GraphicalMap.checkLoaded();
                 //GraphicalMap.checkData();
                 //graphicalMap.loadArea(0, 0);
@@ -346,7 +357,6 @@ namespace Assets.Code
                 Debug.Log(e2);
             }
         }
-        */
     }
 
 }
