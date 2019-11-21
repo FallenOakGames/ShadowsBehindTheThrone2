@@ -90,6 +90,16 @@ namespace Assets.Code
 
         public static void purge()
         {
+            foreach (SocialGroup sg in World.staticMap.socialGroups)
+            {
+                if (sg is Society)
+                {
+                    Society soc = (Society)sg;
+                    foreach (Person p in soc.people){
+                        p.outer = null;
+                    }
+                }
+            }
             foreach (GraphicalSlot sl in loadedSlots)
             {
                 sl.inner.outer = null;

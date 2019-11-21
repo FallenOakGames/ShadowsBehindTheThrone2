@@ -20,7 +20,7 @@ namespace Assets.Code
     public class World : MonoBehaviour
     {
         public static bool logging   = false;
-        public static bool developer = false;
+        public static bool developer = true;
 
         public UIMaster ui;
         public TextureStore textureStore;
@@ -36,7 +36,8 @@ namespace Assets.Code
         public string pathPrefix = "";
         public static string separator = "";
         public bool isWindows = false;
-        
+
+        public static LogBox saveLog = new LogBox("saveLog.log");
 
         public void Start()
         {

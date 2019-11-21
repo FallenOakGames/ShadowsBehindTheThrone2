@@ -421,6 +421,7 @@ namespace FullSerializer {
         private List<fsObjectProcessor> GetProcessors(Type type) {
             List<fsObjectProcessor> processors;
 
+            World.saveLog.takeLine("Get processors for " + type.Name);
             // Check to see if the user has defined a custom processor for the
             // type. If they have, then we don't need to scan through all of the
             // processor to check which one can process the type; instead, we
@@ -604,9 +605,12 @@ namespace FullSerializer {
         /// <param name="data">The serialized state of the object.</param>
         /// <returns>If serialization was successful.</returns>
         public fsResult TrySerialize(Type storageType, Type overrideConverterType, object instance, out fsData data) {
+            World.saveLog.takeLine("First step");
             var processors = GetProcessors(instance == null ? storageType : instance.GetType());
+            World.saveLog.takeLine("Second step");
 
             Invoke_OnBeforeSerialize(processors, storageType, instance);
+            World.saveLog.takeLine("Third step");
 
             // We always serialize null directly as null
             if (ReferenceEquals(instance, null)) {
@@ -614,9 +618,12 @@ namespace FullSerializer {
                 Invoke_OnAfterSerialize(processors, storageType, instance, ref data);
                 return fsResult.Success;
             }
+            World.saveLog.takeLine("Forth step");
 
             var result = InternalSerialize_1_ProcessCycles(storageType, overrideConverterType, instance, out data);
+            World.saveLog.takeLine("Fifth step");
             Invoke_OnAfterSerialize(processors, storageType, instance, ref data);
+            World.saveLog.takeLine("Sixth step");
             return result;
         }
 
@@ -628,14 +635,17 @@ namespace FullSerializer {
                 // serialization levels, not just nested serialization levels,
                 // within the given subobject. A prime example is serialization a
                 // list of references.
+                World.saveLog.takeLine("Internal serial 1: A. Instance " + instance);
                 _references.Enter();
 
+                World.saveLog.takeLine("Internal serial 1: B");
                 // This type does not need cycle support.
                 var converter = GetConverter(instance.GetType(), overrideConverterType);
                 if (converter.RequestCycleSupport(instance.GetType()) == false) {
                     return InternalSerialize_2_Inheritance(storageType, overrideConverterType, instance, out data);
                 }
 
+                World.saveLog.takeLine("Internal serial 1: C");
                 // We've already serialized this object instance (or it is
                 // pending higher up on the call stack). Just serialize a
                 // reference to it to escape the cycle.
@@ -648,6 +658,7 @@ namespace FullSerializer {
                     return fsResult.Success;
                 }
 
+                World.saveLog.takeLine("Internal serial 1: D");
                 // Mark inside the object graph that we've serialized the
                 // instance. We do this *before* serialization so that if we get
                 // back into this function recursively, it'll already be marked
@@ -655,14 +666,17 @@ namespace FullSerializer {
                 // infinite loop.
                 _references.MarkSerialized(instance);
 
+                World.saveLog.takeLine("Internal serial 1: E");
                 // We've created the cycle metadata, so we can now serialize the
                 // actual object. InternalSerialize will handle inheritance
                 // correctly for us.
                 var result = InternalSerialize_2_Inheritance(storageType, overrideConverterType, instance, out data);
                 if (result.Failed) return result;
 
+                World.saveLog.takeLine("Internal serial 1: F");
                 _lazyReferenceWriter.WriteDefinition(_references.GetReferenceId(instance), data);
 
+                World.saveLog.takeLine("Internal serial 1: G");
                 return result;
             }
             finally {

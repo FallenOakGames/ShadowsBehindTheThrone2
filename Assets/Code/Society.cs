@@ -19,7 +19,7 @@ namespace Assets.Code
         public SocialGroup offensiveTarget;
         public VoteSession voteSession;
         public int voteCooldown = 0;
-        internal List<EconEffect> econEffects = new List<EconEffect>();
+        internal List<EconEffect> econEffects;
         public bool isRebellion = false;
         public List<KillOrder> killOrders = new List<KillOrder>();
         public List<Zeit> zeits = new List<Zeit>();
@@ -41,6 +41,7 @@ namespace Assets.Code
             setName("DEFAULT_SOC_NAME");
             sovreign = new Title_Sovreign(this);
             titles.Add(sovreign);
+            econEffects = new List<EconEffect>();
         }
 
         public override void turnTick()

@@ -70,7 +70,13 @@ namespace Assets.Code
 
         public static void purge()
         {
-
+            for (int x = 0; x < world.map.grid.Length; x++)
+            {
+                for (int y = 0; y < world.map.grid[0].Length; y++)
+                {
+                    world.map.grid[x][y].outer = null;
+                }
+            } 
             List<GraphicalHex> unNeeded = new List<GraphicalHex>();
             foreach (GraphicalHex hex in loaded)
             {

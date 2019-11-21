@@ -24,7 +24,6 @@ namespace Assets.Code
 
         public void takeLine(string line)
         {
-
             using (System.IO.StreamWriter file =
                 new System.IO.StreamWriter(path, true))
             {
