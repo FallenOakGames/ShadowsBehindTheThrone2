@@ -39,5 +39,5 @@ sysinfo.txt
 *.unitypackage
 
 *.sv
-
+*.py
 *.log
