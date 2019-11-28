@@ -636,6 +636,11 @@ namespace OdinSerializer
 
                         try
                         {
+                            System.IO.StreamWriter file;
+                            file = new System.IO.StreamWriter("odinSaveLog.log", true);
+                            file.WriteLine(name + " | " + type + " | " + id + " | " + value);
+                            file.Close();
+
                             writer.BeginReferenceNode(name, type, id);
                             formatter.Serialize(value, writer);
                         }

@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,7 +6,7 @@ using System.Text;
 
 namespace Assets.Code
 {
-    public partial class Map
+    public partial class Map : SerializedScriptableObject
     {
         public List<Location> majorLocations = new List<Location>();
         public List<Location> locations = new List<Location>();
@@ -86,7 +87,11 @@ namespace Assets.Code
             stats.turnTick();
             addEnthralledNextTurnMessages();
         }
-        
+
+        internal void addMessage(MsgEvent msgEvent)
+        {
+            turnMessages.Add(msgEvent);
+        }
         public void addMessage(string msg, int level = 1, bool positive = true)
         {
             turnMessages.Add(new MsgEvent(msg, level, positive));
@@ -96,14 +101,14 @@ namespace Assets.Code
         {
             if (overmind.enthralled == null)
             {
-                turnMessages.Add(new MsgEvent("You may enthrall a noble. Use your power on a low-prestige noble", MsgEvent.LEVEL_BLUE, true));
+                addMessage(new MsgEvent("You may enthrall a noble. Use your power on a low-prestige noble", MsgEvent.LEVEL_BLUE, true));
             }
             else
             {
                 if (overmind.enthralled.society.voteSession != null)
                 {
                     string msg = "Vote in session: " + overmind.enthralled.society.voteSession.issue.ToString();
-                    turnMessages.Add(new MsgEvent(msg, MsgEvent.LEVEL_GREEN, true));
+                    addMessage(new MsgEvent(msg, MsgEvent.LEVEL_GREEN, true));
                 }
             }
         }
@@ -266,7 +271,7 @@ namespace Assets.Code
             }
 
 
-            turnMessages.Add(new MsgEvent(att.getName() + " takes " + taken.getName() + " from " + def.getName(), priority,benefit));
+            addMessage(new MsgEvent(att.getName() + " takes " + taken.getName() + " from " + def.getName(), priority,benefit));
 
             if (taken.settlement != null)
             {
@@ -314,7 +319,7 @@ namespace Assets.Code
         {
             World.log("Peace breaks out between " + rel.a.getName() + " and " + rel.b.getName());
 
-            turnMessages.Add(new MsgEvent("The war between " + rel.war.att.getName() + " and " + rel.war.def.getName() + " winds down", MsgEvent.LEVEL_YELLOW, false));
+            addMessage(new MsgEvent("The war between " + rel.war.att.getName() + " and " + rel.war.def.getName() + " winds down", MsgEvent.LEVEL_YELLOW, false));
 
             rel.war = null;
             rel.state = DipRel.dipState.none;
@@ -327,7 +332,7 @@ namespace Assets.Code
             bool good = false;
             if (att.hasEnthralled()) { good = true;priority = MsgEvent.LEVEL_GREEN; }
             if (def.hasEnthralled()) { priority = MsgEvent.LEVEL_RED; }
-            turnMessages.Add(new MsgEvent(att.getName() + " launches an offensive against " + def.getName(),priority,good));
+            addMessage(new MsgEvent(att.getName() + " launches an offensive against " + def.getName(),priority,good));
 
             att.getRel(def).state = DipRel.dipState.war;
             att.getRel(def).war = new War(this,att, def);

@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
+using OdinSerializer;
 
 namespace Assets.Code
 {
-    public class RelEvent : IComparable<RelEvent>
+    public class RelEvent : SerializedScriptableObject, IComparable<RelEvent>
     {
         public string reason;
         public double amount;

@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,9 @@ using UnityEngine;
 namespace Assets.Code
 {
     //[Serializable,HideInInspector]
-    public class Hex
+    public class Hex : SerializedScriptableObject
     {
+        [NonSerialized]
         public GraphicalHex outer;
         public Map map;
         public int x;
@@ -76,7 +78,7 @@ namespace Assets.Code
         {
             string reply = "";
             if (settlement != null) { reply += settlement.name; }
-            else if (location != null) { reply += location.name; }
+            else if (location != null) { reply += location.locName; }
             else { reply += "Empty Hex"; }
             reply += " (" + x + "," + y + ")";
             return reply;

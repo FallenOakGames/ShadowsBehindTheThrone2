@@ -174,7 +174,7 @@ namespace Assets.Code
             {
                 if (nameTag == null)
                 {
-                    nameTag = world.prefabStore.getNameTag(hex.location.name, Color.white);
+                    nameTag = world.prefabStore.getNameTag(hex.location.locName, Color.white);
                     nameTag.gameObject.transform.SetParent(transform);
                     nameTag.gameObject.transform.localPosition = new Vector3(0, -0.5f, -3.02f);
                     nameTag.gameObject.transform.localScale = new Vector3(0.015f, 0.015f, 1);//This is apparently their default scale
@@ -194,12 +194,12 @@ namespace Assets.Code
                     }
                     else
                     {
-                        float brightness = hex.location.soc.color.r;
-                        brightness += hex.location.soc.color.b;
-                        brightness += hex.location.soc.color.g;
+                        float brightness = hex.location.soc.color[0];
+                        brightness += hex.location.soc.color[0];
+                        brightness += hex.location.soc.color[0];
                         if (brightness > 0.5f)
                         {
-                            nameTag.words.color = hex.location.soc.color;
+                            nameTag.words.color = new Color(hex.location.soc.color[0], hex.location.soc.color[1],hex.location.soc.color[2]);
                         }
                         else
                         {
@@ -210,7 +210,7 @@ namespace Assets.Code
                 }
                 else
                 {
-                    nameTag.words.text = hex.location.name;
+                    nameTag.words.text = hex.location.locName;
                     nameTag.words.color = new Color(0.7f, 0.7f, 0.5f);
                 }
 
@@ -219,7 +219,7 @@ namespace Assets.Code
 
                     if (defenceTag == null)
                     {
-                        defenceTag = world.prefabStore.getNameTag(hex.location.name, Color.white);
+                        defenceTag = world.prefabStore.getNameTag(hex.location.locName, Color.white);
                         defenceTag.gameObject.transform.SetParent(transform);
                         defenceTag.gameObject.transform.localPosition = new Vector3(0, -0.75f, -3.02f);
                         defenceTag.gameObject.transform.localScale = new Vector3(0.015f, 0.015f, 1);//This is apparently their default scale
@@ -340,10 +340,10 @@ namespace Assets.Code
                 if (shouldHaveBorder)
                 {
                     borders[i].SetActive(true);
-                    if (borders[i] != null) { borders[i].GetComponent<SpriteRenderer>().color = hex.owner.color; }
+                    if (borders[i] != null) { borders[i].GetComponent<SpriteRenderer>().color = new Color(hex.owner.color[0], hex.owner.color[1], hex.owner.color[2]); }
 
                     borders2[i].SetActive(true);
-                    borders2[i].GetComponent<SpriteRenderer>().color = hex.owner.color2;
+                    borders2[i].GetComponent<SpriteRenderer>().color = new Color(hex.owner.color2[0], hex.owner.color2[1], hex.owner.color2[2]);
                 }
                 else if (!shouldHaveBorder && shouldHaveDivider)
                 {

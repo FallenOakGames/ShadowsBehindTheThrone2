@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,7 +6,7 @@ using System.Text;
 
 namespace Assets.Code
 {
-    public class War
+    public class War : SerializedScriptableObject
     {
         public SocialGroup att;
         public SocialGroup def;

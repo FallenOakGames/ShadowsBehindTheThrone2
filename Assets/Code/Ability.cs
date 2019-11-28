@@ -1,9 +1,10 @@
+using OdinSerializer;
 ﻿using UnityEngine;
 using UnityEditor;
 
 namespace Assets.Code
 {
-    public abstract class Ability
+    public abstract class Ability : SerializedScriptableObject
     {
         public abstract string getName();
         public abstract string getDesc();

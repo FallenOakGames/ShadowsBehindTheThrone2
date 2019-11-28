@@ -20,6 +20,7 @@
 #define CAN_EMIT
 #endif
 
+
 namespace OdinSerializer
 {
     using OdinSerializer.Utilities;

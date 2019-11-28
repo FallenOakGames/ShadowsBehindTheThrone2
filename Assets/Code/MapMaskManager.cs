@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using UnityEngine;
 namespace Assets.Code
 {
     //[Serializable,HideInInspector]
-    public class MapMaskManager
+    public class MapMaskManager : SerializedScriptableObject
     {
         public enum maskType { NONE, NATION, PROVINCE, INFORMATION,THREAT,LIKING_ME,LIKING_THEM, EVIDENCE,SUSPICION, SUSPICION_FROM,TESTING };
         public maskType mask = maskType.NONE;
@@ -156,9 +157,9 @@ namespace Assets.Code
             {
                 if (hex.owner != null)
                 {
-                    float r = hex.owner.color.r;
-                    float g = hex.owner.color.g;
-                    float b = hex.owner.color.b;
+                    float r = hex.owner.color[0];
+                    float g = hex.owner.color[1];
+                    float b = hex.owner.color[2];
                     Color color = new Color(r, g, b, 0.8f);
                     return color;
                 }

@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Code
 {
-    public partial class Person
+    public partial class Person : SerializedScriptableObject
     {
         public string firstName;
         public bool isMale = Eleven.random.Next(2) == 0;
@@ -18,6 +19,7 @@ namespace Assets.Code
         public double targetPrestige = 1;
         public int lastVoteProposalTurn;
         public VoteIssue lastProposedIssue;
+        [NonSerialized]
         public GraphicalSlot outer;
         public List<ThreatItem> threatEvaluations = new List<ThreatItem>();
         public LogBox log;
@@ -161,7 +163,7 @@ namespace Assets.Code
             if (state == personState.normal && shadow == 1)
             {
                 this.state = personState.broken;
-                map.turnMessages.Add(new MsgEvent(this.getFullName() + " has been fully enshadowed, their soul can no longer resist the dark", MsgEvent.LEVEL_GREEN,true));
+                map.addMessage(new MsgEvent(this.getFullName() + " has been fully enshadowed, their soul can no longer resist the dark", MsgEvent.LEVEL_GREEN,true));
             }
         }
 
@@ -407,7 +409,7 @@ namespace Assets.Code
                 benefit = true;
                 priority = MsgEvent.LEVEL_DARK_GREEN;
             }
-            map.turnMessages.Add(new MsgEvent(this.getFullName() + " dies! " + v, priority, benefit));
+            map.addMessage(new MsgEvent(this.getFullName() + " dies! " + v, priority, benefit));
 
             society.people.Remove(this);
             if (this.title_land != null)

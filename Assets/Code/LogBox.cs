@@ -1,9 +1,10 @@
+using OdinSerializer;
 ﻿using UnityEngine;
 using UnityEditor;
 
 namespace Assets.Code
 {
-    public class LogBox
+    public class LogBox : SerializedScriptableObject
     {
         public string path;
         public LogBox(string fileName)

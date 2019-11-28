@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Assets.Code
      * World is your monobehaviour master. It calls the start function, triggering all loading and suchlikes and suchforths
      *
      * It has the ONLY reference to map. Map must be kept apart from any Unity gameObjects, so it can be serialised out
-     * Obviously this is impossible, but every class which knows about its unity GameObject must be able to purge this reference
+     * Obviously this is impossible, but every class which knows about its unity GameObject must be able to purge this reference : SerializedScriptableObject
      *
      * It holds the references to the 'stores'. These are repositories which should not be serialised into the saved games
      */
@@ -37,10 +38,11 @@ namespace Assets.Code
         public static string separator = "";
         public bool isWindows = false;
 
-        public static LogBox saveLog = new LogBox("saveLog.log");
+        public static LogBox saveLog;
 
         public void Start()
         {
+            saveLog = new LogBox("saveLog.log");
             Screen.SetResolution(1920, 1080, true);
             if (developer)
                 startup();
@@ -284,7 +286,9 @@ namespace Assets.Code
             GraphicalSociety.purge();
             world.map.world = null;
 
-
+            //byte[] bytes = SerializationUtility.SerializeValue(map, DataFormat.Binary);
+            //File.WriteAllBytes("odin.sv", bytes);
+            
             fsSerializer _serializer = new fsSerializer();
             fsData data;
             _serializer.TrySerialize(typeof(Map), map, out data).AssertSuccessWithoutWarnings();
@@ -302,7 +306,7 @@ namespace Assets.Code
 
             world.map.world = world;
             staticMap = map;
-            
+
             world.prefabStore.popMsg("Game saved as: " + filename);
 
             //// step 1: parse the JSON data

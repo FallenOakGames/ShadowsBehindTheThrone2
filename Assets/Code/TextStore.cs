@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.IO;
 
 namespace Assets.Code
 {
-    public class TextStore
+    public class TextStore : SerializedScriptableObject
     {
         public static SerialMap<string, List<string>> flavourLists = new SerialMap<string, List<string>>();
         //public static string[] firstNamesM;

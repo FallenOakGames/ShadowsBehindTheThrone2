@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace Assets.Code
     /**
      * Used to hold all manner of items. Exact semantics of this object is dependent on the exact voting issue itself
      */
-    public class VoteOption
+    public class VoteOption : SerializedScriptableObject
     {
         public Person person;
         public Location location;

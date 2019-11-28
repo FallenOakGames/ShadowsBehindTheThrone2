@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
@@ -5,7 +6,7 @@ using System;
 
 namespace Assets.Code
 {
-    public class SavableMap<T, T2>
+    public class SavableMap<T, T2> : SerializedScriptableObject
     {
         public List<T> keys = new List<T>();
         public List<T2> values = new List<T2>();

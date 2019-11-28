@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,7 +6,7 @@ using System.Text;
 
 namespace Assets.Code
 {
-    public abstract class MenuInner
+    public abstract class MenuInner : SerializedScriptableObject
     {
         public abstract string getMenuTitle();
         public abstract string getMenuBody();

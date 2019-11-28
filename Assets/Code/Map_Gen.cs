@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using FullSerializer;
 
 namespace Assets.Code
 {
-    public partial class Map
+    public partial class Map : SerializedScriptableObject
     {
 
         int nSocieties = 12;
@@ -491,7 +492,7 @@ namespace Assets.Code
 
                 int q = Eleven.random.Next(opts.Length);
                 name += opts[q];
-                loc.name = name;
+                loc.locName = name;
             }
         }
 

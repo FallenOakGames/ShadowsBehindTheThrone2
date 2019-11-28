@@ -9,14 +9,14 @@ namespace Assets.Code
         {
             float colourReducer = 0.25f;
             float colourReducer2 = 0.5f;
-            color = new Color(
+            color = new float[] {
                 (float)(Eleven.random.NextDouble()* colourReducer),
                 (float)Eleven.random.NextDouble() * colourReducer2,
-                (float)Eleven.random.NextDouble() * colourReducer2);
-            color2 = new Color(
+                (float)Eleven.random.NextDouble() * colourReducer2 };
+            color2 = new float[] {
                 (float)(Eleven.random.NextDouble() * colourReducer),
                 (float)Eleven.random.NextDouble() * colourReducer2,
-                (float)Eleven.random.NextDouble() * colourReducer2);
+                (float)Eleven.random.NextDouble() * colourReducer2 };
             this.setName("Lights in the Deep");
 
             startingLocation.soc = this;
