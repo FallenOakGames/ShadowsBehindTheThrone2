@@ -753,6 +753,7 @@ namespace FullSerializer {
         /// Attempts to deserialize a value from a serialized state.
         /// </summary>
         public fsResult TryDeserialize(fsData data, Type storageType, Type overrideConverterType, ref object result) {
+            World.saveLog.takeLine("Deserial 1");
             if (data.IsNull) {
                 result = null;
                 var processors = GetProcessors(storageType);
@@ -760,10 +761,12 @@ namespace FullSerializer {
                 Invoke_OnAfterDeserialize(processors, storageType, null);
                 return fsResult.Success;
             }
-            
+            World.saveLog.takeLine("Deserial 2");
+
             // Convert legacy data into modern style data
             ConvertLegacyData(ref data);
-            
+            World.saveLog.takeLine("Deserial 3");
+
 
             try {
                 // We wrap the entire deserialize call in a reference group so
@@ -771,17 +774,24 @@ namespace FullSerializer {
                 // references, ie, a list of objects that are cyclic w.r.t. the
                 // list
                 _references.Enter();
-                
+                World.saveLog.takeLine("Deserial 4");
+
 
                 List<fsObjectProcessor> processors;
+                World.saveLog.takeLine("Deserial 5");
                 var r = InternalDeserialize_1_CycleReference(overrideConverterType, data, storageType, ref result, out processors);
+                World.saveLog.takeLine("Deserial 6");
                 if (r.Succeeded) {
                     Invoke_OnAfterDeserialize(processors, storageType, result);
+                    World.saveLog.takeLine("Deserial 7");
                 }
                 return r;
             }
-            finally {
+            finally
+            {
+                World.saveLog.takeLine("Deserial 8");
                 _references.Exit();
+                World.saveLog.takeLine("Deserial 9");
             }
         }
 
@@ -799,13 +809,18 @@ namespace FullSerializer {
             // will be a reference. Because of this, if we encounter a reference
             // then we will have *always* already encountered the definition for
             // it.
+            World.saveLog.takeLine("Deserial 5b");
             if (IsObjectReference(data)) {
                 int refId = int.Parse(data.AsDictionary[Key_ObjectReference].AsString);
+                World.saveLog.takeLine("Deserial 5c");
                 result = _references.GetReferenceObject(refId);
+                World.saveLog.takeLine("Deserial 5d");
                 processors = GetProcessors(result.GetType());
+                World.saveLog.takeLine("Deserial 5e");
                 return fsResult.Success;
             }
 
+            World.saveLog.takeLine("Deserial 5f");
             return InternalDeserialize_2_Version(overrideConverterType, data, storageType, ref result, out processors);
         }
 

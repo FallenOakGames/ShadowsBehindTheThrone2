@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Assets.Code;
 
 namespace FullSerializer.Internal {
     public class fsCyclicReferenceManager {
@@ -33,17 +34,22 @@ namespace FullSerializer.Internal {
         public bool Exit() {
             _depth--;
 
+            World.saveLog.takeLine("Deserial 8b depth: " + _depth);
             if (_depth == 0) {
                 _objectIds = new Dictionary<object, int>(ObjectReferenceEqualityComparator.Instance);
                 _nextId = 0;
                 _marked = new Dictionary<int, object>();
             }
+            World.saveLog.takeLine("Deserial 8c");
 
+            World.saveLog.takeLine("Deserial 8preErr " + _depth);
             if (_depth < 0) {
                 _depth = 0;
+                World.saveLog.takeLine("Deserial 8err");
                 throw new InvalidOperationException("Internal Error - Mismatched Enter/Exit. Please report a bug at https://github.com/jacobdufault/fullserializer/issues with the serialization data.");
             }
 
+            World.saveLog.takeLine("Deserial 8d");
             return _depth == 0;
         }
 
@@ -77,14 +83,20 @@ namespace FullSerializer.Internal {
         }
 
         public void MarkSerialized(object item) {
-            int referenceId = GetReferenceId(item);
+            World.saveLog.takeLine("Marking serialised: " + item);
 
-            if (_marked.ContainsKey(referenceId)) {
+            int referenceId = GetReferenceId(item);
+            World.saveLog.takeLine("Marked serialised: " + item);
+
+            if (_marked.ContainsKey(referenceId))
+            {
+                World.saveLog.takeLine("Throwing error");
                 throw new InvalidOperationException("Internal Error - " + item +
                     " has already been marked as serialized");
             }
 
             _marked[referenceId] = item;
+            World.saveLog.takeLine("Past marking");
         }
     }
 }
