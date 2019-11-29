@@ -140,6 +140,7 @@ namespace Assets.Code
             }
 
             map.world.ui.addBlocker(map.world.prefabStore.getScrollSet(soc,potentialIssues).gameObject);
+            map.overmind.hasTakenAction = false;
         }
 
         public List<VoteIssue> econIssues(Map map,Person p,Society society)

@@ -20,7 +20,7 @@ namespace Assets.Code
     public class World : MonoBehaviour
     {
         public static bool logging   = false;
-        public static bool developer = true;
+        public static bool developer = false;
 
         public UIMaster ui;
         public TextureStore textureStore;
@@ -338,6 +338,7 @@ namespace Assets.Code
                 fsData data = fsJsonParser.Parse(serializedState);
                 object deserialized = null;
                 _serializer.TryDeserialize(data, typeof(Map), ref deserialized).AssertSuccessWithoutWarnings();
+                World.saveLog.takeLine("Finished deserial");
                 map = (Map)deserialized;
                 map.world = this;
                 staticMap = map;

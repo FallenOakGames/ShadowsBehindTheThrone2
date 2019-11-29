@@ -8,9 +8,14 @@ namespace Assets.Code
         public override void cast(Map map, Hex hex)
         {
             base.cast(map, hex);
-            
+
+            map.world.prefabStore.popImgMsg(
+                map.overmind.enthralled.society.getName() + " turns fully against the light, casting off what was left of their disguise. The nations of men tremble at this threat.",
+                map.world.wordStore.lookup("ABILITY_DARK_EMPIRE"));
+
             map.overmind.enthralled.society.isDarkEmpire = true;
             map.overmind.enthralled.society.threat_mult += map.param.ability_darkEmpireThreatMultGain;
+
         }
 
         public override bool castable(Map map, Hex hex)

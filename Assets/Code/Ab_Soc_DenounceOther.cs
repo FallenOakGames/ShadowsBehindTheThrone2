@@ -10,8 +10,13 @@ namespace Assets.Code
         {
             base.cast(map, hex);
 
-            Society soc = (Society)hex.location.soc;
             Person victim = hex.location.person();
+            castInner(map, victim);
+        }
+
+        public override void castInner(Map map, Person victim)
+        {
+            Society soc = victim.society;
 
             victim.getRelation(map.overmind.enthralled).addLiking(-100, "Denounced me", map.turn);
             foreach (Person p in soc.people)
@@ -24,7 +29,7 @@ namespace Assets.Code
                 if (relVic.suspicion < p.evidence)
                 {
                     double gain = victim.evidence - relVic.suspicion;
-                    gain = Math.Max(0, gain);gain = Math.Min(1, gain);
+                    gain = Math.Max(0, gain); gain = Math.Min(1, gain);
                     //1 if you're revealling a fully evil person
                     gain = Math.Pow(gain, 0.5);//Bring it closer to 1, get your money's worth
 
@@ -43,16 +48,20 @@ namespace Assets.Code
                 map.world.wordStore.lookup("SOC_DENOUNCE_OTHER"));
         }
 
+        public override bool castable(Map map, Person person)
+        {
+            if (map.overmind.enthralled == null) { return false; }
+            if (person == map.overmind.enthralled) { return false; }
+            if (person.society != map.overmind.enthralled.society) { return false; }
+            if (person.evidence == 0) { return false; }
+
+            return true;
+        }
         public override bool castable(Map map, Hex hex)
         {
             if (hex.location == null) { return false; }
             if (hex.location.person() == null) { return false; }
-            if (map.overmind.enthralled == null) { return false; }
-            if (hex.location.person() == map.overmind.enthralled) { return false; }
-            if (hex.location.soc != map.overmind.enthralled.society) { return false; }
-            if (hex.location.person().evidence == 0) { return false; }
-
-            return true;
+            return castable(map,hex.location.person());
         }
 
         public override int getCooldown()

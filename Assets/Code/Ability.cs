@@ -13,6 +13,18 @@ namespace Assets.Code
         public virtual string specialCost() { return null; }
         public virtual int getCooldown() { return 0; }
         public int turnLastCast;
+        public virtual bool castable(Map map,Person person) { return false; }
+        public void cast(Map map,Person person)
+        {
+            if (map.param.overmind_singleAbilityPerTurn) { map.overmind.hasTakenAction = true; }
+            World.log("Cast " + this.ToString() + " " + this.getName());
+            turnLastCast = map.turn;
+            castInner(map, person);
+        }
+        public virtual void castInner(Map map,Person person)
+        {
+
+        }
 
         public virtual void cast(Map map, Hex hex) {
             map.overmind.power -= getCost();

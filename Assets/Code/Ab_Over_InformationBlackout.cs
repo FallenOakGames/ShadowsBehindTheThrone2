@@ -10,6 +10,15 @@ namespace Assets.Code
             base.cast(map, hex);
 
             Property.addProperty(map, hex.location, "Information Blackout");
+            foreach (SocialGroup sg in map.socialGroups)
+            {
+                map.recomputeInformationAvailability(sg);
+            }
+            
+            map.world.prefabStore.popImgMsg(
+                hex.getName() + " loses touch with the world, preventing information from getting through."
+                + "Messengers get lost, carrier pidgeons never arrive. Nobles will fear groups less if they have less information about them.",
+                map.world.wordStore.lookup("ABILITY_INFORMATION_BLACKOUT"));
         }
 
         public override bool castable(Map map, Hex hex)

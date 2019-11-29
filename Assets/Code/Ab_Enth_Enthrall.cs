@@ -9,13 +9,36 @@ namespace Assets.Code
         {
             base.cast(map, hex);
 
-            hex.location.person().state = Person.personState.enthralled;
-            map.overmind.enthralled = hex.location.person();
+            Person target = hex.location.person();
+            castInner(map, target);
+        }
+        public override void castInner(Map map, Person person)
+        {
+            person.state = Person.personState.enthralled;
+            map.overmind.enthralled = person;
 
             map.world.prefabStore.popImgMsg(
                 "You enthrall " + map.overmind.enthralled.getFullName() + ". They are now, until they die, your instrument in this world. Their votes are guided by your hand, and they will"
                 + " act as you command within their society.",
                 map.world.wordStore.lookup("ABILITY_ENTHRALL"));
+        }
+        public override bool castable(Map map, Person person)
+        {
+            if (person.state == Person.personState.broken) { return true; }
+            
+            Society soc = person.society;
+            double minPrestige = 1000000;
+            foreach (Person p in soc.people)
+            {
+                if (p.title_land == null) { continue; }
+                if (p.prestige < minPrestige)
+                {
+                    minPrestige = p.prestige;
+                }
+            }
+
+            //return soc.getEnthrallables().Contains(hex.location.settlement.title.heldBy);
+            return person.prestige < (1 + minPrestige);
         }
 
         public override bool castable(Map map, Hex hex)
@@ -23,26 +46,14 @@ namespace Assets.Code
             if (map.overmind.enthralled != null) { return false; }
 
             if (hex.location == null) { return false; }
+            if (hex.location.soc == null) { return false; }
+            if (hex.location.soc is Society == false) { return false; }
             if (hex.location.settlement == null) { return false; }
             if (hex.location.settlement.title == null) { return false; }
             if (hex.location.settlement.title.heldBy == null) { return false; }
 
-            if (hex.location.settlement.title.heldBy.state == Person.personState.broken) { return true; }
-
-            if (hex.location.soc == null) { return false; }
-            if (hex.location.soc is Society == false) { return false; }
-
-            Society soc = (Society)hex.location.soc;
-            double minPrestige = 1000000;
-            foreach (Person p in soc.people){
-                if (p.title_land == null) { continue; }
-                if (p.prestige < minPrestige){
-                    minPrestige = p.prestige;
-                }
-            }
-            
-            //return soc.getEnthrallables().Contains(hex.location.settlement.title.heldBy);
-            return hex.location.person().prestige < (1+minPrestige);
+            Person p = hex.location.settlement.title.heldBy;
+            return castable(map,p);
         }
 
         public override int getCost()

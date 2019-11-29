@@ -5,7 +5,6 @@
 
 What do I actually DO?
 
-missing flavour text across the board
 
 Events should say how many there are, and how strong the highest one is
 
@@ -17,7 +16,6 @@ Big message for "You are in a new society"
 
 ------------BASICALLY A FEATURE, WHEN YOU THINK ABOUT IT--------------
 
-Wrong number of abilities displayed on button
 
 Militarism flavour in left hand side typo
 
@@ -35,15 +33,12 @@ Turns left on vote
 
 More sea tiles
 
-Mouse clicks still go through
-
 Need a way to get suspicion's actual value
 
 Unsure if map mask manager sees real suspicion
 
 Military stance utilities seem too high
 
-[Possibly fixed] Mac support fails to cap framerates
 
 Event Messages still invisible on startup
 
@@ -51,6 +46,10 @@ Event Messages still invisible on startup
 
 ------------NON-ZERO CHANCE THAT IT'S FIXED------------------
 
+[Possibly fixed] Mac support fails to cap framerates
+[FIXED] Wrong number of abilities displayed on button
+[FIXED] Mouse clicks still go through
+[FIXED] missing flavour text across the board
 [FIXED] Apoptosis can kill anyone
 [Possibly fixed] Utilility values too high on some things (title assignment, it seems)
 [FIXED] Cancel causes you to skip your move

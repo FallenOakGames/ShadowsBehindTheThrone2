@@ -18,6 +18,7 @@ namespace Assets.Code
         public float targetY;
         public Ability ability;
         public Hex hex;
+        public Person person;
         public bool usable = false;
         public Image background;
 
@@ -33,6 +34,39 @@ namespace Assets.Code
             mover.transform.Translate(delta);
         }
 
+        public void setTo(Ability a,Person person)
+        {
+            ability = a;
+            this.person = person;
+            title.text = a.getName();
+            body.text = a.getDesc();
+            icon.sprite = a.getSprite(person.map);
+            if (a.specialCost() != null) { cost.text = a.specialCost(); }
+            else { cost.text = "" + a.getCost(); }
+            usable = a.castable(person.map, person);
+            if (a.getCooldown() > 0)
+            {
+                if (person.map.turn - a.turnLastCast < a.getCooldown())
+                {
+                    cooldown.text = "On Cooldown (" + (a.getCooldown() - (person.map.turn - a.turnLastCast)) + ")";
+                    usable = false;
+                }
+                else
+                {
+                    cooldown.text = "Cooldown: " + a.getCooldown();
+                }
+            }
+            else
+            {
+                cooldown.text = "";
+            }
+
+            if (!usable)
+            {
+                background.color = new Color(1, 1, 1, 0.5f);
+                icon.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+            }
+        }
         public void setTo(Ability a,Hex hex)
         {
             ability = a;
@@ -79,7 +113,14 @@ namespace Assets.Code
         public void clicked(Map map)
         {
             //selector.selected(person,agent);
-            ability.cast(map, hex);
+            if (hex != null)
+            {
+                ability.cast(map, hex);
+            }
+            else
+            {
+                ability.cast(map,person);
+            }
         }
 
         public string getTitle()

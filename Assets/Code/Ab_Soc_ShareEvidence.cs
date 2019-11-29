@@ -10,29 +10,40 @@ namespace Assets.Code
         {
             base.cast(map, hex);
 
-            double spaceLeft = 1 - hex.location.person().evidence;
+            Person target = hex.location.person();
+            castInner(map, target);
+        }
+        public override void castInner(Map map, Person person)
+        {
+            double spaceLeft = 1 - person.evidence;
             double toShare = map.overmind.enthralled.evidence * map.param.ability_shareEvidencePercentage;
             double shared = Math.Min(spaceLeft, toShare);
             map.overmind.enthralled.evidence -= shared;
-            hex.location.person().evidence += shared;
-            hex.location.person().getRelation(map.overmind.enthralled).addLiking(-World.staticMap.param.ability_shareEvidenceLikingCost, "Asked to receive evidence of dubious nature", map.turn);
+            person.evidence += shared;
+            person.getRelation(map.overmind.enthralled).addLiking(-World.staticMap.param.ability_shareEvidenceLikingCost, "Asked to receive evidence of dubious nature", map.turn);
 
             map.world.prefabStore.popImgMsg(
-                "You transfer evidence from your enthralled, " + map.overmind.enthralled.getFullName() + " to " + hex.location.person().getFullName() + "."
-                + " " + (int)(0.5+(100*shared)) + " evidence transferred",
+                "You transfer evidence from your enthralled, " + map.overmind.enthralled.getFullName() + " to " + person.getFullName() + "."
+                + " " + (int)(0.5 + (100 * shared)) + " evidence transferred",
                 map.world.wordStore.lookup("SOC_TRANSFER_EVIDENCE"));
+        }
+
+        public override bool castable(Map map, Person person)
+        {
+            if (map.overmind.enthralled == null) { return false; }
+            if (person == map.overmind.enthralled) { return false; }
+            if (person.society != map.overmind.enthralled.society) { return false; }
+            if (person.getRelation(map.overmind.enthralled).getLiking() < World.staticMap.param.ability_shareEvidenceLikingCost) { return false; }
+
+            return true;
         }
 
         public override bool castable(Map map, Hex hex)
         {
             if (hex.location == null) { return false; }
             if (hex.location.person() == null) { return false; }
-            if (map.overmind.enthralled == null) { return false; }
-            if (hex.location.person() == map.overmind.enthralled) { return false; }
-            if (hex.location.soc != map.overmind.enthralled.society) { return false; }
-            if (hex.location.person().getRelation(map.overmind.enthralled).getLiking() < World.staticMap.param.ability_shareEvidenceLikingCost) { return false; }
-
-            return true;
+            Person p = hex.location.person();
+            return castable(map, p);
         }
 
         public override string specialCost()

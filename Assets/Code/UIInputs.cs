@@ -246,16 +246,14 @@ namespace Assets.Code
 
             if (EventSystem.current.IsPointerOverGameObject())
             {
-                if (EventSystem.current.currentSelectedGameObject != null)
-                {
-                    return;
-                }
+                return;
             }
 
             if (Input.GetMouseButtonDown(0) && !leftClickDown) { leftClick(); }
             else if (Input.GetMouseButtonDown(1) && !rightClickDown) { rightClick(); }
             leftClickDown = Input.GetMouseButtonDown(0);
             rightClickDown = Input.GetMouseButtonDown(1);
+            world.ui.checkData();
         }
 
         public void leftClick()

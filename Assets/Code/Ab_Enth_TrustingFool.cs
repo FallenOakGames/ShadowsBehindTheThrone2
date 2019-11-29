@@ -9,7 +9,21 @@ namespace Assets.Code
         {
             base.cast(map, hex);
 
-            hex.location.person().getRelation(map.overmind.enthralled).suspicion = 0;
+            Person person = hex.location.person();
+            castInner(map, person);
+        }
+        public override void castInner(Map map, Person person)
+        {
+            person.getRelation(map.overmind.enthralled).suspicion = 0;
+
+            map.world.prefabStore.popImgMsg(
+                 person.getFullName() + " forgets all previous suspicions, and trusts " + map.overmind.enthralled.getFullName() + "'s claims of innocence. They may soon notice evidence, if any remains, of course.",
+                map.world.wordStore.lookup("ABILITY_TRUSTING_FOOL"));
+        }
+        public override bool castable(Map map, Person person)
+        {
+            if (map.overmind.enthralled == null) { return false; }
+            return person.state != Person.personState.enthralled;
         }
 
         public override bool castable(Map map, Hex hex)

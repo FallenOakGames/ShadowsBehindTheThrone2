@@ -15,6 +15,15 @@ namespace Assets.Code
                 map.world.wordStore.lookup("ABILITY_APOPTOSIS"));
             hex.location.person().die("Walked into the night and never returned");
         }
+        public override void castInner(Map map, Person person)
+        {
+            base.castInner(map, person);
+        }
+
+        public override bool castable(Map map, Person person)
+        {
+            return person.state == Person.personState.enthralled;
+        }
 
         public override bool castable(Map map, Hex hex)
         {

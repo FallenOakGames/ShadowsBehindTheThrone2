@@ -64,6 +64,7 @@ namespace Assets.Code
 
         public string getName()
         {
+            if (settlement != null) { return settlement.name; }
             return name;
         }
 

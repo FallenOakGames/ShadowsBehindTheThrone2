@@ -53,8 +53,8 @@ namespace Assets.Code
 
         public void OnMouseDown()
         {
-            Debug.Log("poop2");
             GraphicalSociety.refresh(inner);
+            World.staticMap.world.ui.checkData();
         }
 
         public void OnMouseEnter()

@@ -8,13 +8,14 @@ namespace Assets.Code
     {
         public override void cast(Map map, Hex hex)
         {
-            //base.cast(map, hex);
+            base.cast(map, hex);
 
             Society soc = map.overmind.enthralled.society;
             if (soc.voteSession != null)
             {
                 soc.voteSession.assignVoters();
                 map.world.ui.addBlocker(map.world.prefabStore.getScrollSet(soc.voteSession, soc.voteSession.issue.options).gameObject);
+                map.overmind.hasTakenAction = false;
             }
         }
 

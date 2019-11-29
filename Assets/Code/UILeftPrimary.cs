@@ -137,10 +137,20 @@ namespace Assets.Code
                 {
                     powerButton.gameObject.SetActive(master.world.map.overmind.power > 0);
                 }
+
+                if (master.state == UIMaster.uiState.WORLD)
+                {
+                    abilityButtonText.text = "Use Ability (" + master.world.map.overmind.countAvailableAbilities(hex) + ")";
+                    powerButtonText.text = "Use Power (" + master.world.map.overmind.countAvailablePowers(hex) + ")";
+                }
+                else if (master.state == UIMaster.uiState.SOCIETY)
+                {
+
+                    abilityButtonText.text = "Use Ability (" + master.world.map.overmind.countAvailableAbilities(GraphicalSociety.focus) + ")";
+                    powerButtonText.text = "Use Power (" + master.world.map.overmind.countAvailablePowers(GraphicalSociety.focus) + ")";
+                }
             }
 
-            abilityButtonText.text = "Use Ability (" + master.world.map.overmind.countAvailableAbilities(hex) + ")";
-            powerButtonText.text = "Use Power (" + master.world.map.overmind.countAvailablePowers(hex) + ")";
 
             maskTitle.text = GraphicalMap.map.masker.getTitleText();
 

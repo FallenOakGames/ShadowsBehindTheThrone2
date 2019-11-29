@@ -56,6 +56,7 @@ namespace Assets.Code
 
             map.world.prefabStore.popImgMsg("Voting session called. You may now cast your vote on the issue of: " + issue.ToString(),
                 map.world.wordStore.lookup("SOC_VOTE_SESSION_CALLED"));
+            map.overmind.hasTakenAction = true;
         }
 
         public string getTitle()

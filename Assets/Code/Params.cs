@@ -30,12 +30,12 @@ namespace Assets.Code
 
         public double combat_prestigeLossFromConquest = 0.333;//multiplier on captured lords' prestige
         public double combat_thresholdAttackStrength = 0.25;
-        public double combat_lethality = 0.8;//How much of an army is destroyed in a battle at maximum roll against an equivalent force
+        public double combat_lethality = 0.5;//How much of an army is destroyed in a battle at maximum roll against an equivalent force
         public double combat_takeLandThreshold = 1.25;//How much over their strength do you have to be to take some land
         internal double combat_maxMilitaryCapExponent = 0.75;//Used to reduce the power of larger nations
         public double combat_defensivePostureDmgMult = 0.666;
 
-        public int war_defaultLength = 8;
+        public int war_defaultLength = 10;
         internal float minInformationAvailability = 0.2f;
 
         internal double utility_econEffect = 0.5;
@@ -93,9 +93,10 @@ namespace Assets.Code
         internal double dark_fleshThreatMult = 2;
         internal double dark_fishmanStartingThreatMult = -0.25;
         
-        public int ability_uncannyGlamourEvidence = 10;
-        public int ability_uncannyGlamourGain = 25;
+        public int ability_uncannyGlamourEvidence = 7;
+        public int ability_uncannyGlamourGain = 20;
         public int ability_uncannyGlamourCost = 10;
+        public int ability_uncannyGlamourCooldown = 15;
         public int ability_sowDissentCost = 12;
         public int ability_sowDissentLikingChange = -25;
 

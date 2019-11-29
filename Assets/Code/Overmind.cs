@@ -140,5 +140,57 @@ namespace Assets.Code
             }
             return reply;
         }
+        public int countAvailableAbilities(Person p)
+        {
+            if (p == null) { return 0; }
+            int n = 0;
+            foreach (Ability a in abilities)
+            {
+                if (a.castable(map, p))
+                {
+                    n += 1;
+                }
+            }
+            return n;
+        }
+        public int countAvailablePowers(Person p)
+        {
+            if (p == null) { return 0; }
+            int n = 0;
+            foreach (Ability a in powers)
+            {
+                if (a.castable(map, p))
+                {
+                    n += 1;
+                }
+            }
+            return n;
+        }
+        public List<Ability> getAvailableAbilities(Person p)
+        {
+            if (p == null) { return new List<Ability>(); }
+            List<Ability> reply = new List<Ability>();
+            foreach (Ability a in abilities)
+            {
+                if (a.castable(map, p))
+                {
+                    reply.Add(a);
+                }
+            }
+            return reply;
+        }
+        public List<Ability> getAvailablePowers(Person p)
+        {
+            if (p == null) { return new List<Ability>(); }
+            List<Ability> reply = new List<Ability>();
+            foreach (Ability a in powers)
+            {
+                if (a.castable(map, p))
+                {
+                    reply.Add(a);
+                }
+            }
+            return reply;
+        }
     }
 }

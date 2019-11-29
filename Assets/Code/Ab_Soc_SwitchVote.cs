@@ -11,6 +11,10 @@ namespace Assets.Code
             base.cast(map, hex);
 
             Person other = hex.location.person();
+            castInner(map, other);
+        }
+        public override void castInner(Map map, Person other)
+        {
             Society soc = map.overmind.enthralled.society;
             soc.voteSession.assignVoters();
             VoteOption enthOpt = null;
@@ -28,7 +32,7 @@ namespace Assets.Code
             }
             if (enthOpt == null) { throw new Exception("Enthralled wasn't voting for some reason"); }
 
-            if (soc.voteSession.issue.computeUtility(other,enthOpt,new System.Collections.Generic.List<ReasonMsg>()) < -50)
+            if (soc.voteSession.issue.computeUtility(other, enthOpt, new System.Collections.Generic.List<ReasonMsg>()) < -50)
             {
                 map.world.prefabStore.popMsg(other.getFullName() + " refuses to change their vote, as they are too opposed to voting for " + enthOpt.info() + ".");
                 return;
@@ -36,7 +40,7 @@ namespace Assets.Code
 
             other.forcedVoteSession = soc.voteSession;
             other.forcedVoteOption = enthOpt;
-            hex.location.person().getRelation(map.overmind.enthralled).addLiking(-World.staticMap.param.ability_switchVoteLikingCost, "Asked to change vote", map.turn);
+            other.getRelation(map.overmind.enthralled).addLiking(-World.staticMap.param.ability_switchVoteLikingCost, "Asked to change vote", map.turn);
 
 
             map.world.prefabStore.popImgMsg(
@@ -44,14 +48,10 @@ namespace Assets.Code
                 map.world.wordStore.lookup("SOC_CHANGE_VOTE"));
         }
 
-        public override bool castable(Map map, Hex hex)
+        public override bool castable(Map map, Person person)
         {
-            if (hex.location == null) { return false; }
-            if (hex.location.person() == null) { return false; }
             if (map.overmind.enthralled == null) { return false; }
-            if (hex.location.person() == map.overmind.enthralled) { return false; }
-            if (hex.location.soc != map.overmind.enthralled.society) { return false; }
-            if (hex.location.person().getRelation(map.overmind.enthralled).getLiking() < World.staticMap.param.ability_switchVoteLikingCost) { return false; }
+            if (person.getRelation(map.overmind.enthralled).getLiking() < World.staticMap.param.ability_switchVoteLikingCost) { return false; }
 
             if (map.overmind.enthralled.society == null) { throw new Exception("Enthralled didn't have a society?"); }
             Society soc = map.overmind.enthralled.society;
@@ -67,6 +67,16 @@ namespace Assets.Code
                 }
             }
             return false;
+        }
+        public override bool castable(Map map, Hex hex)
+        {
+            if (map.overmind.enthralled == null) { return false; }
+            if (hex.location == null) { return false; }
+            if (hex.location.person() == null) { return false; }
+            if (hex.location.person() == map.overmind.enthralled) { return false; }
+            if (hex.location.soc != map.overmind.enthralled.society) { return false; }
+            Person p = hex.location.person();
+            return castable(map, p);
         }
 
         public override string specialCost()

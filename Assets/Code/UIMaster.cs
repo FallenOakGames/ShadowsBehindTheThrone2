@@ -25,7 +25,7 @@ namespace Assets.Code
 
         //public List<Alert> alertQueue = new List<Alert>();
 
-        public enum uiState { SELECT_SOC, SOCIETY, WORLD, BACKGROUND, MAIN_MENU };
+        public enum uiState {  SOCIETY, WORLD, BACKGROUND, MAIN_MENU };
         public uiState state = uiState.MAIN_MENU;
 
         public void Update()
@@ -144,37 +144,73 @@ namespace Assets.Code
 
         public void bPowers()
         {
-
             if (world.turnLock) { return; }
             if (blocker != null) { return; }
-            if (GraphicalMap.selectedHex == null) { return; }
+            if (state == uiState.WORLD)
+            {
+                if (GraphicalMap.selectedHex == null) { return; }
 
-            List<Ability> abilities = world.map.overmind.getAvailablePowers(GraphicalMap.selectedHex);
-            List<Ability> uncastables = new List<Ability>();
-            foreach (Ability a in world.map.overmind.powers){
-                if (abilities.Contains(a) == false)
+                List<Ability> abilities = world.map.overmind.getAvailablePowers(GraphicalMap.selectedHex);
+                List<Ability> uncastables = new List<Ability>();
+                foreach (Ability a in world.map.overmind.powers)
                 {
-                    uncastables.Add(a);
+                    if (abilities.Contains(a) == false)
+                    {
+                        uncastables.Add(a);
+                    }
                 }
+                addBlocker(world.prefabStore.getScrollSet(abilities, uncastables, GraphicalMap.selectedHex).gameObject);
+            }else if (state == uiState.SOCIETY)
+            {
+                if (GraphicalSociety.focus == null) { return; }
+
+                List<Ability> abilities = world.map.overmind.getAvailablePowers(GraphicalSociety.focus);
+                List<Ability> uncastables = new List<Ability>();
+                foreach (Ability a in world.map.overmind.powers)
+                {
+                    if (abilities.Contains(a) == false)
+                    {
+                        uncastables.Add(a);
+                    }
+                }
+                addBlocker(world.prefabStore.getScrollSet(abilities, uncastables, GraphicalSociety.focus).gameObject);
+
             }
-            addBlocker(world.prefabStore.getScrollSet(abilities,uncastables, GraphicalMap.selectedHex).gameObject);
         }
         public void bActions()
         {
 
             if (world.turnLock) { return; }
             if (blocker != null) { return; }
-            if (GraphicalMap.selectedHex == null) { return; }
 
-            List<Ability> abilities = world.map.overmind.getAvailableAbilities(GraphicalMap.selectedHex);
-            List<Ability> uncastables = new List<Ability>();
-            foreach (Ability a in world.map.overmind.abilities){
-                if (abilities.Contains(a) == false)
+            if (state == uiState.WORLD)
+            {
+                if (GraphicalMap.selectedHex == null) { return; }
+                List<Ability> abilities = world.map.overmind.getAvailableAbilities(GraphicalMap.selectedHex);
+                List<Ability> uncastables = new List<Ability>();
+                foreach (Ability a in world.map.overmind.abilities)
                 {
-                    uncastables.Add(a);
+                    if (abilities.Contains(a) == false)
+                    {
+                        uncastables.Add(a);
+                    }
                 }
+                addBlocker(world.prefabStore.getScrollSet(abilities, uncastables, GraphicalMap.selectedHex).gameObject);
+            }else if (state == uiState.SOCIETY)
+            {
+
+                if (GraphicalSociety.focus == null) { return; }
+                List<Ability> abilities = world.map.overmind.getAvailableAbilities(GraphicalSociety.focus);
+                List<Ability> uncastables = new List<Ability>();
+                foreach (Ability a in world.map.overmind.abilities)
+                {
+                    if (abilities.Contains(a) == false)
+                    {
+                        uncastables.Add(a);
+                    }
+                }
+                addBlocker(world.prefabStore.getScrollSet(abilities, uncastables, GraphicalSociety.focus).gameObject);
             }
-            addBlocker(world.prefabStore.getScrollSet(abilities,uncastables, GraphicalMap.selectedHex).gameObject);
         }
         /*
         public void bViewSociety()
