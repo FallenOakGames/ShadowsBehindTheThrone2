@@ -146,7 +146,7 @@ namespace Assets.Code
                 data_societalStability = (data_loyalLordsCap - data_rebelLordsCap) / (data_loyalLordsCap + data_rebelLordsCap);
             }
 
-            if (data_rebelLordsCap >= data_loyalLordsCap)
+            if (rebels.Count > 0 && data_rebelLordsCap >= data_loyalLordsCap)//Gotta ensure there exist rebels, or you can rebel against yourself by dropping your cap to zero
             {
                 instabilityTurns += 1;
                 int turnsTillCivilWar = map.param.society_instablityTillRebellion - instabilityTurns;

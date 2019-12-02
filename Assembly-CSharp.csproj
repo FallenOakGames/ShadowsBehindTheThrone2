@@ -82,6 +82,7 @@
     <Compile Include="Assets\Code\Ab_Soc_JoinLoyalists.cs" />
     <Compile Include="Assets\Code\Ab_Soc_JoinRebels.cs" />
     <Compile Include="Assets\Code\Ab_Soc_ProposeVote.cs" />
+    <Compile Include="Assets\Code\Ab_Soc_SharedGlory.cs" />
     <Compile Include="Assets\Code\Ab_Soc_ShareEvidence.cs" />
     <Compile Include="Assets\Code\Ab_Soc_SwitchVote.cs" />
     <Compile Include="Assets\Code\Ab_Soc_Vote.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Assets\Code\Pr_DeepOneCult.cs" />
     <Compile Include="Assets\Code\Pr_InformationBlock.cs" />
     <Compile Include="Assets\Code\Pr_MilitaryAid.cs" />
+    <Compile Include="Assets\Code\Pr_MilitaryAidOutgoing.cs" />
     <Compile Include="Assets\Code\PrefabStore.cs" />
     <Compile Include="Assets\Code\Property.cs" />
     <Compile Include="Assets\Code\Property_Prototype.cs" />

@@ -136,17 +136,20 @@ namespace Assets.Code
                 if (p == this) { continue; }
                 if (p.shadow == 0) { continue; }//Can't inherit if they don't have any, skip to save CPU
                 if (p.shadow <= shadow) { continue; }
+                if (p.prestige < prestige) { continue; }
 
+                /*
                 double basePrestige = 100;
                 if (society.getSovreign() != null) { basePrestige = society.getSovreign().prestige; }
                 if (basePrestige < 10) { basePrestige = 10; }
                 double multFromPrestige = p.prestige / basePrestige;
                 if (multFromPrestige < 0) { multFromPrestige = 0; }
                 if (multFromPrestige > 1) { multFromPrestige = 1; }
+                */
 
                 double likingMult = Math.Max(0, this.getRelation(p).getLiking())/100;
 
-                double shadowDelta = p.shadow * likingMult * map.param.person_shadowContagionMult * multFromPrestige;//You get enshadowed by people you like/trust
+                double shadowDelta = p.shadow * likingMult * map.param.person_shadowContagionMult;//You get enshadowed by people you like/trust
                 this.shadow = Math.Min(p.shadow, shadow + shadowDelta);//Don't exceed your donor's shadow
                 if (this.shadow > 1) { this.shadow = 1; }
             }

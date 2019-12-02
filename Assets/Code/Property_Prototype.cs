@@ -34,6 +34,10 @@ namespace Assets.Code
             map.globalist.allProperties.Add(proto);
             map.globalist.propertyMap.Add(proto.name, proto);
 
+            proto = new Pr_MilitaryAidOutgoing(map, "Military Aid Outgoing");
+            map.globalist.allProperties.Add(proto);
+            map.globalist.propertyMap.Add(proto.name, proto);
+
             proto = new Pr_InformationBlock(map, "Information Blackout");
             map.globalist.allProperties.Add(proto);
             map.globalist.propertyMap.Add(proto.name, proto);

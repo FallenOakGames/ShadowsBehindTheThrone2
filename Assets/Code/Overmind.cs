@@ -42,6 +42,7 @@ namespace Assets.Code
 
             abilities.Add(new Ab_Soc_Vote());
             abilities.Add(new Ab_Soc_ProposeVote());
+            abilities.Add(new Ab_Soc_SharedGlory());
             abilities.Add(new Ab_Soc_JoinRebels());
             abilities.Add(new Ab_Soc_JoinLoyalists());
             abilities.Add(new Ab_Soc_ShareEvidence());

@@ -58,7 +58,7 @@ namespace Assets.Code
 
         public double person_maxLikingGainFromVoteAccordance = 30;
         public double person_maxLikingLossFromVoteDiscord = -50;
-        public double person_prestigeDeltaPerTurn = 1;
+        public double person_prestigeDeltaPerTurn = 0.5;
         public double person_threatMult = 100;
         internal double person_defaultPrestige = 5;
         internal double person_evidencePerShadow = 0.025;
@@ -111,7 +111,7 @@ namespace Assets.Code
         internal int ability_enshadowCost = 4;
         internal int ability_militaryAidDur = 20;
         public int ability_militaryAidAmount = 5;
-        public int ability_militaryAidCost = 5;
+        public int ability_militaryAidCost = 2;
         public int ability_fishmanRaidCost = 5;
         internal int ability_fishmanRaidMilAdd = 4;
         internal int ability_fishmanRaidTemporaryThreat = 20;
@@ -138,6 +138,8 @@ namespace Assets.Code
         internal int ability_apoptosisCost = 15;
         internal int ability_darkEmpireCost = 12;
         internal double ability_darkEmpireThreatMultGain = 0.5;
+        public int ability_sharedGloryLikingGain = 8;
+        public int ability_sharedGloryAmount = 5;
 
         public void loadFromFile()
         {

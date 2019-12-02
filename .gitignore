@@ -5,6 +5,7 @@
 [Bb]uilds/
 [Cc]ompiled/
 compiled*
+*ompiled*
 Assets/AssetStoreTools*
 
 # Visual Studio cache directory
