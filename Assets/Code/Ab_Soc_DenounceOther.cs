@@ -26,12 +26,13 @@ namespace Assets.Code
 
                 RelObj relEnth = p.getRelation(map.overmind.enthralled);
                 RelObj relVic = p.getRelation(victim);
-                if (relVic.suspicion < p.evidence)
+                World.log(p.getFullName() + " check " + relVic.suspicion + " " + victim.evidence);
+                if (relVic.suspicion < victim.evidence)
                 {
                     double gain = victim.evidence - relVic.suspicion;
                     gain = Math.Max(0, gain); gain = Math.Min(1, gain);
                     //1 if you're revealling a fully evil person
-                    gain = Math.Pow(gain, 0.5);//Bring it closer to 1, get your money's worth
+                    gain = Math.Pow(gain, 0.4);//Bring it closer to 1, get your money's worth
 
                     relEnth.suspicion *= (1 - gain);//Suspicion drops to 0 if you give up a 100% evidence person with no suspicion on them
                     relVic.suspicion += gain;

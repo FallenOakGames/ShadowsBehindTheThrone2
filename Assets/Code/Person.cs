@@ -105,7 +105,8 @@ namespace Assets.Code
                     if (p == this) { continue; }
                     double infoAvail = map.getInformationAvailability(this.getLocation(), sg);
                     RelObj rel = getRelation(p);
-                    rel.suspicion += infoAvail * p.evidence * map.param.person_suspicionPerEvidence;
+                    double evidenceMult = Math.Pow(p.evidence, map.param.person_evidenceExponent);//Make low evidence a bit slower to cause suspicion
+                    rel.suspicion += infoAvail * evidenceMult * map.param.person_suspicionPerEvidence;
                 }
             }
         }

@@ -81,6 +81,14 @@ namespace Assets.Code
                 {
                     GraphicalMap.selectedHex.location.person().evidence = 1;
                 }
+                if (command == "10 evidence")
+                {
+                    GraphicalMap.selectedHex.location.person().evidence += 0.1;
+                    if (GraphicalMap.selectedHex.location.person().evidence > 1)
+                    {
+                        GraphicalMap.selectedHex.location.person().evidence = 1;
+                    }
+                }
                 if (command == "refresh")
                 {
                     World.staticMap.overmind.hasTakenAction = false;

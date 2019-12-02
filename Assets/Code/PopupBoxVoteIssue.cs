@@ -15,7 +15,7 @@ namespace Assets.Code
         public float targetY;
         public Society soc;
         public VoteIssue issue;
-
+        public Ab_Soc_ProposeVote ability;
 
         public void Update()
         {
@@ -29,10 +29,11 @@ namespace Assets.Code
         }
         
 
-        public void setTo(Society soc,VoteIssue issue)
+        public void setTo(Ab_Soc_ProposeVote ability,Society soc,VoteIssue issue)
         {
             this.soc = soc;
             this.issue = issue;
+            this.ability = ability;
             title.text = issue.ToString();
             //body.text = issue.getLargeDesc();
         }
@@ -48,6 +49,8 @@ namespace Assets.Code
         }
         public void clicked(Map map)
         {
+            this.ability.turnLastCast = map.turn;
+
             soc.voteCooldown = 0;
             soc.voteSession = new VoteSession();
             soc.voteSession.issue = issue;

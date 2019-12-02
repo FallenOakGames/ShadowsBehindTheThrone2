@@ -210,13 +210,13 @@ namespace Assets.Code
             return specific;
         }
 
-        public PopupScrollSet getScrollSet(Society soc,List<VoteIssue> issues)
+        public PopupScrollSet getScrollSet(Ab_Soc_ProposeVote ab,Society soc,List<VoteIssue> issues)
         {
             PopupScrollSet specific = getInnerScrollSet();
 
             foreach (VoteIssue issue in issues)
             {
-                PopupBoxVoteIssue box = getVoteIssueBox(soc,issue);
+                PopupBoxVoteIssue box = getVoteIssueBox(ab,soc,issue);
                 box.gameObject.transform.SetParent(specific.gameObject.transform);
                 specific.scrollables.Add(box);
             }
@@ -234,11 +234,11 @@ namespace Assets.Code
             return msg;
         }
 
-        private PopupBoxVoteIssue getVoteIssueBox(Society soc, VoteIssue issue)
+        private PopupBoxVoteIssue getVoteIssueBox(Ab_Soc_ProposeVote ab,Society soc, VoteIssue issue)
         {
             GameObject obj = Instantiate(popScrollVoteIssue) as GameObject;
             PopupBoxVoteIssue msg = obj.GetComponent<PopupBoxVoteIssue>();
-            msg.setTo(soc, issue);
+            msg.setTo(ab,soc, issue);
             return msg;
         }
 

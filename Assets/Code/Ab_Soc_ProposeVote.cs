@@ -9,7 +9,7 @@ namespace Assets.Code
     {
         public override void cast(Map map, Hex hex)
         {
-            base.cast(map, hex);
+            //base.cast(map, hex);
 
             Society soc = map.overmind.enthralled.society;
 
@@ -139,7 +139,7 @@ namespace Assets.Code
                 }
             }
 
-            map.world.ui.addBlocker(map.world.prefabStore.getScrollSet(soc,potentialIssues).gameObject);
+            map.world.ui.addBlocker(map.world.prefabStore.getScrollSet(this,soc,potentialIssues).gameObject);
             map.overmind.hasTakenAction = false;
         }
 

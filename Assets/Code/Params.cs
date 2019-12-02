@@ -47,7 +47,7 @@ namespace Assets.Code
         internal double utility_vassaliseThreatMult = 0.75;
         internal double utility_introversionFromInstability = 50;
         internal double utility_militarism = 100;
-        internal double utility_landedTitleMult = 0.1;
+        internal double utility_landedTitleMult = 0.2;
         public double utility_unlandedTitleMult = 0.1;
         public double utility_introversionFromSuspicion = 3;
         public double utility_killSuspectFromSuspicion = 350;
@@ -58,10 +58,11 @@ namespace Assets.Code
 
         public double person_maxLikingGainFromVoteAccordance = 30;
         public double person_maxLikingLossFromVoteDiscord = -50;
-        public double person_prestigeDeltaPerTurn = 2;
+        public double person_prestigeDeltaPerTurn = 1;
         public double person_threatMult = 100;
         internal double person_defaultPrestige = 5;
         internal double person_evidencePerShadow = 0.025;
+        public double person_evidenceExponent = 1.5;
         internal double person_suspicionPerEvidence = 0.06;
         internal double person_dislikingFromSuspicion = -200;
         internal double person_shadowContagionMult = 0.05;
@@ -93,8 +94,8 @@ namespace Assets.Code
         internal double dark_fleshThreatMult = 2;
         internal double dark_fishmanStartingThreatMult = -0.25;
         
-        public int ability_uncannyGlamourEvidence = 7;
-        public int ability_uncannyGlamourGain = 20;
+        public int ability_uncannyGlamourEvidence = 10;
+        public int ability_uncannyGlamourGain = 15;
         public int ability_uncannyGlamourCost = 10;
         public int ability_uncannyGlamourCooldown = 15;
         public int ability_sowDissentCost = 12;
