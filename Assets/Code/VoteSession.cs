@@ -16,7 +16,6 @@ namespace Assets.Code
             foreach (VoteOption opt in issue.options)
             {
                 opt.votesFor.Clear();
-                opt.msgs.Clear();
             }
 
             foreach (Person p in this.issue.society.people)

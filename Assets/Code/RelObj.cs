@@ -7,20 +7,23 @@ namespace Assets.Code
 {
     public class RelObj
     {
-        public Person me;
-        public Person them;
         //Leave this crashing thing so it doesn't get reimplemented
         //public double liking { get { return liking; } set { liking = value;liking = Math.Min(100, liking);liking = Math.Max(-100, liking); } } THIS IMPLEMENTATION CRASHES THE UNITY EDITOR
         //private double liking;
         public double suspicion;
         public LinkedList<RelEvent> events = new LinkedList<RelEvent>();
+        public bool isSelf = false;
 
-        public RelObj(Person person, Person other)
+        public RelObj(Person me,Person them)
         {
-            this.me = person;
-            this.them = other;
+            isSelf = me == them;
         }
         public double getLiking()
+        {
+            return 0;
+        }
+
+        public double getLiking(Person me,Person them)
         {
             double liking = me.getRelBaseline(them);
             foreach (RelEvent r in events)
@@ -28,14 +31,14 @@ namespace Assets.Code
                 liking += r.amount;
             }
 
-            liking += getDislikingFromSuspicion();
+            liking += getDislikingFromSuspicion(me);
 
             if (liking > 100) { liking = 100; }
             if (liking < -100) { liking = -100; }
             return liking;
         }
 
-        public double getDislikingFromSuspicion()
+        public double getDislikingFromSuspicion(Person me)
         {
             double evMult = (1 - me.shadow);//You care less about shadow the more enshadowed you are
             evMult = Math.Min(evMult, 1);
@@ -52,7 +55,7 @@ namespace Assets.Code
         */
 
         private List<RelEvent> rems = new List<RelEvent>();
-        public void turnTick()
+        public void turnTick(Person me,Person them)
         {
             //if (them == me) { liking = 100; }//Be at least loyal to yourself (till traits override this)
 
@@ -72,7 +75,7 @@ namespace Assets.Code
 
         public void addLiking(double v,string reason,int turn)
         {
-            if (them == me) { return; }//No events for yourself
+            if (isSelf) { return; }//No events for self
 
             RelEvent ev = new RelEvent();
             ev.amount = v;

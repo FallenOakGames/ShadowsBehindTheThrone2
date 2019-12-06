@@ -12,7 +12,7 @@ namespace Assets.Code
         public string name = "defaultSettlementName";
         public TitleLanded title;
         public double basePrestige = 10;
-        protected double militaryCapAdd = 0;
+        public double militaryCapAdd = 0;
         public double militaryRegenAdd = 0;
         //public double defensiveStrength = 0;
         public double defensiveStrengthRegen = 0.33;

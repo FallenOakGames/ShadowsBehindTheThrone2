@@ -10,11 +10,12 @@ namespace Assets.Code
     {
         public static int indexCounter;
         public int index;
-        public Hex hex;
+        public int[] gridHex;
+        public Hex hex { get { return map.grid[gridHex[0]][gridHex[1]]; } }
         public Location parent;
         public SocialGroup soc;
         public Settlement settlement;
-        public HashSet<Hex> territory = new HashSet<Hex>();
+        public HashSet<int[]> territory = new HashSet<int[]>();
         public Color territoryColor;
         public List<Link> links = new List<Link>();
         public bool isCoastal;
@@ -28,9 +29,9 @@ namespace Assets.Code
         public int turnLastTaken = -1000;
         public double inherentInformationAvailability = 0.85;
         public int lastTaken;
-        public SavableMap<SocialGroup, double> information = new SavableMap<SocialGroup, double>();
-        internal int debugVal;
-        internal int turnLastAssigned;
+        public SavableMap_SG_Double information = new SavableMap_SG_Double();
+        public int debugVal;
+        public int turnLastAssigned;
         public Province province;
 
         public Location(Map map, Hex hex,bool isMajor)
@@ -40,7 +41,7 @@ namespace Assets.Code
 
             this.isMajor = isMajor;
             this.map = map;
-            this.hex = hex;
+            this.gridHex = new int[] {hex.x,hex.y};
             name = "Empty Location";
             shortName = "Empty Location";
 

@@ -13,14 +13,13 @@ namespace Assets.Code
         public List<Title> titles = new List<Title>();
         public TitleLanded title_land;
         public Society society;
-        private SavableMap<Person, RelObj> relations = new SavableMap<Person, RelObj>();
+        public SavableMap_Person_RelObj relations = new SavableMap_Person_RelObj();
         public double prestige = 1;
         public double targetPrestige = 1;
         public int lastVoteProposalTurn;
         public VoteIssue lastProposedIssue;
         public GraphicalSlot outer;
         public List<ThreatItem> threatEvaluations = new List<ThreatItem>();
-        public LogBox log;
         public double evidence;
         public double shadow;
         public int imgIndBack = -1;
@@ -33,17 +32,12 @@ namespace Assets.Code
         public enum personState { normal,enthralled,broken};
         public personState state = personState.normal;
         public bool isDead;
-        internal Society rebellingFrom;
+        public Society rebellingFrom;
 
         public Person(Society soc)
         {
             this.society = soc;
             firstName = TextStore.getName(isMale);
-
-            if (World.logging)
-            {
-                log = new LogBox(this);
-            }
 
             politics_militarism = Math.Pow(Eleven.random.NextDouble(), 0.75);//Bias towards 0
             politics_militarism = 1 - politics_militarism;//0 to 1, bias towards 1
@@ -58,7 +52,6 @@ namespace Assets.Code
 
         public void turnTick()
         {
-            if (World.logging) { log.takeLine("---------Turn " + map.turn + "------------"); }
 
             processEnshadowment();
 
@@ -75,10 +68,13 @@ namespace Assets.Code
             else if (prestige < targetPrestige) { prestige += map.param.person_prestigeDeltaPerTurn; }
             else if (prestige > targetPrestige) { prestige -= map.param.person_prestigeDeltaPerTurn; }
 
+            /*
             foreach (RelObj rel in relations.values)
             {
                 rel.turnTick();
             }
+            */
+            World.log("TODO FIX");
 
             List<Title> rems = new List<Title>();
             foreach (Title t in titles)
@@ -147,7 +143,7 @@ namespace Assets.Code
                 if (multFromPrestige > 1) { multFromPrestige = 1; }
                 */
 
-                double likingMult = Math.Max(0, this.getRelation(p).getLiking())/100;
+                double likingMult = Math.Max(0, this.getRelation(p).getLiking(this,p))/100;
 
                 double shadowDelta = p.shadow * likingMult * map.param.person_shadowContagionMult;//You get enshadowed by people you like/trust
                 this.shadow = Math.Min(p.shadow, shadow + shadowDelta);//Don't exceed your donor's shadow
@@ -341,12 +337,16 @@ namespace Assets.Code
         public RelObj getRelation(Person other)
         {
             if (other == null) { throw new NullReferenceException(); }
-            if (relations.keys.Contains(other))
-            {
-                return relations.lookup(other);
-            }
+
             RelObj rel = new RelObj(this, other);
-            relations.add(other, rel);
+            if (relations.keys.Count < 0)//ANWSAVE
+            {
+                if (relations.keys.Contains(other))
+                {
+                    return relations.lookup(other);
+                }
+                relations.add(other, rel);
+            }
             return rel;
         }
 

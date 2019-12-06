@@ -38,7 +38,7 @@ namespace Assets.Code
             foreach (Person p in soc.people)
             {
                 if (p == map.overmind.enthralled) { continue; }
-                sumLiking += p.getRelation(map.overmind.enthralled).getLiking();
+                sumLiking += p.getRelation(map.overmind.enthralled).getLiking(p,map.overmind.enthralled);
             }
 
             return sumLiking > 0;

@@ -13,9 +13,9 @@ namespace Assets.Code
         public maskType mask = maskType.NONE;
         public Map map;
         [NonSerialized]
-        private Color invis = new Color(0, 0, 0, 0);
+        private static Color invis = new Color(0, 0, 0, 0);
         [NonSerialized]
-        private Color dark = new Color(0, 0, 0, 0.8f);
+        private static Color dark = new Color(0, 0, 0, 0.8f);
 
         public MapMaskManager(Map map)
         {
@@ -85,7 +85,7 @@ namespace Assets.Code
                     RelObj rel = me.getRelation(them);
                     words += "\nAmount: " + ((int)rel.getLiking());
 
-                    double sus = rel.getDislikingFromSuspicion();
+                    double sus = rel.getDislikingFromSuspicion(me);
                     if (sus != 0)
                     {
                         words += "\nFROM SUSPICION: " + sus;
@@ -124,7 +124,7 @@ namespace Assets.Code
                     RelObj rel = me.getRelation(them);
                     words += "\nAmount: " + ((int)rel.getLiking());
 
-                    double sus = rel.getDislikingFromSuspicion();
+                    double sus = rel.getDislikingFromSuspicion(me);
                     if (sus != 0)
                     {
                         words += "\nFROM SUSPICION: " + (int)sus;

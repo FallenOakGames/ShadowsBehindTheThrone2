@@ -5,12 +5,12 @@ using System;
 
 namespace Assets.Code
 {
-    public class SavableMap<T, T2>
+    public class SavableMap_Person_RelObj
     {
-        public List<T> keys = new List<T>();
-        public List<T2> values = new List<T2>();
+        public List<Person> keys = new List<Person>();
+        public List<RelObj> values = new List<RelObj>();
 
-        public T2 lookup(T key){
+        public RelObj lookup(Person key){
             for (int i = 0; i < keys.Count; i++)
             {
                 if (keys[i].Equals(key))
@@ -18,7 +18,7 @@ namespace Assets.Code
                     return values[i];
                 }
             }
-            return default(T2);
+            return null;
         }
 
         internal void Clear()
@@ -27,22 +27,22 @@ namespace Assets.Code
             values.Clear();
         }
 
-        public void Add(T key, T2 value)
+        public void Add(Person key, RelObj value)
         {
             add(key, value);
         }
-        public void add(T key,T2 value)
+        public void add(Person key, RelObj value)
         {
             keys.Add(key);
             values.Add(value);
         }
 
-        public bool ContainsKey(T key)
+        public bool ContainsKey(Person key)
         {
             return keys.Contains(key);
         }
 
-        internal void set(T key, T2 value)
+        internal void set(Person key, RelObj value)
         {
             for (int i = 0; i < keys.Count; i++)
             {

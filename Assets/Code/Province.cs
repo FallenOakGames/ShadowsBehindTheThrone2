@@ -7,7 +7,10 @@ namespace Assets.Code
 {
     public class Province
     {
-        public Hex coreHex;
+        public Map map;
+        public int coreX;
+        public int coreY;
+        public Hex coreHex { get { return map.grid[coreX][coreY]; } }
         public string name;
         public List<Location> locations = new List<Location>();
         public Location capital;
@@ -18,9 +21,11 @@ namespace Assets.Code
         public float cg = (float)Eleven.random.NextDouble();
         public float cb = (float)Eleven.random.NextDouble();
 
-        public Province(Hex hex)
+        public Province(Map map,Hex hex)
         {
-            coreHex = hex;
+            this.map = map;
+            coreX = hex.x;
+            coreY = hex.y;
         }
     }
 }

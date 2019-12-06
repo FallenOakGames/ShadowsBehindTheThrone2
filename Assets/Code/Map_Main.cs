@@ -31,7 +31,7 @@ namespace Assets.Code
             masker = new MapMaskManager(this);
             //overmind = new Overmind(this);
             //eventManager = new MapEventManager(this);
-           stats = new StatRecorder(this);
+           stats = new StatRecorder();
         }
 
         public void turnTick()
@@ -83,7 +83,7 @@ namespace Assets.Code
             }
 
             overmind.turnTick();
-            stats.turnTick();
+            stats.turnTick(this);
             addEnthralledNextTurnMessages();
         }
         

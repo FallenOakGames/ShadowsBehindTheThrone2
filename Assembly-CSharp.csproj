@@ -161,7 +161,12 @@
     <Compile Include="Assets\Code\ReasonMsg.cs" />
     <Compile Include="Assets\Code\RelEvent.cs" />
     <Compile Include="Assets\Code\RelObj.cs" />
-    <Compile Include="Assets\Code\SavableMap.cs" />
+    <Compile Include="Assets\Code\SavableMap_Person_double.cs" />
+    <Compile Include="Assets\Code\SavableMap_Person_RelObj.cs" />
+    <Compile Include="Assets\Code\SavableMap_SG_DipRel.cs" />
+    <Compile Include="Assets\Code\SavableMap_SG_Double.cs" />
+    <Compile Include="Assets\Code\SavableMap_String_PropertyP.cs" />
+    <Compile Include="Assets\Code\SAVE_MapsAndHexes.cs" />
     <Compile Include="Assets\Code\SerialMap.cs" />
     <Compile Include="Assets\Code\Set_City.cs" />
     <Compile Include="Assets\Code\Set_DarkGeneric.cs" />

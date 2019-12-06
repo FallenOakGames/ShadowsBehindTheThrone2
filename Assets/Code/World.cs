@@ -285,20 +285,34 @@ namespace Assets.Code
             world.map.world = null;
 
 
-            fsSerializer _serializer = new fsSerializer();
-            fsData data;
-            _serializer.TrySerialize(typeof(Map), map, out data).AssertSuccessWithoutWarnings();
-            
-            // emit the data via JSON
-            string saveString = fsJsonPrinter.CompressedJson(data);
-            World.Log("Save exit point");
+            /*
+             * Okay, we're hard capped on save size
+             * So we gotta split shit up into different blocks
+             * 
+             * -: hexes and maps
+             * 
+             * -: RelObjs
+             * 
+             * -: Playback
+             * 
+             * -: all remaining
+             * 
+             */
+            SAVE_MapsAndHexes mapsAndHexes = new SAVE_MapsAndHexes();
+            mapsAndHexes.grid = map.grid;
+            mapsAndHexes.humidity = map.humidityMap;
+            mapsAndHexes.temp = map.tempMap;
+            map.grid = null;
+            map.humidityMap = null;
+            map.tempMap = null;
+            StatRecorder recorder = map.stats;
+            map.stats = null;
 
-            if (File.Exists(filename))
-            {
-                World.Log("Overwriting old save: " + filename);
-                File.Delete(filename);
-            }
-            File.WriteAllLines(filename, new string[] { saveString });
+            subsave(filename, mapsAndHexes);
+            subsave(filename, recorder);
+            subsave(filename, map);
+
+
 
             world.map.world = world;
             staticMap = map;
@@ -313,6 +327,65 @@ namespace Assets.Code
             //_serializer.TryDeserialize(data, type, ref deserialized).AssertSuccessWithoutWarnings();
         }
 
+        private void subsave(string filename, SAVE_MapsAndHexes mapsAndHexes)
+        {
+
+            fsSerializer _serializer = new fsSerializer();
+            fsData data;
+            _serializer.TrySerialize(typeof(SAVE_MapsAndHexes), mapsAndHexes, out data).AssertSuccessWithoutWarnings();
+            
+            // emit the data via JSON
+            string saveString = fsJsonPrinter.CompressedJson(data);
+            World.Log("Save exit point");
+
+            filename = filename + "_mapsAndHexes.sv";
+            if (File.Exists(filename))
+            {
+                World.Log("Overwriting old save: " + filename);
+                File.Delete(filename);
+            }
+            File.WriteAllLines(filename, new string[] { saveString });
+
+        }
+        private void subsave(string filename, StatRecorder recorder)
+        {
+
+            fsSerializer _serializer = new fsSerializer();
+            fsData data;
+            _serializer.TrySerialize(typeof(StatRecorder), recorder, out data).AssertSuccessWithoutWarnings();
+
+            // emit the data via JSON
+            string saveString = fsJsonPrinter.CompressedJson(data);
+            World.Log("Save exit point");
+
+            filename = filename + "_recorder.sv";
+            if (File.Exists(filename))
+            {
+                World.Log("Overwriting old save: " + filename);
+                File.Delete(filename);
+            }
+            File.WriteAllLines(filename, new string[] { saveString });
+        }
+        private void subsave(string filename, Map map)
+        {
+
+            fsSerializer _serializer = new fsSerializer();
+            fsData data;
+            _serializer.TrySerialize(typeof(Map), map, out data).AssertSuccessWithoutWarnings();
+
+            // emit the data via JSON
+            string saveString = fsJsonPrinter.CompressedJson(data);
+            World.Log("Save exit point");
+
+            filename = filename + "_map.sv";
+            if (File.Exists(filename))
+            {
+                World.Log("Overwriting old save: " + filename);
+                File.Delete(filename);
+            }
+            File.WriteAllLines(filename, new string[] { saveString });
+        }
+
         public void bQuicksave()
         {
             save("quicksave.sv");
@@ -323,8 +396,8 @@ namespace Assets.Code
         }
         public void load(string filename)
         {
-            try
-            {
+            //try
+            //{
                 if (map != null)
                 {
                     GraphicalMap.purge();
@@ -332,8 +405,9 @@ namespace Assets.Code
                     map.world = null;
                     map = null;
                 }
-                
-                string serializedState = File.ReadAllText(filename);
+
+            World.saveLog.takeLine("Start deserial");
+            string serializedState = File.ReadAllText(filename);
                 fsSerializer _serializer = new fsSerializer();
                 fsData data = fsJsonParser.Parse(serializedState);
                 object deserialized = null;
@@ -344,20 +418,20 @@ namespace Assets.Code
                 staticMap = map;
                 GraphicalMap.map = map;
                 ui.setToMainMenu();
-                //GraphicalMap.checkLoaded();
-                //GraphicalMap.checkData();
-                //graphicalMap.loadArea(0, 0);
+                GraphicalMap.checkLoaded();
+                GraphicalMap.checkData();
+                //GraphicalMap.loadArea(0, 0);
                 World.Log("reached end of loading code");
                 prefabStore.popMsg("Load may well have succeeded.");
-            }
-            catch (FileLoadException e)
-            {
-                Debug.Log(e);
-            }
-            catch (Exception e2)
-            {
-                Debug.Log(e2);
-            }
+            //}
+            //catch (FileLoadException e)
+            //{
+            //    Debug.Log(e);
+            //}
+            //catch (Exception e2)
+            //{
+            //    Debug.Log(e2);
+            //}
         }
     }
 

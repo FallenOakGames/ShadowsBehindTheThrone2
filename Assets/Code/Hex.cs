@@ -13,11 +13,13 @@ namespace Assets.Code
         public Map map;
         public int x;
         public int y;
-        public Location location;
+        public int locIndex = -1;
+        public Location location { get { if (locIndex == -1) { return null; } else { return map.locations[locIndex]; } } }
+        public int territoryIndex = -1;
+        public Location territoryOf { get { if (territoryIndex == -1) { return null; } else { return map.locations[territoryIndex]; } } }
         public enum terrainType { SEA, MOUNTAIN, GRASS, PATH,  SWAMP, MUD, DESERT, DRY, WETLAND, TUNDRA, SNOW };
         public terrainType terrain;
         public bool road;
-        public Location territoryOf;
         public Flora flora;
         public bool amphibPoint;
 

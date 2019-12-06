@@ -10,12 +10,12 @@ namespace Assets.Code
     public partial class Map
     {
 
-        int nSocieties = 12;
-        int minDistBetweenSocs = 12;
-        int citySpread = 5;
-        int townSpread = 12;
-        public int sx = 48;
-        public int sy = 32;
+        public int nSocieties = 12;
+        public int minDistBetweenSocs = 12;
+        public int citySpread = 5;
+        public int townSpread = 12;
+        public int sx = -1;
+        public int sy = -1;
         public int sizeX;
         public int sizeY;
         public int nPrints;
@@ -38,8 +38,8 @@ namespace Assets.Code
         public float param_targetHexesPerTown = 20;
         public int param_isolatedTownMinIsolation = 3;//Dist between an isolated town and its nearest neighbour
         public int param_locations_per_province = 5;
-        int param_maxTerritoryRange = 7;
-        int param_margin = 0;
+        public int param_maxTerritoryRange = 7;
+        public int param_margin = 0;
         public int param_nSerpents = 3;
         //public float param_cityPlacementMapP = 0.65f;
         public float param_seaMargin = 0;
@@ -57,7 +57,7 @@ namespace Assets.Code
 
         public int[][] landmassID;
 
-        public List<List<Hex>> allLandmasses = new List<List<Hex>>();
+        //public List<List<Hex>> allLandmasses = new List<List<Hex>>();
 
         public List<Province> provinces = new List<Province>();
         public List<float[]> terrainPositions = new List<float[]>();
@@ -121,6 +121,14 @@ namespace Assets.Code
             placeInitialSettlements();
 
             //placeMinorSettlements();
+
+            for (int i = 0; i < locations.Count; i++)
+            {
+                if (locations[i].index != i)
+                {
+                    throw new Exception("Failure to assign location indices properly");
+                }
+            }
 
         }
 
@@ -204,7 +212,7 @@ namespace Assets.Code
 
                     if (canGet(x, y))
                     {
-                        Province p = new Province(grid[x][y]);
+                        Province p = new Province(this,grid[x][y]);
                         provinces.Add(p);
                     }
                 }
@@ -535,7 +543,7 @@ namespace Assets.Code
                 {
                     Location seaLoc = new Location(this, opt, false);
                     locations.Add(seaLoc);
-                    opt.location = seaLoc;
+                    opt.locIndex = seaLoc.index;
                     Link link = new Link(location, seaLoc);
                     seaLoc.links.Add(link);
                     location.links.Add(link);
@@ -573,7 +581,7 @@ namespace Assets.Code
 
                     Location seaLoc = new Location(this, grid[i][j], false);
                     locations.Add(seaLoc);
-                    grid[i][j].location = seaLoc;
+                    grid[i][j].locIndex = seaLoc.index;
                     seaLoc.isOcean = true;
                 }
             }
@@ -644,17 +652,19 @@ namespace Assets.Code
                         rems.Add(loc);
                     }
                 }
+                /*
                 foreach (Location loc in rems)
                 {
                     locations.Remove(loc);
-                    loc.hex.location = null;
+                    loc.hex.locIndex = -1;
                     foreach (Link l in loc.links)
                     {
                         l.other(loc).links.Remove(l);
                     }
                 }
-
+                */
                 if (monolinkFound == false) { break; }
+
             }
         }
 
@@ -793,10 +803,12 @@ namespace Assets.Code
                 }
             }
 
+            /*
             foreach (List<Hex> land in allLandmasses)
             {
                 World.log("Landmass size: " + land.Count);
             }
+            */
         }
 
         public void floodfillLandmass(int x, int y)
@@ -827,7 +839,7 @@ namespace Assets.Code
                 open = o2;
             }
 
-            allLandmasses.Add(all);
+            //allLandmasses.Add(all);
         }
 
         private float getCityPlaceProp()
@@ -1017,23 +1029,27 @@ namespace Assets.Code
 
                     if (set.territory.Count == 0) { continue; }
                     int count = 0;
-                    Hex target = null;
-                    foreach (Hex hex in set.territory)
+                    int[] gridTarget = null;
+                    foreach (int[] hex in set.territory)
                     {
-                        if (landmass[hex.x][hex.y] == false) { continue; }
-                        if (hex.location != null) { continue; }
+                        if (landmass[hex[0]][hex[1]] == false) { continue; }
+                        if (grid[hex[0]][hex[1]].location != null) { continue; }
 
                         //Check for adjacent hexes
                         bool blocked = false;
-                        foreach (Hex h2 in getNeighbours(hex))
+                        foreach (Hex h2 in getNeighbours(grid[hex[0]][hex[1]]))
                         {
                             if (h2.location != null) { blocked = true; break; }
                         }
                         if (blocked) { continue; }
 
                         count += 1;
-                        if (Eleven.random.Next(count) == 0) { target = hex; }
+                        if (Eleven.random.Next(count) == 0) { gridTarget = hex; }
                     }
+
+                    if (gridTarget == null) { World.log("Unable to place minor location as desired. Ignoring. Probably ignorable."); continue; }
+
+                    Hex target = grid[gridTarget[0]][gridTarget[1]];
                     if (target == null || target.settlement != null) { continue; }
 
                     bool isCoastal = false;
@@ -1045,7 +1061,7 @@ namespace Assets.Code
 
                     Location l = new Location(this, target, false);
                     locations.Add(l);
-                    target.location = l;
+                    target.locIndex = l.index;
                     l.isCoastal = isCoastal;
                     l.parent = set;
                     n += 1;
@@ -1119,8 +1135,9 @@ namespace Assets.Code
 
                 int q = Eleven.random.Next(valids.Count);
                 Hex chosen = valids[q];
-                chosen.location = new Location(this, chosen, true);
-                locations.Add(chosen.location);
+                Location loc = new Location(this, chosen, true);
+                locations.Add(loc);
+                chosen.locIndex = loc.index;
                 majorLocations.Add(chosen.location);
             }
 
@@ -1171,8 +1188,8 @@ namespace Assets.Code
                     }
                     if (bestLoc != null)
                     {
-                        grid[i][j].territoryOf = bestLoc;
-                        bestLoc.territory.Add(grid[i][j]);
+                        grid[i][j].territoryIndex = bestLoc.index;
+                        bestLoc.territory.Add(new int[] { i, j });
                     }
                 }
             }

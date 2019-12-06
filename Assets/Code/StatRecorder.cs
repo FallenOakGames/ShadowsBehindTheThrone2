@@ -9,18 +9,12 @@ namespace Assets.Code
     //[Serializable,HideInInspector]
     public class StatRecorder
     {
-        Map map;
-
         public List<StatSnapshot> snapshots = new List<StatSnapshot>();
         public float[][][] prevColours;
 
         public StatRecorder() { }
-        public StatRecorder(Map map)
-        {
-            this.map = map;
-        }
 
-        public void turnTick()
+        public void turnTick(Map map)
         {
             StatSnapshot snapshot = new StatSnapshot();
             snapshot.day = map.turn;

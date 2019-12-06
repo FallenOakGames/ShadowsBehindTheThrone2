@@ -14,19 +14,19 @@ namespace Assets.Code
             World.log("cheat command registered: " + command);
 
 
-            try
-            {
+            //try
+            //{
                 if (command == "power")
                 {
                     map.overmind.power = 100;
                 }
                 if (command == "testsave")
                 {
-                    map.world.save("testSave.sv");
+                    map.world.save("testSave");
                 }
                 if (command == "testload")
                 {
-                    map.world.load("testSave.sv");
+                    map.world.load("testSave");
                 }
                 if (command == "shadow")
                 {
@@ -107,11 +107,11 @@ namespace Assets.Code
                     }
                     
                 }
-            }
-            catch(Exception e)
-            {
-                World.log(e.Message);
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    World.log(e.Message);
+            //}
         }
     }
 }

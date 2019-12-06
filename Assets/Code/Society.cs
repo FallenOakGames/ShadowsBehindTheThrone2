@@ -19,11 +19,11 @@ namespace Assets.Code
         public SocialGroup offensiveTarget;
         public VoteSession voteSession;
         public int voteCooldown = 0;
-        internal List<EconEffect> econEffects;
+        public List<EconEffect> econEffects;
         public bool isRebellion = false;
         public List<KillOrder> killOrders = new List<KillOrder>();
         public List<Zeit> zeits = new List<Zeit>();
-        private Location capital;
+        public Location capital;
 
         public int instabilityTurns;
         public double data_loyalLordsCap;
@@ -32,8 +32,7 @@ namespace Assets.Code
         public int turnSovreignAssigned = -1;
 
         public bool isDarkEmpire = false;
-
-        public LogBox logbox;
+        
         public double data_societalStability;
 
         public Society(Map map) : base(map)
@@ -58,7 +57,6 @@ namespace Assets.Code
             checkPopulation();//Add people last, so new people don't suddenly arrive and act before the player can see them
             checkAssertions();
             misc();
-            log();
         }
 
         public void misc()
@@ -76,18 +74,6 @@ namespace Assets.Code
         public void checkAssertions()
         {
             if (titles.Count == 0) { throw new Exception("Sovreign title not present"); }
-        }
-
-        public void log()
-        {
-            if (World.logging)
-            {
-                if (logbox == null)
-                {
-                    logbox = new LogBox(this);
-                }
-                logbox.takeLine("--------Turn " + map.turn + "------");
-            }
         }
 
         public void processKillOrders()
@@ -550,7 +536,6 @@ namespace Assets.Code
                     voteSession = new VoteSession();
                     voteSession.issue = issue;
                     voteSession.timeRemaining = map.param.society_votingDuration;
-                    if (World.logging && logbox != null) { logbox.takeLine("Starting voting on " + voteSession.issue.ToString()); }
                 }
             }
             else
@@ -578,8 +563,6 @@ namespace Assets.Code
                     voteSession.issue.changeLikingForVotes(option);
                 }
 
-                if (World.logging && logbox != null) { logbox.takeLine("End voting on " + voteSession.issue.ToString()); }
-                if (World.logging && logbox != null) { logbox.takeLine("    Winning option: " + winner.info()); }
                 voteSession.issue.implement(winner);
                 voteSession = null;
             }

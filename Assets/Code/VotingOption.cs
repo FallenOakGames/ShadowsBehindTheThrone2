@@ -17,8 +17,8 @@ namespace Assets.Code
         public EconTrait econ_to;
         public int index = -1;//For stuff which doesn't have a discrete target, such as "Declare war yes/no"
 
-        public SavableMap<Person, double> randomUtility = new SavableMap<Person, double>();
-        public SavableMap<Person, List<ReasonMsg>> msgs = new SavableMap<Person, List<ReasonMsg>>();
+        public SavableMap_Person_Double randomUtility = new SavableMap_Person_Double();
+        //public SavableMap_Person_ListMsg msgs = new SavableMap_Person_ListMsg();
         public List<Person> votesFor = new List<Person>();
 
 

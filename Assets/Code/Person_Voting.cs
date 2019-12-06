@@ -13,21 +13,6 @@ namespace Assets.Code
         public VoteSession forcedVoteSession;
         public VoteOption forcedVoteOption;
 
-        public void logVote(VoteIssue issue)
-        {
-            if (World.logging)
-            {
-                string line = "  " + issue.ToString() + " for soc " + issue.society.getName();
-                log.takeLine(line);
-                foreach (VoteOption opt in issue.options)
-                {
-                    line = "     " + opt.fixedLenInfo();
-                    line += " U " + Eleven.toFixedLen(issue.computeUtility(this, opt, new List<ReasonMsg>()),12);
-                    log.takeLine(line);
-                }
-            }
-        }
-
         public VoteIssue proposeVotingIssue()
         {
             //Note we start at 1 utility. This means no guaranteed negative/near-zero utility options will be proposed
@@ -35,8 +20,6 @@ namespace Assets.Code
             VoteIssue bestIssue = null;
 
             bool existFreeTitles = false;
-
-            if (World.logging) { log.takeLine("Proposing vote on turn " + map.turn); }
 
 
             foreach (Location loc in map.locations)
@@ -49,9 +32,12 @@ namespace Assets.Code
 
             VoteIssue issue;
 
-            //Unlanded titles can be distributed
-            //Assignment of sovreign takes priority over any other voting, in the minds of the lords and ladies
-            foreach (Title t in society.titles)
+
+            if (true)
+            { //ANWSAVE
+              //Unlanded titles can be distributed
+              //Assignment of sovreign takes priority over any other voting, in the minds of the lords and ladies
+                foreach (Title t in society.titles)
             {
                 if (t.heldBy != null && (map.turn - t.turnLastAssigned < map.param.society_minTimeBetweenTitleReassignments)) { continue; }
                 issue = new VoteIssue_AssignTitle(society, this, t);
@@ -73,11 +59,11 @@ namespace Assets.Code
                         bestIssue = issue;
                     }
                 }
-                logVote(issue);
+                
             }
 
-            if (society.getSovreign() != null)
-            {
+              //Assignment of sovreign takes priority over any other voting, in the minds of the lords and ladies
+                if (society.getSovreign() != null) { 
                 foreach (Location loc in map.locations)
                 {
                     //If there are unhanded out titles, only consider those. Else, check all.
@@ -109,11 +95,11 @@ namespace Assets.Code
                                 bestIssue = issue;
                             }
                         }
-                        logVote(issue);
+                        
                     }
                 }
 
-                if (!existFreeTitles)
+                    if (!existFreeTitles)
                 {
                     //Check to see if you want to economically rebalance the economy
                     if (this.title_land != null)
@@ -142,7 +128,7 @@ namespace Assets.Code
                             if (mine.Contains(econ_from)) { continue; }//Don't take from yourself
                             foreach (EconTrait econ_to in mine)
                             {
-                                issue = new VoteIssue_EconomicRebalancing(society, this,econ_from,econ_to);
+                                issue = new VoteIssue_EconomicRebalancing(society, this, econ_from, econ_to);
                                 //Allow them to spam econ votes
                                 //if (lastProposedIssue != null && lastProposedIssue.GetType() == issue.GetType()) { break; }//Already seen this proposal, most likely. Make another or skip
 
@@ -175,7 +161,7 @@ namespace Assets.Code
                                     }
                                 }
 
-                                logVote(issue);
+                                
                             }
                         }
                     }
@@ -200,7 +186,7 @@ namespace Assets.Code
                             bestIssue = issue;
                         }
                     }
-                    logVote(issue);
+                    
 
                     //Check to see if you want to alter defensive military targetting
                     issue = new VoteIssue_SetDefensiveTarget(society, this);
@@ -223,7 +209,7 @@ namespace Assets.Code
                             bestIssue = issue;
                         }
                     }
-                    logVote(issue);
+                    
 
                     //Change military posture, to either improve defence, fix internal problems, or attack an enemy
                     issue = new VoteIssue_MilitaryStance(society, this);
@@ -245,7 +231,7 @@ namespace Assets.Code
                             bestIssue = issue;
                         }
                     }
-                    logVote(issue);
+                    
 
                     //Check to see if you want to declare war
                     //You need to be in offensive posture to be allowed to do so
@@ -268,7 +254,7 @@ namespace Assets.Code
                             bestU = localU;
                             bestIssue = issue;
                         }
-                        logVote(issue);
+                        
                     }
 
                     //Check to see if you want to defensively vassalise yourself
@@ -299,7 +285,7 @@ namespace Assets.Code
                                     bestU = localU;
                                     bestIssue = issue;
                                 }
-                                logVote(issue);
+                                
                             }
                         }
                     }
@@ -327,26 +313,19 @@ namespace Assets.Code
                                 bestU = localU;
                                 bestIssue = issue;
                             }
-                            logVote(issue);
+                            
                         }
                     }
+                }//ANWSave
                 }
             }
-
-            if (bestIssue != null)
-            {
-                if (World.logging)
-                {
-                    log.takeLine("CHOSE: " + bestIssue.ToString());
-                }
-            }
+            
             lastProposedIssue = bestIssue;
             return bestIssue;
         }
 
         public VoteOption getVote(VoteSession voteSession)
         {
-            if (World.logging) { this.log.takeLine("Voting on " + voteSession.issue); }
             double highestWeight = 0;
             VoteOption bestChoice = null;
             foreach (VoteOption option in voteSession.issue.options)
@@ -359,19 +338,10 @@ namespace Assets.Code
                     ReasonMsg msg = new ReasonMsg("Obligated to vote for this option", 0);
                     msgs.Add(msg);
                 }
-                option.msgs.set(this, msgs);
                 if (u > highestWeight || bestChoice == null)
                 {
                     bestChoice = option;
                     highestWeight = u;
-                }
-                if (World.logging)
-                {
-                    log.takeLine(" " + option.fixedLenInfo() + "  " + u);
-                    foreach (ReasonMsg msg in msgs)
-                    {
-                        log.takeLine("     " + Eleven.toFixedLen(msg.value, 5) + msg.msg);
-                    }
                 }
             }
 

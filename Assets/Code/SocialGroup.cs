@@ -9,11 +9,11 @@ namespace Assets.Code
     public class SocialGroup
     {
         public Map map;
-        private string name;
+        public string name;
         public Color color;
         public Color color2;
-        
-        public SavableMap<SocialGroup, DipRel> relations = new SavableMap<SocialGroup, DipRel>();
+
+        public SavableMap_SG_DipRel relations = new SavableMap_SG_DipRel();
         public DipRel selfRel;
 
         public double threat_mult = 0;
@@ -21,7 +21,7 @@ namespace Assets.Code
         public double currentMilitary;
         public double militaryRegen;
         public int lastBattle;
-        private bool cachedGone;
+        public bool cachedGone;
         public double temporaryThreat;
         public double permanentThreat;
 
@@ -99,6 +99,7 @@ namespace Assets.Code
             DipRel rel = new DipRel(map,this,soc);
             relations.Add(soc, rel);
             soc.relations.Add(this, rel);
+
             return rel;
         }
 

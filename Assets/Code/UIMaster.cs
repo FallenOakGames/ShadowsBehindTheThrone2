@@ -101,6 +101,8 @@ namespace Assets.Code
 
         public void takeCheatCommand()
         {
+            World.log("World.map: " + world.map);
+            World.log("Cheatfield.text " + cheatField.text);
             Cheat.takeCommand(world.map, cheatField.text);
             cheatField.text = "";
         }
