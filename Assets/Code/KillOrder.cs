@@ -1,9 +1,10 @@
+using OdinSerializer;
 ﻿using UnityEngine;
 using System.Collections;
 
 namespace Assets.Code
 {
-    public class KillOrder
+    public class KillOrder : SerializedScriptableObject
     {
         public Person person;
         public string reason;

@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Assets.Code
      * World is your monobehaviour master. It calls the start function, triggering all loading and suchlikes and suchforths
      *
      * It has the ONLY reference to map. Map must be kept apart from any Unity gameObjects, so it can be serialised out
-     * Obviously this is impossible, but every class which knows about its unity GameObject must be able to purge this reference
+     * Obviously this is impossible, but every class which knows about its unity GameObject must be able to purge this reference : SerializedScriptableObject
      *
      * It holds the references to the 'stores'. These are repositories which should not be serialised into the saved games
      */
@@ -37,10 +38,11 @@ namespace Assets.Code
         public static string separator = "";
         public bool isWindows = false;
 
-        public static LogBox saveLog = new LogBox("saveLog.log");
+        public static LogBox saveLog;
 
         public void Start()
         {
+            saveLog = new LogBox("saveLog.log");
             Screen.SetResolution(1920, 1080, true);
             if (developer)
                 startup();
@@ -284,6 +286,7 @@ namespace Assets.Code
             GraphicalSociety.purge();
             world.map.world = null;
 
+<<<<<<< Updated upstream
 
             /*
              * Okay, we're hard capped on save size
@@ -329,7 +332,6 @@ namespace Assets.Code
 
         private void subsave(string filename, SAVE_MapsAndHexes mapsAndHexes)
         {
-
             fsSerializer _serializer = new fsSerializer();
             fsData data;
             _serializer.TrySerialize(typeof(SAVE_MapsAndHexes), mapsAndHexes, out data).AssertSuccessWithoutWarnings();
@@ -346,10 +348,11 @@ namespace Assets.Code
                 File.Delete(filename);
             }
             File.WriteAllLines(filename, new string[] { saveString });
-
         }
         private void subsave(string filename, StatRecorder recorder)
         {
+
+            world.prefabStore.popMsg("Game saved as: " + filename);
 
             fsSerializer _serializer = new fsSerializer();
             fsData data;

@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,7 +6,7 @@ using System.Text;
 
 namespace Assets.Code
 {
-    public class ReasonMsg
+    public class ReasonMsg : SerializedScriptableObject
     {
         public double value;
         public string msg;

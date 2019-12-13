@@ -8,14 +8,14 @@ namespace Assets.Code
         public SG_WormHive(Map map,Location startingLocation) : base(map)
         {
             float colourReducer = 0.25f;
-            color = new Color(
-                (float)Eleven.random.NextDouble(),
-                (float)Eleven.random.NextDouble(),
-                (float)Eleven.random.NextDouble() * colourReducer);
-            color2 = new Color(
-                (float)Eleven.random.NextDouble(),
-                (float)Eleven.random.NextDouble(),
-                (float)Eleven.random.NextDouble() * colourReducer);
+            //color = new Color(
+            //    (float)Eleven.random.NextDouble(),
+            //    (float)Eleven.random.NextDouble(),
+            //    (float)Eleven.random.NextDouble() * colourReducer);
+            //color2 = new Color(
+            //    (float)Eleven.random.NextDouble(),
+            //    (float)Eleven.random.NextDouble(),
+            //    (float)Eleven.random.NextDouble() * colourReducer);
             this.setName(startingLocation.shortName + " Worm Hive");
 
             startingLocation.soc = this;

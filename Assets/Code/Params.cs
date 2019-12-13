@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Assets.Code
      * Chuck any parameter values in here, to be referenced via world
      */
     //[Serializable,HideInInspector]
-    public class Params
+    public class Params : SerializedScriptableObject
     {
         public int mapGen_sizeX = 32;
         public int mapGen_sizeY = 32;

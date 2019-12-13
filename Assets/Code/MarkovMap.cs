@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,7 +6,7 @@ using System.Text;
 
 namespace Assets.Code
 {
-    public class MarkovModel
+    public class MarkovModel : SerializedScriptableObject
     {
         public double[] p0 = new double[26];
         public double[] sum0 = new double[26];

@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Code
 {
-    public class Location
+    public class Location : SerializedScriptableObject
     {
         public static int indexCounter;
         public int index;
@@ -16,13 +17,14 @@ namespace Assets.Code
         public SocialGroup soc;
         public Settlement settlement;
         public HashSet<int[]> territory = new HashSet<int[]>();
-        public Color territoryColor;
+        //public Color territoryColor;
+        public float[] colorArray;
         public List<Link> links = new List<Link>();
         public bool isCoastal;
         public bool isOcean;
         public bool isForSocieties = true;
         public Map map;
-        public string name;
+        public string locName;
         public string shortName;
         public bool isMajor;//Remember if it's a city, so we have roughly the same amount at all times, regardless of razing
         public List<Property> properties = new List<Property>();
@@ -42,14 +44,14 @@ namespace Assets.Code
             this.isMajor = isMajor;
             this.map = map;
             this.gridHex = new int[] {hex.x,hex.y};
-            name = "Empty Location";
+            locName = "Empty Location";
             shortName = "Empty Location";
 
-            territoryColor = new Color(
+            colorArray = new float[] {
                 (float)Eleven.random.NextDouble(),
                 (float)Eleven.random.NextDouble(),
                 (float)Eleven.random.NextDouble(),
-                0.5f);
+                0.5f };
         }
 
         public double getInformationAvailability()
@@ -65,8 +67,7 @@ namespace Assets.Code
 
         public string getName()
         {
-            if (settlement != null) { return settlement.name; }
-            return name;
+            return locName;
         }
 
         public Person person()

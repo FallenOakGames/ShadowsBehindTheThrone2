@@ -1,8 +1,9 @@
+using OdinSerializer;
 ﻿using UnityEngine;
 using System.Collections;
 
 namespace Assets.Code{
-    public abstract class Title
+    public abstract class Title : SerializedScriptableObject
     {
         public Society society;
         public Person heldBy;

@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Code
 {
-    public partial class Map
+    public partial class Map : SerializedScriptableObject
     {
 
         public bool isSea(Location loc)

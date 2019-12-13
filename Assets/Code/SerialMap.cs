@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using UnityEngine;
 namespace Assets.Code
 {
     //[Serializable,HideInInspector]
-    public class SerialMap<TKey, TValue>
+    public class SerialMap<TKey, TValue> : SerializedScriptableObject
     {
         public HashSet<TKey> existing = new HashSet<TKey>();
         public List<TKey> keys = new List<TKey>();

@@ -109,13 +109,14 @@ namespace Assets.Code
         {
             if (master.world == null) { return; }
             if (master.world.map == null) { return; }
-
+            
             master.world.map.turnMessages.Sort();
             foreach (MsgEvent msg in master.world.map.turnMessages)
             {
                 GameObject obj = Instantiate(master.world.prefabStore.mapMsg, listContent);
                 obj.GetComponent<MonoMapMsg>().SetInfo(msg);
             }
+            
         }
         public void bTestClick(int i)
         {

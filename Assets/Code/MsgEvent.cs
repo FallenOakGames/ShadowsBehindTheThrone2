@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using OdinSerializer;
 
 namespace Assets.Code
 {
-    public class MsgEvent : IComparable<MsgEvent>
+    public class MsgEvent : SerializedScriptableObject
     {
         public static int LEVEL_BLUE   = -1;
         public static int LEVEL_RED = 0;

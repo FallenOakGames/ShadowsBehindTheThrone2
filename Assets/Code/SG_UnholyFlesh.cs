@@ -8,14 +8,14 @@ namespace Assets.Code
         public SG_UnholyFlesh(Map map,Location startingLocation) : base(map)
         {
             float colourReducer = 0.25f;
-            color = new Color(
-                (float)(Eleven.random.NextDouble()* colourReducer) + (1-colourReducer),
-                (float)Eleven.random.NextDouble() * colourReducer,
-                (float)Eleven.random.NextDouble() * colourReducer);
-            color2 = new Color(
-                (float)(Eleven.random.NextDouble() * colourReducer) + (1 - colourReducer),
-                (float)Eleven.random.NextDouble() * colourReducer,
-                (float)Eleven.random.NextDouble() * colourReducer);
+            //color = new Color(
+            //    (float)(Eleven.random.NextDouble()* colourReducer) + (1-colourReducer),
+            //    (float)Eleven.random.NextDouble() * colourReducer,
+            //    (float)Eleven.random.NextDouble() * colourReducer);
+            //color2 = new Color(
+            //    (float)(Eleven.random.NextDouble() * colourReducer) + (1 - colourReducer),
+            //    (float)Eleven.random.NextDouble() * colourReducer,
+            //    (float)Eleven.random.NextDouble() * colourReducer);
             this.setName("Unholy Flesh from " + startingLocation.shortName);
 
             startingLocation.soc = this;

@@ -8,14 +8,14 @@ namespace Assets.Code
         public SG_GenericDark(Map map,Location startingLocation) : base(map)
         {
             float colourReducer = 0.25f;
-            color = new Color(
-                (float)Eleven.random.NextDouble()* colourReducer,
-                (float)Eleven.random.NextDouble() * colourReducer,
-                (float)Eleven.random.NextDouble() * colourReducer);
-            color2 = new Color(
-                (float)Eleven.random.NextDouble() * colourReducer,
-                (float)Eleven.random.NextDouble() * colourReducer,
-                (float)Eleven.random.NextDouble() * colourReducer);
+            //color = new Color(
+            //    (float)Eleven.random.NextDouble()* colourReducer,
+            //    (float)Eleven.random.NextDouble() * colourReducer,
+            //    (float)Eleven.random.NextDouble() * colourReducer);
+            //color2 = new Color(
+            //    (float)Eleven.random.NextDouble() * colourReducer,
+            //    (float)Eleven.random.NextDouble() * colourReducer,
+            //    (float)Eleven.random.NextDouble() * colourReducer);
             this.setName("Darkness in " + startingLocation.shortName);
 
             startingLocation.soc = this;

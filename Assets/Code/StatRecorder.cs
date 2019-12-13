@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using UnityEngine;
 namespace Assets.Code
 {
     //[Serializable,HideInInspector]
-    public class StatRecorder
+    public class StatRecorder : SerializedScriptableObject
     {
         public List<StatSnapshot> snapshots = new List<StatSnapshot>();
         public float[][][] prevColours;

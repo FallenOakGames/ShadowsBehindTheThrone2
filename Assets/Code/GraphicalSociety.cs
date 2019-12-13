@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
@@ -5,7 +6,7 @@ using System.Collections;
 
 namespace Assets.Code
 {
-    public class GraphicalSociety
+    public class GraphicalSociety : SerializedScriptableObject
     {
         public static World world;
 

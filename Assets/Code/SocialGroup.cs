@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,14 +7,22 @@ using UnityEngine;
 
 namespace Assets.Code
 {
-    public class SocialGroup
+    public class SocialGroup : SerializedScriptableObject
     {
         public Map map;
+<<<<<<< Updated upstream
         public string name;
         public Color color;
         public Color color2;
 
         public SavableMap_SG_DipRel relations = new SavableMap_SG_DipRel();
+=======
+        private string name;
+        public float[] color;
+        public float[] color2;
+        
+        public SavableMap<SocialGroup, DipRel> relations = new SavableMap<SocialGroup, DipRel>();
+>>>>>>> Stashed changes
         public DipRel selfRel;
 
         public double threat_mult = 0;
@@ -28,14 +37,14 @@ namespace Assets.Code
         public SocialGroup(Map map)
         {
             this.map = map;
-            color = new Color(
+            color = new float[] {
                 (float)Eleven.random.NextDouble(),
                 (float)Eleven.random.NextDouble(),
-                (float)Eleven.random.NextDouble());
-            color2 = new Color(
+                (float)Eleven.random.NextDouble() };
+            color2 = new float[]{
                 (float)Eleven.random.NextDouble(),
                 (float)Eleven.random.NextDouble(),
-                (float)Eleven.random.NextDouble());
+                (float)Eleven.random.NextDouble() };
             name = "SocialGroup";
 
             //Self-diplomacy

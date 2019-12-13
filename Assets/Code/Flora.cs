@@ -1,3 +1,4 @@
+using OdinSerializer;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Code
 {
-    public abstract class Flora
+    public abstract class Flora : SerializedScriptableObject
     {
         public Hex hex;
         public string name = "Plants";
