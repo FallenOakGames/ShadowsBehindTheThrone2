@@ -11,8 +11,8 @@ namespace Assets.Code
     //[Serializable,HideInInspector]
     public class Params
     {
-        public int mapGen_sizeX = 48;
-        public int mapGen_sizeY = 48;
+        public int mapGen_sizeX = 32;
+        public int mapGen_sizeY = 32;
         public double mapGen_proportionOfMapForHumans = 0.65;
         public float mapGen_minHabitabilityForHumans = 0.15f;
         public int mapGen_stepsPerIsland = 12;

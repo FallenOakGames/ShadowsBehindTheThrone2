@@ -333,9 +333,10 @@ namespace Assets.Code
             fsSerializer _serializer = new fsSerializer();
             fsData data;
             _serializer.TrySerialize(typeof(SAVE_MapsAndHexes), mapsAndHexes, out data).AssertSuccessWithoutWarnings();
-            
+
             // emit the data via JSON
-            string saveString = fsJsonPrinter.CompressedJson(data);
+            //string saveString = fsJsonPrinter.CompressedJson(data);
+            string saveString = "Replaced";
             World.Log("Save exit point");
 
             filename = filename + "_mapsAndHexes.sv";
@@ -355,7 +356,8 @@ namespace Assets.Code
             _serializer.TrySerialize(typeof(StatRecorder), recorder, out data).AssertSuccessWithoutWarnings();
 
             // emit the data via JSON
-            string saveString = fsJsonPrinter.CompressedJson(data);
+            //string saveString = fsJsonPrinter.CompressedJson(data);
+            string saveString = "Replaced";
             World.Log("Save exit point");
 
             filename = filename + "_recorder.sv";
@@ -374,7 +376,8 @@ namespace Assets.Code
             _serializer.TrySerialize(typeof(Map), map, out data).AssertSuccessWithoutWarnings();
 
             // emit the data via JSON
-            string saveString = fsJsonPrinter.CompressedJson(data);
+            //string saveString = fsJsonPrinter.CompressedJson(data);
+            string saveString = "Replaced";
             World.Log("Save exit point");
 
             filename = filename + "_map.sv";
