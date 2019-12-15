@@ -7,22 +7,14 @@ using UnityEngine;
 
 namespace Assets.Code
 {
-    public class SocialGroup : SerializedScriptableObject
+    public class SocialGroup
     {
         public Map map;
-<<<<<<< Updated upstream
-        public string name;
-        public Color color;
-        public Color color2;
 
         public SavableMap_SG_DipRel relations = new SavableMap_SG_DipRel();
-=======
         private string name;
         public float[] color;
         public float[] color2;
-        
-        public SavableMap<SocialGroup, DipRel> relations = new SavableMap<SocialGroup, DipRel>();
->>>>>>> Stashed changes
         public DipRel selfRel;
 
         public double threat_mult = 0;

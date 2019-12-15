@@ -285,8 +285,7 @@ namespace Assets.Code
             GraphicalMap.purge();
             GraphicalSociety.purge();
             world.map.world = null;
-
-<<<<<<< Updated upstream
+            
 
             /*
              * Okay, we're hard capped on save size
@@ -312,8 +311,8 @@ namespace Assets.Code
             map.stats = null;
 
             subsave(filename, mapsAndHexes);
-            subsave(filename, recorder);
-            subsave(filename, map);
+            //subsave(filename, recorder);
+            //subsave(filename, map);
 
 
 
@@ -332,27 +331,31 @@ namespace Assets.Code
 
         private void subsave(string filename, SAVE_MapsAndHexes mapsAndHexes)
         {
-            fsSerializer _serializer = new fsSerializer();
-            fsData data;
-            _serializer.TrySerialize(typeof(SAVE_MapsAndHexes), mapsAndHexes, out data).AssertSuccessWithoutWarnings();
+            //fsSerializer _serializer = new fsSerializer();
+            //fsData data;
+            //_serializer.TrySerialize(typeof(SAVE_MapsAndHexes), mapsAndHexes, out data).AssertSuccessWithoutWarnings();
 
-            // emit the data via JSON
-            //string saveString = fsJsonPrinter.CompressedJson(data);
-            string saveString = "Replaced";
-            World.Log("Save exit point");
+            //// emit the data via JSON
+            ////string saveString = fsJsonPrinter.CompressedJson(data);
+            //string saveString = "Replaced";
+            //World.Log("Save exit point");
 
-            filename = filename + "_mapsAndHexes.sv";
-            if (File.Exists(filename))
-            {
-                World.Log("Overwriting old save: " + filename);
-                File.Delete(filename);
-            }
-            File.WriteAllLines(filename, new string[] { saveString });
+            //filename = filename + "_mapsAndHexes.sv";
+            //if (File.Exists(filename))
+            //{
+            //    World.Log("Overwriting old save: " + filename);
+            //    File.Delete(filename);
+            //}
+            //File.WriteAllLines(filename, new string[] { saveString });
+
+
+            byte[] bytes = SerializationUtility.SerializeValue(mapsAndHexes, DataFormat.Binary);
+            File.WriteAllBytes("odin.sv", bytes);
         }
         private void subsave(string filename, StatRecorder recorder)
         {
 
-            world.prefabStore.popMsg("Game saved as: " + filename);
+            prefabStore.popMsg("Game saved as: " + filename);
 
             fsSerializer _serializer = new fsSerializer();
             fsData data;

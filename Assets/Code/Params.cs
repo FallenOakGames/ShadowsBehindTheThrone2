@@ -13,12 +13,12 @@ namespace Assets.Code
     public class Params : SerializedScriptableObject
     {
         public int mapGen_sizeX = 32;
-        public int mapGen_sizeY = 32;
+        public int mapGen_sizeY = 24;
         public double mapGen_proportionOfMapForHumans = 0.65;
         public float mapGen_minHabitabilityForHumans = 0.15f;
         public int mapGen_stepsPerIsland = 12;
         public int mapGen_maxBrushSize = 5;
-        public int mapGen_burnInSteps = 100;
+        public int mapGen_burnInSteps = 0;
 
         public int overmind_maxPower = 24;
         public float overmind_powerRegen = 1f;
